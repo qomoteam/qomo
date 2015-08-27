@@ -1,0 +1,46 @@
+/*
+ *= require_tree .
+ *= require jquery-layout
+ *= require aui
+ *= require_self
+ */
+*:focus
+  outline: none !important
+
+body
+  min-width: 1100px
+
+#header
+  float: none
+
+#logo
+  margin-right: 2em
+  .version
+    float: left
+    color: honeydew
+    font-size: 10px
+    height: 40px
+    line-height: 50px
+
+.pane
+  display:	none
+  padding: 0
+  border: 0
+  .aui-tabs.horizontal-tabs > .tabs-menu > .menu-item
+    a
+      border-radius: 0
+    &:first-child
+      margin-left: 0
+      a
+        border-left: 0
+
+
+#header
+  .aui-nav a.active
+    background-color: #3572b0
+
+.tabs-pane
+  padding: 10px
+
+#main
+  width: 100%

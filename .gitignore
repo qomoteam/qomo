@@ -1,0 +1,35 @@
+# Rails
+/.bundle
+
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+/log/*.log
+/tmp
+
+/vendor/assets/components
+
+/config/settings.yml
+/config/database.yml
+/config/secrets.yml
+/config/puma.rb
+/config/intializers/devise.rb
+
+/public/assets
+
+# Jetbrains IDE
+.idea
+*.iml
+*.ipr
+*.iws
+
+# OS specific
+.DS_store
+
+# Build tools
+out
+build
+target
+
+# Misc
+npm-debug.log

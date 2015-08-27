@@ -1,0 +1,63 @@
+doctype 5
+html lang='en'
+  head
+    title Qomo
+    meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+    = stylesheet_link_tag 'application', media: 'all'
+
+    = Gon::Base.render_data
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  body data-controller=params[:controller] data-action=params[:action]
+    nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" role="navigation"
+      .aui-header-primary
+        h1#logo.aui-header-logo.aui-header-logo-textonly
+          a href=root_url
+            span.aui-header-logo-device Qomo
+          .version Version: 7e14b92
+
+        ul.aui-nav
+          li
+            a class=active_class('workspaces') href=workspace_path Workspace
+          li
+            a class=active_class('pipelines') href=pipelines_path Pipelines
+
+          li
+            a class=active_class('datastore') href="http://example.com/" Datastore
+          li
+            a class=active_class('scholars') href="http://example.com/" Scholars
+          li
+            a.aui-dropdown2-trigger aria-haspopup='true' aria-owns='menu-help' href="#"  Help
+            #menu-help.aui-dropdown2.aui-style-default.aui-dropdown2-in-header.aui-layer aria-hidden="true"
+              .aui-dropdown2-section
+                ul
+                  li
+                    a href="http://example.com/"  Tutorial
+                  li
+                    a href="http://example.com/"  Agreement
+                  li
+                    a href=about_path  About
+
+      .aui-header-secondary
+        ul.aui-nav
+          li
+            a.aui-dropdown2-trigger-arrowless.aui-dropdown2-trigger aria-haspopup="true" aria-owns="menu-user" href="#"
+              | dotswing@gmail.com
+            #menu-user.aui-dropdown2.aui-style-default.aui-dropdown2-in-header.aui-layer aria-hidden="true" data-aui-dropdown2=""
+              .aui-dropdown2-section
+                ul
+                  li
+                    a.active href="http://example.com/"  Profile
+                  li
+                    a href="http://example.com/"  Extensions
+              .aui-dropdown2-section
+                ul
+                  li
+                    a href="http://example.com/"  Use Agile by default
+              .aui-dropdown2-section
+                ul
+                  li
+                    a href="http://example.com/"  Log out
+    #main
+      = yield
