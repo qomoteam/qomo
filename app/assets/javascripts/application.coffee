@@ -1,14 +1,9 @@
-#= require jquery
-#= require patch
+#= require common
 #= require jquery-ui
 #= require jquery-layout
-#= require aui
 #= require jsPlumb
 
-#= require workspaces.coffee
+#= require workspaces
 #= require_self
-
-AJS.toInit ->
-  AJS.$('.select2').auiSelect2()
 
 

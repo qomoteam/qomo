@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def active_class(p)
-    params[:controller] == p ? 'active' : ''
+  def active_class(controller, action=nil, cls='active')
+    params[:controller] == controller and params[:action] == (action || params[:action]) ? cls : ''
   end
 
 

@@ -1,0 +1,52 @@
+doctype 5
+html lang='en'
+  head
+    title Qomo
+    meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+    = stylesheet_link_tag 'admin/admin', media: 'all'
+
+    = Gon::Base.render_data
+    = javascript_include_tag 'admin/admin'
+    = csrf_meta_tags
+
+  body data-controller=params[:controller] data-action=params[:action]
+    = render 'layouts/header'
+    #content
+      .aui-page-panel
+        .aui-page-panel-inner
+          .aui-page-panel-nav
+            nav.aui-navgroup.aui-navgroup-vertical
+              .aui-navgroup-inner
+                .aui-nav-heading
+                  strong Overview
+                ul.aui-nav
+                  li class=active_class('admin/home', 'index', 'aui-nav-selected')
+                    a href=admin_dashboard_path Dashboard
+
+                .aui-nav-heading
+                  strong Tools
+                ul.aui-nav
+                  li: a href='#' All
+                  li: a href='#' Audit
+                  li: a href='#' Pipelines
+
+                .aui-nav-heading
+                  strong Users
+                ul.aui-nav
+                  li: a href='#' All
+                  li: a href='#' Banned
+
+                .aui-nav-heading
+                  strong Jobs
+                ul.aui-nav
+                  li: a href='#' All
+                  li: a href='#' Statistics
+
+                .aui-nav-heading
+                  strong Misc
+                ul.aui-nav
+                  li: a href='#' Backup
+
+
+          .aui-page-panel-content
+            = yield

@@ -5,4 +5,9 @@ Rails.application.routes.draw do
 
   resource :workspace
   resources :pipelines
+
+  namespace :admin do
+    root 'home#index'
+    get 'dashboard', to: 'home#index'
+  end
 end

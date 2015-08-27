@@ -1,5 +1,6 @@
 within 'workspaces', 'show', ->
+  $c = $('#content')
   window.onresize = ->
-    $('#main').height($(window).height() - $('#main').offset().top)
+    $c.height($(window).height() - $c.offset().top)
   window.onresize()
-  $('#main').layout()
+  $c.layout()
