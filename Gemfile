@@ -16,7 +16,7 @@ gem 'coffee-rails'
 gem 'slim-rails'
 gem 'devise'
 gem 'gon'
-gem 'paloma'
+gem 'settingslogic'
 
 gem 'dvm'
 gem 'vam'

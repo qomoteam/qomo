@@ -4,4 +4,9 @@ module ApplicationHelper
     params[:controller] == p ? 'active' : ''
   end
 
+
+  def revision_tag
+    Config.revision
+  end
+
 end
