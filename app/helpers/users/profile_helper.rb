@@ -1,0 +1,2 @@
+module Users::ProfileHelper
+end

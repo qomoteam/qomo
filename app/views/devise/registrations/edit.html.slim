@@ -1,10 +1,10 @@
-.aui-page-focused
+.aui-page-focused.page-witdh-small
   .aui-page-panel
     .aui-page-panel-inner
       section.aui-page-panel-content
-        h2 Sign up
+        h2 Edit Credentials
 
-        = form_for resource, as: resource_name, url: registration_path(resource_name), html: {class: 'aui top-label'} do |f|
+        = form_for resource, as: resource_name, url: registration_path(resource_name), html: {method: :put, class: 'aui top-label'} do |f|
           - unless resource.errors.empty?
             .aui-message.aui-message-error.error
               = devise_error_messages!
@@ -23,6 +23,9 @@
             = f.label :password_confirmation
             = f.password_field :password_confirmation, autocomplete: 'off', class: 'text long-field'
 
+          .field-group.top-label
+            = f.label :current_password
+            = f.password_field :current_password, autocomplete: 'off', class: 'text long-field'
+
           .aui-group
-            = f.submit 'Sign up', class: 'aui-button aui-button-primary'
-            = render 'devise/shared/links'
+            = f.submit 'Update', class: 'aui-button aui-button-primary'

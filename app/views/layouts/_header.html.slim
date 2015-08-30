@@ -33,15 +33,17 @@ nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" rol
     ul.aui-nav
       - if user_signed_in?
         li
-          a.aui-dropdown2-trigger-arrowless.aui-dropdown2-trigger aria-haspopup="true" aria-owns="menu-user" href="#"
+          a.aui-dropdown2-trigger-arrowless.aui-dropdown2-trigger aria-haspopup='true' aria-owns='menu-user' href='#'
             = current_user.email
-          #menu-user.aui-dropdown2.aui-style-default.aui-dropdown2-in-header.aui-layer aria-hidden="true" data-aui-dropdown2=""
+          #menu-user.aui-dropdown2.aui-style-default.aui-dropdown2-in-header.aui-layer aria-hidden='true'
             .aui-dropdown2-section
               ul
                 li
-                  a.active href="http://example.com/"  Profile
+                  a href=edit_users_profile_path  Profile
                 li
-                  a href="http://example.com/"  Extensions
+                  a href="http://example.com/"  Settings
+                li
+                  a href=edit_user_registration_path  Security
             .aui-dropdown2-section
               ul
                 li

@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
     t.string :location
     t.string :timezone
     t.string :homepage
+
     t.string :role, default: 'user'
 
     ## Database authenticatable

@@ -1,0 +1,36 @@
+.aui-page-focused.page-witdh-small
+  .aui-page-panel
+    .aui-page-panel-inner
+      section.aui-page-panel-content
+        h2 Edit Profile
+
+        = form_for @user, url:users_profile_path, html: {method: :put, class: 'aui'} do |f|
+          .field-group.top-label
+            = f.label :first_name
+            = f.text_field :first_name, autofocus: true, class: 'text long-field'
+
+          .field-group.top-label
+            = f.label :last_name
+            = f.text_field :last_name, autocomplete: 'off', class: 'text long-field'
+
+          .field-group.top-label
+            = f.label :title
+            = f.text_field :title, autocomplete: 'off', class: 'text long-field'
+
+          .field-group.top-label
+            = f.label :location
+            = f.text_field :location, autocomplete: 'off', class: 'text long-field'
+
+          .field-group.top-label
+            = f.label :organization
+            = f.text_field :organization, autocomplete: 'off', class: 'text long-field'
+
+          .field-group.top-label
+            = f.label :homepage
+            = f.text_field :homepage, autocomplete: 'off', class: 'text long-field'
+
+
+          .buttons-container
+            .buttons
+              = f.submit 'Update', class: 'aui-button aui-button-primary'
+              = button_tag 'Cancel', type: :reset, class: 'aui-button'
