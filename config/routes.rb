@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'workspaces#show'
 
   get 'about', to: 'home#about'

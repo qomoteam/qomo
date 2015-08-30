@@ -14,10 +14,9 @@ gem 'puma'
 
 gem 'coffee-rails'
 gem 'slim-rails'
-gem 'devise'
 gem 'gon'
 gem 'settingslogic'
-
+gem 'devise', '3.5.2'
 gem 'dvm'
 gem 'vam'
 
