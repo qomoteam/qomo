@@ -1,6 +1,7 @@
 source 'http://cloud.big.ac.cn/vam'
 
 vam 'jquery'
+vam 'jquery-ujs'
 vam 'jquery-ui'
 vam 'jquery-layout'
 vam 'aui'

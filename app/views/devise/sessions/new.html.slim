@@ -1,0 +1,26 @@
+#page-signin.aui-page-focused
+  .aui-page-panel
+    .aui-page-panel-inner
+      section.aui-page-panel-content
+        h2 Log in
+
+        = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
+          .field-group.top-label
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: 'text long-field'
+
+          .field-group.top-label
+            = f.label :password
+            = f.password_field :password, autocomplete: 'off', class: 'text long-field'
+
+          - if devise_mapping.rememberable?
+            .aui-group
+              fieldset.group.checkbox
+                .checkbox
+                  = f.check_box :remember_me, class: 'checkbox'
+                  = f.label :remember_me
+
+          .aui-group
+            = f.submit 'Log in', class: 'aui-button aui-button-primary'
+            = render 'devise/shared/links'
+
