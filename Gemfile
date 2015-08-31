@@ -17,6 +17,7 @@ gem 'slim-rails'
 gem 'gon'
 gem 'settingslogic'
 gem 'devise', '3.5.2'
+gem 'ledermann-rails-settings'
 gem 'dvm'
 gem 'vam'
 

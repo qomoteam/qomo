@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :pipelines
 
   namespace :users do
-    resource :profile
+    resource :profile, :setting
   end
 
   namespace :admin do
