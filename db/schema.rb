@@ -1,6 +1,6 @@
 ActiveRecord::Schema.define(version: 20141221052429) do
-
-  create_table :pipelines do |t|
+  enable_extension 'uuid-ossp'
+  create_table :pipelines, id: :uuid do |t|
     t.string :pid
     t.string :title
     t.string :contributor
@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
   end
 
 
-  create_table(:users) do |t|
+  create_table :users, id: :uuid do |t|
     t.string :first_name
     t.string :last_name
     t.string :title

@@ -5,9 +5,14 @@ Rails.application.routes.draw do
 
   get 'about', to: 'home#about'
 
+  scope 'datastore' do
+    get '(/-/*path)', to:'datastore#show', as: 'datastore'
+  end
+
+
   resource :workspace
 
-  resources :pipelines
+  resources :pipelines, :filemetas
 
   namespace :users do
     resource :profile, :setting

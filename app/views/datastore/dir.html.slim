@@ -1,0 +1,26 @@
+.aui-toolbar2 role='toolbar'
+  .aui-toolbar2-inner
+    .aui-toolbar2-group
+      .aui-toolbar2-primary
+        .aui-buttons
+          button.aui-button A
+          button.aui-button A
+
+      .aui-toolbar2-secondary
+        button.aui-button A
+
+
+table.aui.aui-table-sortable
+  thead
+    tr
+      th
+      th.aui-table-column-issue-key File Name
+      th Size
+      th Date Modified
+
+    - for file in @files
+      tr
+        td
+        td = file.name
+        td = file.size
+        td = file.mtime
