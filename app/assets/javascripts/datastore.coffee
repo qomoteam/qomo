@@ -1,3 +1,5 @@
+#= require upload
+
 Datastore =
   reload_files: ->
     window.location.reload()
@@ -37,3 +39,4 @@ $ ->
   $('.btn-go').click ->
     path = prompt('Go to directory:')
     Datastore.goto path
+

@@ -11,15 +11,29 @@ class DatastoreController < ApplicationController
     render 'directory'
   end
 
+
   def mkdir
     current_user.datastore.mkdir! params[:dirpath]
     render json: {success: true}
   end
 
+
   def trash
-    puts params[:path]
     current_user.datastore.trash! params[:path]
     render json: {success: true}
+  end
+
+
+  def upload
+    if request.post?
+      current_user.datastore.save! File.join(params[:dir], params[:filename]), params[:file].tempfile
+      render json: {success: true}
+    else
+      gon.dir = params[:dir]
+      gon.token = form_authenticity_token
+    end
+
+
   end
 
 end

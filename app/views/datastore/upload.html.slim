@@ -1,0 +1,29 @@
+.aui-page-focused.page-witdh-normal
+  .aui-page-panel
+    .aui-page-panel-inner
+      section.aui-page-panel-content
+        #uploader data-endpoint=datastore_upload_path
+        #trigger-upload.aui-button.aui-button-primary Uplaod now
+
+script#qq-template type="text/template"
+  .qq-uploader-selector.qq-uploader
+    .qq-upload-drop-area-selector.qq-upload-drop-area qq-hide-dropzone=""
+      span Drop files here to upload
+    .qq-upload-button-selector.qq-upload-button
+      div Select Files
+    span.qq-drop-processing-selector.qq-drop-processing
+      span Processing dropped files...
+      span.qq-drop-processing-spinner-selector.qq-drop-processing-spinner
+    ul.qq-upload-list-selector.qq-upload-list
+      li
+        .qq-progress-bar-container-selector
+          .qq-progress-bar-selector.qq-progress-bar
+        span.qq-upload-spinner-selector.qq-upload-spinner
+        span.qq-edit-filename-icon-selector.qq-edit-filename-icon
+        span.qq-upload-file-selector.qq-upload-file
+        input.qq-edit-filename-selector.qq-edit-filename tabindex="0" type="text"
+          span.qq-upload-size-selector.qq-upload-size
+          a.qq-upload-cancel-selector.qq-upload-cancel href="#"  Cancel
+          a.qq-upload-retry-selector.qq-upload-retry href="#"  Retry
+          a.qq-upload-delete-selector.qq-upload-delete href="#"  Delete
+          span.qq-upload-status-text-selector.qq-upload-status-text

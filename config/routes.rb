@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get '/-/(*path)', action:'show'
     patch 'mkdir'
     delete 'trash'
+    get 'upload'
+    post 'upload'
   end
 
 

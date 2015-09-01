@@ -30,6 +30,10 @@ class Datastore
     FileUtils.rmtree apath(dirpath)
   end
 
+  def save!(path, file)
+    FileUtils.copy file, apath(path)
+  end
+
   def apath(*p)
     File.join @home, p
   end
