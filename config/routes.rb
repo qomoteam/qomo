@@ -6,11 +6,12 @@ Rails.application.routes.draw do
   get 'about', to: 'home#about'
 
   scope :datastore, controller: :datastore, as: :datastore do
-    get '/-/(*path)', action:'show'
+    get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
     patch 'mkdir'
     delete 'trash'
-    get 'upload'
-    post 'upload'
+
+    match 'upload/-/(*dir)', action: 'upload', as: 'upload', constraints: { :path => /.*/ }, via: [:get, :post]
+    get 'download/-/(*path)', action: 'download', as: 'download', constraints: { :path => /.*/ }
   end
 
 

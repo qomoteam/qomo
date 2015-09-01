@@ -32,8 +32,12 @@ class DatastoreController < ApplicationController
       gon.dir = params[:dir]
       gon.token = form_authenticity_token
     end
+  end
 
 
+  def download
+    path = params[:path]
+    send_file current_user.datastore.apath(path)
   end
 
 end

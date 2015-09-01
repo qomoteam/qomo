@@ -11,7 +11,7 @@
 
       .aui-toolbar2-secondary
         .aui-buttons
-          a.aui-button href=datastore_upload_path(dir: @meta.path) target='_blank' Upload
+          a.aui-button href=datastore_upload_path(@meta.path) target='_blank' Upload
           button.aui-button.btn-mkdir Make Directory
           button.aui-button.btn-go Go to...
           a.aui-button href=datastore_path(parent_dir(@meta.path))
@@ -38,9 +38,10 @@ table.aui.aui-table-sortable.tbl-files
           - if file.directory?
             | --
           - else
-            = file.size
+            = number_to_human_size(file.size, precision: 3)
         td = file.kind
         td = file.mtime.to_s :db
         td
+          a.aui-button.aui-button-compact href=datastore_download_path(file.path) Download
           button.aui-button.aui-button-compact.btn-trash
             .aui-icon.aui-icon-small.aui-iconfont-delete
