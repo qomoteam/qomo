@@ -29,7 +29,7 @@ class DatastoreController < ApplicationController
       current_user.datastore.save! File.join(params[:dir], params[:filename]), params[:file].tempfile
       render json: {success: true}
     else
-      gon.dir = params[:dir]
+      gon.dir = params[:dir] || ''
       gon.token = form_authenticity_token
     end
   end
