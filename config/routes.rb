@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'about', to: 'home#about'
 
   scope :datastore, controller: :datastore, as: :datastore do
-    get '(/-/*path)', action:'show'
+    get '/-/(*path)', action:'show'
     patch 'mkdir'
   end
 
