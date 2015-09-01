@@ -78,6 +78,9 @@ GEM
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    js-routes (1.1.0)
+      railties (>= 3.2)
+      sprockets-rails
     json (1.8.3)
     ledermann-rails-settings (2.4.0)
       activerecord (>= 3.1)
@@ -181,6 +184,7 @@ DEPENDENCIES
   dvm
   gon
   jbuilder (~> 2.0)
+  js-routes
   ledermann-rails-settings
   pg
   puma

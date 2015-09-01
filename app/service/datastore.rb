@@ -12,8 +12,16 @@ class Datastore
     end
   end
 
+  def mkdir!(dirpath)
+    FileUtils.mkdir_p rpath(dirpath)
+  end
+
   def create!
     FileUtils.mkdir_p @home
+  end
+
+  def rpath(*p)
+    File.join @home, p
   end
 
 end

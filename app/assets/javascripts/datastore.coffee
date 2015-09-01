@@ -1,3 +1,20 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+Datastore =
+  reload_files: ->
+    window.location.reload()
+
+  mkdir: (dirname) ->
+    dirpath = "#{gon.pwd}/#{dirname}"
+    $.ajax Routes.datastore_mkdir(),
+      method: 'patch'
+      data:
+        dirpath: dirpath
+      success: ->
+        console.debug 'a'
+        Datastore.reload_files()
+      error: ->
+        console.debug 'a'
+
+$ ->
+  $('.btn-mkdir').click ->
+    dirname = prompt('Directory name:')
+    Datastore.mkdir(dirname) if dirname

@@ -15,9 +15,11 @@ gem 'puma'
 gem 'coffee-rails'
 gem 'slim-rails'
 gem 'gon'
+gem 'js-routes'
 gem 'settingslogic'
 gem 'devise', '3.5.2'
 gem 'ledermann-rails-settings'
+
 gem 'dvm'
 gem 'vam'
 

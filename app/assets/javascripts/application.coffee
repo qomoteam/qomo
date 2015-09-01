@@ -4,6 +4,7 @@
 #= require jsPlumb
 
 #= require workspaces
+#= require datastore
 #= require_self
 
 
