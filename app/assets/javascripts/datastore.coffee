@@ -23,6 +23,9 @@ Datastore =
       error: ->
         console.debug 'a'
 
+  goto: (path) ->
+    window.location.href = Routes.datastore path: path
+
 $ ->
   $('.btn-mkdir').click ->
     dirname = prompt('Directory name:')
@@ -30,3 +33,7 @@ $ ->
 
   $('.btn-trash').click ->
     Datastore.trash $(this).parents('tr').data('path')
+
+  $('.btn-go').click ->
+    path = prompt('Go to directory:')
+    Datastore.goto path
