@@ -38,5 +38,5 @@ $ ->
 
   $('.btn-go').click ->
     path = prompt('Go to directory:')
-    Datastore.goto path
+    Datastore.goto path if path
 
