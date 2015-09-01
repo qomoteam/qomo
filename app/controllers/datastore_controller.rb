@@ -2,6 +2,10 @@ class DatastoreController < ApplicationController
   def show
     path = params[:path] || ''
     @meta = current_user.datastore.get path
+    unless @meta
+      render 'not_found'
+      return
+    end
     @files = current_user.datastore.list path
     gon.path = @path
     render 'directory'

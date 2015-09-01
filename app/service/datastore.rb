@@ -8,6 +8,7 @@ class Datastore
   end
 
   def get(path)
+    return nil unless File.exist? apath(path)
     filemeta apath(path)
   end
 
