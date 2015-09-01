@@ -42,8 +42,8 @@ class Datastore
     path[@home.length+1..-1]
   end
 
-  def directory?
-
+  def read(path)
+    File.read apath(path)
   end
 
   def filemeta(abs_path)
@@ -52,7 +52,7 @@ class Datastore
                  mtime: File.mtime(abs_path),
                  atime: File.atime(abs_path),
                  ctime: File.ctime(abs_path),
-                 kind: File.directory?(abs_path) ? :directory : :file
+                 kind: File.directory?(abs_path) ? :directory : :text
   end
 
 end

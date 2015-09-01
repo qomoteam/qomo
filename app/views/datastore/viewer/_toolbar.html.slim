@@ -1,0 +1,16 @@
+.aui-toolbar2 role='toolbar'
+  .aui-toolbar2-inner
+    .aui-toolbar2-group
+      .aui-toolbar2-primary
+        = render 'datastore/viewer/breadcrumb'
+      .aui-toolbar2-secondary
+        - if @meta.directory?
+          .aui-buttons
+            a.aui-button href=datastore_upload_path(@meta.path) target='_blank' Upload
+            button.aui-button.btn-mkdir Make Directory
+
+        .aui-buttons
+          button.aui-button.btn-go Go to...
+          a.aui-button href=datastore_path(parent_dir(@meta.path))
+            .aui-icon.aui-icon-small.aui-iconfont-up
+        button.aui-button A

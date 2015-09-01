@@ -1,0 +1,5 @@
+ol.aui-nav.aui-nav-breadcrumbs.nav-path
+  li: a href=datastore_path Home
+  - for a, b in breadcrumb(@meta.path)
+    li: a href=datastore_path(a) = b
+  li.aui-nav-selected = @meta.name

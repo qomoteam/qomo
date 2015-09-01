@@ -6,9 +6,15 @@ class DatastoreController < ApplicationController
       render 'not_found'
       return
     end
-    @files = current_user.datastore.list path
+
     gon.path = @path
-    render 'directory'
+    if @meta.directory?
+      @files = current_user.datastore.list path
+    else
+      @content = current_user.datastore.read path
+    end
+
+    render "datastore/viewer/#{@meta.kind}"
   end
 
 
