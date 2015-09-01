@@ -19,9 +19,10 @@ table.aui.aui-table-sortable.tbl-files
       th Size
       th Kind
       th Date Modified
+      th Operations
 
     - for file in @files
-      tr
+      tr data-path=file.path
         td
         td
           a href=datastore_path(file.path) = file.name
@@ -31,4 +32,7 @@ table.aui.aui-table-sortable.tbl-files
           - else
             = file.size
         td = file.kind
-        td = file.mtime
+        td = file.mtime.to_s :db
+        td
+          button.aui-button.aui-button-compact.btn-trash
+            .aui-icon.aui-icon-small.aui-iconfont-delete

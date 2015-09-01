@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action:'show'
     patch 'mkdir'
+    delete 'trash'
   end
 
 
@@ -23,4 +24,5 @@ Rails.application.routes.draw do
     root 'home#index'
     get 'dashboard', to: 'home#index'
   end
+
 end

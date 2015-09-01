@@ -25,6 +25,10 @@ class Datastore
     FileUtils.mkdir_p @home
   end
 
+  def trash!(dirpath)
+    FileUtils.rmtree apath(dirpath)
+  end
+
   def apath(*p)
     File.join @home, p
   end
