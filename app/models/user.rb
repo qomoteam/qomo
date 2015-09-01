@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   after_create :setup_new
 
   def datastore
-    Datastore.new self.id, Config.nfs
+    Datastore.new self.id, Config.dir_users
   end
 
   def full_name

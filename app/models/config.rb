@@ -7,4 +7,9 @@ class Config < Settingslogic
     File.exist?(rfile) ? File.read(rfile).strip : 'SNAPSHOT'
   end
 
+
+  def self.dir_users
+    File.join nfs, 'users'
+  end
+
 end

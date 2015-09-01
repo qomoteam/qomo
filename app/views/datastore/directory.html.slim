@@ -16,11 +16,18 @@ table.aui.aui-table-sortable.tbl-files
       th
       th.aui-table-column-issue-key File Name
       th Size
+      th Kind
       th Date Modified
 
     - for file in @files
       tr
         td
-        td = file.name
-        td = file.size
+        td
+          a href=datastore_path(file.path) = file.name
+        td
+          - if file.directory?
+            | --
+          - else
+            = file.size
+        td = file.kind
         td = file.mtime

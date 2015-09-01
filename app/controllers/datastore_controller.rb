@@ -3,7 +3,7 @@ class DatastoreController < ApplicationController
     @path = params[:path] || ''
     @files = current_user.datastore.list(@path)
     gon.pwd = @path
-    render 'dir'
+    render 'directory'
   end
 
   def mkdir

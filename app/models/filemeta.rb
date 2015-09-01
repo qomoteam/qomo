@@ -1,7 +1,14 @@
 class Filemeta
 
-  def initialize(path)
+  attr_reader :path, :size, :mtime, :atime, :ctime, :kind
+
+  def initialize(path:, size:, mtime:, atime:, ctime:, kind:)
     @path = path
+    @size = size
+    @mtime = mtime
+    @ctime = ctime
+    @atime = atime
+    @kind = kind
   end
 
   def name
@@ -12,20 +19,8 @@ class Filemeta
     File.extname @path
   end
 
-  def size
-    File.size @path
-  end
-
-  def mtime
-    File.mtime @path
-  end
-
-  def atime
-    File.atime @path
-  end
-
-  def ctime
-    File.ctime @path
+  def directory?
+    kind == :directory
   end
 
 end
