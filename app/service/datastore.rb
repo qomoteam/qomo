@@ -7,13 +7,13 @@ class Datastore
     @home = File.join @dir_users, uid
   end
 
+  def get(path)
+    filemeta apath(path)
+  end
+
   def list(path)
     Dir.glob(File.join @home, path, '*').map do |e|
-      Filemeta.new path: rpath(e), size: File.size(e),
-                   mtime: File.mtime(e),
-                   atime: File.atime(e),
-                   ctime: File.ctime(e),
-                   kind: File.directory?(e) ? :directory : :file
+      filemeta e
     end
   end
 
@@ -39,6 +39,15 @@ class Datastore
 
   def directory?
 
+  end
+
+  def filemeta(abs_path)
+    Filemeta.new path: rpath(abs_path),
+                 size: File.size(abs_path),
+                 mtime: File.mtime(abs_path),
+                 atime: File.atime(abs_path),
+                 ctime: File.ctime(abs_path),
+                 kind: File.directory?(abs_path) ? :directory : :file
   end
 
 end

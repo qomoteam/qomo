@@ -3,7 +3,7 @@ Datastore =
     window.location.reload()
 
   mkdir: (dirname) ->
-    dirpath = "#{gon.pwd}/#{dirname}"
+    dirpath = "#{gon.path}/#{dirname}"
     $.ajax Routes.datastore_mkdir(),
       method: 'PATCH'
       data:

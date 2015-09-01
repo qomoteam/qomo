@@ -1,8 +1,9 @@
 class DatastoreController < ApplicationController
   def show
-    @pwd = params[:path] || ''
-    @files = current_user.datastore.list(@pwd)
-    gon.pwd = @pwd
+    path = params[:path] || ''
+    @meta = current_user.datastore.get path
+    @files = current_user.datastore.list path
+    gon.path = @path
     render 'directory'
   end
 
