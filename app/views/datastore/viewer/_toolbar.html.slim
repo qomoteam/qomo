@@ -10,7 +10,15 @@
             button.aui-button.btn-mkdir Make Directory
 
         .aui-buttons
-          button.aui-button.btn-go Go to...
           a.aui-button href=datastore_path(parent_dir(@meta.path))
             .aui-icon.aui-icon-small.aui-iconfont-up
-        button.aui-button A
+          button.aui-button.btn-go Go to...
+
+        - if @meta.path != ''
+          .aui-buttons
+            button.aui-button.btn-rename Rename
+
+        .aui-buttons
+          button.aui-button Copy
+          button.aui-button Cut
+          button.aui-button Paste

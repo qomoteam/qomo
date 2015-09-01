@@ -24,5 +24,6 @@ table.aui.aui-table-sortable.tbl-files
         td = file.mtime.to_s :db
         td
           a.aui-button.aui-button-compact href=datastore_download_path(file.path) Download
+          button.aui-button.aui-button-compact.btn-rename Rename
           button.aui-button.aui-button-compact.btn-trash
             .aui-icon.aui-icon-small.aui-iconfont-delete

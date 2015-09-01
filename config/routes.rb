@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
     patch 'mkdir'
+    patch 'mv'
     delete 'trash'
 
     match 'upload/-/(*dir)', action: 'upload', as: 'upload', constraints: { :path => /.*/ }, via: [:get, :post]

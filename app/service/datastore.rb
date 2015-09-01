@@ -30,6 +30,10 @@ class Datastore
     FileUtils.rmtree apath(dirpath)
   end
 
+  def mv!(src, dest)
+    FileUtils.move apath(src), apath(dest)
+  end
+
   def save!(path, file)
     FileUtils.copy file, apath(path)
   end

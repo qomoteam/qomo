@@ -7,7 +7,8 @@ class DatastoreController < ApplicationController
       return
     end
 
-    gon.path = @path
+    gon.path = path
+
     if @meta.directory?
       @files = current_user.datastore.list path
     else
@@ -19,13 +20,19 @@ class DatastoreController < ApplicationController
 
 
   def mkdir
-    current_user.datastore.mkdir! params[:dirpath]
+    current_user.datastore.mkdir! params[:path]
     render json: {success: true}
   end
 
 
   def trash
     current_user.datastore.trash! params[:path]
+    render json: {success: true}
+  end
+
+
+  def mv
+    current_user.datastore.mv! params[:src], params[:dest]
     render json: {success: true}
   end
 

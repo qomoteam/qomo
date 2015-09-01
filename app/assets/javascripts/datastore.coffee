@@ -4,16 +4,32 @@ Datastore =
   reload_files: ->
     window.location.reload()
 
-  mkdir: (dirname) ->
-    dirpath = "#{gon.path}/#{dirname}"
+  mkdir: (path) ->
     $.ajax Routes.datastore_mkdir(),
       method: 'PATCH'
       data:
-        dirpath: dirpath
+        path: path
       success: ->
         Datastore.reload_files()
       error: ->
         console.debug 'a'
+
+  mv: (src, dest, goto=false) ->
+    $.ajax Routes.datastore_mv(),
+      method: 'PATCH'
+      data:
+        src: src
+        dest: dest
+      success: ->
+        if goto
+          Datastore.goto(dest)
+        else
+          Datastore.reload_files()
+      error: ->
+        console.debug 'a'
+
+  rename: (path, new_name, goto=false) ->
+    Datastore.mv path, "#{path.split('/')[0..-2].join('/')}/#{new_name}", goto
 
   trash: (path) ->
     $.ajax Routes.datastore_trash(),
@@ -28,15 +44,28 @@ Datastore =
   goto: (path) ->
     window.location.href = Routes.datastore path: path
 
+path_of_row = (el) ->
+  $(el).parents('tr').data('path')
+
 $ ->
+
   $('.btn-mkdir').click ->
     dirname = prompt('Directory name:')
-    Datastore.mkdir(dirname) if dirname
+    Datastore.mkdir("#{gon.path}/#{dirname}") if dirname
 
   $('.btn-trash').click ->
-    Datastore.trash $(this).parents('tr').data('path')
+    Datastore.trash path_of_row(this)
 
   $('.btn-go').click ->
-    path = prompt('Go to directory:')
+    path = prompt('Go to:')
     Datastore.goto path if path
 
+  $('.btn-rename').click ->
+    name = prompt('New name:')
+    src = path_of_row(this)
+    goto = false
+    unless src
+      src = gon.path
+      goto = true
+
+    Datastore.rename src, name, goto if name
