@@ -1,6 +1,19 @@
-.aui-page-panel
-  .aui-page-panel-inner
-    .aui-page-panel-nav
-      a href=new_tool_path Create Tool
-    .aui-page-panel-content
+.page-panel
+  .aui-tabs.horizontal-tabs
+    ul.tabs-menu
+      li.menu-item.active-tab
+        a href='#tabs-my-tools'
+          strong My Tools
+      li.menu-item
+        a href='#tabs-all-tools'
+          strong Explore
 
+    #tabs-my-tools.tabs-pane.active-pane
+      a.aui-button href=new_tool_path Create Tool
+      ul
+        - for tool in @tools
+          li: a href=edit_tool_path(tool.id) = tool.name
+
+    #tabs-all-tools.tabs-pane
+      - for tool in @tools
+        a href=edit_tool_path(tool.id) = tool.name
