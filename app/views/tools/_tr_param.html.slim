@@ -1,0 +1,12 @@
+tr
+  td: input type='text' name='tool[params][][name]' value=param['name']
+  td: input type='text' name='tool[params][][label]' value=param['label']
+  td
+    select name='tool[params][][type]'
+      = options_for_select \
+          %w[input string bool select path output].map {|e| [e.humanize, e]}, \
+          selected: param['type']
+  td
+    = render partial: "tools/param_#{param['type']}", locals: {param: param}
+  td
+    a.aui-icon.aui-icon-small.aui-iconfont-remove-label.remove-tr href='javascript:;'

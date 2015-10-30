@@ -24,9 +24,26 @@
     fieldset.section
       legend Runtime Information
       .field-group
-        = f.label :params, 'Parameters'
+        = f.label :params
+          | Parameters
+          br
+          a.aui-icon.aui-icon-small.aui-iconfont-add.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params'
         .long-field
-          a.aui-icon.aui-icon-small.aui-iconfont-add href='javascript:;'
+          table.params
+            tr
+              th width='131px'
+                | Param Name
+              th width='131px'
+                | Param Label
+              th width='70px'
+                | Type
+              th
+                | Values/Def.
+              th width='50px'
+            = empty_row @tool.params, 5
+            - if @tool.params
+              - for param in @tool.params
+                = render 'tools/tr_param', param: param
 
       .field-group
         = f.label :command
@@ -38,3 +55,13 @@
     .buttons-container
       .buttons
         = f.submit class: 'button submit'
+
+script#tpl_tr_param type='text/html'
+  = render partial: 'tools/tr_param', locals: {param: {'type' => 'string'}}
+
+script#tpl_tr_option type='text/html'
+  = render partial: 'tools/param_select_option', locals: {option: {}}
+
+- for type in %w[input string bool select path output]
+  script id="tpl_param_#{type}" type='text/html'
+    = render partial: "tools/param_#{type}", locals: {param: {'type' => type}}
