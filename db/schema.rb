@@ -7,7 +7,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
     t.uuid :owner_id, index: true
     t.integer :category_id, index: true
     t.text :command
-    t.text :params
+    t.json :params
     t.text :usage
 
     t.integer :status, default: 0
