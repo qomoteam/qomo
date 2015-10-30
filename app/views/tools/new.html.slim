@@ -14,7 +14,7 @@
 
       .field-group
         = f.label :category
-        = f.text_field :name, placeholder: 'category', class: 'text long-field'
+        = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
 
       .field-group
         = f.label :usage

@@ -4,6 +4,7 @@ class ToolsController < ApplicationController
 
   def new
     @tool = Tool.new
+    @categories = Category.all
   end
 
 end

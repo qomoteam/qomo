@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'home#index'
     get 'dashboard', to: 'home#index'
+    resources :categories
   end
 
 end
