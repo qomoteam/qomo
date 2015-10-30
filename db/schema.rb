@@ -1,5 +1,36 @@
 ActiveRecord::Schema.define(version: 20141221052429) do
   enable_extension 'uuid-ossp'
+
+  create_table :tools, id: :uuid do |t|
+    t.string :name, null: false
+    t.string :contributors
+    t.uuid :owner_id, index: true
+    t.integer :category_id, index: true
+    t.text :command
+    t.text :params
+    t.text :usage
+
+    t.integer :status, default: 0
+
+    t.string :dirname
+
+    t.timestamps
+  end
+
+  add_index :tools, [:name], unique: true
+
+  create_table :categories do |t|
+    t.string :name
+    t.integer :parent_id, :null => true, :index => true
+    t.integer :lft, :null => false, :index => true
+    t.integer :rgt, :null => false, :index => true
+
+    # optional fields
+    t.integer :depth, :null => false, :default => 0
+    t.integer :children_count, :null => false, :default => 0
+  end
+
+
   create_table :pipelines, id: :uuid do |t|
     t.string :pid
     t.string :title

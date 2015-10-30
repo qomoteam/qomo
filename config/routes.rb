@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
   resource :workspace
 
-  resources :pipelines, :filemetas
+  resources :tools, :pipelines, :filemetas
 
   namespace :users do
     resource :profile, :setting

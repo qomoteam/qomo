@@ -1,0 +1,11 @@
+defaults: &defaults
+  nfs: /mapr/qomo.cbb/qomo_<%= Rails.env%>
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

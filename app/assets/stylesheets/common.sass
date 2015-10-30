@@ -1,11 +1,20 @@
 /*
- *= require aui
+ *= require aui/css/aui
+ *= require aui/css/aui-experimental
  */
 *:focus
   outline: none !important
 
 body
   min-width: 1100px
+
+.monospace
+  font-family: monospace
+
+.page-panel
+  width: 1100px
+  margin: 15px auto
+  padding: 0 15px
 
 #header
   float: none
@@ -20,3 +29,14 @@ body
     font-size: 10px
     height: 40px
     line-height: 50px
+
+fieldset.section
+  legend
+    display: block
+    margin: 0 0 5px 0
+    padding: 0
+    color: black
+    font-size: 1.2em
+    font-weight: bold
+    width: 400px
+    text-align: left
