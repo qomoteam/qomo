@@ -6,6 +6,7 @@
 
 #= require workspaces
 #= require datastore
+#= require tools
 #= require_self
 
 

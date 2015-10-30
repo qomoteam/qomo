@@ -1,0 +1,27 @@
+' Multiple:
+input type='checkbox' name='tool[params][][multiple]' checked=param['multiple']
+
+a.edit-options href='javascript:;' Edit Options
+
+.options.ui.popup.bottom.center.transition
+  table.ui.table.compact.segment
+    thead
+      tr
+        th Label
+        th Value
+        th Selected
+        th
+    tbody
+      - if param.include? 'options'
+        - for option in param['options']
+          = render partial: 'admin/tools/tr_param_select_option', locals: {option: option}
+
+      - else
+          tr.empty
+            td colspan=4 Empty
+    tfoot
+      tr
+        td
+          button.ui.button.teal.tiny.add-tr data-tpl='#tpl_tr_option' Add
+        td colspan=3
+          button.ui.button.teal.tiny.ok OK
