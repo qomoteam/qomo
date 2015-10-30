@@ -1,0 +1,40 @@
+.page-panel
+  h2 Create Tool
+  = form_for @tool, html: {class: 'aui'} do |f|
+    fieldset.section
+      legend Basic Information
+      .field-group
+        = f.label :name
+        = f.text_field :name, placeholder: 'Tool name', class: 'text long-field'
+
+      .field-group
+        = f.label :contributors
+        = f.text_field :contributors, placeholder: 'Contributors', class: 'text long-field'
+        .description Multiple contributors may be seperated by semicolon
+
+      .field-group
+        = f.label :category
+        = f.text_field :name, placeholder: 'category', class: 'text long-field'
+
+      .field-group
+        = f.label :usage
+        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea long-field', rows: '10'
+
+
+    fieldset.section
+      legend Runtime Information
+      .field-group
+        = f.label :params, 'Parameters'
+        .long-field
+          a.aui-icon.aui-icon-small.aui-iconfont-add href='javascript:;'
+
+      .field-group
+        = f.label :command
+        = f.text_area :command, spellcheck: 'false', class: 'monospace textarea long-field', placeholder: 'command line', rows: '3'
+
+    fieldset.section
+      legend Attachments
+
+    .buttons-container
+      .buttons
+        = f.submit class: 'button submit'

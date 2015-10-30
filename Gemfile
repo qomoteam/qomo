@@ -20,6 +20,8 @@ gem 'settingslogic'
 gem 'devise', '3.5.2'
 gem 'ledermann-rails-settings'
 
+gem 'awesome_nested_set'
+
 gem 'dvm'
 gem 'vam'
 

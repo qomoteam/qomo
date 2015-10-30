@@ -9,7 +9,7 @@
 
 /vendor/assets/components
 
-/config/settings.yml
+/config/config.yml
 /config/database.yml
 /config/secrets.yml
 /config/puma.rb
