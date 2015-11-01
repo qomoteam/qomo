@@ -14,7 +14,7 @@ a.edit-options href='javascript:;' Edit Options
     tbody
       - if param.include? 'options'
         - for option in param['options']
-          = render partial: 'admin/tools/tr_param_select_option', locals: {option: option}
+          = render partial: 'tools/param_select_option', locals: {option: option}
 
       - else
           tr.empty

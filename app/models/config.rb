@@ -12,4 +12,8 @@ class Config < Settingslogic
     File.join nfs, 'users'
   end
 
+  def self.dir_tools
+    File.join nfs, 'tools'
+  end
+
 end
