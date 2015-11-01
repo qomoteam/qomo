@@ -1,14 +1,27 @@
-.aui-tabs.horizontal-tabs role="application"
-  ul.tabs-menu role="tablist"
-    li.menu-item.active-tab role="presentation"
-      a#aui-uid-0-1440054977661 aria-selected="true" href="#tabs-example-first" role="tab"
+.aui-tabs.horizontal-tabs
+  ul.tabs-menu
+    li.menu-item.active-tab
+      a href="#tools-selector"
         strong Tools
-    li.menu-item role="presentation"
-      a#aui-uid-1-1440054977661 aria-selected="false" href="#tabs-example-second" role="tab"
+    li.menu-item
+      a href="#tabs-example-second"
         strong Files
-  #tabs-example-first.tabs-pane.active-pane aria-hidden="false" role="tabpanel"
-    h2 This is Tab 1
-    p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  #tabs-example-second.tabs-pane aria-hidden="true" role="tabpanel"
+
+  #tools-selector.tabs-pane.active-pane
+    input.search type='text'
+    - for c in Category.roots
+      ul
+        li
+          h5
+            i.fa.fa-folder-open
+            = c.name
+          ul
+            - for tool in c.tools
+              li
+                a.tool-link data-tid=tool.id href='#' = tool.name
+                - unless tool.usage.blank?
+                  a.tool-help data-tid=tool.id data-title=tool.name href='#' ?
+
+  #tabs-example-second.tabs-pane
     h2 This is Tab 2
     p Lorem ipsum dolor sit amet, consectetur adipiscing elit.

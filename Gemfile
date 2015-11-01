@@ -21,6 +21,8 @@ gem 'devise', '3.5.2'
 gem 'ledermann-rails-settings'
 
 gem 'awesome_nested_set'
+gem 'font-awesome-sass'
+gem 'bourbon'
 
 gem 'dvm'
 gem 'vam'

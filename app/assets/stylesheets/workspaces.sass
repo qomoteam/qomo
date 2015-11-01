@@ -1,3 +1,10 @@
+@import bourbon
+
+._jsPlumb_drag_select *
+  @include user-select(none)
+
+$toolbox-padding: 3px 15px
+
 #canvas-toolbar
   margin: 0 20px
   height: 30px
@@ -9,5 +16,133 @@
     margin-top: 3px
     height: 24px
     line-height: 10px
+
 #canvas
   border-bottom: 1px solid #cccccc
+  width: 100%
+  height: 100%
+  position: absolute
+  background: url(data:image/gif;base64,R0lGODlhFAAUAIAAAMDAwP///yH5BAEAAAEALAAAAAAUABQAAAImhI+pwe3vAJxQ0hssnnq/7jVgmJGfGaGiyoyh68GbjNGXTeEcGxQAOw==)
+
+  .toolbox
+    position: absolute
+    color: #222
+    cursor: pointer
+    min-width: 200px
+    background-color: #eeeeef
+    border: 1px solid #346789
+    @include border-top-radius(5px)
+    @include border-bottom-radius(5px)
+    @include border-left-radius(5px)
+    @include border-right-radius(5px)
+    .titlebar
+      padding: $toolbox-padding
+      border-bottom: 1px solid #223133
+      background: #00B5AD
+      font-size: 1.1em
+      .title
+        float: left
+        font-weight: bold
+      .close-toolbox
+        float: right
+        font-size: 1em
+        margin-top: 2px
+        color: #555555
+        &:hover
+          color: #222222
+    table.params
+      font-size: 0.9em
+      margin: 5px 20px 5px 10px
+      tr.param
+        line-height: 28px
+        label
+          margin-right: 12px
+        input[type=text]
+          @include box-sizing(border-box)
+          padding-left: 8px
+          width: 100%
+          height: 25px
+        input[type=checkbox]
+          vertical-align: middle
+        .chosen-single
+          border-radius: 0
+
+.center
+  .pipeline-title
+    display: inline-block
+    margin-left: 20px
+    color: #555555
+  .buttons
+    float: right
+
+#tools-selector
+  padding: 0
+  .tool-link
+    text-decoration: none
+  .tool-help
+    font-size: 0.8em
+    margin-left: 0.4em
+    text-decoration: none
+
+  & > ul
+    list-style: none
+    padding-left: 0
+    margin-top: 0
+    margin-bottom: 0
+    & > li
+      &:first-of-type
+        margin-top: 0
+      &:last-of-type
+        h5
+          border-top: 1px solid #CCC
+          border-bottom-width: 1px !important
+      & > ul
+        list-style: disc
+        margin: 0
+        & > li
+          margin: 2px 0
+          font-size: 0.9em
+
+    h5
+      cursor: pointer
+      padding: 3px 10px
+      margin: 0 0 0 0
+      background-color: #f1f1f1
+      border-top: 1px solid #CCCCCC
+      border-bottom: 1px solid #CCCCCC
+      font-size: 0.9em
+      @include user-select(none)
+
+      i
+        width: 12px
+        margin-right: 12px
+
+    li.panel
+      border-radius: 0
+      margin-bottom: 0
+      border-top: none
+
+
+.job-summary
+  .refresh
+    padding-left: 5px
+    font-size: 0.8em
+  table.job
+    margin-bottom: 10px
+    .status
+      &.SUCCESS
+        color: green
+      &.FAILED
+        color: darkred
+
+.help-content
+  font-size: 0.9rem
+  h1
+    font-size: 1.2rem
+    margin-top: 0
+    margin-bottom: 4px
+  p
+    margin: 5px 0
+
+.tree
+  margin-top: 1em
