@@ -3,6 +3,10 @@ defaults: &defaults
   admin:
     username: xingjian
     email: xuxingjian@big.ac.cn
+  tools:
+    bundle:
+      - https://github.com/qomoteam/kakscalc-qomo.git
+
 
 development:
   <<: *defaults

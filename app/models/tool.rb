@@ -6,4 +6,93 @@ class Tool < ActiveRecord::Base
 
   belongs_to :owner, class_name: 'User'
   belongs_to :category
+
+
+  def dirpath
+    File.join Config.dir_tools, self.dirname
+  end
+
+
+  def self.from_dir(tooldir)
+    tools_def = Hash.from_xml File.read(File.join(tooldir, 'tools.xml'))
+
+    tools = tools_def['tools']
+    if tools.has_key? 'tool'
+      tools = tools['tool']
+    end
+
+    tools = [tools] unless tools.is_a? Array
+    result = []
+    tools.each do |t|
+      if t.is_a? Array
+        t = t[1]
+      end
+
+      tool = Tool.new
+      unless t.has_key? 'id'
+        puts "ATTR id required for this tool: #{tooldir}"
+        next
+      end
+
+      tool.name = t['name']
+      tool.contributors = t['contributors']
+      tool.command = t['command'].strip
+
+      tool.category = Category.find_or_create_by name: t['category']
+      tool.usage = File.read(File.join tooldir, "#{t['id']}.md")
+
+      tool.dirname = File.basename tooldir
+
+      tool.owner = User.find_by_username Config.admin.username
+
+      params = []
+
+      for k, v in t['params']
+        v = [v] unless v.is_a? Array
+        for tv in v
+          param = {}
+          param['type'] = k
+          param['name'] = tv['name']
+          param['label'] = tv['label']
+          param['value'] = tv['value']
+
+          if %w{input output}.include? k
+            param['local'] = tv['local'] == 'true'
+          end
+
+
+          if k == 'select'
+            param['options'] = tv['option']
+
+            for o in param['options']
+              if o['selected'] == 'true'
+                o['selected'] = true
+              else
+                o['selected'] = false
+              end
+            end
+
+            if tv['multiple'] and tv['multiple'] == 'true'
+              param['multiple'] = true
+              param['separator'] = tv['separator'] || ''
+            else
+              param['multiple'] = false
+            end
+          end
+
+          params << param
+        end
+      end
+
+      tool.params = params
+
+      tool.active!
+
+      result << tool
+    end
+
+    result
+
+  end
+
 end

@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
 
 
   create_table :users, id: :uuid do |t|
+    t.string :username
     t.string :first_name
     t.string :last_name
     t.string :title
