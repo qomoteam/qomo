@@ -36,6 +36,9 @@ Rails.application.routes.draw do
     collection do
       get :my
     end
+    member do
+      get :export
+    end
   end
 
   resources :filemetas

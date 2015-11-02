@@ -5,6 +5,7 @@ class PipelinesController < ApplicationController
     @pipelines = Pipeline.all
   end
 
+
   def my
     @pipelines = Pipeline.belongs_to_user current_user
     if params[:inline]
@@ -26,6 +27,13 @@ class PipelinesController < ApplicationController
         format.json { render json: @pipeline }
       end
     end
+  end
+
+
+  def export
+    @pipeline = Pipeline.find params['id']
+    send_data @pipeline.to_json(except: [:owner_id, :public]),
+        filename: "#{@pipeline.accession}.qomo-pipeline"
   end
 
 

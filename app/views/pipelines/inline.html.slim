@@ -10,5 +10,5 @@ table
       tr
         td
           a href=pipeline_path(pipeline) = pipeline.title
-        td = p.updated_at.to_s :db
+        td = pipeline.updated_at.to_s :db
         td = render 'pipelines/operations', pipeline: pipeline
