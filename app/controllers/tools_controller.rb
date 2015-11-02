@@ -44,4 +44,15 @@ class ToolsController < ApplicationController
   end
 
 
+  def boxes
+    @boxes = params['boxes'].map do |e|
+      bid = e['id'] || SecureRandom.uuid
+      tool = Tool.find e['tid']
+      {id: bid, tool: tool}
+    end
+
+    render 'boxes', layout: nil
+  end
+
+
 end

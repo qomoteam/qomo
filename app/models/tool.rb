@@ -8,6 +8,31 @@ class Tool < ActiveRecord::Base
   belongs_to :category
 
 
+  def inputs
+    self.params.select {|k| k['type'].downcase == 'input'}
+  end
+
+
+  def output
+    (self.params.select {|k| k['type'].downcase == 'output'})[0]
+  end
+
+
+  def io
+    inputs << output
+  end
+
+
+  def normal_params
+    self.params.reject {|k| %w(input output tmp).include? k['type'].downcase }
+  end
+
+
+  def dirpath_tmp
+    File.join(Settings.home, "tmp-#{self.dirname}")
+  end
+
+
   def dirpath
     File.join Config.dir_tools, self.dirname
   end

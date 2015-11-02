@@ -1,8 +1,46 @@
 #= require js-routes
 #= require jquery
 #= require jquery-ujs
+#= require artDialog
 #= require patch
 #= require aui
+
+class GUID
+  s4: ->
+    Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1)
+
+  create: () ->
+    "#{@s4()}#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}#{@s4()}#{@s4()}"
+
+
+window.App =
+  scopes: {}
+
+  goto: (url) ->
+    Turbolinks.visit(url)
+
+  open: (url) ->
+    window.open(url)
+
+  getSelectedRowIds: ($table)->
+    row_ids = []
+    $table.find('tr td:first-of-type input[type=checkbox]:checked').each ->
+      row_ids.push $(this).parents('tr').data 'row-id'
+    return row_ids
+
+  setSelectValues: (select, values)->
+    values = [] unless values
+    $(select).val(values).trigger('change')
+#    $(select).find('option').each ->
+#      console.debug this.value in values
+#      $(this).prop('selected', this.value in values)
+
+  guid: ->
+    new GUID().create()
+
+  token: ->
+    $('meta[name=csrf-token]').attr('content')
+
 
 $(document).on 'click', '.add-tr', ->
   sel_target = $(this).data 'target'

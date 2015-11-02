@@ -64,8 +64,13 @@ $toolbox-padding: 3px 15px
           height: 25px
         input[type=checkbox]
           vertical-align: middle
-        .chosen-single
-          border-radius: 0
+        .select2-container
+          width: 138px
+          .select2-choices
+            @include box-sizing(border-box)
+          .select2-search-choice
+            margin-top: 4px
+            font-size: 0.9em !important
 
 .center
   .pipeline-title

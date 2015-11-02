@@ -18,7 +18,12 @@ Rails.application.routes.draw do
 
   resource :workspace
 
-  resources :tools, :pipelines, :filemetas
+  resources :tools do
+    collection do
+      post :boxes
+    end
+  end
+  resources :pipelines, :filemetas
 
   namespace :users do
     resource :profile, :setting
