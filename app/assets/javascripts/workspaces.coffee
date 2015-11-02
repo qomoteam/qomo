@@ -325,6 +325,10 @@ remove_toolbox = ($box)->
   connections = cached_connections()
   for connection, i in connections
     continue unless connection
+    if bid == connection.sourceId
+      console.debug connection
+      $("\##{connection.targetId}").find("input[name=#{connection.targetParamName}]").val('').prop 'disabled', false
+
     if bid in [connection.sourceId, connection.targetId]
       connections.splice i, 1
   save_cached_connections(connections)
