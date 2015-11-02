@@ -33,14 +33,14 @@ cached_connections = ->
 
 load = (pid)->
   set_pid(pid)
-  $.get "/pipelines/#{pid}.json", (data)->
+  $.get Routes.pipeline(pid, {format: 'json'}), (data)->
     localStorage.boxes = data.boxes
     localStorage.connections = data.connections
     restore_workspace()
 
 
 merge = (pid)->
-  $.get "/pipelines/#{pid}.json", (data)->
+  $.get Routes.pipeline(pid, {format: 'json'}), (data)->
     boxes = cached_boxes()
 
     new_boxes = JSON.parse(data.boxes)
@@ -71,6 +71,9 @@ clean_workspace = ->
 
 
 restore_workspace = ->
+  if get_pid()
+    $.get Routes.pipeline(get_pid(), {simple: true, format: 'json'}), (pipeline) ->
+      $('.pipeline-meta-title').html("#{pipeline.accession}: <strong>#{pipeline.title}</strong> (#{pipeline.updated_at})")
   boxes = cached_boxes()
 
   add_toolboxes boxes, ->

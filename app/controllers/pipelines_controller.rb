@@ -18,7 +18,11 @@ class PipelinesController < ApplicationController
     @pipeline = Pipeline.find params['id']
     respond_to do |format|
       format.html
-      format.json { render json: @pipeline }
+      if params[:simple]
+        format.json { render json: {accession: @pipeline.accession, title: @pipeline.title, updated_at: @pipeline.updated_at.to_s(:db)} }
+      else
+        format.json { render json: @pipeline }
+      end
     end
   end
 
