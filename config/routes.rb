@@ -25,6 +25,9 @@ Rails.application.routes.draw do
     collection do
       post :boxes
     end
+    member do
+      get :help
+    end
   end
   resources :pipelines do
     collection do

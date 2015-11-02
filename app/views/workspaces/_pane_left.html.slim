@@ -20,7 +20,7 @@
               li
                 a.tool-link data-tid=tool.id href='#' = tool.name
                 - unless tool.usage.blank?
-                  a.tool-help data-tid=tool.id data-title=tool.name href='#' ?
+                  a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
 
   #tabs-example-second.tabs-pane
     h2 This is Tab 2

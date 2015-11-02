@@ -54,5 +54,16 @@ class ToolsController < ApplicationController
     render 'boxes', layout: nil
   end
 
+  
+  def show
+    @tool = Tool.find params['id']
+  end
+
+
+  def help
+    @tool = Tool.find params['id']
+    render layout: nil
+  end
+
 
 end
