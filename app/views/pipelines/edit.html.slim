@@ -1,0 +1,15 @@
+= form_for @pipeline, html: {id: 'form-pipeline', class: 'aui'} do |f|
+  = f.hidden_field :boxes
+  = f.hidden_field :connections
+
+  .field-group
+    = f.label :title
+    = f.text_field :title, class: 'text long-field'
+
+  .field-group
+    = f.label :contributors
+    = f.text_field :contributors, class: 'text long-field'
+
+  .field-group
+    = f.label :desc
+    = f.text_area :desc, class: 'textarea long-field', rows: '5'

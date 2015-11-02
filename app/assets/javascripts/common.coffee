@@ -2,6 +2,7 @@
 #= require jquery
 #= require jquery-ujs
 #= require artDialog
+#= require jquery-form
 #= require patch
 #= require aui
 

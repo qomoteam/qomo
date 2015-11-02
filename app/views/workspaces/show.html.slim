@@ -6,3 +6,8 @@
 
 .ui-layout-east.pane
   = render 'workspaces/pane_right'
+
+- if @action
+  javascript:
+    _action = "#{@action}"
+    _pid = "#{@pid}"

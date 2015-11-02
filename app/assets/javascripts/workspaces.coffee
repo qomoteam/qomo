@@ -163,7 +163,7 @@ add_toolboxes = (boxes, hook)->
       $(boxes_html).each ->
         box = cached_boxes()[this.id]
         init_box this, box.id, box.position
-    hook()
+      hook()
 
 
 
@@ -346,14 +346,15 @@ within 'workspaces', 'show', ->
 
   init_cache()
 
-  $('.center .save').click ->
+  # Save the pipeline in workspace
+  $('.save').click ->
     if get_pid() != null
-      $.get "/pipelines/#{get_pid()}/edit", (data)->
+      $.get Routes.edit_pipeline(get_pid()), (data)->
         $form =$(data)
         populate_pform $form
-        $form.ajaxSubmit()
+        $form.ajaxSubmit dataType: 'json'
     else
-      $.get this.href, (data)->
+      $.get Routes.new_pipeline(), (data)->
         dia = dialog
           title: 'Save pipeline'
           content: data
@@ -362,7 +363,8 @@ within 'workspaces', 'show', ->
           ok: ->
             $form = $('#form-pipeline')
             populate_pform $form
-            $form.ajaxSubmit()
+            $form.ajaxSubmit success: (pid) ->
+              set_pid(pid)
             return true
           cancelValue: 'Cancel'
           cancel: ->
@@ -372,7 +374,7 @@ within 'workspaces', 'show', ->
     return false
 
 
-  $('.center .clean').click clean_workspace
+  $('.reset').click clean_workspace
 
 
   # Click the tool category bar in left sidebar
@@ -466,7 +468,8 @@ within 'workspaces', 'show', ->
       return false
 
 
-    $('a.run').click ->
+    # Submit current pipeline to job engine
+    $('#canvas-toolbar .run').click ->
       $.post this.href,
         boxes: localStorage.boxes
         connections: localStorage.connections
@@ -477,3 +480,13 @@ within 'workspaces', 'show', ->
         else
           alert("Pipeline has an error: #{data.content}")
       false
+
+    $('#canvas-toolbar .load').click ->
+      $.get Routes.my_pipelines(inline: true), (data) ->
+        dia = dialog
+          content: data
+          title: 'Load Pipeline'
+          width: 800
+        dia.show()
+
+

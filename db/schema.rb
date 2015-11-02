@@ -32,15 +32,19 @@ ActiveRecord::Schema.define(version: 20141221052429) do
 
 
   create_table :pipelines, id: :uuid do |t|
-    t.string :pid
+    t.string :accession
     t.string :title
-    t.string :contributor
+    t.string :contributors
     t.text :desc
+
+    t.uuid :owner_id
 
     t.text :boxes
     t.text :connections
 
     t.text :params
+
+
 
     t.boolean :public, default: false
     t.timestamps

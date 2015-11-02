@@ -16,14 +16,23 @@ Rails.application.routes.draw do
   end
 
 
-  resource :workspace
+  resource :workspace do
+    get 'load/:id', to: :load, as: :load
+    get 'merge/:id', to: :merge, as: :merge
+  end
 
   resources :tools do
     collection do
       post :boxes
     end
   end
-  resources :pipelines, :filemetas
+  resources :pipelines do
+    collection do
+      get :my
+    end
+  end
+
+  resources :filemetas
 
   namespace :users do
     resource :profile, :setting
