@@ -1,0 +1,21 @@
+- for box in @boxes
+  .toolbox id=box[:id] data-tid=box[:tool].id
+    .titlebar
+      .title = box[:tool].name
+      .close-toolbox
+        i.fa.fa-times
+      .clearfix
+
+    table.params
+      - for input in box[:tool].inputs
+        tr.input.param data-paramname=input['name']
+          td: label = input['label']
+          td: input.value.input type='text' name=input['name'] value=input['value']
+
+      - for param in box[:tool].normal_params
+        = render partial: 'box_param', locals: {param: param}
+
+      - if box[:tool].output
+        tr.output.param  data-paramname=box[:tool].output['name']
+          td: label = box[:tool].output['label']
+          td: input.value.output type='text' name=box[:tool].output['name'] value=box[:tool].output['value']

@@ -5,6 +5,7 @@
 
 @import font-awesome-sprockets
 @import font-awesome
+@import bourbon
 
 *:focus
   outline: none !important
@@ -28,6 +29,9 @@ tr.empty td
   float: none
   .aui-nav a.active
     background-color: #3572b0
+
+.clearfix
+  @include clearfix
 
 #logo
   margin-right: 2em
