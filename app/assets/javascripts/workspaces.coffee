@@ -1,4 +1,5 @@
 #= require jsPlumb
+#= require jstree
 
 window.plumb = {}
 
@@ -255,9 +256,9 @@ init_box = (box_html, bid, position)->
                 stripes: true
               data:
                 url: (node) ->
-                  '/datastore/index.json'
+                  Routes.datastore_filetree()
                 data: (node) ->
-                  'dir' : node.id
+                  'dir' : if node.id == '#' then '' else node.id
           ).on 'changed.jstree', (je, e) ->
             $(document.getElementById("content:#{did}")).find('.path').val e.selected.join(' ')
 

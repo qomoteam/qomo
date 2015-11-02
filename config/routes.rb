@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     patch 'mv'
     delete 'trash'
 
+    get :filetree
+
     match 'upload/-/(*dir)', action: 'upload', as: 'upload', constraints: { :path => /.*/ }, via: [:get, :post]
     get 'download/-/(*path)', action: 'download', as: 'download', constraints: { :path => /.*/ }
   end
@@ -29,6 +31,7 @@ Rails.application.routes.draw do
       get :help
     end
   end
+
   resources :pipelines do
     collection do
       get :my

@@ -16,6 +16,22 @@ class DatastoreController < ApplicationController
     end
 
     render "datastore/viewer/#{@meta.kind}"
+
+  end
+
+  def filetree
+    @dir = params['dir'] || ''
+    @files = current_user.datastore.list @dir
+
+    files_tree = @files.collect do |e|
+      {
+          text: e.name,
+          id: e.path,
+          children: e.directory?,
+          icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o'
+      }
+    end
+    render json: files_tree
   end
 
 
