@@ -1,2 +1,48 @@
-h1 Pipelines#index
-p Find me in app/views/pipelines/index.html.slim
+.page-panel
+  .aui-tabs.horizontal-tabs
+    ul.tabs-menu
+      li.menu-item.active-tab
+        a href='#tabs-my-pipelines'
+          strong My Pipelines
+      li.menu-item
+        a href='#tabs-all-pipelines'
+          strong Explore
+
+    #tabs-my-pipelines.tabs-pane.active-pane
+      table.aui
+        thead
+          tr
+            th Accession
+            th Title
+            th Created At
+            th Updated At
+            th Operations
+        tbody
+          - for pipeline in @private_pipelines
+            tr
+              td = pipeline.accession
+              td = pipeline.title
+              td = pipeline.created_at.to_s :db
+              td = pipeline.updated_at.to_s :db
+              td = render 'pipelines/operations', pipeline: pipeline
+
+    #tabs-all-pipelines.tabs-pane
+      table.aui
+        thead
+          tr
+            th Accession
+            th Title
+            th Owner
+            th Created At
+            th Updated At
+            th Operations
+        tbody
+          - for pipeline in @private_pipelines
+            tr
+              td = pipeline.accession
+              td = pipeline.title
+              td = pipeline.owner.full_name
+              td = pipeline.created_at.to_s :db
+              td = pipeline.updated_at.to_s :db
+              td = render 'pipelines/operations', pipeline: pipeline
+

@@ -6,12 +6,9 @@ table
       th Operations
   tbody
     = empty_row @pipelines, 3
-    - for p in @pipelines
+    - for pipeline in @pipelines
       tr
         td
-          a href=pipeline_path(p) = p.title
+          a href=pipeline_path(pipeline) = pipeline.title
         td = p.updated_at.to_s :db
-        td
-          .aui-buttons
-            a.aui-button.load href=load_workspace_path(p) Load
-            a.aui-button.merge href=merge_workspace_path(p) Merge
+        td = render 'pipelines/operations', pipeline: pipeline

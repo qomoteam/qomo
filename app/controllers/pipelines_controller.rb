@@ -1,6 +1,8 @@
 class PipelinesController < ApplicationController
 
   def index
+    @private_pipelines = Pipeline.belongs_to_user current_user
+    @pipelines = Pipeline.all
   end
 
   def my
