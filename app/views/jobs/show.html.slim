@@ -1,0 +1,30 @@
+.page-panel
+  h2 Job ##{@job.id}
+  .meta
+    ' Created At: #{@job.created_at.to_s :db}
+    ' Updated At: #{@job.updated_at.to_s :db}
+
+  - for unit in @job.units
+    table.aui.job-units
+      tr
+        td rowspan='2' width='80px'
+          strong Order:
+        td rowspan='2' = unit.idx + 1
+        td width='80px'
+          strong Tool Name:
+        td = unit.tool.name
+        td width='80px'
+          strong Status:
+        td = unit.status
+      tr
+        td: strong Started At:
+        td = unit.started_at.to_s :db
+        td: strong Ended At:
+        td = unit.ended_at.to_s :db
+      tr
+        td: strong Params:
+        td colspan='5' = unit.params
+      tr
+        td: strong Log:
+        td colspan='5'
+          pre = unit.log

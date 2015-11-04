@@ -1,14 +1,9 @@
 class Job < ActiveRecord::Base
 
-  enum status: {
-           UNKNOWN: 0,
-           READY: 1,
-           RUNNING: 2,
-           SUCCESS: 3,
-           FAIL: 4,
-           SUSPEND: 5
-       }
+  include Statusaware
 
   belongs_to :user
+
+  has_many :units, -> { order idx: :asc }, class_name: 'JobUnit'
 
 end

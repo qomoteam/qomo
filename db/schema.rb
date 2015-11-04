@@ -51,10 +51,28 @@ ActiveRecord::Schema.define(version: 20141221052429) do
 
   create_table :jobs, id: :uuid do |t|
     t.uuid :user_id
-    t.json :units
     t.text :log
+    t.integer :status
     t.timestamps
   end
+
+  create_table :job_units, id: :uuid do |t|
+    t.uuid :job_id
+    t.uuid :tool_id
+    t.string :command
+    t.string :wd
+    t.string :env
+    t.json :params
+
+    t.integer :status
+    t.datetime :started_at
+    t.datetime :ended_at
+    t.text :log
+
+    t.integer :idx
+    t.timestamps
+  end
+
 
   create_table :users, id: :uuid do |t|
     t.string :username

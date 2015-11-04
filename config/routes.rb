@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'jobs/index'
+
+  get 'jobs/show'
+
   devise_for :users
 
   root 'workspaces#show'
@@ -41,6 +45,8 @@ Rails.application.routes.draw do
       get :export
     end
   end
+
+  resources :jobs
 
   resources :filemetas
 

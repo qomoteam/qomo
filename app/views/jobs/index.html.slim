@@ -1,0 +1,19 @@
+.page-panel
+  h1 Jobs History
+
+  table.aui.def
+    thead
+      tr
+        th Job ID
+        th Status
+        th Created At
+        th Updated At
+
+    tbody
+      - for job in @jobs
+        tr
+          td
+            a href=job_path(job) = job.id
+          td = job.status
+          td = job.created_at.to_s :db
+          td = job.updated_at.to_s :db

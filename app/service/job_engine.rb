@@ -8,6 +8,7 @@ class JobEngine
     @datastore = datastore
   end
 
+
   def submit(boxes, conns)
     #Job id
     job_id = SecureRandom.uuid
@@ -104,7 +105,7 @@ class JobEngine
         command.gsub! /\#{#{ka}}/, va.to_s
       end
 
-      units[k] = {id: k, tool_id: tool.id, command: command, wd: tool.dirpath, env: env, status: 0, started_at: '', ended_at: '', log: ''}
+      units[k] = {tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
     end
 
     ordere_units = dg.topsort_iterator.to_a
@@ -112,19 +113,24 @@ class JobEngine
     if ordere_units.length == 0
       ordere_units = units.values
     else
-      ordere_units = ordere_units.collect {|e| units[e]}
+      ordere_units = ordere_units.collect do |e|
+        u = units[e]
+        u['id'] = SecureRandom.uuid
+        u
+      end
+    end
+
+    ordere_units.each_with_index do |u, idx|
+      ju = JobUnit.new u
+      ju.job_id = job_id
+      ju.idx = idx
+      ju.save
     end
 
     job = Job.new id: job_id,
-                  user_id: @user_id,
-                  units: ordere_units
-    _submit(job)
-  end
-
-
-  def _submit(job)
+                  user_id: @user_id
     job.save
-    RMQ.publish 'jobs', job
+    RMQ.publish 'jobs', {id: job_id, units: ordere_units}
   end
 
 
