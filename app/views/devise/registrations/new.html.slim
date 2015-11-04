@@ -10,6 +10,10 @@
               = devise_error_messages!
 
           .field-group.top-label
+            = f.label :username
+            = f.email_field :username, autofocus: true, class: 'text long-field'
+
+          .field-group.top-label
             = f.label :email
             = f.email_field :email, autofocus: true, class: 'text long-field'
 

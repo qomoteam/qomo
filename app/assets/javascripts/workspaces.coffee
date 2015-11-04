@@ -44,8 +44,8 @@ merge = (pid)->
   $.get Routes.pipeline(pid, {format: 'json'}), (data)->
     boxes = cached_boxes()
 
-    new_boxes = JSON.parse(data.boxes)
-    new_connections = JSON.parse(data.connections)
+    new_boxes = data.boxes
+    new_connections = data.connections
 
     for i of new_boxes
       new_box = new_boxes[i]

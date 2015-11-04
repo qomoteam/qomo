@@ -6,8 +6,8 @@
 
         = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
           .field-group.top-label
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: 'text long-field'
+            = f.label :login
+            = f.text_field :login, autofocus: true, class: 'text long-field', placeholder: 'Username or Email'
 
           .field-group.top-label
             = f.label :password

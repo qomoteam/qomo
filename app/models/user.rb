@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   rolify
 
   # Include default devise modules. Others available are:
@@ -7,6 +8,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   after_create :setup_new
+
+  attr_accessor :login
 
   def datastore
     Datastore.new self.id, Config.dir_users
@@ -20,6 +23,16 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    login = conditions.delete(:login)
+    if login
+      where(conditions).where(['lower(username) = :value OR lower(email) = :value', { :value => login.downcase }]).first
+    else
+      where(conditions).first
+    end
   end
 
   private
