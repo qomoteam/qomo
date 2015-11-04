@@ -55,7 +55,7 @@ class Tool < ActiveRecord::Base
 
       tool = Tool.new
       unless t.has_key? 'id'
-        puts "ATTR id required for this tool: #{tooldir}"
+        puts "ATTR `id` required for this tool: #{tooldir}"
         next
       end
 

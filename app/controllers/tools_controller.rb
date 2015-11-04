@@ -47,7 +47,7 @@ class ToolsController < ApplicationController
   def boxes
     @boxes = params['boxes'].map do |e|
       bid = e['id'] || SecureRandom.uuid
-      tool = Tool.find e['tid']
+      tool = Tool.find e['tool_id']
       {id: bid, tool: tool}
     end
 

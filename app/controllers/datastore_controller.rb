@@ -1,4 +1,5 @@
 class DatastoreController < ApplicationController
+  
   def show
     path = params[:path] || ''
     @meta = current_user.datastore.get path

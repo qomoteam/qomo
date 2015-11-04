@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  rolify
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,6 +11,12 @@ class User < ActiveRecord::Base
   def datastore
     Datastore.new self.id, Config.dir_users
   end
+
+
+  def job_engine
+    JobEngine.new self.id, datastore
+  end
+
 
   def full_name
     "#{self.first_name} #{self.last_name}"

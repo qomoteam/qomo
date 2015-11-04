@@ -18,11 +18,16 @@ gem 'gon'
 gem 'js-routes'
 gem 'settingslogic'
 gem 'devise', '3.5.2'
+gem 'rolify'
 gem 'ledermann-rails-settings'
 
 gem 'awesome_nested_set'
 gem 'font-awesome-sass'
 gem 'bourbon'
+
+gem 'jimson'
+gem 'rgl'
+gem 'bunny'
 
 gem 'dvm'
 gem 'vam'
@@ -32,4 +37,5 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
+  gem 'pry-rails'
 end

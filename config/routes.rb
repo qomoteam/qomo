@@ -19,8 +19,9 @@ Rails.application.routes.draw do
 
 
   resource :workspace do
-    get 'load/:id', to: :load, as: :load
-    get 'merge/:id', to: :merge, as: :merge
+    get 'load/:id', action: :load, as: :load
+    get 'merge/:id', action: :merge, as: :merge
+    post :run
   end
 
   resources :tools do

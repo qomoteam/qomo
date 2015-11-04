@@ -31,5 +31,10 @@ class WorkspacesController < ApplicationController
   end
 
 
+  def run
+    current_user.job_engine.submit JSON.parse(params[:boxes]), JSON.parse(params[:connections])
+    render json: {success: true}
+  end
+
 
 end

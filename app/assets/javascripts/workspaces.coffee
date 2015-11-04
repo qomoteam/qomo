@@ -102,10 +102,10 @@ save_cached_connections = (connections)->
   localStorage.connections = JSON.stringify connections
 
 
-cache_box = (bid, tid)->
+cache_box = (bid, tool_id)->
   box = {}
   box.id = bid
-  box.tid = tid
+  box.tool_id = tool_id
   box.values = {}
   boxes = cached_boxes()
   boxes[bid] = box
@@ -172,7 +172,7 @@ add_toolboxes = (boxes, hook)->
 
 
 
-add_toolbox = (bid, tid, position, box)->
+add_toolbox = (bid, tool_id, position, box)->
   init_box box, bid, position
 
 
@@ -453,11 +453,11 @@ within 'workspaces', 'show', ->
 
     #Click link in left sidebar tool list
     $('#tools-selector a.tool-link').click ->
-      tid = this.dataset.tid
+      tool_id = this.dataset.tid
       $.ajax
         method: 'POST'
         url: Routes.boxes_tools()
-        data: JSON.stringify(boxes: [{tid: tid}])
+        data: JSON.stringify(boxes: [{tool_id: tool_id}])
         contentType: 'application/json; charset=utf-8'
         success: (box) ->
           cache_box $(box).attr('id'), $(box).data('tid')
@@ -478,17 +478,21 @@ within 'workspaces', 'show', ->
 
     # Submit current pipeline to job engine
     $('#canvas-toolbar .run').click ->
-      $.post this.href,
-        boxes: localStorage.boxes
-        connections: localStorage.connections
-      , (data) ->
-        if data.success
+      $.ajax
+        url: Routes.run_workspace()
+        type: 'POST'
+        data:
+          boxes: localStorage.boxes
+          connections: localStorage.connections
+        success: (data) ->
           alert("Pipeline submitted.")
-          updateJobStatus()
-        else
+          #updateJobStatus()
+        error: (data) ->
           alert("Pipeline has an error: #{data.content}")
       false
 
+
+    # Load or merge one's own pipeline into current workspace
     $('#canvas-toolbar .load').click ->
       $.get Routes.my_pipelines(inline: true), (data) ->
         dia = dialog

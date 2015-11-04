@@ -39,17 +39,22 @@ ActiveRecord::Schema.define(version: 20141221052429) do
 
     t.uuid :owner_id
 
-    t.text :boxes
-    t.text :connections
+    t.json :boxes
+    t.json :connections
 
-    t.text :params
-
-
+    t.json :params
 
     t.boolean :public, default: false
     t.timestamps
   end
 
+
+  create_table :jobs, id: :uuid do |t|
+    t.uuid :user_id
+    t.json :units
+    t.text :log
+    t.timestamps
+  end
 
   create_table :users, id: :uuid do |t|
     t.string :username
@@ -100,5 +105,21 @@ ActiveRecord::Schema.define(version: 20141221052429) do
   add_index :users, :reset_password_token, unique: true
   add_index :users, :confirmation_token,   unique: true
   #add_index :users, :unlock_token,         unique: true
+
+  create_table(:roles) do |t|
+    t.string :name
+    t.references :resource, :polymorphic => true
+
+    t.timestamps
+  end
+
+  create_table(:users_roles, :id => false) do |t|
+    t.references :user
+    t.references :role
+  end
+
+  add_index(:roles, :name)
+  add_index(:roles, [ :name, :resource_type, :resource_id ])
+  add_index(:users_roles, [ :user_id, :role_id ])
 
 end
