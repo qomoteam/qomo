@@ -10,10 +10,11 @@ class JobEngine
 
 
   def submit(boxes, conns)
-    #Job id
     job_id = SecureRandom.uuid
+    job = Job.new id: job_id,
+                  user_id: @user_id
 
-    outdir = output_dir(job_id)
+    outdir = job.outdir
     output_prefix = @datastore.apath outdir
     @datastore.mkdir! outdir
 
@@ -127,15 +128,8 @@ class JobEngine
       ju.save
     end
 
-    job = Job.new id: job_id,
-                  user_id: @user_id
     job.save
     RMQ.publish 'jobs', {id: job_id, units: ordere_units}
-  end
-
-
-  def output_dir(job_id)
-    "job-#{job_id}"
   end
 
 end

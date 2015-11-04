@@ -1,17 +1,9 @@
-.aui-tabs.horizontal-tabs role="application"
-  ul.tabs-menu role="tablist"
-    li.menu-item.active-tab role="presentation"
-      a aria-selected="true" href="#tabs-example-first" role="tab"
-        strong Properties
-    li.menu-item role="presentation"
-      a aria-selected="false" href="#tabs-example-second" role="tab"
-        strong Jobs
-    li.menu-item role="presentation"
-      a aria-selected="false" href="#tabs-example-second" role="tab"
-        strong Notification
-  #tabs-example-first.tabs-pane.active-pane aria-hidden="false" role="tabpanel"
-    h2 This is Tab 1
-    p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  #tabs-example-second.tabs-pane aria-hidden="true" role="tabpanel"
-    h2 This is Tab 2
-    p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+.aui-tabs.horizontal-tabs
+  ul.tabs-menu
+    li.menu-item.active-tab
+      a aria-selected="true" href='#job-summary'
+        strong Job Summary
+
+  #job-summary.tabs-pane.active-pane
+    a.refresh href='javascript:;' REFRESH
+    .summary-content

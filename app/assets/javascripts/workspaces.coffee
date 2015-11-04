@@ -35,8 +35,8 @@ cached_connections = ->
 load = (pid)->
   set_pid(pid)
   $.get Routes.pipeline(pid, {format: 'json'}), (data)->
-    localStorage.boxes = data.boxes
-    localStorage.connections = data.connections
+    localStorage.boxes = JSON.stringify data.boxes
+    localStorage.connections = JSON.stringify data.connections
     restore_workspace()
 
 
@@ -350,7 +350,9 @@ within 'workspaces', 'show', ->
   window.onresize = ->
     $c.height($(window).height() - $c.offset().top)
   window.onresize()
-  $c.layout()
+  $c.layout
+    east:
+      size: 320
 
   init_cache()
 
@@ -401,13 +403,13 @@ within 'workspaces', 'show', ->
 
 
   updateJobStatus = ->
-    $('.jobs').load $('.jobs').data('url')
+    $('#job-summary .summary-content').load Routes.summary_jobs()
 
 
   updateJobStatus()
   setInterval updateJobStatus, 10000
 
-  $('.job-summary .refresh').click ->
+  $('#job-summary .refresh').click ->
     updateJobStatus()
     return false
 
@@ -486,7 +488,7 @@ within 'workspaces', 'show', ->
           connections: localStorage.connections
         success: (data) ->
           alert("Pipeline submitted.")
-          #updateJobStatus()
+          updateJobStatus()
         error: (data) ->
           alert("Pipeline has an error: #{data.content}")
       false

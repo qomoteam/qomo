@@ -3,7 +3,7 @@ module Statusaware
 
   included do
     enum status: {
-        UNKNOWN: 0,
+        WAITING: 0,
         READY: 1,
         RUNNING: 2,
         FAIL: 3,

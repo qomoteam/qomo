@@ -46,7 +46,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :jobs
+  resources :jobs do
+    collection do
+      get :summary
+    end
+  end
 
   resources :filemetas
 
