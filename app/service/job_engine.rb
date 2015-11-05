@@ -15,11 +15,11 @@ class JobEngine
                   user_id: @user_id
 
     outdir = job.outdir
-    output_prefix = @datastore.apath outdir
     @datastore.mkdir! outdir
 
     preset = {}
     preset['STREAMING_JAR'] = Config.dir_lib Config.lib.streaming
+    preset['QOMO_COMMON'] = Config.dir_lib Config.lib.common
     preset['HADOOP_BIN'] = Config.hadoop.bin
 
     env = {}
@@ -41,7 +41,7 @@ class JobEngine
               if va.blank?
                 boxes[k]['values'][ka] = File.join '.tmp', SecureRandom.uuid
               else
-                boxes[k]['values'][ka] = File.join output_prefix, va
+                boxes[k]['values'][ka] = File.join outdir, va
               end
             end
           end

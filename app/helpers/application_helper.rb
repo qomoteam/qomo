@@ -37,9 +37,8 @@ module ApplicationHelper
   end
 
 
-  def ptime(ts)
-    ts.nil? ? '' : ts.to_s(:db)
+  def ptime(ts, timezone)
+    ts.nil? ? '' : ts.in_time_zone(timezone).strftime('%F %T')
   end
-
 
 end

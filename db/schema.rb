@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
     t.string :title
     t.string :organization
     t.string :location
-    t.string :timezone
+    t.string :timezone, default: 'Beijing'
     t.string :homepage
 
     t.string :role, default: 'user'

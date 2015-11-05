@@ -16,7 +16,7 @@
           td
             a href=job_path(job) = job.id
           td = job.status
-          td = job.created_at.to_s :db
-          td = job.updated_at.to_s :db
+          td = ptime job.created_at, current_user.timezone
+          td = ptime job.updated_at, current_user.timezone
           td
             a href=job_path(job) data-method='DELETE' Delete

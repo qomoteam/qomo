@@ -7,7 +7,7 @@ defaults: &defaults
     bundle:
       - https://github.com/qomoteam/kakscalc-qomo.git
   lib:
-    streaming: hadoop-streaming-2.0.0-mr1-cdh4.3.0.jar
+    streaming: hadoop-streaming-2.7.0-mapr-1506.jar
     common: qomo-common-0.0.1-SNAPSHOT.jar
   hadoop:
     username: qomo

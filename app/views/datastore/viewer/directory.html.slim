@@ -1,29 +1,30 @@
-= render 'datastore/viewer/toolbar'
+.page-panel
+  = render 'datastore/viewer/toolbar'
 
-table.aui.aui-table-sortable.tbl-files
-  thead
-    tr
-      th
-      th.aui-table-column-issue-key File Name
-      th Size
-      th Kind
-      th Date Modified
-      th Operations
+  table.aui.aui-table-sortable.tbl-files
+    thead
+      tr
+        th
+        th.aui-table-column-issue-key File Name
+        th Size
+        th Kind
+        th Date Modified
+        th Operations
 
-    - for file in @files
-      tr data-path=file.path
-        td
-        td
-          a href=datastore_path(file.path) = file.name
-        td
-          - if file.directory?
-            | --
-          - else
-            = number_to_human_size(file.size, precision: 3)
-        td = file.kind
-        td = file.mtime.to_s :db
-        td
-          a.aui-button.aui-button-compact href=datastore_download_path(file.path) Download
-          button.aui-button.aui-button-compact.btn-rename Rename
-          button.aui-button.aui-button-compact.btn-trash
-            .aui-icon.aui-icon-small.aui-iconfont-delete
+      - for file in @files
+        tr data-path=file.path
+          td
+          td
+            a href=datastore_path(file.path) = file.name
+          td
+            - if file.directory?
+              | --
+            - else
+              = number_to_human_size(file.size, precision: 3)
+          td = file.kind
+          td = ptime file.mtime.to_s, current_user.timezone
+          td
+            a.aui-button.aui-button-compact href=datastore_download_path(file.path) Download
+            button.aui-button.aui-button-compact.btn-rename Rename
+            button.aui-button.aui-button-compact.btn-trash
+              .aui-icon.aui-icon-small.aui-iconfont-delete

@@ -29,6 +29,9 @@
             = f.label :homepage
             = f.text_field :homepage, autocomplete: 'off', class: 'text long-field'
 
+          .field-group.top-label
+            = f.label :timezone
+            = f.time_zone_select :timezone, nil, {}, {class: 'select long-field'}
 
           .buttons-container
             .buttons
