@@ -13,10 +13,10 @@ class DatastoreController < ApplicationController
     if @meta.directory?
       @files = current_user.datastore.list path
     else
-      @content = current_user.datastore.read path
+      @content = @meta.read
     end
 
-    render "datastore/viewer/#{@meta.kind}"
+    render "datastore/viewer/#{@meta.tpl}"
 
   end
 
