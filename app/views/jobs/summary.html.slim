@@ -7,14 +7,11 @@
     tr
       td colspan='2'
         a> href=datastore_path(job.outdir) [OUTPUT DIR]
-      td
-        span.status class=job.status
-          = job.status
+      td = status_label job.status
 
     - for unit in job.units
       tr
         td colspan='2'
           | #{unit.idx+1}. #{unit.tool.name}
         td width='60px'
-          span.status class=unit.status
-            = unit.status
+          = status_label unit.status

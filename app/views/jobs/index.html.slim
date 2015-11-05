@@ -15,7 +15,7 @@
         tr
           td
             a href=job_path(job) = job.id
-          td = job.status
+          td = status_label job.status
           td = ptime job.created_at, current_user.timezone
           td = ptime job.updated_at, current_user.timezone
           td

@@ -3,6 +3,7 @@
   .meta
     ' Created At: #{ptime @job.created_at, current_user.timezone}
     ' Updated At: #{ptime @job.updated_at, current_user.timezone}
+    = status_label @job.status
     a< href=datastore_path(@job.outdir) [OUTPUT DIR]
 
   - for unit in @job.units
@@ -16,7 +17,7 @@
         td = unit.tool.name
         td width='80px'
           strong Status:
-        td = unit.status
+        td = status_label unit.status
       tr
         td: strong Started At:
         td = ptime unit.started_at, current_user.timezone

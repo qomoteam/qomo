@@ -41,4 +41,19 @@ module ApplicationHelper
     ts.nil? ? '' : ts.in_time_zone(timezone).strftime('%F %T')
   end
 
+  def status_label(status)
+    clz = ''
+    case status
+      when 'SUCCESS'
+        clz = 'aui-lozenge aui-lozenge-success'
+      when 'FAIL'
+        clz = 'aui-lozenge aui-lozenge-error'
+      when 'RUNNING'
+        clz = 'aui-lozenge aui-lozenge-complete'
+      else
+        clz = 'aui-lozenge'
+    end
+    content_tag :span, status, class: clz, style: 'width: 66px'
+  end
+
 end
