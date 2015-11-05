@@ -1,13 +1,14 @@
 .page-panel
   h1 Jobs History
 
-  table.aui.def
+  table.aui
     thead
       tr
         th Job ID
         th Status
         th Created At
         th Updated At
+        th
 
     tbody
       - for job in @jobs
@@ -17,3 +18,5 @@
           td = job.status
           td = job.created_at.to_s :db
           td = job.updated_at.to_s :db
+          td
+            a href=job_path(job) data-method='DELETE' Delete

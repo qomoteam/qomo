@@ -14,4 +14,11 @@ class JobsController < ApplicationController
   def show
     @job = Job.find params[:id]
   end
+
+
+  def destroy
+    Job.delete params[:id]
+    redirect_to action: :index
+  end
+
 end
