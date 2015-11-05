@@ -36,4 +36,10 @@ module ApplicationHelper
     content_tag :tr, content_tag(:td, 'Empty', colspan: colspan), class: 'empty'
   end
 
+
+  def ptime(ts)
+    ts.nil? ? '' : ts.to_s(:db)
+  end
+
+
 end

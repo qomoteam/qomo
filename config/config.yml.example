@@ -11,7 +11,7 @@ defaults: &defaults
     common: qomo-common-0.0.1-SNAPSHOT.jar
   hadoop:
     username: qomo
-    bin: /opt/mapr/hadoop
+    bin: /opt/mapr/bin/hadoop
   rmq:
     host: h2
     user: qomo

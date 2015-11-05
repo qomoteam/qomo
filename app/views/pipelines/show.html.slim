@@ -1,0 +1,27 @@
+.page-panel
+  h3 Pipeline #{@pipeline.accession}: #{@pipeline.title}
+  = render 'pipelines/operations', {pipeline: @pipeline}
+
+  table.aui.def
+    tr
+      td Accession
+      td  = @pipeline.accession
+    tr
+      td Title
+      td  = @pipeline.title
+    tr
+      td Permalink
+      td
+        a href=pipeline_path(@pipeline) = pipeline_url @pipeline
+    tr
+      td Citation
+      td #{@pipeline.contributors} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at})
+    tr
+      td Created At
+      td = ptime @pipeline.created_at
+    tr
+      td Updated At
+      td = ptime @pipeline.updated_at
+    tr
+      td Describe
+      td = @pipeline.desc

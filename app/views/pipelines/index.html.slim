@@ -20,7 +20,8 @@
         tbody
           - for pipeline in @private_pipelines
             tr
-              td = pipeline.accession
+              td
+                a href=pipeline_path(pipeline) = pipeline.accession
               td = pipeline.title
               td = pipeline.created_at.to_s :db
               td = pipeline.updated_at.to_s :db

@@ -106,7 +106,7 @@ class JobEngine
         command.gsub! /\#{#{ka}}/, va.to_s
       end
 
-      units[k] = {tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
+      units[k] = {id: SecureRandom.uuid, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
     end
 
     ordere_units = dg.topsort_iterator.to_a
@@ -115,9 +115,7 @@ class JobEngine
       ordere_units = units.values
     else
       ordere_units = ordere_units.collect do |e|
-        u = units[e]
-        u['id'] = SecureRandom.uuid
-        u
+        units[e]
       end
     end
 

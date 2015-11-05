@@ -18,9 +18,18 @@
         td = unit.status
       tr
         td: strong Started At:
-        td = unit.started_at.to_s :db
+        td = ptime(unit.started_at)
         td: strong Ended At:
-        td = unit.ended_at.to_s :db
+        td = ptime(unit.ended_at)
+      - if current_user.has_role? :admin
+        tr
+          td: strong Command:
+          td colspan='5'
+            pre = unit.command
+        tr
+          td: strong Env:
+          td colspan='5'
+            pre = unit.env
       tr
         td: strong Params:
         td colspan='5' = unit.params
