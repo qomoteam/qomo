@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
 
   before_filter :reg_gon_attrs
 
+  before_filter :configure_permitted_parameters, if: :devise_controller?
+
   private
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation) }
+  end
 
   def reg_gon_attrs
     gon.controller = params[:controller]

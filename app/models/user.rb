@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+  has_many :jobs, -> {order created_at: :desc}
+
   def datastore
     Datastore.new self.id, Config.dir_users
   end
@@ -24,6 +26,7 @@ class User < ActiveRecord::Base
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
+
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

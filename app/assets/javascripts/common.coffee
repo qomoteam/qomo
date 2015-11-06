@@ -42,6 +42,11 @@ window.App =
   token: ->
     $('meta[name=csrf-token]').attr('content')
 
+$ ->
+  $('.logout').click ->
+    localStorage.clear()
+    true
+
 
 $(document).on 'click', '.add-tr', ->
   sel_target = $(this).data 'target'

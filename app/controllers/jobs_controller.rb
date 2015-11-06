@@ -1,12 +1,12 @@
 class JobsController < ApplicationController
 
   def index
-    @jobs = Job.order created_at: :desc
+    @jobs = current_user.jobs created_at: :desc
   end
 
 
   def summary
-    @jobs = Job.order(created_at: :desc).limit(5)
+    @jobs = current_user.jobs.order(created_at: :desc).limit(5)
     render layout: nil
   end
 
