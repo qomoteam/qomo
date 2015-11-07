@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
     t.string :env
     t.json :params
 
-    t.integer :status
+    t.integer :status, default: 0
     t.datetime :started_at
     t.datetime :ended_at
     t.text :log

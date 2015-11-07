@@ -3,8 +3,6 @@
 ._jsPlumb_drag_select *
   @include user-select(none)
 
-$toolbox-padding: 3px 15px
-
 #canvas-toolbar
   margin: 0 20px
   height: 30px
@@ -36,7 +34,8 @@ $toolbox-padding: 3px 15px
     @include border-left-radius(5px)
     @include border-right-radius(5px)
     .titlebar
-      padding: $toolbox-padding
+      height: 22px
+      padding: 0 5px
       border-bottom: 1px solid #223133
       background: #00B5AD
       font-size: 1.1em
@@ -46,7 +45,6 @@ $toolbox-padding: 3px 15px
       .close-toolbox
         float: right
         font-size: 1em
-        margin-top: 2px
         color: #555555
         &:hover
           color: #222222
@@ -57,7 +55,11 @@ $toolbox-padding: 3px 15px
       tr.param
         line-height: 28px
         label
+          line-height: 1em
+          display: inline-block
           margin-right: 12px
+          &:after
+            content: ":"
         input[type=text]
           @include box-sizing(border-box)
           padding-left: 8px

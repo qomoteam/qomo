@@ -111,8 +111,6 @@ class Tool < ActiveRecord::Base
 
       tool.params = params
 
-      tool.active!
-
       result << tool
     end
 

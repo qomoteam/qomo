@@ -201,8 +201,10 @@ init_box = (box_html, bid, position)->
       update_position bid, $box.position()
 
   divHeight = $box.outerHeight()
-  tdHeight = $box.find('td').outerHeight()
   titleHeight = $box.find('.titlebar').outerHeight()
+  tableMarginTop = parseInt($box.find('table.params').css('margin-top').replace("px", ""))
+
+  gy = titleHeight + tableMarginTop
 
   teps = {}
 
@@ -275,31 +277,36 @@ init_box = (box_html, bid, position)->
         save_cached_boxes(boxes)
 
     is_input = false
+    is_output = false
     if $param.hasClass 'input'
       is_input = true
+      is_output = false
     else if $param.hasClass 'output'
       is_input = false
-    else
-      continue
+      is_output = true
 
-    y = (titleHeight+tdHeight*i + 20) / divHeight
+    trHeight = $param.outerHeight()
 
-    color =  unless is_input then "#558822" else "#225588"
+    if is_input or is_output
+      y = (gy + trHeight/2 + (i+1)*2 ) / divHeight
+      color =  unless is_input then "#558822" else "#225588"
+      ep = plumb.addEndpoint bid,
+        endpoint: 'Rectangle'
+        anchor: [1, y, 1, 0]
+        paintStyle:
+          fillStyle: color
+          width: 15
+          height: 15
+        isSource: not is_input
+        isTarget: is_input
+        maxConnections: 50
 
-    ep = plumb.addEndpoint bid,
-      endpoint: 'Rectangle'
-      anchor: [1, y, 1, 0]
-      paintStyle:
-        fillStyle: color
-        width: 15
-        height: 15
-      isSource: not is_input
-      isTarget: is_input
-      maxConnections: 50
+      ep.paramName = $param.find('input').attr 'name'
 
-    ep.paramName = $param.find('input').attr 'name'
+      teps[$param.find('input').attr('name')] = ep
 
-    teps[$param.find('input').attr('name')] = ep
+    gy += trHeight
+    # END: for param, i
 
   eps[bid] = teps
 

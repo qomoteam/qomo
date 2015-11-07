@@ -5,7 +5,8 @@ defaults: &defaults
     email: xuxingjian@big.ac.cn
   tools:
     bundle:
-      - https://github.com/qomoteam/kakscalc-qomo.git
+      - https://github.com/qomoteam/qtool-kakscalc.git
+      - https://github.com/qomoteam/qtool-bowtie.git
   lib:
     streaming: hadoop-streaming-2.7.0-mapr-1506.jar
     common: qomo-common-0.0.1-SNAPSHOT.jar
