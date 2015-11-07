@@ -262,7 +262,8 @@ init_box = (box_html, bid, position)->
                 data: (node) ->
                   'dir' : if node.id == '#' then '' else node.id
           ).on 'changed.jstree', (je, e) ->
-            $(document.getElementById("content:#{did}")).find('.path').val e.selected.join(' ')
+            # Use comma to seqerate multiple inputs
+            $(document.getElementById("content:#{did}")).find('.path').val e.selected.join(',')
 
 
       $(this).change ->
