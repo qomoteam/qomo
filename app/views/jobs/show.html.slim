@@ -38,4 +38,7 @@
       tr
         td: strong Log:
         td colspan='5'
-          pre = unit.log
+          pre.aui-expander-content id="log-#{unit.id}"
+            = unit.log
+            a.aui-expander-trigger.aui-expander-reveal-text data-replace-text="Show less" aria-controls="log-#{unit.id}" data-replace-selector=".reveal-text-trigger-text"
+              span.reveal-text-trigger-text Show more
