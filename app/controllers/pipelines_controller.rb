@@ -17,6 +17,15 @@ class PipelinesController < ApplicationController
   end
 
 
+  def run
+    @pipeline = Pipeline.find params[:id]
+    values = JSON.parse params[:pipelinevalues]
+    jid = current_user.job_engine.submit @pipeline.merge_params(values), @pipeline.connections
+
+    redirect_to job_path(jid)
+  end
+
+
   def show
     @pipeline = Pipeline.find params['id']
     respond_to do |format|

@@ -128,6 +128,8 @@ class JobEngine
 
     job.save
     RMQ.publish 'jobs', {id: job_id, units: ordere_units}
+
+    job_id
   end
 
 end

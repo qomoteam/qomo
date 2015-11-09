@@ -28,9 +28,10 @@
 
 
   h5 Params to be set:
-  form.aui.top-label
+  = form_tag run_pipeline_path(@pipeline), class: 'aui top-label pipeline-runner'
+    = hidden_field_tag :pipelinevalues, ''
     - for p in @pipeline.params_ui
-      .field-group.top-label
+      .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
         label #{p['label']} (#{p['tool'].name})
         = render 'tools/param_setter', param: p['tool_param']
 

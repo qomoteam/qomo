@@ -10,6 +10,19 @@ class Pipeline < ActiveRecord::Base
   end
 
 
+  def merge_params(values)
+    boxes = self.boxes.dup
+    self.params.collect do |p|
+      self.boxes.each do |k, v|
+        if k == p['box_id']
+          boxes[k]['values'][p['name']] = values.select {|e| e['box_id'] == p['box_id'] and e['name'] == p['name']}[0]['value']
+        end
+      end
+    end
+    boxes
+  end
+
+
   def params_ui
     self.params.collect do |p|
       box = self.boxes[p['box_id']]
