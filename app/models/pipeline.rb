@@ -10,18 +10,31 @@ class Pipeline < ActiveRecord::Base
   end
 
 
-  def parametrize
-    params = []
-    self.boxes.values.each do |box|
-      tool = Tool.find(box['tool_id'])
-      box['values'].each do |k, v|
-        if v.start_with? '~'
-          puts tool.params.select {|e| e['name'] == k}[0]
-          params << {tool: tool, label: v[2..-2], param: (tool.params.select {|e| e['name'] == k}[0])}
+  def params_ui
+    self.params.collect do |p|
+      box = self.boxes[p['box_id']]
+      tool = Tool.find box['tool_id']
+      p['tool'] = tool
+      p['tool_param'] = tool.params.select {|e| e['name'] == p['name']}[0]
+      value = box['values'].select {|k, v| k == p['name']}[p['name']]
+
+      if p['tool_param']['options']
+        unless value.is_a? Array
+          value = [value]
         end
+        p['tool_param']['options'].collect do |e|
+          if value.include? e['value']
+            e['selected'] = true
+          else
+            e['selected'] = false
+          end
+        end
+      else
+        p['tool_param']['value'] = value
       end
+
+      p
     end
-    params
   end
 
 

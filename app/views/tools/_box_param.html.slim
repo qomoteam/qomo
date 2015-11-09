@@ -1,3 +1,3 @@
 tr.param data-paramname=param['name']
-  td: label = param['label']
+  td = render 'tools/param_label', param: param
   td = render 'tools/param_setter', param: param

@@ -22,6 +22,8 @@ init_cache = (forse=false)->
     localStorage.boxes = JSON.stringify {}
   if forse or not localStorage.connections
     localStorage.connections = JSON.stringify []
+  if forse or not localStorage.params
+    set_pipeline_params null
 
 
 cached_boxes = ->
@@ -37,6 +39,7 @@ load = (pid)->
   $.get Routes.pipeline(pid, {format: 'json'}), (data)->
     localStorage.boxes = JSON.stringify data.boxes
     localStorage.connections = JSON.stringify data.connections
+    set_pipeline_params data.params
     restore_workspace()
 
 
@@ -46,6 +49,7 @@ merge = (pid)->
 
     new_boxes = data.boxes
     new_connections = data.connections
+    set_pipeline_params data.params
 
     for i of new_boxes
       new_box = new_boxes[i]
@@ -74,7 +78,10 @@ clean_workspace = ->
 restore_workspace = ->
   if get_pid()
     $.get Routes.pipeline(get_pid(), {simple: true, format: 'json'}), (pipeline) ->
-      $('.pipeline-meta-title').html("#{pipeline.accession}: <strong>#{pipeline.title}</strong> (#{pipeline.updated_at})")
+      purl = Routes.pipeline(get_pid())
+      $('.pipeline-meta-title').html(
+        "#{pipeline.accession}: <a href='#{purl}'><strong>#{pipeline.title}</strong></a> (#{pipeline.updated_at})"
+      )
   boxes = cached_boxes()
 
   add_toolboxes boxes, ->
@@ -170,11 +177,27 @@ add_toolboxes = (boxes, hook)->
       hook()
 
 
-
-
 add_toolbox = (bid, tool_id, position, box)->
   init_box box, bid, position
 
+
+tpl_param_dialog = (label, pname) ->
+  "<h4>Paramiterize as Pipeline Param:</h4>" +
+    "<form class='aui'>" +
+    "<div class='field-group'>" +
+    "<label>#{label} =></label><input class='text medium-field paramiterize' value='#{pname}'></div></form>"
+
+add_pipeline_param = (paramName, pname, tool_id) ->
+  params = get_pipeline_params()
+  params.push {name: paramName, label: pname, box_id: tool_id}
+  set_pipeline_params params
+
+get_pipeline_params = ->
+  JSON.parse localStorage.params
+
+set_pipeline_params = (params) ->
+  params = params || []
+  localStorage.params = JSON.stringify params
 
 init_box = (box_html, bid, position)->
   $box = $(box_html)
@@ -199,6 +222,29 @@ init_box = (box_html, bid, position)->
   plumb.draggable $box,
     stop: ->
       update_position bid, $box.position()
+
+  $box.find('label.param-label').click ->
+    label = this.innerText
+    paramName = $(this).parents('tr').data('paramname')
+    plabel = ''
+    for p in get_pipeline_params()
+      if p['box_id'] == bid and p['name'] == paramName
+        plabel = p['label']
+
+    content = tpl_param_dialog(label, plabel)
+    dia = dialog
+      id: bid
+      title: "Param: #{label}"
+      content: content
+      width: 500
+      okValue: 'Save'
+      ok: ->
+        pname = $(document.getElementById("content:#{bid}")).find('.paramiterize').val()
+        add_pipeline_param(paramName, pname, bid)
+        return true
+      cancelValue: 'Cancel'
+      cancel: ->
+    dia.showModal()
 
   divHeight = $box.outerHeight()
   titleHeight = $box.find('.titlebar').outerHeight()
@@ -225,14 +271,12 @@ init_box = (box_html, bid, position)->
         this.checked = value
       else if $(this).is('select')
         App.setSelectValues this, value
-        $(this).trigger 'chosen:updated'
       else
         $(this).val value
 
       # Open a file select dialog when click input component
       if $(this).hasClass('input')
         App.bindFileSelector this
-
 
       $(this).change ->
         boxes = cached_boxes()
@@ -297,6 +341,12 @@ remove_toolbox = ($box)->
   boxes = cached_boxes()
   delete boxes[bid]
 
+  params = []
+  for p in get_pipeline_params()
+    if p['box_id'] != bid
+      params.push(p)
+  set_pipeline_params params
+
   save_cached_boxes(boxes)
 
   connections = cached_connections()
@@ -314,11 +364,13 @@ remove_toolbox = ($box)->
     plumb.deleteEndpoint ep
 
   $box.remove()
+  # END remove_toolbox($box)
 
 
 populate_pform = ($form)->
   $form.find('#pipeline_boxes').val localStorage.boxes
   $form.find('#pipeline_connections').val localStorage.connections
+  $form.find('#pipeline_params').val localStorage.params
 
 
 within 'workspaces', 'show', ->

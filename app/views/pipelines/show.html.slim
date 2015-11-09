@@ -26,12 +26,13 @@
       td Description
       td = @pipeline.desc
 
+
   h5 Params to be set:
-  form.aui
-    - for p in @pipeline.parametrize
-      .field-group
-        label  #{p[:label]} (#{p[:tool].name})
-        = render 'tools/param_setter', param: p[:param]
+  form.aui.top-label
+    - for p in @pipeline.params_ui
+      .field-group.top-label
+        label #{p['label']} (#{p['tool'].name})
+        = render 'tools/param_setter', param: p['tool_param']
 
     .aui-group
       = submit_tag 'Run', class: 'aui-button aui-button-primary'

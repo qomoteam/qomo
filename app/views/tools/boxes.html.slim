@@ -9,16 +9,13 @@
     table.params
       - for input in box[:tool].inputs
         tr.input.param data-paramname=input['name']
-          td: label = input['label']
-          td
-            = render 'tools/param_setter', param: input
+          td = render 'tools/param_label', param: input
+          td = render 'tools/param_setter', param: input
 
       - for param in box[:tool].normal_params
         = render partial: 'box_param', locals: {param: param}
 
       - if box[:tool].output
         tr.output.param  data-paramname=box[:tool].output['name']
-          td: label = box[:tool].output['label']
-          td
-            = render 'tools/param_setter', param: box[:tool].output
-
+          td = render 'tools/param_label', param: box[:tool].output
+          td = render 'tools/param_setter', param: box[:tool].output

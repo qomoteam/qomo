@@ -1,6 +1,7 @@
 = form_for @pipeline, html: {id: 'form-pipeline', class: 'aui'} do |f|
   = f.hidden_field :boxes
   = f.hidden_field :connections
+  = f.hidden_field :params
 
   .field-group
     = f.label :title
