@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'misc/contact'
+
   get 'jobs/index'
 
   get 'jobs/show'
@@ -29,6 +31,7 @@ Rails.application.routes.draw do
     post :run
   end
 
+
   resources :tools do
     collection do
       post :boxes
@@ -37,6 +40,7 @@ Rails.application.routes.draw do
       get :help
     end
   end
+
 
   resources :pipelines do
     collection do
@@ -48,6 +52,7 @@ Rails.application.routes.draw do
     end
   end
 
+
   resources :jobs do
     collection do
       get :summary
@@ -56,11 +61,14 @@ Rails.application.routes.draw do
 
   end
 
+
   resources :filemetas
+
 
   namespace :users do
     resource :profile, :setting
   end
+
 
   namespace :admin do
     root 'home#index'

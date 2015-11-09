@@ -9,7 +9,6 @@
             a.aui-button.clear-failed-jobs href=clear_jobs_path data-method='PUT' data-confirm='All failed jobs and their output dirs will be deleted, are you sure?'
               | Clear Failed Jobs
 
-
   table.aui
     thead
       tr
@@ -30,4 +29,5 @@
           td = ptime job.created_at, current_user.timezone
           td = ptime job.updated_at, current_user.timezone
           td
-            a href=job_path(job) data-method='DELETE' Delete
+            a> href=datastore_path(job.outdir) OUTPUT
+            a href=job_path(job) data-method='DELETE' data-confirm='Are you sure to delete this job?' Delete
