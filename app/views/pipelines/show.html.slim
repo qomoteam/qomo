@@ -15,13 +15,23 @@
         a href=pipeline_path(@pipeline) = pipeline_url @pipeline
     tr
       td Citation
-      td #{@pipeline.contributors} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at})
+      td #{@pipeline.contributors} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.timezone})
     tr
       td Created At
-      td = ptime @pipeline.created_at
+      td = ptime @pipeline.created_at, current_user.timezone
     tr
       td Updated At
-      td = ptime @pipeline.updated_at
+      td = ptime @pipeline.updated_at, current_user.timezone
     tr
-      td Describe
+      td Description
       td = @pipeline.desc
+
+  h5 Params to be set:
+  form.aui
+    - for p in @pipeline.parametrize
+      .field-group
+        label  #{p[:label]} (#{p[:tool].name})
+        = render 'tools/param_setter', param: p[:param]
+
+    .aui-group
+      = submit_tag 'Run', class: 'aui-button aui-button-primary'

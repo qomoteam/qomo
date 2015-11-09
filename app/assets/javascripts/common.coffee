@@ -13,6 +13,10 @@ class GUID
   create: () ->
     "#{@s4()}#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}-#{@s4()}#{@s4()}#{@s4()}"
 
+tpl_fileselector = "<form class='aui'>
+<input class='path text' value='' />
+  <div class='tree'></div>
+</form>"
 
 window.App =
   scopes: {}
@@ -41,6 +45,42 @@ window.App =
 
   token: ->
     $('meta[name=csrf-token]').attr('content')
+
+  bindFileSelector: (e)->
+    $e = $(e)
+    window.filetree = null
+    $e.click ->
+      did = App.guid()
+      dia = dialog
+        id: did
+        title: 'Select File'
+        content: tpl_fileselector
+        width: 700
+        okValue: 'OK'
+        ok: ->
+          value = $(document.getElementById("content:#{did}")).find('.path').val()
+          $e.val value
+          $e.trigger 'change'
+          return true
+        cancelValue: 'Cancel'
+        cancel: ->
+      $(document.getElementById("content:#{did}")).find('.path').val $e.val()
+      dia.showModal()
+
+      $(document.getElementById("content:#{did}")).find('.tree').jstree(
+        core:
+          animation: 0
+          themes:
+            stripes: true
+          data:
+            url: (node) ->
+              Routes.datastore_filetree()
+            data: (node) ->
+              'dir' : if node.id == '#' then '' else node.id
+      ).on 'changed.jstree', (je, e) ->
+        # Use comma to seqerate multiple inputs
+        $(document.getElementById("content:#{did}")).find('.path').val e.selected.join(',')
+
 
 $ ->
   $('.logout').click ->

@@ -231,39 +231,7 @@ init_box = (box_html, bid, position)->
 
       # Open a file select dialog when click input component
       if $(this).hasClass('input')
-        _this = $(this)
-        window.filetree = null
-        $(this).click ->
-          did = App.guid()
-          dia = dialog
-            id: did
-            title: 'Select File'
-            content: $('#tpl-filetree').html()
-            width: 700
-            okValue: 'OK'
-            ok: ->
-              value = $(document.getElementById("content:#{did}")).find('.path').val()
-              _this.val value
-              _this.trigger 'change'
-              return true
-            cancelValue: 'Cancel'
-            cancel: ->
-          $(document.getElementById("content:#{did}")).find('.path').val _this.val()
-          dia.showModal()
-
-          $(document.getElementById("content:#{did}")).find('.tree').jstree(
-            core:
-              animation: 0
-              themes:
-                stripes: true
-              data:
-                url: (node) ->
-                  Routes.datastore_filetree()
-                data: (node) ->
-                  'dir' : if node.id == '#' then '' else node.id
-          ).on 'changed.jstree', (je, e) ->
-            # Use comma to seqerate multiple inputs
-            $(document.getElementById("content:#{did}")).find('.path').val e.selected.join(',')
+        App.bindFileSelector this
 
 
       $(this).change ->
