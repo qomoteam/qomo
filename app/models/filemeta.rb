@@ -2,14 +2,14 @@ class Filemeta
 
   attr_reader :path, :size, :mtime, :atime, :ctime, :kind
 
-  def initialize(apath:, path:, size:, mtime:, atime:, ctime:, kind:)
-    @apath = apath
-    @path = path
-    @size = size
-    @mtime = mtime
-    @ctime = ctime
-    @atime = atime
-    @kind = kind
+  def initialize(opts={})
+    @apath = opts[:apath]
+    @path = opts[:path]
+    @size = opts[:size]
+    @mtime = opts[:mtime]
+    @ctime = opts[:ctime]
+    @atime = opts[:atime]
+    @kind = opts[:kind]
   end
 
   def name

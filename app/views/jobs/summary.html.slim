@@ -5,8 +5,9 @@
         a href=job_path(job)
           = job.accession
     tr
-      td colspan='2'
-        a> href=datastore_path(job.outdir) [OUTPUT DIR]
+      td
+        a> href=datastore_path(job.outdir) [OUTPUT]
+      td Progress: #{number_to_percentage job.progress*100, precision: 0}
       td = status_label job.status
 
     - for unit in job.units

@@ -13,8 +13,9 @@
   table.aui
     thead
       tr
-        th Job ID
+        th width='270px' Job ID
         th Status
+        td Progress
         th Created At
         th Updated At
         th
@@ -25,6 +26,7 @@
           td
             a href=job_path(job) = job.id
           td = status_label job.status
+          td #{number_to_percentage job.progress*100, precision: 0}
           td = ptime job.created_at, current_user.timezone
           td = ptime job.updated_at, current_user.timezone
           td

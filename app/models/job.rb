@@ -15,4 +15,9 @@ class Job < ActiveRecord::Base
     "QP-#{self.id}"
   end
 
+
+  def progress
+    self.units.success.count*1.0 / self.units.count
+  end
+
 end

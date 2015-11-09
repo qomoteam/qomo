@@ -4,7 +4,9 @@
     ' Created At: #{ptime @job.created_at, current_user.timezone}
     ' Updated At: #{ptime @job.updated_at, current_user.timezone}
     = status_label @job.status
-    a< href=datastore_path(@job.outdir) [OUTPUT DIR]
+    a<> href=datastore_path(@job.outdir) [OUTPUT DIR]
+
+    ' Progress: #{number_to_percentage @job.progress*100, precision: 0}
 
   - for unit in @job.units
     table.aui.job-units
@@ -18,6 +20,7 @@
         td width='80px'
           strong Status:
         td = status_label unit.status
+
       tr
         td: strong Started At:
         td = ptime unit.started_at, current_user.timezone

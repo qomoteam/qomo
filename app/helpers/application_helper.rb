@@ -42,6 +42,7 @@ module ApplicationHelper
   end
 
   def status_label(status)
+    status ||= :unknown
     clz = ''
     case status
       when 'success'
