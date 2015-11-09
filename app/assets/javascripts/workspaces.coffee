@@ -189,8 +189,23 @@ tpl_param_dialog = (label, pname) ->
 
 add_pipeline_param = (paramName, pname, tool_id) ->
   params = get_pipeline_params()
-  params.push {name: paramName, label: pname, box_id: tool_id}
+  if pname
+    e = {name: paramName, label: pname, box_id: tool_id}
+    added = false
+    # Avoid redudant pipeline params with same paramName
+    params = _.map params, (p) ->
+      if p['name'] == paramName
+        added = true
+        e
+      else
+        p
+    unless added
+      params.push {name: paramName, label: pname, box_id: tool_id}
+  else
+    params = _.reject params, (p) -> p['name'] == paramName
+
   set_pipeline_params params
+  # END add_pipeline_param(paramName, pname, tool_id)
 
 get_pipeline_params = ->
   JSON.parse localStorage.params
