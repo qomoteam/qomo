@@ -32,7 +32,7 @@
     = hidden_field_tag :pipelinevalues, ''
     - for p in @pipeline.params_ui
       .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
-        label #{p['label']} (#{p['tool'].name})
+        label #{p['label']} (#{p['tool'].name}: #{p['tool'].params.select {|e| e['name'] == p['name']}[0]['label']})
         = render 'tools/param_setter', param: p['tool_param']
 
     .aui-group
