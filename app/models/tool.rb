@@ -97,7 +97,7 @@ class Tool < ActiveRecord::Base
               end
             end
 
-            if tv['multiple'] and tv['multiple'] == 'true'
+            if tv['multiple'] and (tv['multiple'] == 'true' or tv['multiple'] == 'on')
               param['multiple'] = true
               param['separator'] = tv['separator'] || ''
             else
