@@ -44,16 +44,16 @@ module ApplicationHelper
   def status_label(status)
     clz = ''
     case status
-      when 'SUCCESS'
+      when 'success'
         clz = 'aui-lozenge aui-lozenge-success'
-      when 'FAIL'
+      when 'failed'
         clz = 'aui-lozenge aui-lozenge-error'
-      when 'RUNNING'
+      when 'running'
         clz = 'aui-lozenge aui-lozenge-complete'
       else
         clz = 'aui-lozenge'
     end
-    content_tag :span, status, class: clz, style: 'width: 66px'
+    content_tag :span, status.upcase, class: clz, style: 'width: 66px'
   end
 
 end

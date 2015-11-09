@@ -22,6 +22,10 @@ class Datastore
     FileUtils.mkdir_p apath(dirpath)
   end
 
+  def delete!(path)
+    FileUtils.rmtree apath(path)
+  end
+
   def create!
     FileUtils.mkdir_p @home
   end

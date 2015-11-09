@@ -1,6 +1,15 @@
 .page-panel
   h1 Jobs History
 
+  .aui-toolbar2 role='toolbar'
+    .aui-toolbar2-inner
+      .aui-toolbar2-group
+        .aui-toolbar2-primary
+          .aui-buttons
+            a.aui-button.clear-failed-jobs href=clear_jobs_path data-method='PUT' data-confirm='All failed jobs and their output dirs will be deleted, are you sure?'
+              | Clear Failed Jobs
+
+
   table.aui
     thead
       tr

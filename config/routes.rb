@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
-    get '/clear/-/(*path)', action: 'clear', as: :clear, constraints: { :path => /.*/ }
+    put '/clear/-/(*path)', action: 'clear', as: :clear, constraints: { :path => /.*/ }
     patch 'mkdir'
     patch 'mv'
     delete 'trash'
@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   resources :jobs do
     collection do
       get :summary
+      put :clear
     end
 
   end

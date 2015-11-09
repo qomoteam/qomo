@@ -21,4 +21,13 @@ class JobsController < ApplicationController
     redirect_to action: :index
   end
 
+
+  def clear
+    Job.failed.each do |j|
+      j.destroy
+      current_user.datastore.delete! "job-#{j.id}"
+    end
+    redirect_to jobs_path
+  end
+
 end

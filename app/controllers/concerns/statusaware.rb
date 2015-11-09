@@ -3,12 +3,12 @@ module Statusaware
 
   included do
     enum status: {
-        WAITING: 0,
-        READY: 1,
-        RUNNING: 2,
-        FAIL: 3,
-        SUCCESS: 4,
-        SUSPEND: 5
+        waiting: 0,
+        ready: 1,
+        running: 2,
+        failed: 3,
+        success: 4,
+        suspend: 5
     }
   end
 
