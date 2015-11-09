@@ -49,6 +49,10 @@ path_of_row = (el) ->
 
 $ ->
 
+  $('.clear-job-dirs').click ->
+    return true unless confirm('All empty job dirs will be deleted, are you sure?')
+
+
   $('.btn-mkdir').click ->
     dirname = prompt('Directory name:')
     Datastore.mkdir("#{gon.path}/#{dirname}") if dirname

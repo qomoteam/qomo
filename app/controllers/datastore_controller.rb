@@ -17,8 +17,21 @@ class DatastoreController < ApplicationController
     end
 
     render "datastore/viewer/#{@meta.tpl}"
-
   end
+
+
+  def clear
+    path = params[:path] || ''
+
+    current_user.datastore.list(path).each do |f|
+      if f.name.start_with?('job-') and f.directory? and current_user.datastore.list(f.path).size == 0
+        f.delete!
+      end
+    end
+
+    redirect_to datastore_path(path)
+  end
+
 
   def filetree
     @dir = params['dir'] || ''

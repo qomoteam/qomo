@@ -34,6 +34,11 @@ class Filemeta
   end
 
 
+  def delete!
+    Dir.delete @apath
+  end
+
+
   def tpl
     if @kind == :rdout
       return :text
