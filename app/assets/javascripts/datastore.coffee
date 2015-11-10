@@ -47,13 +47,12 @@ Datastore =
 path_of_row = (el) ->
   $(el).parents('tr').data('path')
 
-$ ->
+within 'datastore', 'show', ->
   $('.shared-toggle').change ->
     toggle = this
     toggle.busy = true
     isChecked = toggle.checked
     path = $(this).parents('tr').data 'path'
-    console.debug path
     url = if isChecked then Routes.datastore_share(path: path) else Routes.datastore_unshare(path: path)
     $.ajax
       url: url

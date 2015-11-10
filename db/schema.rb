@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
 
     t.json :params
 
-    t.boolean :public, default: false
+    t.boolean :shared, default: false
     t.timestamps
   end
 

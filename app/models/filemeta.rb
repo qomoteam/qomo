@@ -10,16 +10,12 @@ class Filemeta
     @ctime = opts[:ctime]
     @atime = opts[:atime]
     @kind = opts[:kind]
-  end
-
-
-  def owner_id
-    @apath.split(@path)[0].split('/')[-1]
+    @owner_id = opts[:owner_id]
   end
 
 
   def record
-    Filerecord.find_by(path: @path, owner_id: owner_id) || Filerecord.new(path: @path, owner_id: owner_id)
+    Filerecord.find_by(path: @path, owner_id: @owner_id) || Filerecord.new(path: @path, owner_id: @owner_id)
   end
 
 

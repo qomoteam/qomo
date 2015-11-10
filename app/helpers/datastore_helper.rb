@@ -14,13 +14,4 @@ module DatastoreHelper
     end
   end
 
-
-  def shared_tag(shared)
-    if shared
-      content_tag 'aui-toggle', nil, {class: 'shared-toggle', label: 'Shared', checked: 'on'}
-    else
-      content_tag 'aui-toggle', nil, {class: 'shared-toggle', label: 'Shared'}
-    end
-  end
-
 end

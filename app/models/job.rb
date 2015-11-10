@@ -6,6 +6,8 @@ class Job < ActiveRecord::Base
 
   has_many :units, -> { order idx: :asc }, class_name: 'JobUnit', dependent: :delete_all
 
+  default_scope -> { order('created_at DESC') }
+
   def outdir
     "job-#{self.id}"
   end

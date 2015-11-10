@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
-  has_many :jobs, -> {order created_at: :desc}
+  has_many :jobs
+  has_many :pipelines, foreign_key: :owner_id
 
   def datastore
     Datastore.new self.id, Config.dir_users

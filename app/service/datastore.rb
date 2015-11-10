@@ -3,6 +3,7 @@ class Datastore
   attr_reader :home
 
   def initialize(uid, dir_users)
+    @uid = uid
     @dir_users = dir_users
     @home = File.join @dir_users, uid
   end
@@ -63,7 +64,8 @@ class Datastore
                  mtime: File.mtime(abs_path),
                  atime: File.atime(abs_path),
                  ctime: File.ctime(abs_path),
-                 kind: kind
+                 kind: kind,
+                 owner_id: @uid
   end
 
 end

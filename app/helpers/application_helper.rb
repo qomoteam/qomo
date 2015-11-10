@@ -57,4 +57,11 @@ module ApplicationHelper
     content_tag :span, status.upcase, class: clz, style: 'width: 66px'
   end
 
+
+  def shared_tag(shared)
+    opts = {class: 'shared-toggle', label: 'Shared'}
+    opts[:checked] = 'on' if shared
+    content_tag 'aui-toggle', nil, opts
+  end
+
 end

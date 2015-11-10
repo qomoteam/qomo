@@ -1,8 +1,8 @@
 class PipelinesController < ApplicationController
 
   def index
-    @private_pipelines = Pipeline.belongs_to_user current_user
-    @pipelines = Pipeline.all
+    @private_pipelines = current_user.pipelines
+    @pipelines = Pipeline.where shared: true
   end
 
 
@@ -14,6 +14,22 @@ class PipelinesController < ApplicationController
 
     end
 
+  end
+
+
+  def share
+    pipeline = Pipeline.find params[:id]
+    pipeline.shared = true
+    pipeline.save
+    render json: {success: true}
+  end
+
+
+  def unshare
+    pipeline = Pipeline.find params[:id]
+    pipeline.shared = false
+    pipeline.save
+    render json: {success: true}
   end
 
 
@@ -41,7 +57,7 @@ class PipelinesController < ApplicationController
 
   def export
     @pipeline = Pipeline.find params['id']
-    send_data @pipeline.to_json(except: [:owner_id, :public]),
+    send_data @pipeline.to_json(except: [:owner_id, :shared]),
         filename: "#{@pipeline.accession}.qomo-pipeline"
   end
 

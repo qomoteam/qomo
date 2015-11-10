@@ -16,15 +16,17 @@
             th Title
             th Created At
             th Updated At
+            th Shared
             th Operations
         tbody
           - for pipeline in @private_pipelines
-            tr
+            tr data-pid=pipeline.id
               td
                 a href=pipeline_path(pipeline) = pipeline.accession
               td = pipeline.title
               td = pipeline.created_at.to_s :db
               td = pipeline.updated_at.to_s :db
+              td = shared_tag pipeline.shared
               td = render 'pipelines/operations', pipeline: pipeline
 
     #tabs-all-pipelines.tabs-pane
@@ -38,7 +40,7 @@
             th Updated At
             th Operations
         tbody
-          - for pipeline in @private_pipelines
+          - for pipeline in @pipelines
             tr
               td = pipeline.accession
               td = pipeline.title

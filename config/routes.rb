@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       get :my
     end
     member do
+      patch :share
+      patch :unshare
       get :export
       post :run
     end
