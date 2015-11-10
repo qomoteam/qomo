@@ -7,7 +7,7 @@ class PipelinesController < ApplicationController
 
 
   def my
-    @pipelines = Pipeline.belongs_to_user current_user
+    @pipelines = current_user.pipelines
     if params[:inline]
      render 'inline', layout: nil
     else
@@ -21,6 +21,17 @@ class PipelinesController < ApplicationController
     pipeline = Pipeline.find params[:id]
     pipeline.shared = true
     pipeline.save
+    pipeline.boxes.values.each do |e|
+      tool = Tool.find e['tool_id']
+      tool.inputs.each do |input|
+        path = e['values'][input['name']]
+        unless path.blank?
+          record = Filerecord.find_or_create_by(path: path, owner_id: current_user.id)
+          record.shared = true
+          record.save
+        end
+      end
+    end
     render json: {success: true}
   end
 

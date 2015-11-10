@@ -20,10 +20,7 @@ class DatastoreController < ApplicationController
 
 
   def share
-    record = Filerecord.find_by(path: path, owner_id: current_user.id)
-    unless record
-      record = Filerecord.new name: File.basename(path), path: path, owner_id: current_user.id
-    end
+    record = Filerecord.find_or_create_by(name: File.basename(path), path: path, owner_id: current_user.id)
 
     record.shared = true
     record.save

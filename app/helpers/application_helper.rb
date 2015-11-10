@@ -64,4 +64,10 @@ module ApplicationHelper
     content_tag 'aui-toggle', nil, opts
   end
 
+
+  def user_tag(user)
+    display = user.full_name.blank? ? user.username : user.full_name
+    content_tag :span, display
+  end
+
 end

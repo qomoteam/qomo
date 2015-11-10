@@ -12,8 +12,7 @@
       table.aui
         thead
           tr
-            th Accession
-            th Title
+            th width='400px' Title
             th Created At
             th Updated At
             th Shared
@@ -21,8 +20,6 @@
         tbody
           - for pipeline in @private_pipelines
             tr data-pid=pipeline.id
-              td
-                a href=pipeline_path(pipeline) = pipeline.accession
               td = pipeline.title
               td = pipeline.created_at.to_s :db
               td = pipeline.updated_at.to_s :db
@@ -33,8 +30,7 @@
       table.aui
         thead
           tr
-            th Accession
-            th Title
+            th width='400px' Title
             th Owner
             th Created At
             th Updated At
@@ -42,9 +38,8 @@
         tbody
           - for pipeline in @pipelines
             tr
-              td = pipeline.accession
               td = pipeline.title
-              td = pipeline.owner.full_name
+              td = user_tag pipeline.owner
               td = pipeline.created_at.to_s :db
               td = pipeline.updated_at.to_s :db
               td = render 'pipelines/operations', pipeline: pipeline
