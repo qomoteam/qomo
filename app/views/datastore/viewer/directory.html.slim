@@ -1,4 +1,4 @@
-.page-panel
+.page-panel.wider
   = render 'datastore/viewer/toolbar'
 
   table.aui.aui-table-sortable.tbl-files
@@ -8,6 +8,7 @@
         th.aui-table-column-issue-key File Name
         th Size
         th Kind
+        th Shared
         th Date Modified
         th Operations
 
@@ -22,6 +23,7 @@
             - else
               = number_to_human_size(file.size, precision: 3)
           td = file.kind
+          td = shared_tag file.record.shared
           td = ptime file.mtime.to_s, current_user.timezone
           td
             a.aui-button.aui-button-compact href=datastore_download_path(file.path) Download

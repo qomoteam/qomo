@@ -1,7 +1,6 @@
 class DatastoreController < ApplicationController
   
   def show
-    path = params[:path] || ''
     @meta = current_user.datastore.get path
     unless @meta
       render 'not_found'
@@ -20,16 +19,43 @@ class DatastoreController < ApplicationController
   end
 
 
-  def clear
-    path = params[:path] || ''
+  def share
+    record = Filerecord.find_by(path: path, owner_id: current_user.id)
+    unless record
+      record = Filerecord.new name: File.basename(path), path: path, owner_id: current_user.id
+    end
 
+    record.shared = true
+    record.save
+
+    render json: {success: true}
+  end
+
+
+  def unshare
+    Filerecord.where(path: path, owner_id: current_user.id).each do |record|
+      record.shared = false
+      record.save
+    end
+
+    render json: {success: true}
+  end
+
+
+  def clear
     current_user.datastore.list(path).each do |f|
       if f.name.start_with?('job-') and f.directory? and current_user.datastore.list(f.path).size == 0
         f.delete!
+        Filerecord.destroy_all path: f.path, owner_id: current_user.id
       end
     end
 
     redirect_to datastore_path(path)
+  end
+
+
+  def path
+    params[:path] || ''
   end
 
 
@@ -57,6 +83,7 @@ class DatastoreController < ApplicationController
 
   def trash
     current_user.datastore.trash! params[:path]
+    Filerecord.destroy_all path: params[:path], owner_id: current_user.id
     render json: {success: true}
   end
 

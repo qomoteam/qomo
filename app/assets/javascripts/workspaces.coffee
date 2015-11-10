@@ -394,6 +394,8 @@ within 'workspaces', 'show', ->
     $c.height($(window).height() - $c.offset().top)
   window.onresize()
   $c.layout
+    west:
+      size: 250
     east:
       size: 320
 

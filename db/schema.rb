@@ -115,7 +115,6 @@ ActiveRecord::Schema.define(version: 20141221052429) do
     # t.string   :unlock_token # Only if unlock strategy is :email or :both
     # t.datetime :locked_at
 
-
     t.timestamps null: false
   end
 
@@ -139,5 +138,14 @@ ActiveRecord::Schema.define(version: 20141221052429) do
   add_index(:roles, :name)
   add_index(:roles, [ :name, :resource_type, :resource_id ])
   add_index(:users_roles, [ :user_id, :role_id ])
+
+
+  create_table :filerecords do |t|
+    t.uuid :owner_id, index: true
+    t.string :name
+    t.string :path
+    t.boolean :shared, default: false
+    t.text :desc
+  end
 
 end

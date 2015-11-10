@@ -48,6 +48,21 @@ path_of_row = (el) ->
   $(el).parents('tr').data('path')
 
 $ ->
+  $('.shared-toggle').change ->
+    toggle = this
+    toggle.busy = true
+    isChecked = toggle.checked
+    path = $(this).parents('tr').data 'path'
+    console.debug path
+    url = if isChecked then Routes.datastore_share(path: path) else Routes.datastore_unshare(path: path)
+    $.ajax
+      url: url
+      method: 'PATCH'
+      error: ->
+        toggle.checked = !isChecked
+        toggle.busy = false
+      success: ->
+        toggle.busy = false
 
   $('.clear-job-dirs').click ->
     return true unless confirm('All empty job dirs will be deleted, are you sure?')

@@ -12,13 +12,26 @@ class Filemeta
     @kind = opts[:kind]
   end
 
+
+  def owner_id
+    @apath.split(@path)[0].split('/')[-1]
+  end
+
+
+  def record
+    Filerecord.find_by(path: @path, owner_id: owner_id) || Filerecord.new(path: @path, owner_id: owner_id)
+  end
+
+
   def name
     File.basename @path
   end
 
+
   def ext
     File.extname @path
   end
+
 
   def directory?
     kind == :directory
@@ -40,10 +53,11 @@ class Filemeta
 
 
   def tpl
-    if @kind == :rdout
-      return :text
-    else
-      return @kind
+    case @kind
+      when :rdout
+        :text
+      else
+        @kind
     end
   end
 

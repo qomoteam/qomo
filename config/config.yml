@@ -1,7 +1,7 @@
 defaults: &defaults
   nfs: /mapr/qomo.cbb/qomo_<%= Rails.env%>
   admin:
-    username: xingjian
+    username: qomo
     email: xuxingjian@big.ac.cn
   tools:
     bundle:
