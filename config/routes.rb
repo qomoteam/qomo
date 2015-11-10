@@ -1,15 +1,10 @@
 Rails.application.routes.draw do
-  get 'misc/contact'
-
-  get 'jobs/index'
-
-  get 'jobs/show'
-
   devise_for :users
 
   root 'workspaces#show'
 
   get 'about', to: 'home#about'
+  get 'agreement', to: 'home#agreement'
 
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
