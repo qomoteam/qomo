@@ -14,6 +14,7 @@
 /config/secrets.yml
 /config/puma.rb
 /config/intializers/devise.rb
+/config/email.yml
 
 /public/assets
 

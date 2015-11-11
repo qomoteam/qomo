@@ -2,7 +2,7 @@ defaults: &defaults
   nfs: /mapr/qomo.cbb/qomo_<%= Rails.env%>
   admin:
     username: qomo
-    email: xuxingjian@big.ac.cn
+    email: qomocloud@big.ac.cn
   tools:
     bundle:
       - https://github.com/qomoteam/kakscalc-qomo.git
