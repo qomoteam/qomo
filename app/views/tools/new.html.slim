@@ -51,10 +51,15 @@
 
     fieldset.section
       legend Attachments
+      .field-group
+        = f.label :file
+        label.ffi data-ffi-button-text='Select'
+          = f.file_field :file, multiple: true
 
     .buttons-container
       .buttons
         = f.submit class: 'button submit'
+        span &nbsp; Notice: your tool will be audited mannually
 
 script#tpl_tr_param type='text/html'
   = render partial: 'tools/tr_param', locals: {param: {'type' => 'string'}}

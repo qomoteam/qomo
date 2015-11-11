@@ -110,7 +110,7 @@ class Tool < ActiveRecord::Base
       end
 
       tool.params = params
-
+      tool.active!
       result << tool
     end
 

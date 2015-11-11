@@ -3,6 +3,7 @@ class ToolsController < ApplicationController
     @tools = Tool.all
   end
 
+
   def new
     @tool = Tool.new
     @categories = Category.all
@@ -12,7 +13,11 @@ class ToolsController < ApplicationController
   def create
     @tool = Tool.new params.require(:tool).permit!
     @tool.owner = current_user
-    @tool.active!
+
+    if @current_user.has_role :admin
+      @tool.active!
+    end
+
     @tool.save
     redirect_to action: 'edit', id: @tool.id
   end
