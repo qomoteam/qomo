@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       get :my
     end
     member do
+      get :import
       patch :share
       patch :unshare
       get :export

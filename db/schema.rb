@@ -84,8 +84,6 @@ ActiveRecord::Schema.define(version: 20141221052429) do
     t.string :timezone, default: 'Beijing'
     t.string :homepage
 
-    t.string :role, default: 'user'
-
     ## Database authenticatable
     t.string :email,              null: false, default: ''
     t.string :encrypted_password, null: false, default: ''
@@ -123,6 +121,14 @@ ActiveRecord::Schema.define(version: 20141221052429) do
   add_index :users, :confirmation_token,   unique: true
   #add_index :users, :unlock_token,         unique: true
 
+  create_table :filerecords do |t|
+    t.uuid :owner_id, index: true
+    t.string :name
+    t.string :path
+    t.boolean :shared, default: false
+    t.text :desc
+  end
+
   create_table(:roles) do |t|
     t.string :name
     t.references :resource, :polymorphic => true
@@ -131,7 +137,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
   end
 
   create_table(:users_roles, :id => false) do |t|
-    t.references :user
+    t.uuid :user_id
     t.references :role
   end
 
@@ -139,13 +145,5 @@ ActiveRecord::Schema.define(version: 20141221052429) do
   add_index(:roles, [ :name, :resource_type, :resource_id ])
   add_index(:users_roles, [ :user_id, :role_id ])
 
-
-  create_table :filerecords do |t|
-    t.uuid :owner_id, index: true
-    t.string :name
-    t.string :path
-    t.boolean :shared, default: false
-    t.text :desc
-  end
 
 end

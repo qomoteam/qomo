@@ -1,6 +1,7 @@
 class ToolsController < ApplicationController
   def index
-    @tools = Tool.all
+    @tools = current_user.tools
+    @all_tools = Tool.all.active
   end
 
 
@@ -14,7 +15,7 @@ class ToolsController < ApplicationController
     @tool = Tool.new params.require(:tool).permit!
     @tool.owner = current_user
 
-    if @current_user.has_role :admin
+    if @current_user.has_role? :admin
       @tool.active!
     end
 

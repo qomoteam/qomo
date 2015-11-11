@@ -20,7 +20,8 @@
         tbody
           - for pipeline in @private_pipelines
             tr data-pid=pipeline.id
-              td = pipeline.title
+              td
+                a href=pipeline_path(pipeline) = pipeline.title
               td = pipeline.created_at.to_s :db
               td = pipeline.updated_at.to_s :db
               td = shared_tag pipeline.shared
@@ -38,7 +39,8 @@
         tbody
           - for pipeline in @pipelines
             tr
-              td = pipeline.title
+              td
+                a href=pipeline_path(pipeline) = pipeline.title
               td = user_tag pipeline.owner
               td = pipeline.created_at.to_s :db
               td = pipeline.updated_at.to_s :db

@@ -12,8 +12,9 @@
       a.aui-button href=new_tool_path Create Tool
       ul
         - for tool in @tools
-          li: a href=edit_tool_path(tool.id) = tool.name
+          li: a href=edit_tool_path(tool) = tool.name
 
     #tabs-all-tools.tabs-pane
-      - for tool in @tools
-        a href=edit_tool_path(tool.id) = tool.name
+      ul
+      - for tool in @all_tools
+        li: a href=tool_path(tool) = tool.name

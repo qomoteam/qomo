@@ -17,6 +17,14 @@ class PipelinesController < ApplicationController
   end
 
 
+  def import
+    pipeline = Pipeline.find params['id']
+    pipeline = pipeline.export_to_user(current_user) if pipeline.owner != current_user
+
+    redirect_to pipeline_path(pipeline)
+  end
+
+
   def share
     pipeline = Pipeline.find params[:id]
     pipeline.shared = true
@@ -57,10 +65,15 @@ class PipelinesController < ApplicationController
     @pipeline = Pipeline.find params['id']
     respond_to do |format|
       format.html
-      if params[:simple]
-        format.json { render json: {accession: @pipeline.accession, title: @pipeline.title, updated_at: @pipeline.updated_at.to_s(:db)} }
-      else
-        format.json { render json: @pipeline }
+      format.json do
+        if @pipeline.owner != current_user
+          @pipeline.polish_export_params!
+        end
+        if params[:simple]
+          render json: {accession: @pipeline.accession, title: @pipeline.title, updated_at: @pipeline.updated_at.to_s(:db)}
+        else
+          render json: @pipeline
+        end
       end
     end
   end
@@ -115,31 +128,4 @@ class PipelinesController < ApplicationController
     redirect_to action: 'my'
   end
 
-
-  def mark_public
-    pipeline = Pipeline.find params['id']
-    pipeline.public = (params['mark'] == 'true')
-    polish_params pipeline
-    pipeline.save
-    render json: {success: true}
-  end
-
-
-  protected
-
-  def polish_params(pipeline)
-    jb = JSON.parse(pipeline.boxes)
-    jb.each do |k, v|
-      tool = Tool.find v['tid']
-      tool.inputs.each do |tp|
-        v['values'].each do |pk, pv|
-          if tp['name'] == pk and (not pv.blank?) and (not pv.start_with? '@')
-            jb[k]['values'][pk] = "@#{current_user.username}:#{pv}"
-          end
-        end
-      end
-    end
-    pipeline.boxes = JSON.dump jb
-    pipeline.save
-  end
 end

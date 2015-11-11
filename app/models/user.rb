@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
 
   has_many :jobs
   has_many :pipelines, foreign_key: :owner_id
+  has_many :tools, foreign_key: :owner_id
 
   def datastore
     Datastore.new self.id, Config.dir_users

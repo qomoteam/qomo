@@ -74,4 +74,36 @@ class Pipeline < ActiveRecord::Base
     ep
   end
 
+
+  def export_to_user(user)
+    pipeline = self.dup
+
+    pipeline.polish_export_params!
+    pipeline.id = nil
+    pipeline.title = "My #{ pipeline.title}"
+    pipeline.owner = user
+    pipeline.shared = false
+
+
+    pipeline.save
+    pipeline
+  end
+
+
+  def polish_export_params!
+    jb = self.boxes
+    jb.each do |k, v|
+      tool = Tool.find v['tool_id']
+      tool.inputs.each do |tp|
+        v['values'].each do |pk, pv|
+          if tp['name'] == pk and (not pv.blank?) and (not pv.start_with? '@')
+            jb[k]['values'][pk] = "@#{self.owner.username}:#{pv}"
+          end
+        end
+      end
+    end
+    self.boxes = jb
+  end
+
+
 end

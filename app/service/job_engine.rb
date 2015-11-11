@@ -84,7 +84,8 @@ class JobEngine
                   if ev.start_with? '@'
                     username = ev[1, ev.index(':')-1]
                     user = User.find_by username: username
-                    ud = Datastore.new user.id, Config.nfs
+                    # TODO: Remove this ugly implementation
+                    ud = Datastore.new user.id, Config.dir_users
                     ev = ud.apath ev[ev.index(':')+1 .. -1]
                   else
                     ev = @datastore.apath ev
