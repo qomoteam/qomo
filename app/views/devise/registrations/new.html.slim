@@ -35,6 +35,18 @@
               span.aui-icon.icon-required
             = f.password_field :password_confirmation, autocomplete: 'off', class: 'text long-field'
 
+          .field-group.top-label
+            = f.label :first_name
+              | First Name
+              span.aui-icon.icon-required
+            = f.text_field :first_name, autofocus: true, class: 'text long-field'
+
+          .field-group.top-label
+            = f.label :last_name
+              | Last Name
+              span.aui-icon.icon-required
+            = f.text_field :last_name, autofocus: true, class: 'text long-field'
+
           .aui-group
             = f.submit 'Sign up', class: 'aui-button aui-button-primary'
             = render 'devise/shared/links'
