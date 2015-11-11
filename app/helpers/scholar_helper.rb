@@ -1,0 +1,2 @@
+module ScholarHelper
+end

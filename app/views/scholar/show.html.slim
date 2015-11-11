@@ -1,0 +1,24 @@
+.page-panel
+  h3
+    = user_tag @user
+    span.user-title = @user.title
+
+  span @#{@user.username}
+  br
+  span
+    .fa.fa-map-marker
+    | #{@user.location}, #{@user.organization}
+  br
+  span
+    .fa.fa-clock-o
+    | Joins on #{ptime2 @user.created_at}
+
+  h5 Contributed Pipelines:
+  ul
+    - for pipeline in @user.pipelines
+      li: a href=pipeline_path(pipeline) = pipeline.title
+
+  h5 Contributed Tools:
+  ul
+    - for tool in @user.tools.active
+      li: a href=tool_path(tool) = tool.name

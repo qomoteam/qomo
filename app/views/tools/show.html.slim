@@ -19,5 +19,8 @@
       td Updated At
       td = ptime @tool.updated_at, current_user.timezone
     tr
-      td Description
+      td Usage
       td = @tool.usage
+    tr
+      td Owner
+      td = user_tag @tool.owner

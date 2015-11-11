@@ -70,6 +70,7 @@ Rails.application.routes.draw do
     resource :profile, :setting
   end
 
+  get 'scholar/:username', to: 'scholar#show', as: :scholar
 
   namespace :admin do
     root 'home#index'

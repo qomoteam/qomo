@@ -41,6 +41,10 @@ module ApplicationHelper
     ts.nil? ? '' : ts.in_time_zone(timezone).strftime('%F %T')
   end
 
+  def ptime2(ts)
+    ts.nil? ? '' : ts.strftime('%B %e, %Y')
+  end
+
   def status_label(status)
     status ||= :unknown
     clz = ''
@@ -67,7 +71,7 @@ module ApplicationHelper
 
   def user_tag(user)
     display = user.full_name.blank? ? user.username : user.full_name
-    content_tag :span, display
+    content_tag :a, display, href: scholar_path(user.username)
   end
 
 end

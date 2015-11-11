@@ -10,6 +10,9 @@
       td Title
       td  = @pipeline.title
     tr
+      td Contributors:
+      td = @pipeline.contributors
+    tr
       td Permalink
       td
         a href=pipeline_path(@pipeline) = pipeline_url @pipeline
@@ -25,6 +28,10 @@
     tr
       td Description
       td = @pipeline.desc
+    tr
+      td Owner
+      td = user_tag @pipeline.owner
+
 
 
   h5 Params to be set:

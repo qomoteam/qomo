@@ -24,7 +24,7 @@ nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" rol
         a class=active_class('datastore') href=datastore_path Datastore
 
       li
-        a class=active_class('scholars') href="#" Scholars
+        a class=active_class('scholars') href=scholar_path(current_user.username) Scholars
 
       li
         a.aui-dropdown2-trigger aria-haspopup='true' aria-owns='menu-help' href="#"  Help
@@ -51,8 +51,8 @@ nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" rol
               ul
                 li
                   a href=edit_users_profile_path  Profile
-                li
-                  a href=edit_users_setting_path  Settings
+                /li
+                /  a href=edit_users_setting_path  Settings
                 li
                   a href=edit_user_registration_path  Security
             .aui-dropdown2-section
