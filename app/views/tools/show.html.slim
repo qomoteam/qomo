@@ -1,0 +1,23 @@
+.page-panel
+  h3 Tool: #{@tool.name}
+
+  table.aui.def
+    tr
+      td width='100px' Title
+      td  = @tool.name
+    tr
+      td Permalink
+      td
+        a href=tool_path(@tool) = tool_url @tool
+    tr
+      td Citation
+      td #{@tool.contributors} Tool: "#{@tool.name}" in Qomo, available at #{tool_url @tool} (Last update: #{tool_url @tool} #{ptime @tool.updated_at, current_user.timezone})
+    tr
+      td Created At
+      td = ptime @tool.created_at, current_user.timezone
+    tr
+      td Updated At
+      td = ptime @tool.updated_at, current_user.timezone
+    tr
+      td Description
+      td = @tool.usage
