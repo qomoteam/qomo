@@ -29,6 +29,8 @@ gem 'jimson'
 gem 'rgl'
 gem 'bunny'
 
+gem 'redcarpet'
+
 gem 'dvm'
 gem 'vam'
 

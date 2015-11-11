@@ -27,7 +27,7 @@
       td = ptime @pipeline.updated_at, current_user.timezone
     tr
       td Description
-      td = @pipeline.desc
+      td == markdown @pipeline.desc
     tr
       td Owner
       td = user_tag @pipeline.owner
