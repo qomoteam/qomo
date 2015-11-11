@@ -80,4 +80,26 @@ module ApplicationHelper
     markdown.render str
   end
 
+
+  def contributors_tag(str, link=true)
+    str.split(',').map do |c|
+      c = c.strip
+      if c.start_with? '@'
+        c = c[1..-1]
+        user = User.find_by_username c
+        if user
+          if link
+            user_tag user
+          else
+            user.full_name.blank? ? user.username : user.full_name
+          end
+        else
+          c
+        end
+      else
+        c
+      end
+    end.join ', '
+  end
+
 end

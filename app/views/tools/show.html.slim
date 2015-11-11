@@ -10,6 +10,9 @@
       td
         a href=tool_path(@tool) = tool_url @tool
     tr
+      td Contributors
+      td == contributors_tag @tool.contributors
+    tr
       td Citation
       td #{@tool.contributors} Tool: "#{@tool.name}" in Qomo, available at #{tool_url @tool} (Last update: #{tool_url @tool} #{ptime @tool.updated_at, current_user.timezone})
     tr

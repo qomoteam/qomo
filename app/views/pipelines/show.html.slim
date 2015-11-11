@@ -4,21 +4,21 @@
 
   table.aui.def
     tr
-      td Accession
+      td width='100px' Accession
       td  = @pipeline.accession
     tr
       td Title
       td  = @pipeline.title
     tr
-      td Contributors:
-      td = @pipeline.contributors
+      td Contributors
+      td == contributors_tag @pipeline.contributors
     tr
       td Permalink
       td
         a href=pipeline_path(@pipeline) = pipeline_url @pipeline
     tr
       td Citation
-      td #{@pipeline.contributors} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.timezone})
+      td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.timezone})
     tr
       td Created At
       td = ptime @pipeline.created_at, current_user.timezone
