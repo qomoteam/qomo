@@ -124,8 +124,12 @@ class PipelinesController < ApplicationController
 
 
   def destroy
-    Pipeline.delete params['id']
-    redirect_to action: 'my'
+    pipeline = Pipeline.find params[:id]
+    if pipeline.owner == current_user
+      pipeline.destroy!
+    end
+
+    redirect_to pipelines_path
   end
 
 end
