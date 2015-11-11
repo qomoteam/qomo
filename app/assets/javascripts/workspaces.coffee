@@ -404,10 +404,13 @@ within 'workspaces', 'show', ->
   # Save the pipeline in workspace
   $('.save').click ->
     if get_pid() != null
-      $.get Routes.edit_pipeline(get_pid()), (data)->
-        $form =$(data)
-        populate_pform $form
-        $form.ajaxSubmit dataType: 'json'
+      $.ajax
+        url: Routes.pipeline(get_pid(), {format: 'json'})
+        method: 'PATCH'
+        data:
+          'pipeline[connections]': localStorage.connections
+          'pipeline[boxes]': localStorage.boxes
+          'pipeline[params]': localStorage.params
     else
       $.get Routes.new_pipeline(), (data)->
         dia = dialog
@@ -545,7 +548,7 @@ within 'workspaces', 'show', ->
         dia = dialog
           content: data
           title: 'Load Pipeline'
-          width: 800
+          width: 900
         dia.show()
 
 

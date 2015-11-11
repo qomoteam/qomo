@@ -88,14 +88,12 @@ class PipelinesController < ApplicationController
 
   def new
     @pipeline = Pipeline.new
-    render 'edit', layout: nil
+    render layout: nil
   end
 
 
   def edit
     @pipeline = Pipeline.find params['id']
-    @pipeline.contributors = current_user.full_name
-    render 'edit', layout: nil
   end
 
 
@@ -109,15 +107,10 @@ class PipelinesController < ApplicationController
 
   def update
     pipeline = Pipeline.find params['id']
-    pipeline.update(params.require('pipeline').permit!)
-
-    if pipeline.public
-      polish_params pipeline
-      pipeline.save
-    end
+    pipeline.update params.require('pipeline').permit!
 
     respond_to do |format|
-      format.html {redirect_to pipeline_path(pipeline)}
+      format.html { redirect_to pipeline_path(pipeline) }
       format.json { render json: {success: true} }
     end
   end

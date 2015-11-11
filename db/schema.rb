@@ -39,10 +39,10 @@ ActiveRecord::Schema.define(version: 20141221052429) do
 
     t.uuid :owner_id
 
-    t.json :boxes
-    t.json :connections
+    t.json :boxes, default: {}
+    t.json :connections, default: []
 
-    t.json :params
+    t.json :params, default: []
 
     t.boolean :shared, default: false
     t.timestamps

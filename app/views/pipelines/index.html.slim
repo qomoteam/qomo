@@ -12,9 +12,8 @@
       table.aui
         thead
           tr
-            th width='350px' Title
+            th width='400px' Title
             th Created At
-            th Updated At
             th Shared
             th Operations
         tbody
@@ -23,7 +22,6 @@
               td
                 a href=pipeline_path(pipeline) = pipeline.title
               td = pipeline.created_at.to_s :db
-              td = pipeline.updated_at.to_s :db
               td = shared_tag pipeline.shared
               td = render 'pipelines/operations', pipeline: pipeline
 
@@ -31,10 +29,9 @@
       table.aui
         thead
           tr
-            th width='350px' Title
+            th width='400px' Title
             th Owner
             th Created At
-            th Updated At
             th Operations
         tbody
           - for pipeline in @pipelines
@@ -43,6 +40,5 @@
                 a href=pipeline_path(pipeline) = pipeline.title
               td = user_tag pipeline.owner
               td = pipeline.created_at.to_s :db
-              td = pipeline.updated_at.to_s :db
               td = render 'pipelines/operations', pipeline: pipeline
 
