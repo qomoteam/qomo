@@ -551,4 +551,12 @@ within 'workspaces', 'show', ->
           width: 900
         dia.show()
 
+    $('#tools-selector .search').keyup ->
+      q = this.value.toLowerCase()
+      hl = _.each $('#tools-selector a.tool-link'), (toollink) ->
+        if toollink.textContent.toLowerCase().indexOf(q) == -1
+          $(toollink).parents('li').hide()
+        else
+          $(toollink).parents('li').show()
+
 

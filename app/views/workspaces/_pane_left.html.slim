@@ -3,9 +3,6 @@
     li.menu-item.active-tab
       a href="#tools-selector"
         strong Tools
-    li.menu-item
-      a href="#tabs-example-second"
-        strong Files
 
   #tools-selector.tabs-pane.active-pane
     input.search type='text'
@@ -22,6 +19,3 @@
                 - unless tool.usage.blank?
                   a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
 
-  #tabs-example-second.tabs-pane
-    h2 This is Tab 2
-    p Lorem ipsum dolor sit amet, consectetur adipiscing elit.
