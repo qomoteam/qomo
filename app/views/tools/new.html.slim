@@ -42,7 +42,7 @@
             = empty_row @tool.params, 5
             - if @tool.params
               - for param in @tool.params
-                  #TODO: REMOVE tmp param
+                  //TODO: REMOVE tmp param
                   - if param['type'] != 'tmp'
                     = render 'tools/tr_param', param: param
 
