@@ -1,5 +1,4 @@
 .page-panel
-  h2 Create Tool
   = form_for @tool, html: {class: 'aui'} do |f|
     fieldset.section
       legend Basic Information
@@ -18,7 +17,7 @@
 
       .field-group
         = f.label :usage
-        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea long-field', rows: '10'
+        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea full-width-field', rows: '10'
 
 
     fieldset.section
@@ -27,13 +26,13 @@
         = f.label :params
           | Parameters
           br
-          a.aui-icon.aui-icon-small.aui-iconfont-add.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params'
-        .long-field
-          table.params
+          a.aui-icon.aui-icon-small.aui-iconfont-add.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params-def'
+        .full-width-field
+          table.params-def
             tr
-              th width='131px'
+              th width='30%'
                 | Param Name
-              th width='131px'
+              th width='30%'
                 | Param Label
               th width='70px'
                 | Type
@@ -47,19 +46,20 @@
 
       .field-group
         = f.label :command
-        = f.text_area :command, spellcheck: 'false', class: 'monospace textarea long-field', placeholder: 'command line', rows: '3'
+        = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '3'
 
     fieldset.section
       legend Attachments
       .field-group
         = f.label :file
-        label.ffi data-ffi-button-text='Select'
+        label.ffi.long-field data-ffi-button-text='Select'
           = f.file_field :file, multiple: true
 
     .buttons-container
       .buttons
         = f.submit class: 'button submit'
         span &nbsp; Notice: your tool will be audited mannually
+
 
 script#tpl_tr_param type='text/html'
   = render partial: 'tools/tr_param', locals: {param: {'type' => 'string'}}

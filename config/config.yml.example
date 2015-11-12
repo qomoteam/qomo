@@ -1,8 +1,8 @@
 defaults: &defaults
   nfs: /mapr/qomo.cbb/qomo_<%= Rails.env%>
   admin:
-    username: qomo
-    email: xuxingjian@big.ac.cn
+    username: qomoteam
+    email: qomocloud@big.ac.cn
   tools:
     bundle:
       - https://github.com/qomoteam/qtool-kakscalc.git

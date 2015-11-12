@@ -84,7 +84,8 @@ window.App =
 
 
 $ ->
-  AJS.$('select').auiSelect2()
+  AJS.$('select.select2').auiSelect2()
+
   $('.logout').click ->
     localStorage.clear()
     true

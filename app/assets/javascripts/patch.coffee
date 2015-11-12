@@ -4,8 +4,10 @@ window._hooks = {}
 
 window.within = (controller, action, onready) ->
   actions = _hooks[controller] || {}
-  actions[action] = onready
-  _hooks[controller] = actions
+  _.each action.split(','), (e) ->
+    e = e.trim()
+    actions[e] = onready
+    _hooks[controller] = actions
 
 window.app = gon
 
