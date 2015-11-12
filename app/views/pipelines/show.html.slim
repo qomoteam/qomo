@@ -39,7 +39,7 @@
     - for p in @pipeline.params_ui
       .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
         label #{p['label']} (#{p['tool'].name}: #{p['tool'].params.select {|e| e['name'] == p['name']}[0]['label']})
-        = render 'tools/param_setter', param: export_param p['tool_param']
+        = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
 
     .aui-group
       = submit_tag 'Run', class: 'aui-button aui-button-primary'
