@@ -14,7 +14,7 @@ class Job < ActiveRecord::Base
 
 
   def accession
-    "QP-#{self.id}"
+    self.id
   end
 
 
