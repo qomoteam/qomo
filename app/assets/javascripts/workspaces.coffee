@@ -187,22 +187,22 @@ tpl_param_dialog = (label, pname) ->
     "<div class='field-group'>" +
     "<label>#{label} =></label><input class='text medium-field paramiterize' value='#{pname}'></div></form>"
 
-add_pipeline_param = (paramName, pname, tool_id) ->
+add_pipeline_param = (paramName, pname, box_id) ->
   params = get_pipeline_params()
   if pname
-    e = {name: paramName, label: pname, box_id: tool_id}
+    e = {name: paramName, label: pname, box_id: box_id}
     added = false
     # Avoid redudant pipeline params with same paramName
     params = _.map params, (p) ->
-      if p['name'] == paramName
+      if p['name'] == paramName and p['box_id'] == box_id
         added = true
         e
       else
         p
     unless added
-      params.push {name: paramName, label: pname, box_id: tool_id}
+      params.push {name: paramName, label: pname, box_id: box_id}
   else
-    params = _.reject params, (p) -> p['name'] == paramName
+    params = _.reject params, (p) -> p['name'] == paramName and p['box_id'] == box_id
 
   set_pipeline_params params
   # END add_pipeline_param(paramName, pname, tool_id)
