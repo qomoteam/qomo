@@ -10,4 +10,4 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w( admin/admin.js admin/admin.css visitor_analytics.js )
 Rails.application.config.assets.precompile += [/(?:\/|\\|\A)admin\.(css|js)$/]
-Rails.application.config.assets.precompile += [/\.(?:svg|eot|woff|ttf)\z/]
+Rails.application.config.assets.precompile += [/\.(?:svg|eot|woff|ttf|png|gif|jpg)\z/]
