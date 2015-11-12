@@ -7,10 +7,12 @@ namespace :qomo do
 
   desc 'QOMO | Create default admin user'
   task create_admin_user: :environment do
-    admin_user = User.create username: Config.admin.username,
+    admin_user = User.create! username: Config.admin.username,
                 email: Config.admin.email,
                 password: '11111111',
-                password_confirmation: '11111111'
+                password_confirmation: '11111111',
+                confirmed_at: Time.now
+
 
     admin_user.add_role :admin
   end
