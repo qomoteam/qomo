@@ -8,4 +8,7 @@ class HomeController < ApplicationController
   def agreement
   end
 
+  def tutorial
+  end
+
 end

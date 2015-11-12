@@ -1,0 +1,102 @@
+<div class="page-panel">
+
+    <h2>Demo</h2>
+    <h3>Mapping -> Differential Expression Analysis</h3>
+    <p>
+        This is a
+        <a href="http://cloud.big.ac.cn/workspace/load/9e889aae-0520-4931-897b-2cae20898295">demo</a> pipeline.
+        It first uses Bowtie to perform mapping; then calculates the counts of reads based on a reference; finally uses DEGseq to identify differentially expressed genes.
+    </p>
+
+    <h3>Ka/Ks Calculation</h3>
+    <p>
+        This is another
+        <a href="http://cloud.big.ac.cn/workspace/load/29c9190c-a5d9-4504-98d4-63a9e86fe9e0">demo</a>
+        that performs Ka/Ks caculation using the Ka/Ks Calculator developed by our lab.
+    </p>
+
+
+    <h2>Tool: The Simplest "Pipeline"</h2>
+
+    <p>
+        Qomo allows you to build pipelines based on various basic tools (modules).
+        All the tools are shown in the left panel of the Workspace tab.
+        To use any one of them, just click on its title.
+        Then a box representing the tool will show in the middle panel of the page.
+        The box is basically a form containing the parameters you need to specify for running the tool.
+        Also notice the question mark (?) on the right of the title of each tool.
+        If you click on it, the usage and relevant information about the tool will pop up.
+        After specifying the necessary parameters, you can click on the RUN button at the top-right corner.
+        Then the pipeline will be submitted as a new job to the server.
+        You can monitor the status of the job on the right panel.
+        After the job is finished, you can check its output on the Data tab.
+    </p>
+
+    <p>
+        Here is an example performing differential expression analysis:
+    </p>
+
+    <ul>
+        <li>
+            Click on <a href="#">DEGseq</a>
+        </li>
+        <li>
+            Click on the input box labeled <strong>Expression</strong>.
+            Select "PUBLIC/GeneExpExample5000.txt" in the open file dialogue.
+        </li>
+        <li>
+            Click on the input box labeled <strong>Score</strong>.
+            Type in a name for the output file (e.g. "de").
+        </li>
+        <li>
+            Click on <strong>RUN</strong>. You should see the submitted job on the right panel.
+            After it is finished, click on Data to check the output.
+        </li>
+    </ul>
+
+
+    <h3>Your First Real Pipeline</h3>
+    <p>Now it's time to build a real pipeline.</p>
+    <ul>
+        <li>
+            Following previous example, click on Line filter in the toolkit panel. This is a tool for filtering lines.
+            Here we use it to remove genes with a p-value less than 0.05.
+        </li>
+        <li>
+            To use the output of DEGseq as the input of Line filter,
+            drag the little green box on the right of the input box labeled Score to the blue box on the right of the input box labeled Input.
+            Now there is an arrow showing the data flow between the two tools.
+        </li>
+        <li>
+            Type in "$6 < 0.05" in the input box labeled Expression,
+            because column 6 of the output of DEGseq is the p-value, and "$6" means the value in the 6th column.
+            You can get to know the meaning of the output by reading the usage of the tool. (Hint: click on the question mark (?).)
+        </li>
+        <li>
+            Finally, specify a name for the output of Line filter (e.g. "filtered"),
+            and click on RUN. After the job is finished, you can check the output in the Data tab.
+        </li>
+    </ul>
+
+
+    <h3>Save Your Work and Share It with Others</h3>
+    <p>
+        After finishing building your first pipeline,
+        you may want to save it for further use or even sharing with others. Saving a pipeline is easy.
+        Just click on the SAVE button on the top-right corner in the Workspace tab.
+        Type in the title for your pipeline (e.g. "Differential Expression Analysis").
+        Then type in some description about it (e.g. "Use DEGseq for differential expression analysis,
+        and filter results based on p-values."). Finally, click on Save.
+        You can check all the saved pipelines in the Pipelines tab.
+        (If it is not shown, you may try to refresh the page by pressing "F5" on your keyboard.)
+    </p>
+
+    <h3>Import Pipelines</h3>
+    <p>
+        You can import pipelines from the <strong>Private</strong> pipelines
+        or <strong>Public</strong> pipelines panel under the Pipelines tab.
+        If you <strong>load</strong> a pipeline, it will override the current pipeline in your workspace.
+        If your <strong>merge</strong> a pipeline, its components will be added into your current pipeline.
+    </p>
+
+</div>

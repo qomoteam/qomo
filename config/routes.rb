@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'about', to: 'home#about'
   get 'agreement', to: 'home#agreement'
+  get 'tutorial', to: 'home#tutorial'
 
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
