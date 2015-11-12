@@ -1,0 +1,21 @@
+#!/usr/bin/env puma
+
+app_name = 'qomo'
+root = "/opt/qomo/#{app_name}/current"
+
+directory root
+
+environment 'production'
+
+workers 10
+threads 10, 20
+
+daemonize
+
+pidfile "#{root}/tmp/server.pid"
+state_path "#{root}/tmp/server.state"
+bind "tcp://0.0.0.0:7500"
+
+stdout_redirect "#{root}/log/stdout", "#{root}/log/stderr"
+
+preload_app!
