@@ -80,7 +80,7 @@ restore_workspace = ->
     $.get Routes.pipeline(get_pid(), {simple: true, format: 'json'}), (pipeline) ->
       purl = Routes.pipeline(get_pid())
       $('.pipeline-meta-title').html(
-        "#{pipeline.accession}: <a href='#{purl}'><strong>#{pipeline.title}</strong></a> (#{pipeline.updated_at})"
+        "<a href='#{purl}'><strong>#{pipeline.title}</strong></a>"
       )
   boxes = cached_boxes()
 

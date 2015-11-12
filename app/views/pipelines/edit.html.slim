@@ -1,16 +1,17 @@
-= form_for @pipeline, html: {id: 'form-pipeline', class: 'aui'} do |f|
-  .field-group
-    = f.label :title
-    = f.text_field :title, class: 'text long-field'
+.page-panel
+  = form_for @pipeline, html: {id: 'form-pipeline', class: 'aui'} do |f|
+    .field-group
+      = f.label :title
+      = f.text_field :title, class: 'text long-field'
 
-  .field-group
-    = f.label :contributors
-    = f.text_field :contributors, class: 'text long-field'
+    .field-group
+      = f.label :contributors
+      = f.text_field :contributors, class: 'text long-field'
 
-  .field-group
-    = f.label :desc
-    = f.text_area :desc, class: 'textarea long-field', rows: '5'
+    .field-group
+      = f.label :desc
+      = f.text_area :desc, class: 'textarea long-field', rows: '5'
 
-  .buttons-container
-    .buttons
-      = f.submit class: 'button submit'
+    .buttons-container
+      .buttons
+        = f.submit class: 'button submit'
