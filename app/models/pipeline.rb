@@ -12,7 +12,7 @@ class Pipeline < ActiveRecord::Base
   def merge_params(values)
     boxes = self.boxes.dup
     self.params.collect do |p|
-      self.boxes.each do |k, v|
+      self.boxes.each do |k, _|
         if k == p['box_id']
           boxes[k]['values'][p['name']] = values.select {|e| e['box_id'] == p['box_id'] and e['name'] == p['name']}[0]['value']
         end
@@ -28,7 +28,7 @@ class Pipeline < ActiveRecord::Base
       tool = Tool.find box['tool_id']
       p['tool'] = tool
       p['tool_param'] = tool.params.select {|e| e['name'] == p['name']}[0]
-      value = box['values'].select {|k, v| k == p['name']}[p['name']]
+      value = box['values'].select {|k, _| k == p['name']}[p['name']]
 
       if p['tool_param']['options']
         unless value.is_a? Array

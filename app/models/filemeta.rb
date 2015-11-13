@@ -36,7 +36,7 @@ class Filemeta
 
   def read
     if @kind == :rdout
-      Dir.glob(File.join @apath, 'part-*').reduce('') {|mem, e| mem += File.read(e)}
+      Dir.glob(File.join @apath, 'part-*').reduce('') {|mem, e| mem + File.read(e)}
     else
       File.read @apath
     end

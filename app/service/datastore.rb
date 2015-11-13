@@ -56,7 +56,7 @@ class Datastore
     size = File.size(abs_path)
     if File.directory? abs_path and File.exist?(File.join abs_path, '_SUCCESS')
       kind = :rdout
-      size = Dir.glob(File.join abs_path, 'part-*').reduce(0) {|mem, e| mem += File.size(e)}
+      size = Dir.glob(File.join abs_path, 'part-*').reduce(0) {|mem, e| mem + File.size(e)}
     end
     Filemeta.new apath: abs_path,
                  path: rpath(abs_path),

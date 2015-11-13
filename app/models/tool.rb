@@ -90,11 +90,7 @@ class Tool < ActiveRecord::Base
             param['options'] = tv['option']
 
             for o in param['options']
-              if o['selected'] == 'true'
-                o['selected'] = true
-              else
-                o['selected'] = false
-              end
+              o['selected'] = o['selected'] == 'true'
             end
 
             if tv['multiple'] and (tv['multiple'] == 'true' or tv['multiple'] == 'on')
