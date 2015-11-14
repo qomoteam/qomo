@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.5'
 gem 'pg'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sass-rails'
+gem 'uglifier'
+gem 'jbuilder'
+gem 'sdoc', group: :doc
 
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt'
 
 gem 'puma'
 
@@ -20,6 +20,7 @@ gem 'settingslogic'
 gem 'devise', '3.5.2'
 gem 'rolify'
 gem 'ledermann-rails-settings'
+gem 'wice_grid'
 
 gem 'awesome_nested_set'
 gem 'font-awesome-sass'

@@ -1,0 +1,13 @@
+= grid @users_grid, html: {class: 'aui'} do |g|
+  - g.column name: 'ID' do |user|
+    - user.id
+  - g.column name: 'Username', attribute: 'username' do |user|
+    - user.username
+  - g.column name: 'Email', attribute: 'email' do |user|
+    - user.email
+  - g.column name: 'Full Name', attribute: 'first_name' do |user|
+    - user.full_name
+  - g.column name: 'Last Sign In Ip' do |user|
+    - user.last_sign_in_ip
+  - g.column name: 'Last Sign In At', attribute: 'last_sign_in_at' do |user|
+    - ptime user.last_sign_in_at, current_user.timezone

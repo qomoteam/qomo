@@ -1,9 +1,12 @@
 #= require js-routes
 #= require jquery
+#= require jquery-migrate
+#= require jquery-ui
 #= require jquery-ujs
 #= require artDialog
 #= require jquery-form
 #= require underscore
+#= require wice_grid
 #= require patch
 #= require aui
 
