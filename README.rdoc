@@ -3,32 +3,6 @@
 {<img src="https://codeclimate.com/github/qomoteam/qomo/badges/coverage.svg" />}[https://codeclimate.com/github/qomoteam/qomo/coverage]
 {<img src="https://travis-ci.org/qomoteam/qomo.svg" alt="Build Status" />}[https://travis-ci.org/qomoteam/qomo]
 {<img src="https://gemnasium.com/qomoteam/qomo.svg" alt="Dependency Status" />}[https://gemnasium.com/qomoteam/qomo]
-
 {<img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="GPL License" />}[https://raw.githubusercontent.com/qomoteam/qomo/master/LICENSE]
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Qomo is a cloud platform for biological data storage, analysis and sharing. It integrates data and analysis tools in one stop; data is stored in a distributed manner and computations are run in parallel in multiple nodes. By adding more nodes into the cluster, it is capable of accommodating the growing needs of storage and computation.
