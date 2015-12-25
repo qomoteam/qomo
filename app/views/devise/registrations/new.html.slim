@@ -47,6 +47,13 @@
               span.aui-icon.icon-required
             = f.text_field :last_name, autofocus: true, class: 'text long-field'
 
+          .field-group.top-label
+            = f.label :last_name
+              | Captcha
+              span.aui-icon.icon-required
+            = rucaptcha_input_tag class: 'text'
+            = rucaptcha_image_tag alt: 'Captcha', style: 'margin: 5px 0;display:block'
+
           .aui-group
             = f.submit 'Sign up', class: 'aui-button aui-button-primary'
             = render 'devise/shared/links'
