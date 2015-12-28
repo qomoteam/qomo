@@ -5,7 +5,7 @@ class Datastore
   def initialize(uid, dir_users)
     @uid = uid
     @dir_users = dir_users
-    @home = File.join @dir_users, uid
+    @home = File.join @dir_users, uid[0], uid[1], uid
   end
 
   def get(path)
