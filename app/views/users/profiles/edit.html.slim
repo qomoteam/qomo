@@ -6,6 +6,10 @@
 
         = form_for @user, url:users_profile_path, html: {method: :put, class: 'aui'} do |f|
           .field-group.top-label
+            = f.label :username
+            input.text.long-field value=@user.username readonly='readonly'
+
+          .field-group.top-label
             = f.label :first_name
             = f.text_field :first_name, autofocus: true, class: 'text long-field'
 

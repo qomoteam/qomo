@@ -6,7 +6,8 @@ html lang='en'
     = stylesheet_link_tag 'application', media: 'all'
 
     = Gon::Base.render_data
-    = javascript_include_tag 'application'
+    javascript:
+      gon.notice = "#{flash[:notice]}"
     = javascript_include_tag 'visitor_analytics', async: true
     = csrf_meta_tags
 
@@ -14,3 +15,4 @@ html lang='en'
     = render 'layouts/header'
     #content
       = yield
+    = javascript_include_tag 'application'

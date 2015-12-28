@@ -18,13 +18,13 @@
         a href=pipeline_path(@pipeline) = pipeline_url @pipeline
     tr
       td Citation
-      td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.timezone})
+      td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
     tr
       td Created At
-      td = ptime @pipeline.created_at, current_user.timezone
+      td = ptime @pipeline.created_at, current_user.try(:timezone)
     tr
       td Updated At
-      td = ptime @pipeline.updated_at, current_user.timezone
+      td = ptime @pipeline.updated_at, current_user.try(:timezone)
     tr
       td Description
       td == markdown @pipeline.desc

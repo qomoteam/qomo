@@ -1,4 +1,7 @@
 class WorkspacesController < ApplicationController
+
+  before_action :authenticate_user!
+
   def show
     @action = flash[:action]
     @pid = flash[:pid]

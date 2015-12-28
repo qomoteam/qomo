@@ -4,6 +4,10 @@ Rails.application.routes.draw do
       registrations: 'users/registrations'
   }
 
+  devise_scope :user do
+    post 'users/guest_signin', to: 'users/sessions#guest_signin', as: 'guest_signin'
+  end
+
   mount RuCaptcha::Engine => '/captcha'
 
   root 'workspaces#show'

@@ -2,7 +2,9 @@
   .aui-page-panel
     .aui-page-panel-inner
       section.aui-page-panel-content
-        h2 Log in
+        h2
+          ' Log in |
+          a.aui-button.aui-button-link href=guest_signin_path data-method="post" Or Try with Guest
 
         = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
           .field-group.top-label

@@ -1,31 +1,33 @@
 .page-panel
   .aui-tabs.horizontal-tabs
     ul.tabs-menu
+      - if user_signed_in?
+        li.menu-item
+          a href='#tabs-my-pipelines'
+            strong My Pipelines
       li.menu-item.active-tab
-        a href='#tabs-my-pipelines'
-          strong My Pipelines
-      li.menu-item
         a href='#tabs-all-pipelines'
           strong Explore
 
-    #tabs-my-pipelines.tabs-pane.active-pane
-      table.aui
-        thead
-          tr
-            th width='400px' Title
-            th Created At
-            th Shared
-            th Operations
-        tbody
-          - for pipeline in @private_pipelines
-            tr data-pid=pipeline.id
-              td
-                a href=pipeline_path(pipeline) = pipeline.title
-              td = pipeline.created_at.to_s :db
-              td = shared_tag pipeline.shared
-              td = render 'pipelines/operations', pipeline: pipeline
+    - if user_signed_in?
+      #tabs-my-pipelines.tabs-pane
+        table.aui
+          thead
+            tr
+              th width='400px' Title
+              th Created At
+              th Shared
+              th Operations
+          tbody
+            - for pipeline in @private_pipelines
+              tr data-pid=pipeline.id
+                td
+                  a href=pipeline_path(pipeline) = pipeline.title
+                td = pipeline.created_at.to_s :db
+                td = shared_tag pipeline.shared
+                td = render 'pipelines/operations', pipeline: pipeline
 
-    #tabs-all-pipelines.tabs-pane
+    #tabs-all-pipelines.tabs-pane.active-pane
       table.aui
         thead
           tr

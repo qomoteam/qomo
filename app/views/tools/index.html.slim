@@ -1,20 +1,22 @@
 .page-panel
   .aui-tabs.horizontal-tabs
     ul.tabs-menu
+      - if user_signed_in?
+        li.menu-item
+          a href='#tabs-my-tools'
+            strong My Tools
       li.menu-item.active-tab
-        a href='#tabs-my-tools'
-          strong My Tools
-      li.menu-item
         a href='#tabs-all-tools'
           strong Explore
 
-    #tabs-my-tools.tabs-pane.active-pane
-      a.aui-button href=new_tool_path Create Tool
-      ul
-        - for tool in @tools
-          li: a href=edit_tool_path(tool) = tool.name
+    - if user_signed_in?
+      #tabs-my-tools.tabs-pane
+        a.aui-button href=new_tool_path Create Tool
+        ul
+          - for tool in @tools
+            li: a href=edit_tool_path(tool) = tool.name
 
-    #tabs-all-tools.tabs-pane
+    #tabs-all-tools.tabs-pane.active-pane
       ul
       - for tool in @all_tools
         li: a href=tool_path(tool) = tool.name

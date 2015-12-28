@@ -1,6 +1,12 @@
 class Users::SessionsController < Devise::SessionsController
 # before_filter :configure_sign_in_params, only: [:create]
 
+  def guest_signin
+    user = User.create_guest
+    flash[:notice] = "Sign in as guest user #{user.username}, temp password 123456"
+    sign_in_and_redirect user
+  end
+
   # GET /resource/sign_in
   # def new
   #   super

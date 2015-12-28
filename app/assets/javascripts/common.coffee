@@ -9,6 +9,7 @@
 #= require wice_grid
 #= require patch
 #= require aui
+#= require notie
 
 class GUID
   s4: ->
@@ -88,6 +89,9 @@ window.App =
 
 $ ->
   AJS.$('select.select2').auiSelect2()
+
+  if gon.notice
+    notie.alert 4, gon.notice, 100
 
   $('.logout').click ->
     localStorage.clear()

@@ -450,12 +450,13 @@ within 'workspaces', 'show', ->
       $ul.slideDown 200
 
 
-  updateJobStatus = ->
-    $('#job-summary .summary-content').load Routes.summary_jobs()
+  if gon.user_signed_in
+    updateJobStatus = ->
+      $('#job-summary .summary-content').load Routes.summary_jobs()
 
 
-  updateJobStatus()
-  setInterval updateJobStatus, 10000
+    updateJobStatus()
+    setInterval updateJobStatus, 10000
 
   $('#job-summary .refresh').click ->
     updateJobStatus()

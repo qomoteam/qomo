@@ -3,8 +3,7 @@ addons:
   postgresql: 9.3
 
 rvm:
-  - 2.2
-  - 2.1
+  - 2.3
 
 sudo: false
 

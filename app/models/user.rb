@@ -40,6 +40,21 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  def self.create_guest
+    x = SecureRandom.uuid
+    username = "guest-#{x}"
+    password = '123456'
+    user = User.new username: username,
+                    email: "#{username}@example.com",
+                    first_name: 'Guest',
+                    password: password, password_confirmation: password,
+                    timezone: 'Beijing'
+    user.add_role :guest
+    user.save
+    user
+  end
+
   private
 
   def setup_new

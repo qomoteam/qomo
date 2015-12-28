@@ -1,6 +1,6 @@
 class ToolsController < ApplicationController
   def index
-    @tools = current_user.tools
+    @tools = current_user.try :tools
     @all_tools = Tool.all.active
   end
 

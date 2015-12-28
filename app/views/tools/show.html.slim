@@ -14,13 +14,13 @@
       td == contributors_tag @tool.contributors
     tr
       td Citation
-      td #{contributors_tag @tool.contributors} Tool: "#{@tool.name}" in Qomo, available at #{tool_url @tool} (Last update: #{ptime @tool.updated_at, current_user.timezone})
+      td #{contributors_tag @tool.contributors} Tool: "#{@tool.name}" in Qomo, available at #{tool_url @tool} (Last update: #{ptime @tool.updated_at, current_user.try(:timezone)})
     tr
       td Created At
-      td = ptime @tool.created_at, current_user.timezone
+      td = ptime @tool.created_at, current_user.try(:timezone)
     tr
       td Updated At
-      td = ptime @tool.updated_at, current_user.timezone
+      td = ptime @tool.updated_at, current_user.try(:timezone)
     tr
       td Usage
       td = @tool.usage

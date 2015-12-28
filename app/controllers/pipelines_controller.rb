@@ -1,7 +1,9 @@
 class PipelinesController < ApplicationController
 
+  before_action :authenticate_user!, except: [:index, :show]
+
   def index
-    @private_pipelines = current_user.pipelines
+    @private_pipelines = current_user.try :pipelines
     @pipelines = Pipeline.where shared: true
   end
 

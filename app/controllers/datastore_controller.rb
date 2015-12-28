@@ -1,5 +1,6 @@
 class DatastoreController < ApplicationController
-  
+  before_action :authenticate_user!, except: [:filetree]
+
   def show
     @meta = current_user.datastore.get path
     unless @meta
@@ -57,17 +58,21 @@ class DatastoreController < ApplicationController
 
 
   def filetree
-    @dir = params['dir'] || ''
-    @files = current_user.datastore.list @dir
+    files_tree = {}
+    if user_signed_in?
+      @dir = params['dir'] || ''
+      @files = current_user.datastore.list @dir
 
-    files_tree = @files.collect do |e|
-      {
-          text: e.name,
-          id: e.path,
-          children: e.directory?,
-          icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o'
-      }
+      files_tree = @files.collect do |e|
+        {
+            text: e.name,
+            id: e.path,
+            children: e.directory?,
+            icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o'
+        }
+      end
     end
+
     render json: files_tree
   end
 
