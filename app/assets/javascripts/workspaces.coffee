@@ -214,8 +214,18 @@ set_pipeline_params = (params) ->
   params = params || []
   localStorage.params = JSON.stringify params
 
+
+show_tool_spec = (tid) ->
+  $.get Routes.help_tool(tid), (html) ->
+    $('#tool-spec').html(html)
+    AJS.tabs.change $('a[href="#tool-spec"]')
+
 init_box = (box_html, bid, position)->
   $box = $(box_html)
+
+  tid = $box.data('tid')
+  $box.click ->
+    show_tool_spec(tid)
 
   if position
     $box.css
@@ -518,12 +528,8 @@ within 'workspaces', 'show', ->
 
 
     $('#tools-selector a.tool-help').click ->
-      dia = dialog
-        title: "Help: #{$(this).data 'title'}"
-        width: 500
-      dia.show()
-      $.get this.href, (data) ->
-        dia.content data
+      tid = $(this).data 'tid'
+      show_tool_spec(tid)
       return false
 
 
