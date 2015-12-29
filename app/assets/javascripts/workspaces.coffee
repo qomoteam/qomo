@@ -1,6 +1,6 @@
 #= require jsPlumb
 #= require jstree
-
+#= require jquery-panzoom
 window.plumb = {}
 
 hightest_zIndex = 50
@@ -39,6 +39,8 @@ load = (pid)->
   $.get Routes.pipeline(pid, {format: 'json'}), (data)->
     localStorage.boxes = JSON.stringify data.boxes
     localStorage.connections = JSON.stringify data.connections
+    localStorage.panx = JSON.stringify data.panx
+    localStorage.pany = JSON.stringify data.pany
     set_pipeline_params data.params
     restore_workspace()
 
@@ -71,6 +73,8 @@ merge = (pid)->
 clean_workspace = ->
   init_cache(true)
   set_pid(null)
+  set_pan(-5000, -5000)
+  $("#canvas").panzoom('pan', -5000, -5000)
   $('#canvas .toolbox').remove()
   plumb.deleteEveryEndpoint()
 
@@ -88,6 +92,12 @@ restore_workspace = ->
     connections = cached_connections()
     for connection in connections
       add_connection connection
+
+  $("#canvas").panzoom()
+  pan = get_pan()
+  $("#canvas").panzoom('pan', pan.x, pan.y)
+  $("#canvas").on 'panzoomend', (e, p, m, c) ->
+    set_pan(m[4], m[5])
 
 
 
@@ -220,6 +230,7 @@ show_tool_spec = (tid) ->
     $('#tool-spec').html(html)
     AJS.tabs.change $('a[href="#tool-spec"]')
 
+
 init_box = (box_html, bid, position)->
   $box = $(box_html)
 
@@ -232,11 +243,12 @@ init_box = (box_html, bid, position)->
       top: position.top
       left: position.left
   else
+    pan = get_pan()
     $box.offset
-      top: toolbox_offset
-      left: toolbox_offset
+      top: toolbox_offset - pan.y
+      left: toolbox_offset - pan.x
     toolbox_offset += 30
-    if toolbox_offset > 400
+    if toolbox_offset > 500
       toolbox_offset = 5
     update_position bid, $box.position()
 
@@ -396,7 +408,16 @@ populate_pform = ($form)->
   $form.find('#pipeline_boxes').val localStorage.boxes
   $form.find('#pipeline_connections').val localStorage.connections
   $form.find('#pipeline_params').val localStorage.params
+  $form.find('#pipeline_panx').val get_pan().x
+  $form.find('#pipeline_pany').val get_pan().y
 
+
+set_pan = (x, y) ->
+  localStorage.panx = x
+  localStorage.pany = y
+
+get_pan = ->
+  {x: Number(localStorage.panx || -5000), y: Number(localStorage.pany || -5000)}
 
 within 'workspaces', 'show', ->
   $c = $('#content')
@@ -421,6 +442,8 @@ within 'workspaces', 'show', ->
           'pipeline[connections]': localStorage.connections
           'pipeline[boxes]': localStorage.boxes
           'pipeline[params]': localStorage.params
+          'pipeline[panx]': get_pan().x
+          'pipeline[pany]': get_pan().y
     else
       $.get Routes.new_pipeline(), (data)->
         dia = dialog
@@ -472,6 +495,7 @@ within 'workspaces', 'show', ->
     updateJobStatus()
     return false
 
+  $("#canvas-container").css(height: $('.ui-layout-pane-center').height()-$('#canvas-toolbar').height()-1)
 
   jsPlumb.ready ->
     window.plumb = jsPlumb.getInstance
