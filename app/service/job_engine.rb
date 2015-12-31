@@ -106,7 +106,7 @@ class JobEngine
           end
         end
 
-        command.gsub! /\#{#{ka}}/, va.to_s
+        inject_param command, ka, va
       end
 
       units[k] = {id: SecureRandom.uuid, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
@@ -133,6 +133,15 @@ class JobEngine
     RMQ.publish 'jobs', {id: job_id, units: ordere_units}
 
     job_id
+  end
+
+
+  def inject_param(command, ka, va)
+    va = va.to_s
+    if ka.start_with? 'hdfs:'
+      va = "hdfs:#{va[Config.hadoop.hdfs.length..-1]}"
+    end
+    command.gsub! /\#{#{ka}}/, va
   end
 
 end
