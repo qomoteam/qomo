@@ -4,6 +4,7 @@ class Users::SessionsController < Devise::SessionsController
   def guest_signin
     user = User.create_guest
     flash[:notice] = "Sign in as guest user #{user.username}, temp password 123456"
+    user.remember_me!
     sign_in_and_redirect user
   end
 

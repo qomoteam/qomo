@@ -566,7 +566,10 @@ within 'workspaces', 'show', ->
           boxes: localStorage.boxes
           connections: localStorage.connections
         success: (data) ->
-          alert("Pipeline submitted.")
+          msg = "Pipeline submitted."
+          if gon.guest
+            msg += "<br> Guest user will be restricted to use very limited resources."
+          notie.alert(1, msg)
           updateJobStatus()
         error: (data) ->
           alert("Pipeline has an error: #{data.content}")
