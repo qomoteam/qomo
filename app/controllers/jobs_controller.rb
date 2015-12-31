@@ -14,7 +14,12 @@ class JobsController < ApplicationController
 
 
   def show
-    @job = Job.find params[:id]
+    r = Job.where id: params[:id], user_id: current_user.id
+    if r.length != 1
+      raise ActiveRecord::RecordNotFound
+    else
+      @job = r[0]
+    end
   end
 
 

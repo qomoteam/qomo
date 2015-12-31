@@ -7,6 +7,19 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from ActiveRecord::RecordNotFound,
+                ActionController::RoutingError,
+                ActionController::UnknownController,
+                ActionController::UnknownAction,
+                ActionController::MethodNotAllowed do |exception|
+
+      # Put loggers here, if desired.
+
+      redirect_to four_oh_four_path
+    end
+  end
+
   private
 
   def configure_permitted_parameters
