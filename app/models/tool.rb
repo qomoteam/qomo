@@ -106,7 +106,7 @@ class Tool < ActiveRecord::Base
       end
 
       tool.params = params
-      tool.active!
+      tool.status = 0
       result << tool
     end
 

@@ -16,7 +16,7 @@ class DatastoreController < ApplicationController
       @content = @meta.read
     end
 
-    render "datastore/viewer/#{@meta.tpl}"
+    render "datastore/viewer/#{@meta.type.tpl}"
   end
 
 

@@ -52,10 +52,12 @@ class Datastore
   end
 
   def filemeta(abs_path)
-    kind = File.directory?(abs_path) ? :directory : :text
+    kind = File.directory?(abs_path) ? :directory : File.extname(abs_path)[1..-1].to_sym
     size = File.size(abs_path)
-    if File.directory? abs_path and File.exist?(File.join abs_path, '_SUCCESS')
-      kind = :rdout
+    is_rdout = false
+    if kind == :directory and File.exist?(File.join abs_path, '_SUCCESS')
+      is_rdout = :true
+      kind = File.extname(abs_path)[1..-1]
       size = Dir.glob(File.join abs_path, 'part-*').reduce(0) {|mem, e| mem + File.size(e)}
     end
     Filemeta.new apath: abs_path,
@@ -64,6 +66,7 @@ class Datastore
                  mtime: File.mtime(abs_path),
                  atime: File.atime(abs_path),
                  ctime: File.ctime(abs_path),
+                 is_rdout: is_rdout,
                  kind: kind,
                  owner_id: @uid
   end

@@ -21,6 +21,8 @@ class JobEngine
     preset['STREAMING_JAR'] = Config.dir_lib Config.lib.streaming
     preset['QOMO_COMMON'] = Config.dir_lib Config.lib.common
     preset['HADOOP_BIN'] = Config.hadoop.bin
+    preset['SPARK_SUBMIT'] = Config.spark.submit
+    preset['SPARK_MASTER'] = Config.spark.master
 
     env = {}
     env['HADOOP_USER_NAME'] = Config.hadoop.username

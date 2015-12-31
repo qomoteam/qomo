@@ -22,7 +22,7 @@
               | --
             - else
               = number_to_human_size(file.size, precision: 3)
-          td = file.kind
+          td = file.type.desc
           td = shared_tag file.record.shared
           td = ptime file.mtime.to_s, current_user.timezone
           td

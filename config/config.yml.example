@@ -13,6 +13,9 @@ defaults: &defaults
   hadoop:
     username: qomo
     bin: /opt/mapr/bin/hadoop
+  spark:
+    submit: /opt/mapr/spark/spark-1.5.2/bin/spark-submit
+    master: spark://host2:7077
   rmq:
     host: h2
     user: qomo
