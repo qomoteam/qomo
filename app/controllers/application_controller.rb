@@ -10,8 +10,7 @@ class ApplicationController < ActionController::Base
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActiveRecord::RecordNotFound,
                 ActionController::RoutingError,
-                ActionController::UnknownController,
-                ActionController::UnknownAction,
+                AbstractController::ActionNotFound,
                 ActionController::MethodNotAllowed do |exception|
 
       # Put loggers here, if desired.
