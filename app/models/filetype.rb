@@ -9,6 +9,9 @@ class Filetype
       typemapping[:directory] = Filetype.new :directory, 'Directory', 'directory'
       typemapping[:nwk] = Filetype.new :nwk, 'Newick', 'nwk'
       typemapping[:newick] = Filetype.new :nwk, 'Newick', 'nwk'
+      typemapping[:fa] = Filetype.new :fa, 'Fasta', 'fa'
+      typemapping[:fna] = Filetype.new :fa, 'Fasta', 'fa'
+      typemapping[:faa] = Filetype.new :fa, 'Fasta', 'fa'
 
       typemapping[kind]
     end
