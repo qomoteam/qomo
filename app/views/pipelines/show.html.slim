@@ -41,4 +41,4 @@
         = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
 
     .aui-group
-      = submit_tag 'Run', class: 'aui-button aui-button-primary', disabled: current_user != @pipeline.owner
+      = submit_tag 'Run', class: 'aui-button aui-button-primary'
