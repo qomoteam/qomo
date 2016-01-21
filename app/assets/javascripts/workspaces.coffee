@@ -238,6 +238,9 @@ init_box = (box_html, bid, position)->
   $box.click ->
     show_tool_spec(tid)
 
+  $box.find('input').click (e)->
+    $(this).focus()
+
   if position
     $box.css
       top: position.top
