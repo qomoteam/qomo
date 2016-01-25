@@ -1,6 +1,6 @@
 class Filemeta
 
-  attr_reader :path, :size, :mtime, :atime, :ctime, :type
+  attr_reader :path, :size, :mtime, :atime, :ctime, :type, :is_rdout
 
   def initialize(opts={})
     @apath = opts[:apath]
@@ -9,7 +9,7 @@ class Filemeta
     @mtime = opts[:mtime]
     @ctime = opts[:ctime]
     @atime = opts[:atime]
-    @is_rdout = opts[:isRdout]
+    @is_rdout = opts[:is_rdout]
     @type = Filetype.get opts[:kind]
     @owner_id = opts[:owner_id]
   end
@@ -36,7 +36,7 @@ class Filemeta
 
 
   def read
-    if @is_rdout == :rdout
+    if @is_rdout
       Dir.glob(File.join @apath, 'part-*').reduce('') {|mem, e| mem + File.read(e)}
     else
       File.read @apath

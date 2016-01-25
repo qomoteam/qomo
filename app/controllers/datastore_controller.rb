@@ -109,7 +109,13 @@ class DatastoreController < ApplicationController
 
   def download
     path = params[:path]
-    send_file current_user.datastore.apath(path)
+    f = current_user.datastore.get(path)
+    if f.is_rdout
+      send_data f.read
+    else
+      send_file current_user.datastore.apath(path)
+    end
+
   end
 
 end

@@ -1,8 +1,6 @@
 = grid @users_grid, html: {class: 'aui'} do |g|
-  - g.column name: 'ID' do |user|
-    - user.id
   - g.column name: 'Username', attribute: 'username' do |user|
-    - user.username
+    - link_to user.username, admin_user_path(user)
   - g.column name: 'Email', attribute: 'email' do |user|
     - user.email
   - g.column name: 'Full Name', attribute: 'first_name' do |user|
