@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20141221052429) do
     t.uuid :tool_id
     t.string :command
     t.string :wd
-    t.string :env
+    t.hstore :env
     t.json :params
 
     t.integer :status, default: 0

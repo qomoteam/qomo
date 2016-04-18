@@ -5,7 +5,7 @@ class Datastore
   def initialize(uid, dir_users)
     @uid = uid
     @dir_users = dir_users
-    @home = File.join @dir_users, uid[0], uid[1], uid
+    @home = Datastore.home_dir(uid, dir_users)
   end
 
   def get(path)
@@ -69,6 +69,10 @@ class Datastore
                  is_rdout: is_rdout,
                  kind: kind,
                  owner_id: @uid
+  end
+
+  def self.home_dir(uid, dir_users)
+    File.join dir_users, uid[0], uid[1], uid
   end
 
 end

@@ -11,7 +11,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
-  has_many :jobs
+  has_many :filerecords, foreign_key: :owner_id, dependent: :destroy
+  has_many :jobs, dependent: :destroy
+
   has_many :pipelines, foreign_key: :owner_id
   has_many :tools, foreign_key: :owner_id
 

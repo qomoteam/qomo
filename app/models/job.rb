@@ -4,7 +4,7 @@ class Job < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :units, -> { order idx: :asc }, class_name: 'JobUnit', dependent: :delete_all
+  has_many :units, -> { order idx: :asc }, class_name: 'JobUnit', dependent: :destroy
 
   default_scope -> { order('created_at DESC') }
 

@@ -1,1 +1,24 @@
-h3 = @user.id
+h3 = @user.username
+
+table.aui
+  tbody
+    tr
+      td ID
+      td = @user.id
+    tr
+      td Email
+      td = @user.email
+    tr
+      td Full Name
+      td = @user.full_name
+
+    tr
+      td Last Sign In At
+      td = @user.last_sign_in_at
+    tr
+      td Last Sign In IP
+      td = @user.last_sign_in_ip
+
+
+p
+  a href=admin_user_path(@user.id) class="aui-button aui-button-primary" data-confirm='Are your sure?' data-method='delete' Delete
