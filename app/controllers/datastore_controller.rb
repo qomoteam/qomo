@@ -1,8 +1,22 @@
 class DatastoreController < ApplicationController
   before_action :authenticate_user!, except: [:filetree]
 
+  def datastore
+    uid = params[:uid] || current_user.id
+    Datastore.new uid, Config.dir_users
+  end
+
+
   def show
-    @meta = current_user.datastore.get path
+    @meta = datastore.get path
+
+    if params[:uid] and
+        params[:uid] != current_user.id and
+        !Filerecord.shared?(params[:uid], @meta.path)
+      render 'not_found'
+      return
+    end
+
     unless @meta
       render 'not_found'
       return
@@ -11,7 +25,7 @@ class DatastoreController < ApplicationController
     gon.path = path
 
     if @meta.directory?
-      @files = current_user.datastore.list path
+      @files = datastore.list path
     else
       @content = @meta.read
     end
@@ -41,8 +55,8 @@ class DatastoreController < ApplicationController
 
 
   def clear
-    current_user.datastore.list(path).each do |f|
-      if f.name.start_with?('job-') and f.directory? and current_user.datastore.list(f.path).size == 0
+    datastore.list(path).each do |f|
+      if f.name.start_with?('job-') and f.directory? and datastore.list(f.path).size == 0
         f.delete!
         Filerecord.destroy_all path: f.path, owner_id: current_user.id
       end
@@ -61,7 +75,7 @@ class DatastoreController < ApplicationController
     files_tree = {}
     if user_signed_in?
       @dir = params['dir'] || ''
-      @files = current_user.datastore.list @dir
+      @files = datastore.list @dir
 
       files_tree = @files.collect do |e|
         {
@@ -78,27 +92,27 @@ class DatastoreController < ApplicationController
 
 
   def mkdir
-    current_user.datastore.mkdir! params[:path]
+    datastore.mkdir! params[:path]
     render json: {success: true}
   end
 
 
   def trash
-    current_user.datastore.trash! params[:path]
+    datastore.trash! params[:path]
     Filerecord.destroy_all path: params[:path], owner_id: current_user.id
     render json: {success: true}
   end
 
 
   def mv
-    current_user.datastore.mv! params[:src], params[:dest]
+    datastore.mv! params[:src], params[:dest]
     render json: {success: true}
   end
 
 
   def upload
     if request.post?
-      current_user.datastore.save! File.join(params[:dir], params[:filename]), params[:file].tempfile
+      datastore.save! File.join(params[:dir], params[:filename]), params[:file].tempfile
       render json: {success: true}
     else
       gon.dir = params[:dir] || ''
@@ -109,11 +123,11 @@ class DatastoreController < ApplicationController
 
   def download
     path = params[:path]
-    f = current_user.datastore.get(path)
+    f = datastore.get(path)
     if f.is_rdout
       send_data f.read
     else
-      send_file current_user.datastore.apath(path)
+      send_file datastore.apath(path)
     end
 
   end

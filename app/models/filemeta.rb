@@ -1,6 +1,6 @@
 class Filemeta
 
-  attr_reader :path, :size, :mtime, :atime, :ctime, :type, :is_rdout
+  attr_reader :path, :size, :mtime, :atime, :ctime, :type, :is_rdout, :owner_id
 
   def initialize(opts={})
     @apath = opts[:apath]

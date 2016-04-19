@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'library/index'
+
   devise_for :users, controllers: {
       sessions: 'users/sessions',
       registrations: 'users/registrations'
@@ -15,6 +17,8 @@ Rails.application.routes.draw do
   get 'about', to: 'home#about'
   get 'agreement', to: 'home#agreement'
   get 'tutorial', to: 'home#tutorial'
+
+  get 'library', to: 'library#index'
 
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }

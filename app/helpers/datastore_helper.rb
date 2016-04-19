@@ -14,4 +14,9 @@ module DatastoreHelper
     end
   end
 
+
+  def own?(filemeta)
+    filemeta.owner_id == current_user.id
+  end
+
 end

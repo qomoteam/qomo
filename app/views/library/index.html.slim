@@ -1,0 +1,13 @@
+.page-panel
+  table.aui
+    thead
+      tr
+        th Name
+        th Description
+
+    tbody
+      - for record in @records
+        tr
+          td
+            a href=datastore_path(record.path, uid: record.owner_id) = record.name
+          td = record.desc

@@ -8,25 +8,36 @@
         th.aui-table-column-issue-key File Name
         th Size
         th Kind
-        th Shared
+
+        - if own? @meta
+          th Shared
+
         th Date Modified
+
         th Operations
 
       - for file in @files
         tr data-path=file.path
           td
           td
-            a href=datastore_path(file.path) = file.name
+            a href=datastore_path(file.path, uid: params[:uid]) = file.name
           td
             - if file.directory?
               | --
             - else
               = number_to_human_size(file.size, precision: 3)
+
           td = file.type.desc
-          td = shared_tag file.record.shared
+
+          - if own? file
+            td = shared_tag file.record.shared
+
           td = ptime file.mtime.to_s, current_user.timezone
+
           td
-            a.aui-button.aui-button-compact href=datastore_download_path(file.path) Download
-            button.aui-button.aui-button-compact.btn-rename Rename
-            button.aui-button.aui-button-compact.btn-trash
-              .aui-icon.aui-icon-small.aui-iconfont-delete
+            a.aui-button.aui-button-compact href=datastore_download_path(file.path, uid: params[:uid]) Download
+
+            - if own? file
+              button.aui-button.aui-button-compact.btn-rename Rename
+              button.aui-button.aui-button-compact.btn-trash
+                .aui-icon.aui-icon-small.aui-iconfont-delete
