@@ -17,6 +17,18 @@ class User < ActiveRecord::Base
   has_many :pipelines, foreign_key: :owner_id
   has_many :tools, foreign_key: :owner_id
 
+
+  scope :expired_guests, -> {
+    where 'username LIKE ? and CURRENT_DATE-current_sign_in_at>?', 'guest-%', '3 mons'
+  }
+
+
+  def destroy!
+    self.destroy
+    FileUtils.rm_rf datastore.home
+  end
+
+
   def datastore
     Datastore.new self.id, Config.dir_users
   end

@@ -9,8 +9,12 @@ class Admin::UsersController < Admin::ApplicationController
 
   def destroy
     user = User.find(params[:id])
-    FileUtils.rm_rf Datastore.home_dir(user.id, Config.dir_users)
-    user.destroy
+    user.destroy!
+    redirect_to admin_users_path
+  end
+
+  def destroy_expired
+    User.expired_guests.each { |user| user.destroy! }
     redirect_to admin_users_path
   end
 

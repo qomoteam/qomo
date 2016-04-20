@@ -84,12 +84,19 @@ Rails.application.routes.draw do
     resource :profile, :setting
   end
 
+
   get 'scholar/:username', to: 'scholar#show', as: :scholar
+
 
   namespace :admin do
     root 'home#index'
     get 'dashboard', to: 'home#index'
-    resources :categories, :users
+    resources :categories
+    resources :users do
+      collection do
+        delete :destroy_expired
+      end
+    end
   end
 
 end

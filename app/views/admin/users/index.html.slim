@@ -1,3 +1,5 @@
+a.aui-button.aui-button-primary href=destroy_expired_admin_users_path data-method='delete' data-confirm='Delete all expired guests?' Delete Expired Guests
+
 == grid @users_grid, html: {class: 'aui'} do |g|
   - g.column name: 'Username', attribute: 'username' do |user|
     - link_to user.username, admin_user_path(user)
