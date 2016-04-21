@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post '/rate' => 'rater#create', :as => 'rate'
   get 'library/index'
 
   devise_for :users, controllers: {
@@ -64,6 +65,7 @@ Rails.application.routes.draw do
       patch :unshare
       get :export
       post :run
+      post :star
     end
   end
 

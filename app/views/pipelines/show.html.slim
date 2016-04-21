@@ -1,6 +1,6 @@
 .page-panel
   h3 Pipeline: #{@pipeline.title}
-  = render 'pipelines/operations', {pipeline: @pipeline}
+  = render partial: 'pipelines/operations', locals: {pipeline: @pipeline, compact: false}
 
   table.aui.def
     tr

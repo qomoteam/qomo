@@ -8,7 +8,7 @@
 .aui-buttons
   a.aui-button.export href=export_pipeline_path(pipeline) Export
 
-- if pipeline.owner == current_user
+- if pipeline.owner == current_user and !compact
   .aui-buttons
     a.aui-button href=edit_pipeline_path(pipeline) Edit
     a.aui-button href=pipeline_path(pipeline) data-method='delete' Delete

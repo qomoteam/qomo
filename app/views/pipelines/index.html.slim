@@ -23,24 +23,27 @@
               tr data-pid=pipeline.id
                 td
                   a href=pipeline_path(pipeline) = pipeline.title
-                td = pipeline.created_at.to_s :db
+                td = ptime pipeline.created_at, current_user.try(:timezone)
                 td = shared_tag pipeline.shared
-                td = render 'pipelines/operations', pipeline: pipeline
+                td = render partial: 'pipelines/operations', locals: {pipeline: pipeline, compact: false}
 
     #tabs-all-pipelines.tabs-pane.active-pane
       table.aui
         thead
           tr
-            th width='400px' Title
+            th width='300px' Title
+            th width='450px' Description
             th Owner
             th Created At
-            th Operations
+            th Star
         tbody
           - for pipeline in @pipelines
             tr
               td
                 a href=pipeline_path(pipeline) = pipeline.title
+              td = pipeline.desc
               td = user_tag pipeline.owner
-              td = pipeline.created_at.to_s :db
-              td = render 'pipelines/operations', pipeline: pipeline
+              td = ptime2 pipeline.created_at
+              td = render 'pipelines/star', pipeline: pipeline
+
 

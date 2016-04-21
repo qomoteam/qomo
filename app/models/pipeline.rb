@@ -1,5 +1,7 @@
 class Pipeline < ActiveRecord::Base
 
+  acts_as_votable
+
   belongs_to :owner, class_name: 'User'
 
   default_scope -> { order('created_at DESC') }

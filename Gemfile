@@ -23,7 +23,9 @@ gem 'rolify'
 gem 'ledermann-rails-settings'
 gem 'wice_grid'
 
+gem 'acts_as_votable'
 gem 'awesome_nested_set'
+
 gem 'font-awesome-sass'
 gem 'bourbon'
 
@@ -38,8 +40,7 @@ gem 'vam'
 
 group :development, :test do
   gem 'byebug'
-  gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'spring'
   gem 'pry-rails'
+  gem 'web-console'
 end

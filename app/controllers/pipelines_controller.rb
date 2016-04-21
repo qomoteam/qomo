@@ -130,4 +130,17 @@ class PipelinesController < ApplicationController
     redirect_to pipelines_path
   end
 
+
+  def star
+    pipeline = Pipeline.find(params[:id])
+    user = current_user
+    if user.voted_for? pipeline
+      puts 1
+      pipeline.unliked_by user
+    else
+      pipeline.liked_by user
+    end
+    redirect_to pipelines_path
+  end
+
 end

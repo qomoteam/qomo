@@ -10,5 +10,5 @@ table
       tr
         td
           a href=pipeline_path(pipeline) = pipeline.title
-        td = pipeline.updated_at.to_s :db
+        td = ptime pipeline.created_at, current_user.try(:timezone)
         td = render 'pipelines/operations', pipeline: pipeline
