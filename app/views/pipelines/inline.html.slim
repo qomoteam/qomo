@@ -11,4 +11,4 @@ table
         td
           a href=pipeline_path(pipeline) = pipeline.title
         td = ptime pipeline.created_at, current_user.try(:timezone)
-        td = render 'pipelines/operations', pipeline: pipeline
+        td = render partial: 'pipelines/operations', locals: {pipeline: pipeline, compact: false}

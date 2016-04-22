@@ -22,4 +22,10 @@ class Job < ActiveRecord::Base
     self.units.success.count*1.0 / self.units.count
   end
 
+
+  def status
+    units.last.status
+  end
+
+
 end
