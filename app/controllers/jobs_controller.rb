@@ -30,9 +30,10 @@ class JobsController < ApplicationController
 
 
   def clear
-    Job.failed.each do |j|
-      j.destroy
-      current_user.datastore.delete! "job-#{j.id}"
+    Job.all.each do |j|
+      if j.status == 'failed' or j.status == 'success'
+        j.destroy
+      end
     end
     redirect_to jobs_path
   end
