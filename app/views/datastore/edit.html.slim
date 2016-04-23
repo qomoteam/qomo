@@ -1,0 +1,13 @@
+.page-panel
+  = form_tag datastore_update_path(@meta.path), method: :patch, class: 'aui' do |f|
+    .field-group
+      = label_tag :file_name
+      = text_field_tag :file_name, @meta.name, class: 'text long-field'
+
+    .field-group
+      = label_tag :description
+      = text_area_tag :description, @record&.desc, class: 'textarea long-field', rows: '5'
+
+    .buttons-container
+      .buttons
+        = submit_tag 'Save', class: 'button submit'

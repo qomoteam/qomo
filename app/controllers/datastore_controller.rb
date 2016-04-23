@@ -34,6 +34,33 @@ class DatastoreController < ApplicationController
   end
 
 
+  def edit
+    @meta = datastore.get path
+    @record = @meta.record
+  end
+
+
+  # Update file name and its desc
+  def update
+    @meta = datastore.get path
+    dirname = File.dirname(path)
+    dirname = dirname == '.' ? '' : dirname+'/'
+    new_path = dirname+params[:file_name]
+
+    if @meta.name != params[:file_name]
+      datastore.mv! path, new_path
+    end
+
+    @record = @meta.record
+    @record.path = new_path
+    @record.name = params[:file_name]
+    @record.desc = params[:description]
+    @record.save
+
+    redirect_to datastore_edit_path(new_path)
+  end
+
+
   def share
     record = Filerecord.find_or_create_by(name: File.basename(path), path: path, owner_id: current_user.id)
 

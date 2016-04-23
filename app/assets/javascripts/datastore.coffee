@@ -78,7 +78,7 @@ within 'datastore', 'show', ->
     path = prompt('Go to:')
     Datastore.goto path if path
 
-  $('.btn-rename').click ->
+  $('.b1tn-edit-meta').click ->
     name = prompt('New name:')
     src = path_of_row(this)
     goto = false

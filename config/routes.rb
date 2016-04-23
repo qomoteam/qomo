@@ -28,6 +28,9 @@ Rails.application.routes.draw do
     patch :mv
     delete :trash
 
+    get '/edit/-/(*path)', action: 'edit', as: :edit, constraints: { :path => /.*/ }
+    patch '/-/(*path)', action: 'update', as: :update, constraints: { :path => /.*/ }
+
     patch '/share/-/(*path)', action: 'share', as: :share, constraints: {:path => /.*/ }
     patch '/unshare/-/(*path)', action: 'unshare', as: :unshare, constraints: {:path => /.*/ }
 
