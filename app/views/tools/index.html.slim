@@ -21,11 +21,12 @@
         table.aui
           tbody
             tr
-              td
+              td colspan='2'
                 h5
                   ' Category:
                   = category.name
             - for tool in category.active_tools
               tr
-                td
+                td width='125px'
                   a href=tool_path(tool) = tool.name
+                td = tool.desc

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421082104) do
+ActiveRecord::Schema.define(version: 20160423144526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20160421082104) do
     t.string   "dirname"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "desc"
   end
 
   add_index "tools", ["category_id"], name: "index_tools_on_category_id", using: :btree

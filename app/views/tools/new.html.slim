@@ -16,6 +16,10 @@
         = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
 
       .field-group
+        = f.label :desc, 'Description'
+        = f.text_field :desc, placeholder: 'Simple description.', class: 'text full-width-field'
+
+      .field-group
         = f.label :usage
         = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea full-width-field', rows: '10'
 
@@ -42,9 +46,9 @@
             = empty_row @tool.params, 5
             - if @tool.params
               - for param in @tool.params
-                  //TODO: REMOVE tmp param
-                  - if param['type'] != 'tmp'
-                    = render 'tools/tr_param', param: param
+                //TODO: REMOVE tmp param
+                - if param['type'] != 'tmp'
+                  = render 'tools/tr_param', param: param
 
       .field-group
         = f.label :command
@@ -56,6 +60,7 @@
         = f.label :file
         label.ffi.long-field data-ffi-button-text='Select'
           = f.file_field :file, multiple: true
+
 
     .buttons-container
       .buttons
