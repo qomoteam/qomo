@@ -1,20 +1,20 @@
 class Tool < ActiveRecord::Base
   enum status: {
-           inactive: 0,
-           active: 1
-       }
+      inactive: 0,
+      active: 1
+  }
 
   belongs_to :owner, class_name: 'User'
   belongs_to :category
 
 
   def inputs
-    self.params.select {|k| k['type'].downcase == 'input'}
+    self.params.select { |k| k['type'].downcase == 'input' }
   end
 
 
   def output
-    (self.params.select {|k| k['type'].downcase == 'output'})[0]
+    (self.params.select { |k| k['type'].downcase == 'output' })[0]
   end
 
 
@@ -24,7 +24,7 @@ class Tool < ActiveRecord::Base
 
 
   def normal_params
-    self.params.reject {|k| %w(input output tmp).include? k['type'].downcase }
+    self.params.reject { |k| %w(input output tmp).include? k['type'].downcase }
   end
 
 

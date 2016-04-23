@@ -17,6 +17,15 @@
             li: a href=edit_tool_path(tool) = tool.name
 
     #tabs-all-tools.tabs-pane.active-pane
-      ul
-      - for tool in @all_tools
-        li: a href=tool_path(tool) = tool.name
+      - for category in @categories
+        table.aui
+          tbody
+            tr
+              td
+                h5
+                  ' Category:
+                  = category.name
+            - for tool in category.active_tools
+              tr
+                td
+                  a href=tool_path(tool) = tool.name
