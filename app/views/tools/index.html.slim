@@ -27,6 +27,11 @@
                   = category.name
             - for tool in category.active_tools
               tr
-                td width='185px'
-                  a href=tool_path(tool) = tool.name
+                td width='250px'
+                  a href=tool_path(tool)
+                    => tool.name
+                  - if tool.tech == 'Hadoop'
+                    span.aui-lozenge.aui-lozenge-success.tool-tech = tool.tech
+                  - if tool.tech == 'Spark'
+                    span.aui-lozenge.aui-lozenge-current.tool-tech = tool.tech
                 td = tool.desc

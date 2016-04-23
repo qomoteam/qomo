@@ -1,9 +1,6 @@
 class AddDescToTool < ActiveRecord::Migration
-  def up
+  def change
     add_column :tools, :desc, :text
   end
 
-  def down
-    remove_column :tools, :desc, :text
-  end
 end
