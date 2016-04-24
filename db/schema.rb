@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423150951) do
+ActiveRecord::Schema.define(version: 20160424091408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20160423150951) do
     t.datetime "updated_at"
     t.integer  "panx",         default: 0
     t.integer  "pany",         default: 0
+    t.integer  "category_id"
   end
 
   create_table "roles", force: :cascade do |t|

@@ -93,12 +93,14 @@ class PipelinesController < ApplicationController
 
   def new
     @pipeline = Pipeline.new
+    @categories = Category.all
     render layout: nil
   end
 
 
   def edit
     @pipeline = Pipeline.find params['id']
+    @categories = Category.all
   end
 
 

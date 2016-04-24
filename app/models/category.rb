@@ -3,6 +3,7 @@ class Category < ActiveRecord::Base
 
   has_many :tools
 
+  has_many :pipelines
 
   def active_tools
     self.tools.select { |tool| tool.active? }
