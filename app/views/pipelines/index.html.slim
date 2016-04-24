@@ -28,16 +28,28 @@
                 td = render partial: 'pipelines/operations', locals: {pipeline: pipeline, compact: false}
 
     #tabs-all-pipelines.tabs-pane.active-pane
-      ol.pipeline-explorer
-        - for pipeline in @pipelines
-          li
-            h3
-              => user_tag pipeline.owner
-              ' /
-              a> href=pipeline_path(pipeline) = pipeline.title
-              = render 'pipelines/star', pipeline: pipeline
-            p.desc = pipeline.desc
-            .meta
-              ' Category: #{pipeline.category.name} |
-              ' Star: #{pipeline.votes_for.size} |
-              ' Updated: #{ptime2 pipeline.updated_at}
+      .aui-group
+        .aui-item style='width: 80%'
+          ol.pipeline-explorer
+            - for pipeline in @pipelines
+              li
+                h3
+                  => user_tag pipeline.owner
+                  ' /
+                  a> href=pipeline_path(pipeline) = pipeline.title
+                  = render 'pipelines/star', pipeline: pipeline
+                p.desc = pipeline.desc
+                .meta
+                  ' Category: #{pipeline.category.name} |
+                  ' Star: #{pipeline.votes_for.size} |
+                  ' Updated: #{ptime2 pipeline.updated_at}
+        .aui-item
+          nav.aui-navgroup.aui-navgroup-vertical
+            .aui-navgroup-inner
+              ul.aui-nav
+                li class=('aui-nav-selected' unless params[:category_id])
+                  a href=pipelines_path  All
+                - for category in all_categories
+                  li class=('aui-nav-selected' if category.id == params[:category_id].to_i)
+                    a href=category_pipelines_path(category) = category.name
+

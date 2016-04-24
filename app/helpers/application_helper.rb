@@ -102,4 +102,9 @@ module ApplicationHelper
     end.join ', '
   end
 
+
+  def all_categories
+    Category.all
+  end
+
 end
