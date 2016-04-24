@@ -28,22 +28,16 @@
                 td = render partial: 'pipelines/operations', locals: {pipeline: pipeline, compact: false}
 
     #tabs-all-pipelines.tabs-pane.active-pane
-      table.aui
-        thead
-          tr
-            th width='300px' Title
-            th width='400px' Description
-            th Owner
-            th Created At
-            th width='50px' Star
-        tbody
-          - for pipeline in @pipelines
-            tr
-              td
-                a href=pipeline_path(pipeline) = pipeline.title
-              td = pipeline.desc
-              td = user_tag pipeline.owner
-              td = ptime2 pipeline.created_at
-              td = render 'pipelines/star', pipeline: pipeline
-
-
+      ol.pipeline-explorer
+        - for pipeline in @pipelines
+          li
+            h3
+              => user_tag pipeline.owner
+              ' /
+              a> href=pipeline_path(pipeline) = pipeline.title
+              = render 'pipelines/star', pipeline: pipeline
+            p.desc = pipeline.desc
+            .meta
+              ' Category: #{pipeline.category.name} |
+              ' Star: #{pipeline.votes_for.size} |
+              ' Updated: #{ptime2 pipeline.updated_at}

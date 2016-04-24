@@ -4,6 +4,8 @@ class Pipeline < ActiveRecord::Base
 
   belongs_to :owner, class_name: 'User'
 
+  belongs_to :category
+
   default_scope -> { order('created_at DESC') }
 
   def accession
