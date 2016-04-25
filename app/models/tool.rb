@@ -4,6 +4,8 @@ class Tool < ActiveRecord::Base
       active: 1
   }
 
+  default_scope -> { order('name ASC') }
+
   belongs_to :owner, class_name: 'User'
   belongs_to :category
 
