@@ -7,7 +7,20 @@
     .buttons
       = f.submit class: 'button submit'
 
-ul
-  - for c in @categories
-    li = c.name
+table.aui
+  thead
+    tr
+      th Name
+      th Pipelines
+      th Tools
+      th
+  tbody
+    - for c in @categories
+      tr
+        td
+          a href=edit_admin_category_path(c) = c.name
+        td = c.pipelines.size
+        td = c.tools.size
+        td
+          a href=admin_category_path(c) data-method='delete' data-confirm='Are you sure delete this category?' Delete
 
