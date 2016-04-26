@@ -52,7 +52,16 @@ class Datastore
   end
 
   def filemeta(abs_path)
-    kind = File.directory?(abs_path) ? :directory : File.extname(abs_path)[1..-1].to_sym
+    if File.directory?(abs_path)
+      kind = :directory
+    else
+      extname = File.extname(abs_path)
+      unless extname.blank?
+        kind = extname[1..-1].to_sym
+      else
+        kind = :text
+      end
+    end
     size = File.size(abs_path)
     is_rdout = false
     if kind == :directory and File.exist?(File.join abs_path, '_SUCCESS')
