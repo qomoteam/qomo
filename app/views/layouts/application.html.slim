@@ -15,4 +15,19 @@ html lang='en'
     = render 'layouts/header'
     #content
       = yield
+
+    footer id="footer" role="contentinfo"
+      section class="footer-body"
+        ul
+          li
+            ' Copyright © 2016 Qomo,
+            a> href='http://bigd.big.ac.cn/' target="_blank" BIG Data Center,
+            a> href='http://english.big.cas.cn/' target="_blank" Beijing Institute of Genomics,
+            a> href='http://english.cas.cn/' target="_blank" Chinese Academy of Sciences
+          li
+            a href=agreement_path Agreement
+          li
+            a href='https://github.com/qomoteam/qomo' target="_blank" Source
+          li = revision_tag
+
     = javascript_include_tag 'application'

@@ -2,6 +2,12 @@
 ._jsPlumb_drag_select *
   @include user-select(none)
 
+body[data-controller=workspaces][data-action=show]
+  #footer
+    display: none
+  #content
+    padding-bottom: 0px
+
 #canvas-toolbar
   margin: 0 20px
   height: 30px

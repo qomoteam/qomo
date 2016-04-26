@@ -10,14 +10,14 @@ class DatastoreController < ApplicationController
   def show
     @meta = datastore.get path
 
-    if params[:uid] and
-        params[:uid] != current_user.id and
-        !Filerecord.shared?(params[:uid], @meta.path)
+    unless @meta
       render 'not_found'
       return
     end
 
-    unless @meta
+    if params[:uid] and
+        params[:uid] != current_user.id and
+        !Filerecord.shared?(params[:uid], @meta.path)
       render 'not_found'
       return
     end
