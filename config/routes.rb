@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   post '/rate' => 'rater#create', :as => 'rate'
-  get 'library/index'
 
   devise_for :users, controllers: {
       sessions: 'users/sessions',
@@ -20,6 +19,7 @@ Rails.application.routes.draw do
   get 'tutorial', to: 'home#tutorial'
 
   get 'library', to: 'library#index'
+  get 'library/filetree', to: 'library#filetree'
 
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   resource :workspace do
     get 'load/:id', action: :load, as: :load
     get 'merge/:id', action: :merge, as: :merge
+    get 'fileselector'
     post :run
   end
 

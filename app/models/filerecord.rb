@@ -16,5 +16,9 @@ class Filerecord < ActiveRecord::Base
   end
 
 
+  def meta
+    Datastore.new(owner.id, Config.dir_users).get(path)
+  end
+
 
 end

@@ -1,0 +1,12 @@
+form.aui
+  input.path.text value="" /
+  .aui-tabs.horizontal-tabs
+    ul.tabs-menu
+      li.menu-item.active-tab
+        a href="#myfiles-tab"  My Files
+      li.menu-item
+        a href="#library-tab"  Dataset Library
+    #myfiles-tab.tabs-pane.active-pane
+      .tree data-url=datastore_filetree_path
+    #library-tab.tabs-pane
+      .tree data-url=library_filetree_path

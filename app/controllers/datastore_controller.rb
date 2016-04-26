@@ -1,4 +1,7 @@
 class DatastoreController < ApplicationController
+
+  LIBRARY_ID = '__dataset__library__'
+
   before_action :authenticate_user!, except: [:filetree]
 
   def datastore
@@ -109,6 +112,7 @@ class DatastoreController < ApplicationController
             text: e.name,
             id: e.path,
             children: e.directory?,
+            #TODO remove frontend html class
             icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o'
         }
       end
