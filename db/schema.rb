@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424091408) do
+ActiveRecord::Schema.define(version: 20160426102935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20160424091408) do
     t.integer "rgt",                        null: false
     t.integer "depth",          default: 0, null: false
     t.integer "children_count", default: 0, null: false
+    t.integer "tech_id_id"
   end
 
   add_index "categories", ["lft"], name: "index_categories_on_lft", using: :btree
@@ -93,6 +94,11 @@ ActiveRecord::Schema.define(version: 20160424091408) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "teches", force: :cascade do |t|
+    t.string "name"
+    t.string "htmlClass"
+  end
+
   create_table "tools", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name",                     null: false
     t.string   "contributors"
@@ -106,7 +112,7 @@ ActiveRecord::Schema.define(version: 20160424091408) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "desc"
-    t.string   "tech"
+    t.integer  "tech_id_id"
   end
 
   add_index "tools", ["category_id"], name: "index_tools_on_category_id", using: :btree

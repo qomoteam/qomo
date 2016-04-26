@@ -30,8 +30,6 @@
                 td width='250px'
                   a href=tool_path(tool)
                     => tool.name
-                  - if tool.tech == 'Hadoop'
-                    span.aui-lozenge.aui-lozenge-success.tool-tech = tool.tech
-                  - if tool.tech == 'Spark'
-                    span.aui-lozenge.aui-lozenge-current.tool-tech = tool.tech
+                    - if tool.tech
+                      span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name
                 td = tool.desc

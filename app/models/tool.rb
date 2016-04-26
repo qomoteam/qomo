@@ -9,6 +9,8 @@ class Tool < ActiveRecord::Base
   belongs_to :owner, class_name: 'User'
   belongs_to :category
 
+  belongs_to :tech
+
 
   def inputs
     self.params.select { |k| k['type'].downcase == 'input' }

@@ -12,12 +12,12 @@
         .description Multiple contributors may be seperated by semicolon
 
       .field-group
-        = f.label :category
+        = f.label :category_id, 'Category'
         = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
 
       .field-group
-        = f.label :tech, 'Technology'
-        = f.select :tech, %w(Unknown Single\ Thread Simple\ Parallel Hadoop Spark), {}, {class: 'select long-field'}
+        = f.label :tech_id, 'Technology'
+        = f.collection_select :tech_id, Tech.all, :id, :name, {include_blank: true}, {class: 'select long-field'}
 
       .field-group
         = f.label :desc, 'Description'
