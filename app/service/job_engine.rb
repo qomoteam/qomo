@@ -72,7 +72,7 @@ class JobEngine
         if va.kind_of? Array
           separator = ','
           tool.params.each do |p|
-            separator = p['separator'] if p['name'] == ka
+            separator = p['separator'] || separator if p['name'] == ka
           end
           va = va.join separator
         end
