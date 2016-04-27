@@ -13,6 +13,11 @@ class Job < ActiveRecord::Base
   end
 
 
+  def tmpdir
+    File.join outdir, '.tmp'
+  end
+
+
   def accession
     self.id
   end
@@ -33,5 +38,10 @@ class Job < ActiveRecord::Base
     'waiting'
   end
 
+
+  def destroy!
+    user.datastore.delete! self.tmpdir
+    self.destroy
+  end
 
 end

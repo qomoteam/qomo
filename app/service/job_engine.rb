@@ -11,8 +11,7 @@ class JobEngine
 
   def submit(boxes, conns)
     job_id = SecureRandom.uuid
-    job = Job.new id: job_id,
-                  user_id: @user_id
+    job = Job.new id: job_id, user_id: @user_id
 
     outdir = job.outdir
     @datastore.mkdir! outdir
@@ -34,14 +33,14 @@ class JobEngine
       tool = Tool.find v['tool_id']
       tool.params.each do |e|
         if e['type'] == 'tmp'
-          boxes[k]['values'][e['name']] = File.join '.tmp', SecureRandom.uuid
+          boxes[k]['values'][e['name']] = File.join outdir, '.tmp', SecureRandom.uuid
         end
 
         v['values'].each do |ka, va|
           if e['name'] == ka
             if e['type'] == 'output'
               if va.blank?
-                boxes[k]['values'][ka] = File.join '.tmp', SecureRandom.uuid
+                boxes[k]['values'][ka] = File.join outdir, '.tmp', SecureRandom.uuid
               else
                 boxes[k]['values'][ka] = File.join outdir, va
               end
@@ -66,9 +65,11 @@ class JobEngine
     #Generate commands
     boxes.each do |k, v|
       tool = Tool.find v['tool_id']
+      unit_id = SecureRandom.uuid
       command = tool.command.dup
 
-      preset.merge(v['values']).each do |ka, va|
+      pvalues = v['values']
+      preset.merge(pvalues).each do |ka, va|
         if va.kind_of? Array
           separator = ','
           tool.params.each do |p|
@@ -100,7 +101,7 @@ class JobEngine
               when 'output'
                 va = @datastore.apath va
               when 'tmp'
-                va = @datastore.apath va
+                va = @datastore.apath "#{outdir}/.tmp/#{unit_id}"
             end
 
           end
@@ -109,7 +110,7 @@ class JobEngine
         inject_param command, ka, va
       end
 
-      units[k] = {id: SecureRandom.uuid, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
+      units[k] = {id: unit_id, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
     end
 
     ordere_units = dg.topsort_iterator.to_a

@@ -24,7 +24,8 @@ class JobsController < ApplicationController
 
 
   def destroy
-    Job.delete params[:id]
+    job = Job.find params[:id]
+    job.destroy!
     redirect_to action: :index
   end
 
