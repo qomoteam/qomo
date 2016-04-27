@@ -51,12 +51,15 @@ merge = (pid)->
 
     new_boxes = data.boxes
     new_connections = data.connections
+
     set_pipeline_params data.params
 
     for i of new_boxes
       new_box = new_boxes[i]
       new_id = App.guid()
       new_box.id = new_id
+      new_box.position.left -= localStorage.panx
+      new_box.position.top -= localStorage.pany
       boxes[new_id] = new_box
       for new_connection in new_connections
         new_connection.sourceId = new_id if new_connection.sourceId == i
