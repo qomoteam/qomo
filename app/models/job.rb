@@ -25,7 +25,7 @@ class Job < ActiveRecord::Base
 
   def status
     for unit in units.reverse
-      if unit && (unit.tatus != 'waiting')
+      if unit && (unit.status != 'waiting')
         return unit.status
       end
     end
