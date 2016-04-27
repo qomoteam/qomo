@@ -70,7 +70,7 @@ class JobEngine
 
       preset.merge(v['values']).each do |ka, va|
         if va.kind_of? Array
-          separator = ''
+          separator = ','
           tool.params.each do |p|
             separator = p['separator'] if p['name'] == ka
           end

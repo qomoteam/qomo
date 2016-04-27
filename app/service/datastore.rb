@@ -56,10 +56,10 @@ class Datastore
       kind = :directory
     else
       extname = File.extname(abs_path)
-      unless extname.blank?
-        kind = extname[1..-1].to_sym
-      else
+      if extname.blank?
         kind = :text
+      else
+        kind = extname[1..-1].to_sym
       end
     end
     size = File.size(abs_path)
