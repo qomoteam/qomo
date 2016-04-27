@@ -58,8 +58,9 @@ merge = (pid)->
       new_box = new_boxes[i]
       new_id = App.guid()
       new_box.id = new_id
-      new_box.position.left -= localStorage.panx
-      new_box.position.top -= localStorage.pany
+      # Set the correct position of tool box after merge
+      new_box.position.left = new_box.position.left - localStorage.panx + data.panx
+      new_box.position.top = new_box.position.top - localStorage.pany + data.pany
       boxes[new_id] = new_box
       for new_connection in new_connections
         new_connection.sourceId = new_id if new_connection.sourceId == i
