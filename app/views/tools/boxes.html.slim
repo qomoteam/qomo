@@ -15,7 +15,7 @@
       - for param in box[:tool].normal_params
         = render partial: 'box_param', locals: {param: param}
 
-      - if box[:tool].output
-        tr.output.param  data-paramname=box[:tool].output['name']
-          td = render 'tools/param_label', param: box[:tool].output
-          td = render 'tools/param_setter', param: box[:tool].output
+      - for output in box[:tool].outputs
+        tr.output.param  data-paramname=output['name']
+          td = render 'tools/param_label', param: output
+          td = render 'tools/param_setter', param: output

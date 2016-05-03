@@ -17,8 +17,14 @@ class Tool < ActiveRecord::Base
   end
 
 
+  # @deprecated
   def output
-    (self.params.select { |k| k['type'].downcase == 'output' })[0]
+    outputs[0]
+  end
+
+
+  def outputs
+    self.params.select { |k| k['type'].downcase == 'output' }
   end
 
 
