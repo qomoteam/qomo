@@ -1,5 +1,8 @@
 .page-panel
-  h3 Tool: #{@tool.name}
+  h3
+    ' Tool: #{@tool.name}
+    - if @tool.owner == current_user
+      small: a href=edit_tool_path(@tool) Edit
 
   table.aui.def
     tr
