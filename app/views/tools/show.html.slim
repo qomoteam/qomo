@@ -25,8 +25,8 @@
       td Updated At
       td = ptime @tool.updated_at, current_user.try(:timezone)
     tr
-      td Usage
-      td = @tool.usage
-    tr
       td Owner
       td = user_tag @tool.owner
+    tr
+      td Usage
+      td == markdown @tool.usage
