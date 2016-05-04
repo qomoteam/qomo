@@ -391,9 +391,8 @@ init_box = (box_html, bid, position)->
         isTarget: is_input
         maxConnections: 50
 
-      ep.paramName = $param.find('input').attr 'name'
-
-      teps[$param.find('input').attr('name')] = ep
+      ep.paramName = $param.data 'paramname'
+      teps[ep.paramName] = ep
 
     gy += trHeight
     # END: for param, i
