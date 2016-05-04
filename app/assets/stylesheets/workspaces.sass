@@ -42,7 +42,7 @@ body[data-controller=workspaces][data-action=show]
     @include border-left-radius(5px)
     @include border-right-radius(5px)
     &.highlight
-      border: 2px solid #1f4d7d
+      border: 2px solid #f79232
     .titlebar
       height: 22px
       padding: 0 5px
@@ -148,14 +148,6 @@ body[data-controller=workspaces][data-action=show]
 .ui-layout-east.tabs-pane
   font-size: 0.8rem
 
-.help-content
-  h1
-    font-size: 1.2em
-    margin-top: 0
-    margin-bottom: 4px
-  p
-    margin: 5px 0
-
 .tree
   margin-top: 1em
   overflow-y: auto
@@ -193,3 +185,14 @@ input.path
             border: 1px solid #aaaaaa !important
           .select2-search-choice
             margin-top: 4px
+
+.help-content
+  font-size: 0.8rem
+  ul, ol
+    padding-left: 15px
+  h1
+    font-size: 1.2em
+    margin-top: 0
+    margin-bottom: 4px
+  p
+    margin: 5px 0

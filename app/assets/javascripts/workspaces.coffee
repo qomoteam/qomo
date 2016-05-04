@@ -239,18 +239,18 @@ handle_props = (response) ->
   add_box_props($props)
 
 add_box_props = ($props) ->
-  $('#boxes-props').append($props)
+  $('#boxes-props').prepend($props)
 
-# Display tool usage/spec in right panel
-show_tool_spec = (tid) ->
+# Display tool usage in right panel
+show_tool_usage = (tid) ->
   $.get Routes.help_tool(tid), (html) ->
-    $('#tool-spec').html(html)
-    AJS.tabs.change $('a[href="#tool-spec"]')
+    $('#boxes-props .tool-usage').html(html)
+    AJS.tabs.change $('a[href="#boxes-props"]')
 
 
 # Display tool properties in right panel
 show_box_prop = (bid) ->
-  $('#boxes-props .box-props').hide()
+  hide_box_props()
   box_prop(bid).show()
   AJS.tabs.change $('a[href="#boxes-props"]')
 
@@ -261,6 +261,11 @@ highlight_box = (bid) ->
   $('.toolbox').removeClass('highlight')
   $("##{bid}").addClass('highlight')
 
+hide_box_props = ->
+  $('#boxes-props .box-props').hide()
+
+unhighlight_toolbox = ->
+  $('.toolbox.highlight').removeClass('highlight')
 
 init_box = (box_html, bid, position)->
   $box = $(box_html)
@@ -270,6 +275,7 @@ init_box = (box_html, bid, position)->
 
   $box.click ->
     highlight_box(bid)
+    show_tool_usage(tid)
     show_box_prop(bid)
 
   $box.find('input').click (e)->
@@ -598,7 +604,9 @@ within 'workspaces', 'show', ->
 
     $('#tools-selector a.tool-help').click ->
       tid = $(this).data 'tid'
-      show_tool_spec(tid)
+      show_tool_usage(tid)
+      hide_box_props()
+      unhighlight_toolbox()
       return false
 
 
