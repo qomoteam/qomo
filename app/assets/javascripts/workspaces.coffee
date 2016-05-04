@@ -81,6 +81,7 @@ clean_workspace = ->
   $("#canvas").panzoom('pan', -5000, -5000)
   $('#canvas .toolbox').remove()
   plumb.deleteEveryEndpoint()
+  $('#boxes-props').html('')
 
 
 restore_workspace = ->
@@ -184,7 +185,9 @@ add_toolboxes = (boxes, hook)->
     url: Routes.boxes_tools()
     data: JSON.stringify(boxes: boxes)
     contentType: 'application/json; charset=utf-8'
-    success: (boxes_html) ->
+    success: (response) ->
+      boxes_html = parse_boxes(response)
+      handle_props(response)
       $(boxes_html).each ->
         box = cached_boxes()[this.id]
         init_box this, box.id, box.position
@@ -229,23 +232,50 @@ set_pipeline_params = (params) ->
   localStorage.params = JSON.stringify params
 
 
+parse_boxes = (response) -> $(response).filter ()-> $(this).hasClass('toolbox')
+
+handle_props = (response) ->
+  $props = $(response).filter ()-> $(this).hasClass('box-props')
+  add_box_props($props)
+
+add_box_props = ($props) ->
+  $('#boxes-props').append($props)
+
+# Display tool usage/spec in right panel
 show_tool_spec = (tid) ->
   $.get Routes.help_tool(tid), (html) ->
     $('#tool-spec').html(html)
     AJS.tabs.change $('a[href="#tool-spec"]')
 
 
+# Display tool properties in right panel
+show_box_prop = (bid) ->
+  $('#boxes-props .box-props').hide()
+  box_prop(bid).show()
+  AJS.tabs.change $('a[href="#boxes-props"]')
+
+box_prop = (bid) ->
+  $("#box-props-#{bid}")
+
+highlight_box = (bid) ->
+  $('.toolbox').removeClass('highlight')
+  $("##{bid}").addClass('highlight')
+
+
 init_box = (box_html, bid, position)->
   $box = $(box_html)
+  $props = box_prop(bid)
 
   tid = $box.data('tid')
+
   $box.click ->
-    show_tool_spec(tid)
+    highlight_box(bid)
+    show_box_prop(bid)
 
   $box.find('input').click (e)->
     $(this).focus()
 
-  if position
+  if position and position.top > 0 and position.left > 0
     $box.css
       top: position.top
       left: position.left
@@ -261,13 +291,13 @@ init_box = (box_html, bid, position)->
 
   $('#canvas').append $box
 
-  AJS.$("select", $box).auiSelect2()
+  AJS.$("select", $props).auiSelect2()
 
   plumb.draggable $box,
     stop: ->
       update_position bid, $box.position()
 
-  $box.find('label.param-label').click ->
+  on_param_click = ->
     label = this.innerText
     paramName = $(this).parents('tr').data('paramname')
     plabel = ''
@@ -290,6 +320,9 @@ init_box = (box_html, bid, position)->
       cancel: ->
     dia.showModal()
 
+  $box.find('label.param-label').click on_param_click
+  box_prop(bid).find('label.param-label').click on_param_click
+
   divHeight = $box.outerHeight()
   titleHeight = $box.find('.titlebar').outerHeight()
   tableMarginTop = parseInt($box.find('table.params').css('margin-top').replace("px", ""))
@@ -298,9 +331,8 @@ init_box = (box_html, bid, position)->
 
   teps = {}
 
-  for param, i in $box.find('.params .param')
+  for param, i in $props.find('.params .param')
     $param = $(param)
-
     $param.find('.value').each ->
       boxes = cached_boxes()
       paramName = $param.data('paramname')
@@ -330,9 +362,10 @@ init_box = (box_html, bid, position)->
           value = $(this).is(':checked')
 
         boxes[bid].values[paramName] = value
-
         save_cached_boxes(boxes)
 
+  for param, i in $box.find('.params .param')
+    $param = $(param)
     is_input = false
     is_output = false
     if $param.hasClass 'input'
@@ -385,6 +418,8 @@ remove_toolbox = ($box)->
   boxes = cached_boxes()
   delete boxes[bid]
 
+  box_prop(bid).remove()
+
   params = []
   for p in get_pipeline_params()
     if p['box_id'] != bid
@@ -425,6 +460,7 @@ set_pan = (x, y) ->
 
 get_pan = ->
   {x: Number(localStorage.panx || -5000), y: Number(localStorage.pany || -5000)}
+
 
 within 'workspaces', 'show', ->
   $c = $('#content')
@@ -551,9 +587,12 @@ within 'workspaces', 'show', ->
         url: Routes.boxes_tools()
         data: JSON.stringify(boxes: [{tool_id: tool_id}])
         contentType: 'application/json; charset=utf-8'
-        success: (box) ->
-          cache_box $(box).attr('id'), $(box).data('tid')
-          add_toolbox $(box).attr('id'), $(box).data('tid'), null, $(box)
+        success: (response) ->
+          $box = parse_boxes(response)
+          handle_props(response)
+
+          cache_box $box.attr('id'), $box.data('tid')
+          add_toolbox $box.attr('id'), $box.data('tid'), null, $box
 
       return false
 

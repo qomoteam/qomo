@@ -10,12 +10,25 @@
       - for input in box[:tool].inputs
         tr.input.param data-paramname=input['name']
           td = render 'tools/param_label', param: input
-          td = render 'tools/param_setter', param: input
-
-      - for param in box[:tool].normal_params
-        = render partial: 'box_param', locals: {param: param}
 
       - for output in box[:tool].outputs
         tr.output.param  data-paramname=output['name']
           td = render 'tools/param_label', param: output
-          td = render 'tools/param_setter', param: output
+
+
+  .box-props id="box-props-#{box[:id]}" data-tid=box[:tool].id data-bid=box[:id]
+    ol.params
+      - for input in box[:tool].inputs
+        li.input.param data-paramname=input['name']
+          = render 'tools/param_label', param: input
+          = render 'tools/param_setter', param: input
+
+        - for param in box[:tool].normal_params
+          li.param data-paramname=param['name']
+            = render 'tools/param_label', param: param
+            = render 'tools/param_setter', param: param
+
+        - for output in box[:tool].outputs
+          li.output.param data-paramname=output['name']
+            = render 'tools/param_label', param: output
+            = render 'tools/param_setter', param: output
