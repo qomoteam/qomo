@@ -29,6 +29,8 @@ gem 'awesome_nested_set'
 gem 'font-awesome-sass'
 gem 'bourbon'
 
+gem 'gravatar_image_tag'
+
 gem 'jimson'
 gem 'rgl'
 gem 'bunny'
