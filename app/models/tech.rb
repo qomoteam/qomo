@@ -1,4 +1,4 @@
-class Tech < ActiveRecord::Base
+class Tech < ApplicationRecord
 
   default_scope -> { order :name }
 

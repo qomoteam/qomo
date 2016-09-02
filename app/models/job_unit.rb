@@ -1,4 +1,4 @@
-class JobUnit < ActiveRecord::Base
+class JobUnit < ApplicationRecord
 
   include Statusaware
 

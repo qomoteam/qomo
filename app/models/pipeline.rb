@@ -1,4 +1,4 @@
-class Pipeline < ActiveRecord::Base
+class Pipeline < ApplicationRecord
 
   acts_as_votable
 

@@ -1,4 +1,4 @@
-class Filerecord < ActiveRecord::Base
+class Filerecord < ApplicationRecord
   belongs_to :owner, class_name: 'User'
 
   scope :library, -> { where shared: true, owner: User.find_by_username(Config.admin.username) }

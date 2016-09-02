@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '4.2.6'
+gem 'rails'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier'
@@ -17,7 +17,7 @@ gem 'slim-rails'
 gem 'gon'
 gem 'js-routes'
 gem 'settingslogic'
-gem 'devise', '3.5.2'
+gem 'devise'
 gem 'rucaptcha'
 gem 'rolify'
 gem 'ledermann-rails-settings'

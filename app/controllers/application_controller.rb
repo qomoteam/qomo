@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :reg_gon_attrs
+  before_action :reg_gon_attrs
 
-  before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActiveRecord::RecordNotFound,
@@ -22,7 +22,9 @@ class ApplicationController < ActionController::Base
   private
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :first_name, :last_name) }
+    devise_parameter_sanitizer.permit(:sign_up) do |u|
+      u.permit(:username, :email, :password, :password_confirmation, :first_name, :last_name)
+    end
   end
 
   def reg_gon_attrs

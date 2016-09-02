@@ -1,4 +1,4 @@
-class Tool < ActiveRecord::Base
+class Tool < ApplicationRecord
   enum status: {
       inactive: 0,
       active: 1
