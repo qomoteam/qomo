@@ -103,7 +103,7 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
-    root 'home#index'
+    root to: 'home#index', as: :root
     get 'dashboard', to: 'home#index'
     resources :categories
     resources :users do
