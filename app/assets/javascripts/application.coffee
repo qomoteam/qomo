@@ -1,5 +1,6 @@
 #= require common
 #= require jquery-layout
+#= require cable
 
 #= require workspaces
 #= require pipelines

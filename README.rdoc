@@ -1,7 +1,6 @@
 == README
 {<img src="https://codeclimate.com/github/qomoteam/qomo/badges/gpa.svg" />}[https://codeclimate.com/github/qomoteam/qomo]
 {<img src="https://codeclimate.com/github/qomoteam/qomo/badges/coverage.svg" />}[https://codeclimate.com/github/qomoteam/qomo/coverage]
-{<img src="https://travis-ci.org/qomoteam/qomo.svg" alt="Build Status" />}[https://travis-ci.org/qomoteam/qomo]
 {<img src="https://gemnasium.com/qomoteam/qomo.svg" alt="Dependency Status" />}[https://gemnasium.com/qomoteam/qomo]
 {<img src="https://img.shields.io/badge/license-GPL-blue.svg" alt="GPL License" />}[https://raw.githubusercontent.com/qomoteam/qomo/master/LICENSE]
 

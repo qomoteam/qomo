@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  mount ActionCable.server => '/cable'
+
+  mount RuCaptcha::Engine => '/captcha'
+
   post '/rate' => 'rater#create', :as => 'rate'
 
   devise_for :users, controllers: {
@@ -9,8 +14,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'users/guest_signin', to: 'users/sessions#guest_signin', as: 'guest_signin'
   end
-
-  mount RuCaptcha::Engine => '/captcha'
 
   root 'workspaces#show'
 

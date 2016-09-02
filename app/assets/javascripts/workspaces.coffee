@@ -532,12 +532,11 @@ within 'workspaces', 'show', ->
 
 
   if gon.user_signed_in
-    updateJobStatus = ->
+    window.updateJobStatus = ->
       $('#job-summary .summary-content').load Routes.summary_jobs()
 
 
     updateJobStatus()
-    setInterval updateJobStatus, 10000
 
   $('#job-summary .refresh').click ->
     updateJobStatus()
@@ -624,6 +623,7 @@ within 'workspaces', 'show', ->
             msg += "<br> Guest user will be restricted to use very limited resources."
           notie.alert(1, msg)
           updateJobStatus()
+          AJS.tabs.change('a[href="#job-summary"]')
         error: (data) ->
           alert("Pipeline has an error: #{data.content}")
       false

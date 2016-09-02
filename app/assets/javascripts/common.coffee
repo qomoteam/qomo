@@ -8,7 +8,8 @@
 #= require underscore
 #= require wice_grid
 #= require patch
-#= require aui
+#= require aui/js/aui
+#= require aui/js/aui-experimental
 #= require notie
 
 class GUID

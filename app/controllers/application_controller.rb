@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
     gon.action = params[:action]
     gon.user_signed_in = user_signed_in?
     gon.guest = user_signed_in? ? current_user.has_role?(:guest) : true
+    gon.uid = current_user.id if user_signed_in?
   end
 
 end

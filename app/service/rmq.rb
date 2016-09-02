@@ -1,6 +1,6 @@
 class RMQ
   def self.publish(quename, message = {})
-    x = channel.queue("qomo_#{Rails.env}.#{quename}", durable:true, exclusive: false, auto_delete: false)
+    x = channel.queue("qomo_#{Rails.env}.#{quename}", durable: true, exclusive: false, auto_delete: false)
     x.publish(message.to_json, content_type: 'application/json')
   end
 

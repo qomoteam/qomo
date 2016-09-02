@@ -22,5 +22,9 @@ module Qomo
     config.active_record.raise_in_transactional_callbacks = true
     config.action_mailer.smtp_settings = config_for(:email)['smtp_settings'].symbolize_keys
     config.action_mailer.default_url_options = config_for(:email)['default_url_options'].symbolize_keys
+
+    config.action_cable.allowed_request_origins = [/.*/]
+    config.action_cable.disable_request_forgery_protection = true
+
   end
 end
