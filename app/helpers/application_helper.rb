@@ -11,7 +11,7 @@ module ApplicationHelper
       title = (title.map {|e| e.humanize}).join ' » '
     end
 
-    title = "Qomo | #{title}"
+    title = "#{title} | Qomo"
 
     content_tag :title, title
   end

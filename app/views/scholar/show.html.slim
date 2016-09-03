@@ -1,24 +1,29 @@
-.page-panel
-  h3
-    = user_tag @user
-    span.user-title = @user.title
+.page-panel.scholar
+  .aui-group
+    .aui-item.bio
+      h2
+        = user_tag @user
+      span.user-title = @user.title
+      ul.user-details
+        li
+          i.fa.fa-user
+          | @#{@user.username}
+        li
+          i.fa.fa-envelope-o
+          a href="mailto:#{@user.email}" #{@user.email}
+        li
+          i.fa.fa-map-marker
+          | #{@user.location}
+        li
+          i.fa.fa-sitemap
+          | #{@user.organization}
+        li
+          i.fa.fa-clock-o
+          | Joined on #{ptime2 @user.created_at}
+    .aui-item
+      h5 Contributed Pipelines:
+      = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines, show_user_prefix: false}
 
-  span @#{@user.username}
-  br
-  span
-    .fa.fa-map-marker
-    | #{@user.location}, #{@user.organization}
-  br
-  span
-    .fa.fa-clock-o
-    | Joins on #{ptime2 @user.created_at}
-
-  h5 Contributed Pipelines:
-  ul
-    - for pipeline in @user.pipelines
-      li: a href=pipeline_path(pipeline) = pipeline.title
-
-  h5 Contributed Tools:
-  ul
-    - for tool in @user.tools.active
-      li: a href=tool_path(tool) = tool.name
+      h5 Contributed Tools:
+      table.aui
+        = render partial: 'tools/rich_list_tr', locals: {tools: @user.tools.active}

@@ -45,6 +45,14 @@ class User < ApplicationRecord
     "#{self.first_name} #{self.last_name}"
   end
 
+  def displayed_name
+    if full_name.blank?
+      username
+    else
+      full_name
+    end
+  end
+
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

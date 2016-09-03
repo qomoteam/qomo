@@ -1,5 +1,5 @@
 - if user_signed_in?
-  a> href=star_pipeline_path(pipeline) data-method='post'
+  a.pipeline-star> href=star_pipeline_path(pipeline) data-method='post'
     - if current_user.voted_for? pipeline
       i.fa.fa-star
     - else

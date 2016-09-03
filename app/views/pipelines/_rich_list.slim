@@ -1,0 +1,14 @@
+ol.pipeline-explorer
+  - for pipeline in pipelines
+    li
+      h3
+        - if show_user_prefix
+          => user_tag pipeline.owner
+          ' /
+        a> href=pipeline_path(pipeline) = pipeline.title
+        = render 'pipelines/star', pipeline: pipeline
+      p.desc = pipeline.desc
+      .meta
+        ' Category: #{pipeline.category.name} |
+        ' Star: #{pipeline.votes_for.size} |
+        ' Updated: #{ptime2 pipeline.updated_at}

@@ -30,19 +30,7 @@
     #tabs-all-pipelines.tabs-pane.active-pane
       .aui-group
         .aui-item style='width: 80%'
-          ol.pipeline-explorer
-            - for pipeline in @pipelines
-              li
-                h3
-                  => user_tag pipeline.owner
-                  ' /
-                  a> href=pipeline_path(pipeline) = pipeline.title
-                  = render 'pipelines/star', pipeline: pipeline
-                p.desc = pipeline.desc
-                .meta
-                  ' Category: #{pipeline.category.name} |
-                  ' Star: #{pipeline.votes_for.size} |
-                  ' Updated: #{ptime2 pipeline.updated_at}
+          = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
         .aui-item
           nav.aui-navgroup.aui-navgroup-vertical
             .aui-navgroup-inner
