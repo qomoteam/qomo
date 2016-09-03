@@ -1,13 +1,16 @@
 a.aui-button.aui-button-primary href=destroy_expired_admin_users_path data-method='delete' data-confirm='Delete all expired guests?' Delete Expired Guests
 
-== grid @users_grid, html: {class: 'aui'} do |g|
-  - g.column name: 'Username', attribute: 'username' do |user|
-    - link_to user.username, admin_user_path(user)
-  - g.column name: 'Email', attribute: 'email' do |user|
-    - user.email
-  - g.column name: 'Full Name', attribute: 'first_name' do |user|
-    - user.full_name
-  - g.column name: 'Last Sign In Ip' do |user|
-    - user.last_sign_in_ip
-  - g.column name: 'Last Sign In At', attribute: 'last_sign_in_at' do |user|
-    - ptime user.last_sign_in_at, current_user.timezone
+table.aui
+  tr
+    th Username
+    th Email
+    th Full Name
+    th Last Sign In Ip
+    th Last Sign In At
+  - for user in @users
+    tr
+      td = user.username
+      td = user.email
+      td = user.full_name
+      td = user.last_sign_in_ip
+      td = user.last_sign_in_at

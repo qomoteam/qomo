@@ -1,6 +1,7 @@
 class Admin::UsersController < Admin::ApplicationController
+
   def index
-    @users_grid = initialize_grid User
+    @users = User.all
   end
 
   def show

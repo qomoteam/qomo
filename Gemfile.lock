@@ -100,9 +100,6 @@ GEM
       railties (>= 3.2)
       sprockets-rails
     json (1.8.3)
-    kaminari (0.17.0)
-      actionpack (>= 3.0.0)
-      activesupport (>= 3.0.0)
     lazy_priority_queue (0.1.1)
     ledermann-rails-settings (2.4.2)
       activerecord (>= 3.1)
@@ -231,10 +228,6 @@ GEM
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
-    wice_grid (3.6.2)
-      activerecord (> 3.2)
-      coffee-rails (> 3.2)
-      kaminari (~> 0.16)
 
 PLATFORMS
   ruby
@@ -273,7 +266,6 @@ DEPENDENCIES
   uglifier
   vam
   web-console
-  wice_grid
 
 BUNDLED WITH
    1.11.2

@@ -5,7 +5,6 @@
 #= require artDialog
 #= require jquery-form
 #= require underscore
-#= require wice_grid
 #= require patch
 #= require notie
 #= require aui

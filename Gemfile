@@ -21,7 +21,6 @@ gem 'devise'
 gem 'rucaptcha'
 gem 'rolify'
 gem 'ledermann-rails-settings'
-gem 'wice_grid'
 
 gem 'acts_as_votable'
 gem 'awesome_nested_set'
