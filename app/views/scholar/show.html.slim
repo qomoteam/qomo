@@ -20,6 +20,7 @@
         li
           i.fa.fa-clock-o
           | Joined on #{ptime2 @user.created_at}
+
     .aui-item
       h5 Contributed Pipelines:
       = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines, show_user_prefix: false}
