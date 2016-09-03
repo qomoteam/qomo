@@ -1,16 +1,21 @@
 doctype 5
 html lang='en'
   head
-    = title_tag
     meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
     = action_cable_meta_tag
+    = csrf_meta_tags
+
+    = title_tag
+
     = stylesheet_link_tag 'application', media: 'all'
+
+    = render partial: 'layouts/external_libs'
 
     = Gon::Base.render_data
     javascript:
-      gon.notice = "#{flash[:notice]}"
+      gon.notice = "#{flash[:notice]}";
+
     = javascript_include_tag 'visitor_analytics', async: true
-    = csrf_meta_tags
 
   body data-controller=params[:controller] data-action=params[:action]
     = render 'layouts/header'

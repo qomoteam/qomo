@@ -1,5 +1,4 @@
 #= require js-routes
-#= require jquery
 #= require jquery-migrate
 #= require jquery-ui
 #= require jquery-ujs
@@ -8,9 +7,8 @@
 #= require underscore
 #= require wice_grid
 #= require patch
-#= require aui/js/aui
-#= require aui/js/aui-experimental
 #= require notie
+#= require aui
 
 class GUID
   s4: ->

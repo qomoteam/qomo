@@ -1,12 +1,10 @@
 source 'https://cloud.big.ac.cn/vam'
 
-vam 'jquery'
 vam 'jquery-migrate'
 vam 'jquery-ujs'
 vam 'jquery-ui'
 vam 'jquery-layout'
 vam 'jquery-fine-uploader'
-vam 'aui'
 vam 'jsPlumb'
 vam 'artDialog'
 vam 'jquery-form'
