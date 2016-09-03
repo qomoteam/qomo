@@ -6,6 +6,20 @@ window.plumb = {}
 hightest_zIndex = 50
 toolbox_offset = 0
 
+spinner = new Spinner
+  length: 50
+  width: 10
+  lines: 9
+  radius: 60
+
+freeze_canvas = ->
+  $('#canvas').addClass('freeze')
+  spinner.spin()
+  document.getElementById('canvas-container').appendChild(spinner.el)
+
+unfreeze_canvas = ->
+  $('#canvas').removeClass('freeze')
+  spinner.stop()
 
 get_pid = ->
   localStorage.getItem('pid')
@@ -85,6 +99,7 @@ clean_workspace = ->
 
 
 restore_workspace = ->
+  freeze_canvas()
   if get_pid()
     $.get Routes.pipeline(get_pid(), {simple: true, format: 'json'}), (pipeline) ->
       purl = Routes.pipeline(get_pid())
@@ -97,6 +112,7 @@ restore_workspace = ->
     connections = cached_connections()
     for connection in connections
       add_connection connection
+    unfreeze_canvas()
 
   $("#canvas").panzoom()
   pan = get_pan()
