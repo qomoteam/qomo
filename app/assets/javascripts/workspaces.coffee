@@ -108,11 +108,14 @@ restore_workspace = ->
       )
   boxes = cached_boxes()
 
-  add_toolboxes boxes, ->
-    connections = cached_connections()
-    for connection in connections
-      add_connection connection
+  if localStorage.boxes == '{}'
     unfreeze_canvas()
+  else
+    add_toolboxes boxes, ->
+      connections = cached_connections()
+      for connection in connections
+        add_connection connection
+      unfreeze_canvas()
 
   $("#canvas").panzoom()
   pan = get_pan()
