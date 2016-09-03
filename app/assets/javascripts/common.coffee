@@ -9,6 +9,7 @@
 #= require patch
 #= require notie
 #= require aui
+#= require spin
 
 class GUID
   s4: ->
