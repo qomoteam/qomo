@@ -1,4 +1,4 @@
-module Statusaware
+module StatusAware
   extend ActiveSupport::Concern
 
   included do

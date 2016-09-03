@@ -13,6 +13,12 @@ class JobEngine
     job_id = SecureRandom.uuid
     job = Job.new id: job_id, user_id: @user_id
 
+    result = {
+        success: true,
+        job_id: job_id,
+        errors: []
+    }
+
     outdir = job.outdir
     @datastore.mkdir! outdir
 
@@ -51,7 +57,7 @@ class JobEngine
     end
 
     #Copy output param to input param for connected tools
-    dg=RGL::DirectedAdjacencyGraph.new
+    dg = RGL::DirectedAdjacencyGraph.new
     conns.each do |e|
       dg.add_edge e['sourceId'], e['targetId']
 
@@ -63,12 +69,23 @@ class JobEngine
     end
 
     #Generate commands
+    #TODO rename variable `k, v`
     boxes.each do |k, v|
       tool = Tool.find v['tool_id']
       unit_id = SecureRandom.uuid
       command = tool.command.dup
 
       pvalues = v['values']
+
+      # Validate all params are set correctly (not null, etc.)
+      tool.params.each do |te|
+        pv = pvalues[te['name']]
+        if pv&.blank?
+          result[:success] = false
+          result[:errors] << {box_id: k, param: te['name'], msg: 'need value to be set'}
+        end
+      end
+
       preset.merge(pvalues).each do |ka, va|
         if va.kind_of? Array
           separator = ','
@@ -78,32 +95,33 @@ class JobEngine
           va = va.join separator
         end
 
-        tool.params.each do |e|
-          if e['name'] == ka
-            case e['type']
-              when 'input'
-                va = va.split ','
-                va = va.collect do |ev|
-                  if ev.start_with? '@'
-                    username = ev[1, ev.index(':')-1]
-                    user = User.find_by username: username
-                    # TODO: Remove this ugly implementation
-                    ud = Datastore.new user.id, Config.dir_users
-                    ev = ud.apath ev[ev.index(':')+1 .. -1]
-                  else
-                    ev = @datastore.apath ev
-                  end
-                  ev
+        #TODO check this and rename variable `e`
+        e = tool.params.find { |e| e['name'] == ka }
+        if e
+          case e['type']
+            when 'input'
+              va = va.split ','
+              va = va.collect do |ev|
+                if ev.start_with? '@'
+                  username = ev[1, ev.index(':')-1]
+                  user = User.find_by username: username
+                  # TODO: Remove this ugly implementation
+                  ud = Datastore.new user.id, Config.dir_users
+                  ev = ud.apath ev[ev.index(':')+1 .. -1]
+                else
+                  ev = @datastore.apath ev
                 end
+                ev
+              end
 
-                va = va.join ','
+              va = va.join ','
 
-              when 'output'
-                va = @datastore.apath va
-              when 'tmp'
-                va = @datastore.apath "#{outdir}/.tmp/#{unit_id}"
-            end
-
+            when 'output'
+              va = @datastore.apath va
+            when 'tmp'
+              va = @datastore.apath "#{outdir}/.tmp/#{unit_id}"
+            else
+              # No-op
           end
         end
 
@@ -112,6 +130,8 @@ class JobEngine
 
       units[k] = {id: unit_id, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
     end
+
+    return result unless result[:success]
 
     ordere_units = dg.topsort_iterator.to_a
 
@@ -123,17 +143,20 @@ class JobEngine
       end
     end
 
-    ordere_units.each_with_index do |u, idx|
-      ju = JobUnit.new u
-      ju.job_id = job_id
-      ju.idx = idx
-      ju.save
+    # Persist to DB and submit to job engine only when everything is OK
+    if result[:success]
+      ordere_units.each_with_index do |u, idx|
+        ju = JobUnit.new u
+        ju.job_id = job_id
+        ju.idx = idx
+        ju.save
+      end
+      job.save
+
+      RMQ.publish 'jobs', {id: job_id, units: ordere_units}
     end
 
-    job.save
-    RMQ.publish 'jobs', {id: job_id, units: ordere_units}
-
-    job_id
+    result
   end
 
 

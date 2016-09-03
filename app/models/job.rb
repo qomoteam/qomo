@@ -1,6 +1,6 @@
 class Job < ApplicationRecord
 
-  include Statusaware
+  include StatusAware
 
   belongs_to :user
 

@@ -259,7 +259,11 @@ box_prop = (bid) ->
 
 highlight_box = (bid) ->
   $('.toolbox').removeClass('highlight')
-  $("##{bid}").addClass('highlight')
+  box = $("##{bid}")
+  box.addClass('highlight')
+  tid = box.data('tid')
+  show_tool_usage(tid)
+  show_box_prop(bid)
 
 hide_box_props = ->
   $('#boxes-props .box-props').hide()
@@ -275,8 +279,6 @@ init_box = (box_html, bid, position)->
 
   $box.click ->
     highlight_box(bid)
-    show_tool_usage(tid)
-    show_box_prop(bid)
 
   $box.find('input').click (e)->
     $(this).focus()
@@ -617,13 +619,24 @@ within 'workspaces', 'show', ->
         data:
           boxes: localStorage.boxes
           connections: localStorage.connections
-        success: (data) ->
-          msg = "Pipeline submitted."
-          if gon.guest
-            msg += "<br> Guest user will be restricted to use very limited resources."
-          notie.alert(1, msg)
-          updateJobStatus()
-          AJS.tabs.change('a[href="#job-summary"]')
+        success: (result) ->
+          if result.success
+            msg = "Pipeline submitted."
+            if gon.guest
+              msg += "<br> Guest user will be restricted to use very limited resources."
+            notie.alert(1, msg, 1)
+            updateJobStatus()
+            AJS.tabs.change('a[href="#job-summary"]')
+          else
+            msg = 'Pipeline param error <ul>'
+            for error in result.errors
+              toolName = $('#'+error.box_id).find('.titlebar .title').text()
+              msg += "<li>Param '#{error.param}' of tool #{toolName}: #{error.msg}</li>"
+            msg += '</ul>'
+            notie.alert(3, msg)
+            hboxId = result.errors[0].box_id
+            hparam = result.errors[0].param
+            highlight_box(hboxId)
         error: (data) ->
           alert("Pipeline has an error: #{data.content}")
       false

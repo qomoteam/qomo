@@ -1,6 +1,6 @@
 class JobUnit < ApplicationRecord
 
-  include Statusaware
+  include StatusAware
 
   belongs_to :job
   belongs_to :tool
