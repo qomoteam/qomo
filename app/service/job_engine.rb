@@ -154,7 +154,7 @@ class JobEngine
       job.save
 
       #TODO Try catch here!
-      RMQ.publish 'jobs', {id: job_id, units: ordere_units}
+      RMQ.new.publish 'jobs', {id: job_id, units: ordere_units}
     end
 
     result

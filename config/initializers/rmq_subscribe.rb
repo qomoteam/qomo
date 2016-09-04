@@ -1,4 +1,4 @@
-q = RMQ.channel.queue("qomo_#{Rails.env}.jobs.status", durable: true, exclusive: false, auto_delete: false)
+q = RMQ.new.channel.queue("qomo_#{Rails.env}.jobs.status", durable: true, exclusive: false, auto_delete: false)
 q.subscribe do |delivery_info, metadata, payload|
   juid = payload
   job_unit = JobUnit.find(juid)
