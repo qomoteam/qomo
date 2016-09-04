@@ -154,6 +154,7 @@ class PipelinesController < ApplicationController
 
 
   def wrapping_json_param
+    # In RAILS 5 we have to do this manully
     params[:pipeline][:boxes] = JSON.parse(params[:pipeline][:boxes])
     params[:pipeline][:connections] = JSON.parse(params[:pipeline][:connections])
     params[:pipeline][:params] = JSON.parse(params[:pipeline][:params])
