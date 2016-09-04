@@ -111,14 +111,16 @@ class PipelinesController < ApplicationController
 
 
   def create
+    wrapping_json_param
     pipeline = Pipeline.new params.require('pipeline').permit!
     pipeline.owner = current_user
     pipeline.save
-    render text: pipeline.id
+    render plain: pipeline.id
   end
 
 
   def update
+    wrapping_json_param
     pipeline = Pipeline.find params['id']
     pipeline.update params.require('pipeline').permit!
 
@@ -143,12 +145,18 @@ class PipelinesController < ApplicationController
     pipeline = Pipeline.find(params[:id])
     user = current_user
     if user.voted_for? pipeline
-      puts 1
       pipeline.unliked_by user
     else
       pipeline.liked_by user
     end
     redirect_to pipelines_path
+  end
+
+
+  def wrapping_json_param
+    params[:pipeline][:boxes] = JSON.parse(params[:pipeline][:boxes])
+    params[:pipeline][:connections] = JSON.parse(params[:pipeline][:connections])
+    params[:pipeline][:params] = JSON.parse(params[:pipeline][:params])
   end
 
 end
