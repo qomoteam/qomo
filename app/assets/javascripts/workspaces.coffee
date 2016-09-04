@@ -1,10 +1,16 @@
 #= require jsPlumb
 #= require jstree
-#= require jquery-panzoom
+
 window.plumb = {}
 
 hightest_zIndex = 50
 toolbox_offset = 0
+
+sourceColor = '#558822'
+
+targetColor = '#225588'
+
+MAX_CONNECTIONS = 25
 
 spinner = new Spinner
   length: 50
@@ -15,7 +21,7 @@ spinner = new Spinner
 freeze_canvas = ->
   $('#canvas').addClass('freeze')
   spinner.spin()
-  document.getElementById('canvas-container').appendChild(spinner.el)
+  document.getElementById('canvas').appendChild(spinner.el)
 
 unfreeze_canvas = ->
   $('#canvas').removeClass('freeze')
@@ -92,7 +98,6 @@ clean_workspace = ->
   init_cache(true)
   set_pid(null)
   set_pan(-5000, -5000)
-  $("#canvas").panzoom('pan', -5000, -5000)
   $('#canvas .toolbox').remove()
   plumb.deleteEveryEndpoint()
   $('#boxes-props').html('')
@@ -117,12 +122,7 @@ restore_workspace = ->
         add_connection connection
       unfreeze_canvas()
 
-  $("#canvas").panzoom()
   pan = get_pan()
-  $("#canvas").panzoom('pan', pan.x, pan.y)
-  $("#canvas").on 'panzoomend', (e, p, m, c) ->
-    set_pan(m[4], m[5])
-
 
 
 add_connection = (connection)->
@@ -291,152 +291,154 @@ unhighlight_toolbox = ->
   $('.toolbox.highlight').removeClass('highlight')
 
 init_box = (box_html, bid, position)->
-  $box = $(box_html)
-  $props = box_prop(bid)
+  plumb.batch ->
+    $box = $(box_html)
+    $props = box_prop(bid)
 
-  tid = $box.data('tid')
+    tid = $box.data('tid')
 
-  $box.click ->
-    highlight_box(bid)
+    $box.click ->
+      highlight_box(bid)
 
-  $box.find('input').click (e)->
-    $(this).focus()
+    $box.find('input').click (e)->
+      $(this).focus()
 
-  if position and position.top > 0 and position.left > 0
-    $box.css
-      top: position.top
-      left: position.left
-  else
-    pan = get_pan()
-    $box.offset
-      top: toolbox_offset - pan.y
-      left: toolbox_offset - pan.x
-    toolbox_offset += 30
-    if toolbox_offset > 500
-      toolbox_offset = 5
-    update_position bid, $box.position()
-
-  $('#canvas').append $box
-
-  AJS.$("select", $props).auiSelect2()
-
-  plumb.draggable $box,
-    stop: ->
+    if position and position.top > 0 and position.left > 0
+      $box.css
+        top: position.top
+        left: position.left
+    else
+      pan = get_pan()
+      $box.offset
+        top: toolbox_offset - pan.y
+        left: toolbox_offset - pan.x
+      toolbox_offset += 30
+      if toolbox_offset > 500
+        toolbox_offset = 5
       update_position bid, $box.position()
 
-  on_param_click = ->
-    label = this.innerText
-    paramName = $(this).parents('tr').data('paramname')
-    plabel = ''
-    for p in get_pipeline_params()
-      if p['box_id'] == bid and p['name'] == paramName
-        plabel = p['label']
+    $('#canvas .jtk-surface-canvas').append $box
+    renderer.ingest(document.getElementById(bid))
 
-    content = tpl_param_dialog(label, plabel)
-    dia = dialog
-      id: bid
-      title: "Param: #{label}"
-      content: content
-      width: 500
-      okValue: 'Save'
-      ok: ->
-        pname = $(document.getElementById("content:#{bid}")).find('.paramiterize').val()
-        add_pipeline_param(paramName, pname, bid)
-        return true
-      cancelValue: 'Cancel'
-      cancel: ->
-    dia.showModal()
+    AJS.$("select", $props).auiSelect2()
 
-  $box.find('label.param-label').click on_param_click
-  box_prop(bid).find('label.param-label').click on_param_click
+    plumb.draggable $box,
+      stop: ->
+        update_position bid, $box.position()
 
-  divHeight = $box.outerHeight()
-  titleHeight = $box.find('.titlebar').outerHeight()
-  tableMarginTop = parseInt($box.find('table.params').css('margin-top').replace("px", ""))
+    on_param_click = ->
+      label = this.innerText
+      paramName = $(this).parents('tr').data('paramname')
+      plabel = ''
+      for p in get_pipeline_params()
+        if p['box_id'] == bid and p['name'] == paramName
+          plabel = p['label']
 
-  gy = titleHeight + tableMarginTop
+      content = tpl_param_dialog(label, plabel)
+      dia = dialog
+        id: bid
+        title: "Param: #{label}"
+        content: content
+        width: 500
+        okValue: 'Save'
+        ok: ->
+          pname = $(document.getElementById("content:#{bid}")).find('.paramiterize').val()
+          add_pipeline_param(paramName, pname, bid)
+          return true
+        cancelValue: 'Cancel'
+        cancel: ->
+      dia.showModal()
 
-  teps = {}
+    $box.find('label.param-label').click on_param_click
+    box_prop(bid).find('label.param-label').click on_param_click
 
-  for param, i in $props.find('.params .param')
-    $param = $(param)
-    $param.find('.value').each ->
-      boxes = cached_boxes()
-      paramName = $param.data('paramname')
+    divHeight = $box.outerHeight()
+    titleHeight = $box.find('.titlebar').outerHeight()
+    tableMarginTop = parseInt($box.find('table.params').css('margin-top').replace("px", ""))
 
-      # When this is a new added tool, we should populate its default values first
-      unless position
-        boxes[bid].values[paramName] = if $(this).is(':checkbox') then this.checked else $(this).val()
-        save_cached_boxes(boxes)
+    gy = titleHeight + tableMarginTop
 
-      value = boxes[bid].values[paramName]
-      if $(this).is(':checkbox')
-        this.checked = value
-      else if $(this).is('select')
-        App.setSelectValues this, value
-      else
-        $(this).val value
+    teps = {}
 
-      # Open a file select dialog when click input component
-      if $(this).hasClass('input')
-        App.bindFileSelector this
-
-      $(this).change ->
+    for param, i in $props.find('.params .param')
+      $param = $(param)
+      $param.find('.value').each ->
         boxes = cached_boxes()
-        value = $(this).val()
+        paramName = $param.data('paramname')
 
+        # When this is a new added tool, we should populate its default values first
+        unless position
+          boxes[bid].values[paramName] = if $(this).is(':checkbox') then this.checked else $(this).val()
+          save_cached_boxes(boxes)
+
+        value = boxes[bid].values[paramName]
         if $(this).is(':checkbox')
-          value = $(this).is(':checked')
+          this.checked = value
+        else if $(this).is('select')
+          App.setSelectValues this, value
+        else
+          $(this).val value
 
-        boxes[bid].values[paramName] = value
-        save_cached_boxes(boxes)
+        # Open a file select dialog when click input component
+        if $(this).hasClass('input')
+          App.bindFileSelector this
 
-  for param, i in $box.find('.params .param')
-    $param = $(param)
-    is_input = false
-    is_output = false
-    if $param.hasClass 'input'
-      is_input = true
-      is_output = false
-    else if $param.hasClass 'output'
+        $(this).change ->
+          boxes = cached_boxes()
+          value = $(this).val()
+
+          if $(this).is(':checkbox')
+            value = $(this).is(':checked')
+
+          boxes[bid].values[paramName] = value
+          save_cached_boxes(boxes)
+
+    for param, i in $box.find('.params .param')
+      $param = $(param)
       is_input = false
-      is_output = true
+      is_output = false
+      if $param.hasClass 'input'
+        is_input = true
+        is_output = false
+      else if $param.hasClass 'output'
+        is_input = false
+        is_output = true
 
-    trHeight = $param.outerHeight()
+      trHeight = $param.outerHeight()
 
-    if is_input or is_output
-      y = (gy + trHeight/2 + (i+1)*2 ) / divHeight
-      color =  unless is_input then "#558822" else "#225588"
-      ep = plumb.addEndpoint bid,
-        endpoint: 'Rectangle'
-        anchor: [1, y, 1, 0]
-        paintStyle:
-          fillStyle: color
-          width: 15
-          height: 15
-        isSource: not is_input
-        isTarget: is_input
-        maxConnections: 50
+      if is_input or is_output
+        y = (gy + trHeight/2 + (i+1)*2 ) / divHeight
+        color =  unless is_input then "#558822" else "#225588"
+        ep = plumb.addEndpoint bid,
+          anchor: [1, y, 1, 0]
+          paintStyle:
+            width: 10
+            height: 10
+            fillStyle: color
+          isSource: not is_input
+          isTarget: is_input
+          maxConnections: MAX_CONNECTIONS
 
-      ep.paramName = $param.data 'paramname'
-      teps[ep.paramName] = ep
 
-    gy += trHeight
-    # END: for param, i
+        ep.paramName = $param.data 'paramname'
+        teps[ep.paramName] = ep
 
-  eps[bid] = teps
+      gy += trHeight
+      # END: for param, i
 
-  update_zIndex $box
-  $box.mousedown ->
-    if ($box.css 'z-index') < hightest_zIndex
-      update_zIndex $box
+    eps[bid] = teps
 
-  $box.find('.close-toolbox').click ->
-    remove_toolbox($box)
+    update_zIndex $box
+    $box.mousedown ->
+      if ($box.css 'z-index') < hightest_zIndex
+        update_zIndex $box
 
-  plumb.repaint bid
-  $box.bind 'DOMSubtreeModified', ->
+    $box.find('.close-toolbox').click ->
+      remove_toolbox($box)
+
     plumb.repaint bid
+    $box.bind 'DOMSubtreeModified', ->
+      plumb.repaint bid
 
 
 remove_toolbox = ($box)->
@@ -487,17 +489,24 @@ set_pan = (x, y) ->
 get_pan = ->
   {x: Number(localStorage.panx || -5000), y: Number(localStorage.pany || -5000)}
 
+canvas_resize = ->
+  $("#canvas").css(height: $('#content').height()-$('#canvas-toolbar').height()-1)
 
 within 'workspaces', 'show', ->
   $c = $('#content')
   window.onresize = ->
     $c.height($(window).height() - $c.offset().top)
+    canvas_resize()
+
   window.onresize()
+
   $c.layout
     west:
       size: 250
     east:
       size: 320
+
+  canvas_resize()
 
   init_cache()
 
@@ -536,7 +545,6 @@ within 'workspaces', 'show', ->
 
   $('.reset').click clean_workspace
 
-
   # Click the tool category bar in left sidebar
   $('#tools-selector h5').click ->
     $this = $(this)
@@ -563,24 +571,38 @@ within 'workspaces', 'show', ->
     updateJobStatus()
     return false
 
-  $("#canvas-container").css(height: $('.ui-layout-pane-center').height()-$('#canvas-toolbar').height()-1)
-
-  jsPlumb.ready ->
+  jsPlumbToolkit.ready ->
     window.plumb = jsPlumb.getInstance
       DragOptions:
         cursor: 'pointer'
         zIndex: 2000
       ConnectionOverlays: [
         [
-          "Arrow",
+          'Arrow',
           location: 0.5,
-          length: 20
+          width: 12,
+          length: 12
         ]
       ]
+      Connector: ['Flowchart', {stub: '20'}]
+      Endpoint: 'Rectangle'
+      EndpointHoverStyle:
+        fillStyle: 'orange'
       PaintStyle:
-        strokeStyle: '#456'
-        lineWidth: 6
+        gradient:
+          stops:
+            [
+              [0, sourceColor],
+              [1, targetColor]
+            ]
+        strokeStyle: targetColor
+        lineWidth: 3
+      Container: 'canvas'
 
+    window.renderer = jsPlumbToolkit.Support.ingest jsPlumb: plumb
+
+    renderer.createMiniview
+      container: 'minimap'
 
     plumb.bind 'click', (c)->
       delete_connection c.sourceId, c.endpoints[0].paramName, c.targetId, c.endpoints[1].paramName

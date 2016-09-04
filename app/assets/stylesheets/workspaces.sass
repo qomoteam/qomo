@@ -1,12 +1,13 @@
+/*
+ *= require jsPlumb
+ */
 @import bourbon
-._jsPlumb_drag_select *
-  @include user-select(none)
 
 body[data-controller=workspaces][data-action=show]
   #footer
     display: none
   #content
-    padding-bottom: 0px
+    padding-bottom: 0px !important
 
 #canvas-toolbar
   margin: 0 20px
@@ -20,16 +21,8 @@ body[data-controller=workspaces][data-action=show]
     height: 24px
     line-height: 10px
 
-#canvas-container
-  border-top: 1px solid #cccccc
-  width: 100%
-  position: absolute
-
 #canvas
   background: url(data:image/gif;base64,R0lGODlhFAAUAIAAAMDAwP///yH5BAEAAAEALAAAAAAUABQAAAImhI+pwe3vAJxQ0hssnnq/7jVgmJGfGaGiyoyh68GbjNGXTeEcGxQAOw==)
-  width: 10000px
-  height: 10000px
-  position: absolute
   &.freeze
     opacity: .2
     z-index: -100000
@@ -47,28 +40,26 @@ body[data-controller=workspaces][data-action=show]
     &.highlight
       border: 2px solid #f79232
     .titlebar
-      height: 22px
+      height: 16px
       padding: 0 5px
       border-bottom: 1px solid #223133
       background: #00B5AD
-      font-size: 1.1em
+      font-size: 12px
       .title
         float: left
         font-weight: bold
       .close-toolbox
         float: right
-        font-size: 1em
         color: #555555
         &:hover
           color: #222222
 
     table.params
-      font-size: 0.9em
+      font-size: 12px
       margin: 2px 20px 2px 10px
       tr.param
-        line-height: 20px
+        line-height: 16px
         label
-          line-height: 1em
           display: inline-block
           margin-right: 12px
 
@@ -135,7 +126,6 @@ body[data-controller=workspaces][data-action=show]
       margin-bottom: 0
       border-top: none
 
-
 .job-summary
   .refresh
     padding-left: 5px
@@ -201,3 +191,9 @@ input.path
     margin-bottom: 4px
   p
     margin: 5px 0
+
+#minimap
+  position: absolute
+  top: 25px
+  right: 25px
+  z-index: 100
