@@ -1,0 +1,9 @@
+= render 'datastore/viewer/toolbar'
+
+table.aui
+  tbody
+    - for row in @content
+      tr
+        - for col in row
+          td width="50px" = col
+

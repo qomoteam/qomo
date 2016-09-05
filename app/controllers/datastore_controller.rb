@@ -32,8 +32,7 @@ class DatastoreController < ApplicationController
     else
       @content = @meta.read
     end
-
-    render "datastore/viewer/#{@meta.type.tpl}"
+    render template: "datastore/viewer/#{@meta.type.tpl}", formats: [:html]
   end
 
 

@@ -1,3 +1,5 @@
+require 'csv'
+
 class Filemeta
 
   attr_reader :path, :size, :mtime, :atime, :ctime, :type, :is_rdout, :owner_id
@@ -38,6 +40,10 @@ class Filemeta
   def read
     if @is_rdout
       Dir.glob(File.join @apath, 'part-*').reduce('') {|mem, e| mem + File.read(e)}
+    elsif @type.name == :tsv
+      File.read(@apath).split("\n").collect {|line| line.split("\t")}
+    elsif @type.name == :csv
+      CSV.read(@apath)
     else
       File.read @apath
     end

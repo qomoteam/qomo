@@ -12,6 +12,8 @@ class Filetype
       typemapping[:fa] = Filetype.new :fa, 'Fasta', 'fa'
       typemapping[:fna] = Filetype.new :fa, 'Fasta', 'fa'
       typemapping[:faa] = Filetype.new :fa, 'Fasta', 'fa'
+      typemapping[:tsv] = Filetype.new :tsv, 'TSV', 'tsv'
+      typemapping[:csv] = Filetype.new :csv, 'CSV', 'tsv'
 
       typemapping[kind]
     end
