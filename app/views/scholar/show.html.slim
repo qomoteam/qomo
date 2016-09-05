@@ -23,7 +23,7 @@
 
     .aui-item
       h5 Contributed Pipelines:
-      = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines, show_user_prefix: false}
+      = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.where(shared: true), show_user_prefix: false}
 
       h5 Contributed Tools:
       table.aui

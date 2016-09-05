@@ -149,7 +149,7 @@ class PipelinesController < ApplicationController
     else
       pipeline.liked_by user
     end
-    redirect_to pipelines_path
+    redirect_to pipeline_path(pipeline)
   end
 
 
