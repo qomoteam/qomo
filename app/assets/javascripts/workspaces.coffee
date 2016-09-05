@@ -59,8 +59,6 @@ load = (pid)->
   $.get Routes.pipeline(pid, {format: 'json'}), (data)->
     localStorage.boxes = JSON.stringify data.boxes
     localStorage.connections = JSON.stringify data.connections
-    localStorage.panx = JSON.stringify data.panx
-    localStorage.pany = JSON.stringify data.pany
     set_pipeline_params data.params
     restore_workspace()
 
@@ -78,9 +76,6 @@ merge = (pid)->
       new_box = new_boxes[i]
       new_id = App.guid()
       new_box.id = new_id
-      # Set the correct position of tool box after merge
-      new_box.position.left = new_box.position.left - localStorage.panx + data.panx
-      new_box.position.top = new_box.position.top - localStorage.pany + data.pany
       boxes[new_id] = new_box
       for new_connection in new_connections
         new_connection.sourceId = new_id if new_connection.sourceId == i
@@ -97,7 +92,6 @@ merge = (pid)->
 clean_workspace = ->
   init_cache(true)
   set_pid(null)
-  set_pan(-5000, -5000)
   $('#canvas .toolbox').remove()
   plumb.deleteEveryEndpoint()
   $('#boxes-props').html('')
@@ -121,8 +115,6 @@ restore_workspace = ->
       for connection in connections
         add_connection connection
       unfreeze_canvas()
-
-  pan = get_pan()
 
 
 add_connection = (connection)->
@@ -308,10 +300,9 @@ init_box = (box_html, bid, position)->
         top: position.top
         left: position.left
     else
-      pan = get_pan()
       $box.offset
-        top: toolbox_offset - pan.y
-        left: toolbox_offset - pan.x
+        top: toolbox_offset
+        left: toolbox_offset
       toolbox_offset += 30
       if toolbox_offset > 500
         toolbox_offset = 5
@@ -478,16 +469,7 @@ populate_pform = ($form)->
   $form.find('#pipeline_boxes').val localStorage.boxes
   $form.find('#pipeline_connections').val localStorage.connections
   $form.find('#pipeline_params').val localStorage.params
-  $form.find('#pipeline_panx').val get_pan().x
-  $form.find('#pipeline_pany').val get_pan().y
 
-
-set_pan = (x, y) ->
-  localStorage.panx = x
-  localStorage.pany = y
-
-get_pan = ->
-  {x: Number(localStorage.panx || -5000), y: Number(localStorage.pany || -5000)}
 
 canvas_resize = ->
   $("#canvas").css(height: $('#content').height()-$('#canvas-toolbar').height()-1)
@@ -520,8 +502,6 @@ within 'workspaces', 'show', ->
           'pipeline[connections]': localStorage.connections
           'pipeline[boxes]': localStorage.boxes
           'pipeline[params]': localStorage.params
-          'pipeline[panx]': get_pan().x
-          'pipeline[pany]': get_pan().y
     else
       $.get Routes.new_pipeline(), (data)->
         dia = dialog
@@ -600,9 +580,6 @@ within 'workspaces', 'show', ->
       Container: 'canvas'
 
     window.renderer = jsPlumbToolkit.Support.ingest jsPlumb: plumb
-
-    renderer.createMiniview
-      container: 'minimap'
 
     plumb.bind 'click', (c)->
       delete_connection c.sourceId, c.endpoints[0].paramName, c.targetId, c.endpoints[1].paramName

@@ -38,8 +38,10 @@ body[data-controller=workspaces][data-action=show]
     @include border-left-radius(5px)
     @include border-right-radius(5px)
     &.highlight
-      border: 2px solid #f79232
+      border-color: #f79232
     .titlebar
+      @include border-top-radius(5px)
+      @include border-bottom-radius(0px)
       height: 16px
       padding: 0 5px
       border-bottom: 1px solid #223133
