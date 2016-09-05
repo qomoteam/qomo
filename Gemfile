@@ -41,6 +41,7 @@ gem 'redcarpet'
 
 gem 'dvm'
 gem 'vam'
+gem 'redis'
 
 group :development, :test do
   gem 'byebug'
