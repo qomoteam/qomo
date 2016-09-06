@@ -2,6 +2,7 @@
  *= require artDialog
  *= require notie
  *= require jstree
+ *= require quill
  */
 
 @import font-awesome-sprockets
@@ -15,7 +16,7 @@ body
   min-width: 1100px
 
 .monospace
-  font-family: monospace
+  font-family: monospace !important
 
 tr.empty td
   text-align: center !important
@@ -88,3 +89,18 @@ table.def
   background-color: #815b3a
   border-color: #815b3a
   color: #fff
+
+textarea.quill
+  display: none
+
+.ql-toolbar
+  padding-top: 2px !important
+  padding-bottom: 2px !important
+  .ql-picker
+    font-size: 12px !important
+  button
+    height: 20px !important
+
+.ql-editor
+  min-height: 200px
+  background: white

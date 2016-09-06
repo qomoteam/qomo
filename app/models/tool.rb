@@ -1,4 +1,8 @@
+require 'zip'
+
 class Tool < ApplicationRecord
+
+  attr_accessor :upload
 
   enum status: {
       inactive: 0,
@@ -45,7 +49,30 @@ class Tool < ApplicationRecord
 
 
   def dirpath
-    File.join Config.dir_tools, self.dirname
+    File.join Config.dir_tools, self.dirname || self.id
+  end
+
+  def copy_upload!
+    unless Dir.exist? dirpath
+      Dir.mkdir dirpath
+    end
+    if self.upload
+      if self.upload.original_filename.end_with? '.zip'
+        Zip::File.open(self.upload.path) do |zip_file|
+          zip_file.each do |entry|
+            entry.extract("#{dirpath}/#{entry.name}")
+          end
+        end
+      else
+        File.open("#{dirpath}/#{self.upload.original_filename}", "wb") { |f| f.write(self.upload.tempfile.read) }
+      end
+    end
+  end
+
+
+  def files
+    pl = self.dirpath.length + 1
+    Dir.glob("#{self.dirpath}/**/*").reject {|e| File.directory? e}.collect {|e| {path: e[pl..-1], exe: File.executable?(e)}}
   end
 
 

@@ -9,6 +9,8 @@
 #= require notie
 #= require aui
 #= require spin
+#= require quill
+#= require validate
 
 class GUID
   s4: ->
@@ -22,6 +24,24 @@ tpl_fileselector = ""
 
 window.App =
   scopes: {}
+
+  validate: ($form, constrains) ->
+    $form.submit (e) ->
+      errors = validate this, constrains
+      $form = $(this)
+      if errors
+        for field, msgs of errors
+          errorMsg = ''
+          if msgs.length > 1
+            errorMsg = '"' + ("#{msg}" for msg in msgs).join(',') + '"'
+          else
+            errorMsg = msgs[0]
+          $form.find("*[name='#{field}']")
+          .attr('data-aui-notification-field', true)
+          .attr('data-aui-notification-error', errorMsg)
+        return false
+      else
+        return true
 
   goto: (url) ->
     Turbolinks.visit(url)
@@ -96,43 +116,13 @@ $ ->
     localStorage.clear()
     true
 
+  $('textarea.quill').each ->
+    $qe = $("<div class=\"quill\" data-textarea=''>#{$(this).val()}</div>")
+    $qe.insertBefore($(this))
+    window.quill = new Quill $qe[0],
+      theme: 'snow'
+      placeholder: this.placeholder
 
-$(document).on 'click', '.add-tr', ->
-  sel_target = $(this).data 'target'
-  $target = {}
-  if sel_target
-    $target = $(sel_target)
-  else
-    $target = $(this).closest('table')
-
-
-  $tr_empty = $target.find('tbody tr.empty')
-  if $tr_empty.length > 0
-    $tr_empty.remove()
-
-  sel_tpl_tr = $(this).data 'tpl'
-
-  $target.append $(sel_tpl_tr).text()
-  return false
-
-$(document).on 'click', '.remove-tr', ->
-  remote = false
-  params = {}
-  $this = $(this)
-  delete_tr = ->
-    $this.closest('tr').remove()
-  for k of this.dataset
-    if k.indexOf('param') == 0
-      remote = true
-      params[k.substring('param'.length)] = this.dataset[k]
-
-  if remote
-    $.ajax
-      url: this.href
-      method: 'delete'
-      data: params
-      success: run
-  else
-    delete_tr()
-
-  return false
+    $(this).parents('form').submit =>
+      $(this).val($qe.html())
+      return true

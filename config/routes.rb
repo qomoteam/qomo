@@ -58,6 +58,9 @@ Rails.application.routes.draw do
     end
     member do
       get :help
+      post :asset_mkexe
+      get :asset_download
+      post :asset_delete
     end
   end
 
