@@ -5,7 +5,10 @@
         h2
           ' Log in |
           a.aui-button.aui-button-link href=guest_signin_path data-method="post" Or Try with Guest
-
+        - if flash[:alert]
+          .aui-message.aui-message-error
+            p.title Login Error
+            p = flash[:alert]
         = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
           .field-group.top-label
             = f.label :login

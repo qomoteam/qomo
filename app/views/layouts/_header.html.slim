@@ -47,6 +47,10 @@ nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" rol
   .aui-header-secondary
     ul.aui-nav
       - if user_signed_in?
+        - if current_user.has_role? :admin
+          li
+            a.aui-nav-imagelink href=admin_root_path
+              .aui-icon.aui-icon-small.aui-iconfont-configure
         li
           a.aui-dropdown2-trigger-arrowless.aui-dropdown2-trigger aria-haspopup='true' aria-owns='menu-user' href='#'
             span.aui-avatar.aui-avatar-small
@@ -65,10 +69,6 @@ nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" rol
               ul
                 li
                   a.logout href=destroy_user_session_path data-method='delete' Log out
-        - if current_user.has_role? :admin
-          li
-            a.aui-nav-imagelink href=admin_root_path
-              .aui-icon.aui-icon-small.aui-iconfont-configure
       - else
         li
           a href=new_user_session_path  Log in
