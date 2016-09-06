@@ -49,7 +49,7 @@ class Tool < ApplicationRecord
 
 
   def dirpath
-    File.join Config.dir_tools, self.dirname || self.id
+    File.join Config.dir_tools, self.owner.id, self.dirname || self.id
   end
 
   def copy_upload!
@@ -72,7 +72,7 @@ class Tool < ApplicationRecord
 
   def files
     pl = self.dirpath.length + 1
-    Dir.glob("#{self.dirpath}/**/*").reject {|e| File.directory? e}.collect {|e| {path: e[pl..-1], exe: File.executable?(e)}}
+    Dir.glob("#{self.dirpath}/**/*").reject { |e| File.directory? e }.collect { |e| {path: e[pl..-1], exe: File.executable?(e)} }
   end
 
 

@@ -79,6 +79,7 @@ class ToolsController < ApplicationController
   def asset_mkexe
     tool = Tool.find params['id']
     path = File.join(tool.dirpath, params[:path])
+    puts path
     if File.executable? path
       File.chmod(0655, path)
     else

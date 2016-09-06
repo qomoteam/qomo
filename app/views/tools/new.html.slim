@@ -75,7 +75,7 @@
       table.aui
         thead
           tr
-            th style='width: 65%' File Name
+            th style='width: 75%' File Name
             th Executable
             th
         tbody
@@ -95,7 +95,7 @@
                         i.fa.fa-download
           - else
             tr
-              td style='text-align: center' Empty
+              td colspan=3 style='text-align: center' Empty
 
 script#tpl_tr_param type='text/html'
   = render partial: 'tools/tr_param', locals: {param: {'type' => 'string'}}

@@ -2,6 +2,7 @@ a.aui-button.aui-button-primary href=destroy_expired_admin_users_path data-metho
 
 table.aui
   tr
+    th ID
     th Username
     th Email
     th Full Name
@@ -9,6 +10,7 @@ table.aui
     th Last Sign In At
   - for user in @users
     tr
+      td = user.id
       td = user.username
       td = user.email
       td = user.full_name

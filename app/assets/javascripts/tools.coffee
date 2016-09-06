@@ -9,6 +9,7 @@ within 'tools', 'new, edit', ->
     $.post this.href,
       success: ->
         $this.parents('tr').remove()
+    return false
 
   $(document).on 'change', 'select[name="tool[params][][type]"]', ->
     $(this).parents('td').next().html $("#tpl_param_#{this.value}").text()
