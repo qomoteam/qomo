@@ -38,14 +38,20 @@ class Filemeta
 
 
   def read
-    if @is_rdout
-      Dir.glob(File.join @apath, 'part-*').reduce('') {|mem, e| mem + File.read(e)}
-    elsif @type.name == :tsv
-      File.read(@apath).split("\n").collect {|line| line.split("\t")}
+    if @type.name == :tsv
+      raw_read.split("\n").collect {|line| line.split("\t")}
     elsif @type.name == :csv
       CSV.read(@apath)
     else
-      File.read @apath
+      raw_read
+    end
+  end
+
+  def raw_read
+    if @is_rdout
+      Dir.glob(File.join @apath, 'part-*').reduce('') {|mem, e| mem + File.read(e)}
+    else
+      File.read(@apath)
     end
   end
 

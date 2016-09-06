@@ -25,6 +25,8 @@ class DatastoreController < ApplicationController
       return
     end
 
+    puts @meta.type.name
+
     gon.path = path
 
     if @meta.directory?
