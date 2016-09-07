@@ -35,9 +35,6 @@
 
           td
             ul.menu
-              li
-                a href=datastore_download_path(file.path, uid: params[:uid]) title='Download this file'
-                  i.fa.fa-download
               - if own? file
                 li
                   a href=datastore_edit_path(file.path) title='Edit file name'
@@ -45,3 +42,8 @@
                 li
                   a.btn-trash href='javascript:void(0);' title='Delete this file'
                     i.fa.fa-trash-o
+
+              - unless file.directory?
+                li
+                  a href=datastore_download_path(file.path, uid: params[:uid]) title='Download this file'
+                    i.fa.fa-download

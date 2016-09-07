@@ -66,7 +66,12 @@ class Datastore
     is_rdout = false
     if kind == :directory and File.exist?(File.join abs_path, '_SUCCESS')
       is_rdout = :true
-      kind = File.extname(abs_path)[1..-1].to_sym
+      extname = File.extname(abs_path)
+      if extname.blank?
+        kind = :text
+      else
+        kind = extname[1..-1].to_sym
+      end
       size = Dir.glob(File.join abs_path, 'part-*').reduce(0) {|mem, e| mem + File.size(e)}
     end
     Filemeta.new apath: abs_path,
