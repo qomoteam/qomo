@@ -11,6 +11,7 @@
 #= require spin
 #= require quill
 #= require validate
+#= require pace
 
 class GUID
   s4: ->
