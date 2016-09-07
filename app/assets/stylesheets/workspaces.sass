@@ -23,9 +23,6 @@ body[data-controller=workspaces][data-action=show]
 
 #canvas
   background: url(data:image/gif;base64,R0lGODlhFAAUAIAAAMDAwP///yH5BAEAAAEALAAAAAAUABQAAAImhI+pwe3vAJxQ0hssnnq/7jVgmJGfGaGiyoyh68GbjNGXTeEcGxQAOw==)
-  &.freeze
-    opacity: .2
-    z-index: -100000
   .toolbox
     position: absolute
     color: #222
@@ -128,12 +125,17 @@ body[data-controller=workspaces][data-action=show]
       margin-bottom: 0
       border-top: none
 
-.job-summary
+#job-summary
+  padding: 0
   .refresh
-    padding-left: 5px
-    font-size: 0.8em
+    margin-right: 10px
+    font-size: 1em
+    float: right
   table.job
+    padding: 0 5px
     margin-bottom: 10px
+    width: 100%
+    border-top: 1px solid #D1D1D1
     .status
       &.SUCCESS
         color: green

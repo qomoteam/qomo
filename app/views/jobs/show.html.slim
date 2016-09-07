@@ -1,5 +1,5 @@
 .page-panel
-  h2 Job ##{@job.id}
+  h2 Job: #{@job.name}
   .meta
     ' Created At: #{ptime @job.created_at, current_user.timezone}
     ' Updated At: #{ptime @job.updated_at, current_user.timezone}
@@ -13,7 +13,7 @@
       tr
         td rowspan='2' width='80px'
           strong Order:
-        td rowspan='2' = unit.idx + 1
+        td rowspan='2' width="20px" = unit.idx + 1
         td width='80px'
           strong Tool Name:
         td = unit.tool.name

@@ -12,7 +12,7 @@
   table.aui
     thead
       tr
-        th width='270px' Job ID
+        th width='270px' Job
         th Status
         td Progress
         th Created At
@@ -23,11 +23,16 @@
       - for job in @jobs
         tr
           td
-            a href=job_path(job) = job.id
+            a href=job_path(job) = job.name
           td = status_label job.status
           td #{number_to_percentage job.progress*100, precision: 0}
           td = ptime job.created_at, current_user.timezone
           td = ptime job.updated_at, current_user.timezone
           td
-            a> href=datastore_path(job.outdir) OUTPUT
-            a href=job_path(job) data-method='DELETE' data-confirm='Are you sure to delete this job?' Delete
+            ul.menu
+              li
+                a> href=datastore_path(job.outdir) title='Job output folder'
+                  i.fa.fa-folder-o
+              li
+                a href=job_path(job) data-method='DELETE' data-confirm='Are you sure to delete this job?'
+                  i.fa.fa-trash-o

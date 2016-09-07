@@ -25,7 +25,7 @@ class WorkspacesController < ApplicationController
 
 
   def run
-    result = current_user.job_engine.submit JSON.parse(params[:boxes]), JSON.parse(params[:connections])
+    result = current_user.job_engine.submit params[:name], JSON.parse(params[:boxes]), JSON.parse(params[:connections])
     render json: result
   end
 

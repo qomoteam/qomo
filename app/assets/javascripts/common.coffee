@@ -22,8 +22,23 @@ class GUID
 #TODO externalize
 tpl_fileselector = ""
 
+spinner = new Spinner
+  length: 50
+  width: 10
+  lines: 9
+  radius: 60
+
 window.App =
   scopes: {}
+
+  freeze_canvas: ->
+    $('#freeze_layer').show()
+    spinner.spin()
+    document.getElementById('freeze_layer').appendChild(spinner.el)
+
+  unfreeze_canvas: ->
+    $('#freeze_layer').hide()
+    spinner.stop()
 
   validate: ($form, constrains) ->
     $form.submit (e) ->

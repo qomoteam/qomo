@@ -9,9 +9,9 @@ class JobEngine
   end
 
 
-  def submit(boxes, conns)
+  def submit(job_name, boxes, conns)
     job_id = SecureRandom.uuid
-    job = Job.new id: job_id, user_id: @user_id
+    job = Job.new id: job_id, user_id: @user_id, name: job_name
 
     result = {
         success: true,
@@ -155,6 +155,9 @@ class JobEngine
 
       #TODO Try catch here!
       RMQ.new.publish 'jobs', {id: job_id, units: ordere_units}
+    else
+      # TODO maybe we should use exception to do this cleanup
+      @datastore.delete! outdir
     end
 
     result

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426102935) do
+ActiveRecord::Schema.define(version: 20160906150033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,23 +25,21 @@ ActiveRecord::Schema.define(version: 20160426102935) do
     t.integer "depth",          default: 0, null: false
     t.integer "children_count", default: 0, null: false
     t.integer "tech_id_id"
+    t.index ["lft"], name: "index_categories_on_lft", using: :btree
+    t.index ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+    t.index ["rgt"], name: "index_categories_on_rgt", using: :btree
   end
 
-  add_index "categories", ["lft"], name: "index_categories_on_lft", using: :btree
-  add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
-  add_index "categories", ["rgt"], name: "index_categories_on_rgt", using: :btree
-
-  create_table "filerecords", force: :cascade do |t|
+  create_table "filerecords", id: :integer, default: -> { "nextval('filemeta_id_seq'::regclass)" }, force: :cascade do |t|
     t.uuid    "owner_id"
     t.string  "path",                     null: false
     t.text    "desc"
     t.boolean "shared",   default: false
     t.string  "name"
+    t.index ["owner_id"], name: "index_filemeta_on_owner_id", using: :btree
   end
 
-  add_index "filerecords", ["owner_id"], name: "index_filemeta_on_owner_id", using: :btree
-
-  create_table "job_units", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "job_units", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.uuid     "job_id"
     t.uuid     "tool_id"
     t.string   "command"
@@ -58,15 +55,16 @@ ActiveRecord::Schema.define(version: 20160426102935) do
     t.datetime "updated_at"
   end
 
-  create_table "jobs", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "jobs", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.uuid     "user_id"
     t.text     "log"
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
-  create_table "pipelines", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "pipelines", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "accession"
     t.string   "title"
     t.string   "contributors"
@@ -89,17 +87,15 @@ ActiveRecord::Schema.define(version: 20160426102935) do
     t.string   "resource_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+    t.index ["name"], name: "index_roles_on_name", using: :btree
   end
-
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
-  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "teches", force: :cascade do |t|
     t.string "name"
-    t.string "htmlClass"
   end
 
-  create_table "tools", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "tools", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name",                     null: false
     t.string   "contributors"
     t.uuid     "owner_id"
@@ -112,14 +108,13 @@ ActiveRecord::Schema.define(version: 20160426102935) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "desc"
-    t.integer  "tech_id_id"
+    t.integer  "tech_id"
+    t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
+    t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree
+    t.index ["owner_id"], name: "index_tools_on_owner_id", using: :btree
   end
 
-  add_index "tools", ["category_id"], name: "index_tools_on_category_id", using: :btree
-  add_index "tools", ["name"], name: "index_tools_on_name", unique: true, using: :btree
-  add_index "tools", ["owner_id"], name: "index_tools_on_owner_id", using: :btree
-
-  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "username"
     t.string   "first_name"
     t.string   "last_name"
@@ -144,11 +139,10 @@ ActiveRecord::Schema.define(version: 20160426102935) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.uuid    "user_id"
@@ -165,9 +159,8 @@ ActiveRecord::Schema.define(version: 20160426102935) do
     t.integer  "vote_weight"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
   end
-
-  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
-  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
 
 end

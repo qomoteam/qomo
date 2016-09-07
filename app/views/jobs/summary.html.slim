@@ -1,18 +1,19 @@
 - for job in @jobs
-  table.ui.table.small.celled.job
-    tr
-      td colspan='3'
-        a href=job_path(job)
-          = job.accession
+  table.job
     tr
       td
-        a> href=datastore_path(job.outdir) [OUTPUT]
+        a href=job_path(job)
+          = job.name
+      td width='80px' style='text-align: right'
+        a> href=datastore_path(job.outdir) title='Job output folder'
+          i.fa.fa-folder-o
+    tr
       td Progress: #{number_to_percentage job.progress*100, precision: 0}
       td = status_label job.status
 
     - for unit in job.units
       tr
-        td colspan='2'
+        td
           | #{unit.idx+1}. #{unit.tool.name}
-        td width='60px'
+        td
           = status_label unit.status

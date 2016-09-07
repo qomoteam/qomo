@@ -12,21 +12,6 @@ targetColor = '#225588'
 
 MAX_CONNECTIONS = 25
 
-spinner = new Spinner
-  length: 50
-  width: 10
-  lines: 9
-  radius: 60
-
-freeze_canvas = ->
-  $('#canvas').addClass('freeze')
-  spinner.spin()
-  document.getElementById('canvas').appendChild(spinner.el)
-
-unfreeze_canvas = ->
-  $('#canvas').removeClass('freeze')
-  spinner.stop()
-
 get_pid = ->
   localStorage.getItem('pid')
 
@@ -37,7 +22,7 @@ set_pid = (value)->
     localStorage.pid = value
 
 
-init_cache = (forse=false)->
+init_cache = (forse = false)->
   if forse or not localStorage.boxes
     localStorage.boxes = JSON.stringify {}
   if forse or not localStorage.connections
@@ -95,26 +80,34 @@ clean_workspace = ->
   $('#canvas .toolbox').remove()
   plumb.deleteEveryEndpoint()
   $('#boxes-props').html('')
+  reset_ptitle()
+
+get_ptitle = ->
+  $('.pipeline-meta-title').data('title')
+
+reset_ptitle = () ->
+  $('.pipeline-meta-title').data('title', '')
+  $('.pipeline-meta-title a').remove()
 
 
 restore_workspace = ->
-  freeze_canvas()
+  App.freeze_canvas()
   if get_pid()
     $.get Routes.pipeline(get_pid(), {simple: true, format: 'json'}), (pipeline) ->
       purl = Routes.pipeline(get_pid())
-      $('.pipeline-meta-title').html(
+      $('.pipeline-meta-title').data('title', pipeline.title).html(
         "<a href='#{purl}'><strong>#{pipeline.title}</strong></a>"
       )
   boxes = cached_boxes()
 
-  if localStorage.boxes == '{}'
-    unfreeze_canvas()
+  if $.isEmptyObject(cached_boxes())
+    App.unfreeze_canvas()
   else
     add_toolboxes boxes, ->
       connections = cached_connections()
       for connection in connections
         add_connection connection
-      unfreeze_canvas()
+      App.unfreeze_canvas()
 
 
 add_connection = (connection)->
@@ -233,7 +226,7 @@ add_pipeline_param = (paramName, pname, box_id) ->
     params = _.reject params, (p) -> p['name'] == paramName and p['box_id'] == box_id
 
   set_pipeline_params params
-  # END add_pipeline_param(paramName, pname, tool_id)
+# END add_pipeline_param(paramName, pname, tool_id)
 
 get_pipeline_params = ->
   JSON.parse localStorage.params
@@ -398,8 +391,8 @@ init_box = (box_html, bid, position)->
       trHeight = $param.outerHeight()
 
       if is_input or is_output
-        y = (gy + trHeight/2 + (i+1)*2 ) / divHeight
-        color =  unless is_input then "#558822" else "#225588"
+        y = (gy + trHeight / 2 + (i + 1) * 2 ) / divHeight
+        color = unless is_input then "#558822" else "#225588"
         ep = plumb.addEndpoint bid,
           anchor: [1, y, 1, 0]
           paintStyle:
@@ -415,7 +408,7 @@ init_box = (box_html, bid, position)->
         teps[ep.paramName] = ep
 
       gy += trHeight
-      # END: for param, i
+    # END: for param, i
 
     eps[bid] = teps
 
@@ -462,7 +455,7 @@ remove_toolbox = ($box)->
     plumb.deleteEndpoint ep
 
   $box.remove()
-  # END remove_toolbox($box)
+# END remove_toolbox($box)
 
 
 populate_pform = ($form)->
@@ -472,7 +465,7 @@ populate_pform = ($form)->
 
 
 canvas_resize = ->
-  $("#canvas").css(height: $('#content').height()-$('#canvas-toolbar').height()-1)
+  $("#canvas").css(height: $('#content').height() - $('#canvas-toolbar').height() - 1)
 
 within 'workspaces', 'show', ->
   $c = $('#content')
@@ -631,32 +624,44 @@ within 'workspaces', 'show', ->
 
     # Submit current pipeline to job engine
     $('#canvas-toolbar .run').click ->
-      $.ajax
-        url: Routes.run_workspace()
-        type: 'POST'
-        data:
-          boxes: localStorage.boxes
-          connections: localStorage.connections
-        success: (result) ->
-          if result.success
-            msg = "Pipeline submitted."
-            if gon.guest
-              msg += "<br> Guest user will be restricted to use very limited resources."
-            notie.alert(1, msg, 1)
-            updateJobStatus()
-            AJS.tabs.change('a[href="#job-summary"]')
-          else
-            msg = 'Pipeline param error <ul>'
-            for error in result.errors
-              toolName = $('#'+error.box_id).find('.titlebar .title').text()
-              msg += "<li>Param '#{error.param}' of tool #{toolName}: #{error.msg}</li>"
-            msg += '</ul>'
-            notie.alert(3, msg)
-            hboxId = result.errors[0].box_id
-            hparam = result.errors[0].param
-            highlight_box(hboxId)
-        error: (data) ->
-          alert("Pipeline has an error: #{data.content}")
+      if $.isEmptyObject(cached_boxes())
+        notie.alert 3, 'Empty workspace, nothing to run.'
+      else
+        now = new Date()
+        defaultJobName = "#{get_ptitle()} #{now.getHours()}#{now.getMinutes()}"
+        notie.input {
+          type: 'text'
+          placeholder: "Job name, default: #{defaultJobName}"
+        }, 'Please enter a job name:', 'Submit', 'Cancel',
+          (jobName) ->
+            jobName = jobName || defaultJobName
+            $.ajax
+              url: Routes.run_workspace()
+              type: 'POST'
+              data:
+                name: jobName
+                boxes: localStorage.boxes
+                connections: localStorage.connections
+              success: (result) ->
+                if result.success
+                  msg = "Pipeline submitted."
+                  if gon.guest
+                    msg += "<br> Guest user will be restricted to use very limited resources."
+                  notie.alert(1, msg, 1)
+                  updateJobStatus()
+                  AJS.tabs.change('a[href="#job-summary"]')
+                else
+                  msg = 'Pipeline param error <ul>'
+                  for error in result.errors
+                    toolName = $('#' + error.box_id).find('.titlebar .title').text()
+                    msg += "<li>Param '#{error.param}' of tool #{toolName}: #{error.msg}</li>"
+                  msg += '</ul>'
+                  notie.alert(3, msg)
+                  hboxId = result.errors[0].box_id
+                  hparam = result.errors[0].param
+                  highlight_box(hboxId)
+              error: (data) ->
+                alert("Pipeline has an error: #{data.content}")
       false
 
 
