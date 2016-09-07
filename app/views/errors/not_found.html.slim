@@ -4,5 +4,6 @@
       section.aui-page-panel-content
         .aui-message.aui-message-error.error
           p.title
-            strong File not found:
-          = params[:path]
+            strong Error: #{response.status}
+          p
+            | Sorry, your requested resource is not found.

@@ -14,10 +14,10 @@
         table.aui
           thead
             tr
-              th width='300px' Title
-              th Created At
-              th Shared
-              th Operations
+              th Title
+              th width='200px' Created At
+              th width='100px' Shared
+              th width='350px' Operations
           tbody
             - for pipeline in @private_pipelines
               tr data-pid=pipeline.id

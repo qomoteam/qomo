@@ -14,15 +14,12 @@ class DatastoreController < ApplicationController
     @meta = datastore.get path
 
     unless @meta
-      render 'not_found'
-      return
+      not_found
     end
 
     if params[:uid] and
-        params[:uid] != current_user.id and
-        !Filerecord.shared?(params[:uid], @meta.path)
-      render 'not_found'
-      return
+        params[:uid] != current_user.id and !Filerecord.shared?(params[:uid], @meta.path)
+      unauthorized
     end
 
     @page_title = @meta.name unless @meta.name.blank?

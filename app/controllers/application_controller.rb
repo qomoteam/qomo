@@ -19,7 +19,32 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  class NotFound < StandardError
+  end
+
+  class UnAuthorized < StandardError
+  end
+
+  rescue_from NotFound, ActiveRecord::RecordNotFound, with: :handle_not_found
+  rescue_from UnAuthorized, with: :handle_unauthorized
+
+  def not_found
+    raise NotFound.new
+  end
+
+  def unauthorized
+    raise UnAuthorized.new
+  end
+
   private
+
+  def handle_not_found
+    render status: :not_found, template: 'errors/not_found', formats: [:html]
+  end
+
+  def handle_unauthorized
+    render status: :unauthorized, template: 'errors/not_authorized', formats: [:html]
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|

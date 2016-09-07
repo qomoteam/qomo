@@ -74,6 +74,9 @@ class PipelinesController < ApplicationController
 
   def show
     @pipeline = Pipeline.find params['id']
+    if !@pipeline.shared and @pipeline.owner != current_user
+      unauthorized
+    end
     respond_to do |format|
       format.html
       format.json do
