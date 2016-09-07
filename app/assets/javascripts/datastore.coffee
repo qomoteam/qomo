@@ -78,12 +78,16 @@ within 'datastore', 'show', ->
     path = prompt('Go to:')
     Datastore.goto path if path
 
-  $('.b1tn-edit-meta').click ->
-    name = prompt('New name:')
-    src = path_of_row(this)
-    goto = false
-    unless src
-      src = gon.path
-      goto = true
-
-    Datastore.rename src, name, goto if name
+  $('.btn-rename').click ->
+    self = this
+    notie.input {
+      type: 'text'
+    }, 'New name:', 'OK', 'Cancel',
+      (name) ->
+        if name
+          src = path_of_row(self)
+          goto = false
+          unless src
+            src = gon.path
+            goto = true
+          Datastore.rename src, name, goto if name
