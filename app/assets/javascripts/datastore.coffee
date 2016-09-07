@@ -75,7 +75,9 @@ within 'datastore', 'show', ->
         Datastore.mkdir("#{gon.path}/#{dirname}") if dirname
 
   $('.btn-trash').click ->
-    Datastore.trash path_of_row(this)
+    self = this
+    notie.confirm 'Are you sure you want to delete this file?', 'Yes', 'Cancel', ->
+      Datastore.trash path_of_row(self)
 
   $('.btn-go').click ->
     path = prompt('Go to:')
