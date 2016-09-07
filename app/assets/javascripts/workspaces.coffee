@@ -628,7 +628,10 @@ within 'workspaces', 'show', ->
         notie.alert 3, 'Empty workspace, nothing to run.'
       else
         now = new Date()
-        defaultJobName = "#{get_ptitle()} #{now.getHours()}#{now.getMinutes()}"
+        if get_pid()
+          defaultJobName = "#{get_ptitle()}_#{now.getHours()}#{now.getMinutes()}"
+        else
+          defaultJobName = "Untitled Job_#{now.getHours()}#{now.getMinutes()}"
         notie.input {
           type: 'text'
           placeholder: "Job name, default: #{defaultJobName}"
