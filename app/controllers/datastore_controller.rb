@@ -25,7 +25,7 @@ class DatastoreController < ApplicationController
       return
     end
 
-    puts @meta.type.name
+    @page_title = @meta.name unless @meta.name.blank?
 
     gon.path = path
 
@@ -41,6 +41,7 @@ class DatastoreController < ApplicationController
   def edit
     @meta = datastore.get path
     @record = @meta.record
+    render formats: [:html]
   end
 
 
