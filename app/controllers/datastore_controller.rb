@@ -30,7 +30,7 @@ class DatastoreController < ApplicationController
     gon.path = path
 
     if @meta.directory?
-      @files = datastore.list path
+      @files = datastore.list(path).sort_by { |f| f.name.downcase }
     else
       @content = @meta.read
     end

@@ -1,7 +1,7 @@
 .page-panel.wider
   = render 'datastore/viewer/toolbar'
 
-  table.aui.tbl-files
+  table.aui.tbl-files.aui-table-sortable
     thead
       tr
         th width='50%' File Name
@@ -9,39 +9,39 @@
         th width='100px' Kind
 
         - if own? @meta
-          th Shared
+          th.aui-table-column-unsortable Shared
 
         th Date Modified
 
-        th Operations
+        th.aui-table-column-unsortable Operations
 
-      tbody
-        - for file in @files
-          tr data-path=file.path
-            td
-              a href=datastore_path(file.path, uid: params[:uid]) = file.name
-            td
-              - if file.directory?
-                | --
-              - else
-                = number_to_human_size(file.size, precision: 3)
+    tbody
+      - for file in @files
+        tr data-path=file.path
+          td
+            a href=datastore_path(file.path, uid: params[:uid]) = file.name
+          td
+            - if file.directory?
+              | --
+            - else
+              = number_to_human_size(file.size, precision: 3)
 
-            td = file.type.desc
+          td = file.type.desc
 
-            - if own? file
-              td = shared_tag file.record.shared
+          - if own? file
+            td = shared_tag file.record.shared
 
-            td = ptime file.mtime.to_s, current_user.timezone
+          td = ptime file.mtime.to_s, current_user.timezone
 
-            td
-              ul.menu
+          td
+            ul.menu
+              li
+                a href=datastore_download_path(file.path, uid: params[:uid]) title='Download this file'
+                  i.fa.fa-download
+              - if own? file
                 li
-                  a href=datastore_download_path(file.path, uid: params[:uid]) title='Download this file'
-                    i.fa.fa-download
-                - if own? file
-                  li
-                    a href=datastore_edit_path(file.path) title='Edit file name'
-                      i.fa.fa-pencil
-                  li
-                    a.btn-trash href='javascript:void(0);' title='Delete this file'
-                      i.fa.fa-trash-o
+                  a href=datastore_edit_path(file.path) title='Edit file name'
+                    i.fa.fa-pencil
+                li
+                  a.btn-trash href='javascript:void(0);' title='Delete this file'
+                    i.fa.fa-trash-o
