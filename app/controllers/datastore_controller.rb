@@ -88,7 +88,7 @@ class DatastoreController < ApplicationController
 
   def clear
     datastore.list(path).each do |f|
-      if f.name.start_with?('job-') and f.directory? and datastore.list(f.path).size == 0
+      if (not f.record.shared) and f.directory? and datastore.list(f.path).size == 0
         f.delete!
         Filerecord.destroy_all path: f.path, owner_id: current_user.id
       end

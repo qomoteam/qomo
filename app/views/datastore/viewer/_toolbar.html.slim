@@ -9,7 +9,7 @@
           - if @meta.directory?
             .aui-buttons
               a.aui-button href=datastore_upload_path(@meta.path) target='_blank' Upload
-              button.aui-button.btn-mkdir Make Directory
+              button.aui-button.btn-mkdir New Folder
 
           .aui-buttons
             a.aui-button href=datastore_path(parent_dir(@meta.path))
@@ -26,4 +26,4 @@
             button.aui-button Paste
 
           .aui-buttons
-            a.aui-button.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' Clear Empty Job Dirs
+            a.aui-button.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' Clear Empty Folders

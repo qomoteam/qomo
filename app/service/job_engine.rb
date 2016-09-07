@@ -131,7 +131,10 @@ class JobEngine
       units[k] = {id: unit_id, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
     end
 
-    return result unless result[:success]
+    unless result[:success]
+      @datastore.delete! outdir
+      return result
+    end
 
     ordere_units = dg.topsort_iterator.to_a
 

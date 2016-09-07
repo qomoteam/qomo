@@ -68,8 +68,11 @@ within 'datastore', 'show', ->
 
 
   $('.btn-mkdir').click ->
-    dirname = prompt('Directory name:')
-    Datastore.mkdir("#{gon.path}/#{dirname}") if dirname
+    notie.input {
+      type: 'text'
+    }, 'Folder name:', 'OK', 'Cancel',
+      (dirname) ->
+        Datastore.mkdir("#{gon.path}/#{dirname}") if dirname
 
   $('.btn-trash').click ->
     Datastore.trash path_of_row(this)

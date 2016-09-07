@@ -9,7 +9,7 @@ class Job < ApplicationRecord
   default_scope -> { order('created_at DESC') }
 
   def outdir
-    "job-#{self.id}"
+    "jobs/#{self.name}"
   end
 
 

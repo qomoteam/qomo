@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'zip'
 
 class Tool < ApplicationRecord
@@ -54,7 +55,7 @@ class Tool < ApplicationRecord
 
   def copy_upload!
     unless Dir.exist? dirpath
-      Dir.mkdir dirpath
+      FileUtils.mkdir_p dirpath
     end
     if self.upload
       if self.upload.original_filename.end_with? '.zip'
