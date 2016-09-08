@@ -25,7 +25,8 @@
                   a href=pipeline_path(pipeline) = pipeline.title
                 td = ptime pipeline.created_at, current_user.try(:timezone)
                 td = shared_tag pipeline.shared
-                td = render partial: 'pipelines/operations', locals: {pipeline: pipeline, compact: false}
+                td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
+
 
     #tabs-all-pipelines.tabs-pane.active-pane
       .aui-group

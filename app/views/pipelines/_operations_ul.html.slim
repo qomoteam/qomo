@@ -1,0 +1,16 @@
+ul.menu
+  li
+    .aui-buttons
+      - if pipeline.owner != current_user
+        a.aui-button.load href=import_pipeline_path(pipeline) Import
+
+      a.aui-button.load href=load_workspace_path(pipeline) Load
+      a.aui-button.merge href=merge_workspace_path(pipeline) Merge
+  li
+    .aui-buttons
+      a.aui-button.export href=export_pipeline_path(pipeline) Export
+  li
+    - if pipeline.owner == current_user
+      .aui-buttons
+        a.aui-button href=edit_pipeline_path(pipeline) Edit
+        a.aui-button href=pipeline_path(pipeline) data-method='delete' data-confirm='Are you sure want to delete this pipeline?' Delete
