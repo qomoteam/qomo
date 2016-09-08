@@ -686,3 +686,15 @@ within 'workspaces', 'show', ->
           $(toollink).parents('li').show()
 
 
+    $(document).on 'click', '.delete-job-summary', ->
+      self = this
+      console.debug self.href
+      notie.confirm 'Are you sure want to delete this job?', 'Yes', 'Cancel', ->
+        $.ajax
+          url: self.href
+          method: 'delete'
+          success: ->
+            $(self).parents('table.job').remove()
+      return false
+
+

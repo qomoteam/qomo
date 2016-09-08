@@ -7,6 +7,9 @@
       td width='80px' style='text-align: right'
         a> href=datastore_path(job.outdir) title='Job output folder'
           i.fa.fa-folder-o
+        a.delete-job-summary> href=job_path(job) style='margin-left: 1em' title='Delete this job'
+          i.fa.fa-trash-o
+
     tr
       td Progress: #{number_to_percentage job.progress*100, precision: 0}
       td = status_label job.status

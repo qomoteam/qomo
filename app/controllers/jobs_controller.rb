@@ -26,7 +26,7 @@ class JobsController < ApplicationController
   def destroy
     job = Job.find params[:id]
     job.destroy!
-    redirect_to action: :index
+    redirect_to jobs_path, status: :see_other
   end
 
 
