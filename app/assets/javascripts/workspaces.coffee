@@ -203,7 +203,7 @@ add_toolbox = (bid, tool_id, position, box)->
 
 
 tpl_param_dialog = (label, pname) ->
-  "<h4>Paramiterize as Pipeline Param:</h4>" +
+  "<h4>Export as Pipeline Param:</h4>" +
     "<form class='aui'>" +
     "<div class='field-group'>" +
     "<label>#{label} =></label><input class='text medium-field paramiterize' value='#{pname}'></div></form>"

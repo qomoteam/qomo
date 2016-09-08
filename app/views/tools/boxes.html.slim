@@ -22,13 +22,22 @@
         li.input.param data-paramname=input['name']
           = render 'tools/param_label', param: input
           = render 'tools/param_setter', param: input
+          p.desc
+            ' Description:
+            = input['desc']
 
-        - for param in box[:tool].normal_params
-          li.param data-paramname=param['name']
-            = render 'tools/param_label', param: param
-            = render 'tools/param_setter', param: param
+      - for param in box[:tool].normal_params
+        li.param data-paramname=param['name']
+          = render 'tools/param_label', param: param
+          = render 'tools/param_setter', param: param
+          p.desc
+            ' Description:
+            = param['desc']
 
-        - for output in box[:tool].outputs
-          li.output.param data-paramname=output['name']
-            = render 'tools/param_label', param: output
-            = render 'tools/param_setter', param: output
+      - for output in box[:tool].outputs
+        li.output.param data-paramname=output['name']
+          = render 'tools/param_label', param: output
+          = render 'tools/param_setter', param: output
+          p.desc
+            ' Description:
+            = output['desc']

@@ -22,7 +22,7 @@ within 'tools', 'new, edit', ->
     offset = $(this).position()
     width = $(this).outerWidth()
     height = $(this).outerHeight()
-    popupWidth   = $options.width()
+    popupWidth = $options.width()
 
     $options.css
       top    : offset.top + height + 1
