@@ -9,7 +9,6 @@
 #= require notie
 #= require aui
 #= require spin
-#= require quill
 #= require validate
 #= require pace
 #= require dragula
@@ -133,13 +132,16 @@ $ ->
     localStorage.clear()
     true
 
-  $('textarea.quill').each ->
-    $qe = $("<div class=\"quill\" data-textarea=''>#{$(this).val()}</div>")
-    $qe.insertBefore($(this))
-    window.quill = new Quill $qe[0],
-      theme: 'snow'
-      placeholder: this.placeholder
-
-    $(this).parents('form').submit =>
-      $(this).val($qe.html())
-      return true
+  tinymce.init
+    selector: '.tinymce'
+    menubar: false
+    statusbar: false
+    content_style: 'body {font-size: 12px !important}'
+    plugins: [
+      'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      'searchreplace wordcount visualblocks visualchars code fullscreen',
+      'insertdatetime media nonbreaking save table contextmenu directionality',
+      'emoticons template paste textcolor colorpicker textpattern imagetools fullpage'
+    ]
+    toolbar: 'styleselect | bold italic underline | forecolor backcolor | bullist numlist outdent indent | link image table | fullscreen'
+    image_advtab: true

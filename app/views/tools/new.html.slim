@@ -47,7 +47,7 @@
 
       .aui-item style='width: 40%'
         h4 Usage
-        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea full-width-field quill', rows: '10'
+        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea full-width-field tinymce', rows: '20'
 
         h4 Tool Assets
         = f.file_field :upload, class: 'upfile'

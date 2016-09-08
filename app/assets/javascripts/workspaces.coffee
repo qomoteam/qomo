@@ -479,7 +479,7 @@ within 'workspaces', 'show', ->
     west:
       size: 250
     east:
-      size: 320
+      size: 388
 
   canvas_resize()
 
