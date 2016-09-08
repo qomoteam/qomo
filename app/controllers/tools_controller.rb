@@ -2,9 +2,7 @@ class ToolsController < ApplicationController
 
   def index
     @tools = current_user&.tools
-
     @categories = Category.all
-
   end
 
 
@@ -43,14 +41,15 @@ class ToolsController < ApplicationController
 
 
   def destroy
-    Tool.delete params['id']
-    redirect_to action: 'index'
+    tool = Tool.find params['id']
+    tool.destroy!
+    redirect_to action: 'index', status: :see_other
   end
 
 
   def delete
     Tool.delete params['ids']
-    redirect_to action: 'index'
+    redirect_to action: 'index', status: :see_other
   end
 
 

@@ -5,6 +5,8 @@ class Tool < ApplicationRecord
 
   attr_accessor :upload
 
+  before_destroy :rmdir
+
   enum status: {
       inactive: 0,
       active: 1
@@ -16,6 +18,11 @@ class Tool < ApplicationRecord
   belongs_to :category
 
   belongs_to :tech
+
+
+  def rmdir
+    FileUtils.rmtree self.dirpath
+  end
 
 
   def inputs
