@@ -14,6 +14,8 @@ within 'tools', 'new, edit', ->
   $(document).on 'change', 'select[name="tool[params][][type]"]', ->
     $(this).parents('.param-def').find('td.defautl-value-td').html $("#tpl_param_#{this.value}").text()
 
+  dragula([document.getElementById('param-defs')])
+
   $(document).on 'click', '.param-def .edit-options', ->
     $options = $(this).parents('td').find('.options')
     console.debug $options

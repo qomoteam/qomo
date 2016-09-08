@@ -32,7 +32,7 @@
                 br
                 a.aui-icon.aui-icon-small.aui-iconfont-add.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params-def'
               .full-width-field
-                .params-defs
+                #param-defs
                   - if @tool.params
                     - for param in @tool.params
                       = render 'tools/tr_param', param: param

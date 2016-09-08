@@ -2,7 +2,8 @@
   h3
     ' Tool: #{@tool.name}
     - if @tool.owner == current_user
-      small: a href=edit_tool_path(@tool) Edit
+      a href=edit_tool_path(@tool)
+        i.fa.fa-pencil-square-o
 
   table.aui.def
     tr

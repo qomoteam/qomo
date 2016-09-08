@@ -12,6 +12,7 @@
 #= require quill
 #= require validate
 #= require pace
+#= require dragula
 
 class GUID
   s4: ->
