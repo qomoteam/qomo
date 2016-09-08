@@ -1,101 +1,82 @@
 .page-panel.wider
-  .aui-group
-    .aui-item
-      = form_for @tool, multipart: true, html: {class: 'aui edit-tool-form'} do |f|
-        fieldset.section
-          legend Basic Information
-          .field-group
-            = f.label :name
-            = f.text_field :name, placeholder: 'Tool name', class: 'text long-field', data: {'aui-validation-field' => true}
+  = form_for @tool, multipart: true, html: {class: 'aui', id: 'edit-tool-form'} do |f|
+    .aui-group
+      .aui-item
+        .aui-group
+          .aui-item
+            .field-group
+              = f.label :name
+              = f.text_field :name, placeholder: 'Tool name', class: 'text long-field', data: {'aui-validation-field' => true}
+          .aui-item
+            .field-group
+              = f.label :contributors
+              = f.text_field :contributors, placeholder: 'Multiple contributors may be seperated by semicolon', class: 'text long-field'
+        .aui-group
+          .aui-item
+            .field-group
+              = f.label :category_id, 'Category'
+              = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
+          .aui-item
+            .field-group
+              = f.label :tech_id, 'Technology'
+              = f.collection_select :tech_id, Tech.all, :id, :name, {include_blank: true}, {class: 'select long-field'}
+        .aui-group
+          .aui-item
+            .field-group
+              = f.label :desc, 'Description'
+              = f.text_field :desc, placeholder: 'Simple description.', class: 'text full-width-field novalidation'
 
-          .field-group
-            = f.label :contributors
-            = f.text_field :contributors, placeholder: 'Contributors', class: 'text long-field'
-            .description Multiple contributors may be seperated by semicolon
+            .field-group
+              = f.label :params
+                | Parameters
+                br
+                a.aui-icon.aui-icon-small.aui-iconfont-add.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params-def'
+              .full-width-field
+                .params-defs
+                  - if @tool.params
+                    - for param in @tool.params
+                      = render 'tools/tr_param', param: param
 
-          .field-group
-            = f.label :category_id, 'Category'
-            = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
-
-          .field-group
-            = f.label :tech_id, 'Technology'
-            = f.collection_select :tech_id, Tech.all, :id, :name, {include_blank: true}, {class: 'select long-field'}
-
-          .field-group
-            = f.label :desc, 'Description'
-            = f.text_field :desc, placeholder: 'Simple description.', class: 'text full-width-field'
-
-          .field-group
-            = f.label :usage
-            = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea full-width-field quill', rows: '10'
-
-
-        fieldset.section
-          legend Runtime Information
-          .field-group
-            = f.label :params
-              | Parameters
-              br
-              a.aui-icon.aui-icon-small.aui-iconfont-add.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params-def'
-            .full-width-field
-              table.params-def
-                tr
-                  th width='30%'
-                    | Param Name
-                  th width='30%'
-                    | Param Label
-                  th width='70px'
-                    | Type
-                  th
-                    | Values/Def.
-                  th width='50px'
-                = empty_row @tool.params, 5
-                - if @tool.params
-                  - for param in @tool.params
-                    = render 'tools/tr_param', param: param
-
-          .field-group
-            = f.label :command
-            = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '3'
-
-        fieldset.section
-          legend Attachments
-          .field-group
-            = f.label :upload
-            = f.file_field :upload, class: 'upfile'
-            small.tip Notice: If you upload a zip (*.zip) file, it will be unziped automatically
-
+            .field-group
+              = f.label :command
+              = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '3'
 
         .buttons-container
           .buttons
-            = f.submit class: 'button submit'
+            = f.submit class: 'aui-button aui-button-primary'
 
-    .aui-item style='width: 40%'
-      h4 Tool Assets
-      table.aui
-        thead
-          tr
-            th style='width: 75%' File Name
-            th Executable
-            th
-        tbody
-          - if @tool.id and @tool.files.length > 0
-            - for file in @tool.files
-              tr
-                td = file[:path]
-                td
-                  input.mkexe-asset type='checkbox' data-path=file[:path] data-tid=@tool.id checked=file[:exe]
-                td
-                  ul.menu
-                    li
-                      a.delete-asset href=asset_delete_tool_path(@tool, path: file[:path]) title='Delete this file' data-confirm='Are you sure to delete this file?'
-                        i.fa.fa-trash-o
-                    li
-                      a href=asset_download_tool_path(@tool, path: file[:path]) title='Download this file'
-                        i.fa.fa-download
-          - else
+      .aui-item style='width: 40%'
+        h4 Usage
+        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea full-width-field quill', rows: '10'
+
+        h4 Tool Assets
+        = f.file_field :upload, class: 'upfile'
+        small.tip Notice: If you upload a zip (*.zip) file, it will be unziped automatically
+
+        table.aui
+          thead
             tr
-              td colspan=3 style='text-align: center' Empty
+              th style='width: 75%' File Name
+              th Executable
+              th
+          tbody
+            - if @tool.id and @tool.files.length > 0
+              - for file in @tool.files
+                tr
+                  td = file[:path]
+                  td
+                    input.mkexe-asset type='checkbox' data-path=file[:path] data-tid=@tool.id checked=file[:exe]
+                  td
+                    ul.menu
+                      li
+                        a.delete-asset href=asset_delete_tool_path(@tool, path: file[:path]) title='Delete this file' data-confirm='Are you sure to delete this file?'
+                          i.fa.fa-trash-o
+                      li
+                        a href=asset_download_tool_path(@tool, path: file[:path]) title='Download this file'
+                          i.fa.fa-download
+            - else
+              tr
+                td colspan=3 style='text-align: center' Empty
 
 script#tpl_tr_param type='text/html'
   = render partial: 'tools/tr_param', locals: {param: {'type' => 'string'}}

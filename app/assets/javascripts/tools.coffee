@@ -12,10 +12,11 @@ within 'tools', 'new, edit', ->
     return false
 
   $(document).on 'change', 'select[name="tool[params][][type]"]', ->
-    $(this).parents('td').next().html $("#tpl_param_#{this.value}").text()
+    $(this).parents('.param-def').find('td.defautl-value-td').html $("#tpl_param_#{this.value}").text()
 
-  $(document).on 'click', '.params-def .edit-options', ->
-    $options = $(this).parents('tr').find('.options')
+  $(document).on 'click', '.param-def .edit-options', ->
+    $options = $(this).parents('td').find('.options')
+    console.debug $options
     offset = $(this).position()
     width = $(this).outerWidth()
     height = $(this).outerHeight()
@@ -29,8 +30,12 @@ within 'tools', 'new, edit', ->
 
     $options.show()
 
+  $(document).on 'click', '.remove-param', ->
+    $(this).parents('.param-def').fadeOut ->
+      $(this).remove()
 
-  $(document).on 'click', '.params-def .options button.ok', ->
+
+  $(document).on 'click', '.param-def .options button.ok', ->
     $(this).parents('.options').hide()
     return false
 
@@ -79,8 +84,8 @@ within 'tools', 'new, edit', ->
       presence: true
       length:
         minimum: 5
-        maximum: 12
+        maximum: 25
     'tool[command]':
       presence: true
 
-  App.validate($('.edit-tool-form'), constrains)
+  App.validate($('#edit-tool-form'), constrains)

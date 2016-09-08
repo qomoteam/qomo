@@ -1,24 +1,52 @@
-table.params-def
-  width: 100%
-  td
-    padding-right: 10px
-  input[type=text]
-    width: 100%
-  input[type=checkbox]
-    margin-top: 2px
-  .edit-options
-    margin-left: 10px
-  .options
-    display: none
-    max-width: 600px !important
-  th
-    height: 22px
-  td, th
-    text-align: left
-
-  .options
-    button
-      font-size: 10px
+form#edit-tool-form
+  h4
+    margin: 20px 0 5px 0
+    &:first-of-type
+      margin-top: 0
+  .field-group
+    padding-left: 80px
+    input, select
+      width: 96%
+      &.novalidation
+        width: 100%
+    &> label
+      width: 80px
+      margin-left: -90px
+  .params-defs
+    .param-def
+      width: 100%
+      border: 1px dotted #0fbad6
+      margin: 12px 0
+      &:first-of-type
+        margin-top: 0
+      td
+        padding-right: 10px
+        &.label
+          padding-left: 10px
+        &.remove-param-td
+          padding-right: 0
+          border-right: 1px dotted #0fbad6
+      input[type=text], select
+        width: 100%
+      input[type=checkbox]
+        margin-top: 2px
+      textarea
+        width: 100%
+      .edit-options
+        margin-left: 10px
+      .options
+        display: none
+        max-width: 600px !important
+      th
+        height: 22px
+      td, th
+        text-align: left
+      .options
+        button
+          font-size: 10px
+  .buttons-container
+    margin-top: 2em
+    padding-left: 80px
 
 small.tip
   margin-left: 10px

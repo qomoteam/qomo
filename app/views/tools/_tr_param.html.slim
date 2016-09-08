@@ -1,14 +1,25 @@
-tr
-  td: input type='text' name='tool[params][][name]' value=param['name']
+table.param-def
+  tbody
+    tr
+      td.remove-param-td rowspan=3 width='18px'
+        a.aui-icon.aui-icon-small.aui-iconfont-remove-label.remove-param href='javascript:;' title='Delete this param'
+      td.label width='100px' Param Name
+      td
+        input type='text' name='tool[params][][name]' value=param['name']
+      td.label width='100px' Param Label
+      td
+        - if param['type'] != 'tmp'
+          input type='text' name='tool[params][][label]' value=param['label']
+    tr
+      td.label Param Type
+      td
+        select name='tool[params][][type]'
+          = options_for_select %w[input string bool select path output tmp].map { |e| [e.humanize, e] }, selected: param['type']
+      td.label Default Value
+      td.defautl-value-td = render partial: "tools/param_#{param['type']}", locals: {param: param}
+    tr
+      td.label Description
+      td colspan=3
+        textarea rows=4 name='tool[params][][desc]' = param['desc']
 
-  td
-    / Tmp type param do not need label field
-    - if param['type'] != 'tmp'
-      input type='text' name='tool[params][][label]' value=param['label']
-  td
-    select name='tool[params][][type]'
-      = options_for_select %w[input string bool select path output tmp].map {|e| [e.humanize, e]}, selected: param['type']
-  td
-    = render partial: "tools/param_#{param['type']}", locals: {param: param}
-  td
-    a.aui-icon.aui-icon-small.aui-iconfont-remove-label.remove-tr href='javascript:;' title='Delete this param'
+
