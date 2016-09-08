@@ -74,13 +74,6 @@ module ApplicationHelper
     content_tag :a, display, href: scholar_path(user.username)
   end
 
-
-  def markdown(str)
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-    markdown.render str
-  end
-
-
   def contributors_tag(str, link=true)
     str.split(',').map do |c|
       c = c.strip
