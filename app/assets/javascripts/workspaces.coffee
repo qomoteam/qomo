@@ -117,7 +117,7 @@ add_connection = (connection)->
     drawEndpoints: false
     source: sourceEp
     target: targetEp
-  $("\##{connection.targetId}").find("input[name=#{connection.targetParamName}]").val('').prop 'disabled', true
+  $(".box-props[data-bid=#{connection.targetId}] .param[data-paramname=#{connection.targetParamName}] input").val('').prop('disabled', true)
 
 
 save_cached_boxes = (boxes)->
@@ -576,8 +576,9 @@ within 'workspaces', 'show', ->
 
     plumb.bind 'click', (c)->
       delete_connection c.sourceId, c.endpoints[0].paramName, c.targetId, c.endpoints[1].paramName
-
+      $(".box-props[data-bid=#{c.targetId}] .param[data-paramname=#{c.endpoints[1].paramName}] input").prop('disabled', false)
       plumb.detach c
+
       return true
 
 
@@ -586,8 +587,8 @@ within 'workspaces', 'show', ->
       targetParamName = info.dropEndpoint.paramName
       cache_connection info.sourceId, sourceParamName, info.targetId, targetParamName
 
+      $(".box-props[data-bid=#{info.targetId}] .param[data-paramname=#{targetParamName}] input").val('').prop('disabled', true)
 
-      $("\##{info.targetId}").find("input[name=#{targetParamName}]").val('').prop 'disabled', true
       return true
 
     if typeof(_action) != 'undefined'
