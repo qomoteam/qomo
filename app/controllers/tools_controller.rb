@@ -2,7 +2,6 @@ class ToolsController < ApplicationController
 
   def index
     @tools = current_user&.tools
-    @categories = Category.all
   end
 
 

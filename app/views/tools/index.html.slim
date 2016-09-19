@@ -1,43 +1,21 @@
 .page-panel
-  .aui-tabs.horizontal-tabs
-    ul.tabs-menu
-      - if user_signed_in?
-        li.menu-item
-          a href='#tabs-my-tools'
-            strong My Tools
-      li.menu-item.active-tab
-        a href='#tabs-all-tools'
-          strong Explore
+  a.aui-button href=new_tool_path Create Tool
+  table.aui
+    thead
+      tr
+        th width='40%' Name
+        th Category
+        th Desc
+        th width='100px'
+    tbody
+      - for tool in @tools
+        tr
+          td: a href=edit_tool_path(tool) = tool.name
+          td = tool.category.name
+          td = tool.desc
+          td
+            ul.menu
+              li
+                a href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' title='delete this tool'
+                  i.fa.fa-trash-o
 
-    - if user_signed_in?
-      #tabs-my-tools.tabs-pane
-        a.aui-button href=new_tool_path Create Tool
-        table.aui
-          thead
-            tr
-              th width='40%' Name
-              th Category
-              th Desc
-              th width='100px'
-          tbody
-            - for tool in @tools
-              tr
-                td: a href=edit_tool_path(tool) = tool.name
-                td = tool.category.name
-                td = tool.desc
-                td
-                  ul.menu
-                    li
-                      a href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' title='delete this tool'
-                        i.fa.fa-trash-o
-
-    #tabs-all-tools.tabs-pane.active-pane
-      - for category in @categories
-        table.aui
-          tbody
-            tr
-              td colspan='2'
-                h5
-                  ' Category:
-                  = category.name
-            = render partial: 'tools/rich_list_tr', locals: {tools: category.active_tools}

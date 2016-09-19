@@ -1,44 +1,16 @@
 .page-panel
-  .aui-tabs.horizontal-tabs
-    ul.tabs-menu
-      - if user_signed_in?
-        li.menu-item
-          a href='#tabs-my-pipelines'
-            strong My Pipelines
-      li.menu-item.active-tab
-        a href='#tabs-all-pipelines'
-          strong Explore
-
-    - if user_signed_in?
-      #tabs-my-pipelines.tabs-pane
-        table.aui
-          thead
-            tr
-              th Title
-              th width='200px' Created At
-              th width='100px' Shared
-              th width='350px' Operations
-          tbody
-            - for pipeline in @private_pipelines
-              tr data-pid=pipeline.id
-                td
-                  a href=pipeline_path(pipeline) = pipeline.title
-                td = ptime pipeline.created_at, current_user.try(:timezone)
-                td = shared_tag pipeline.shared
-                td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
-
-
-    #tabs-all-pipelines.tabs-pane.active-pane
-      .aui-group
-        .aui-item style='width: 80%'
-          = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
-        .aui-item
-          nav.aui-navgroup.aui-navgroup-vertical
-            .aui-navgroup-inner
-              ul.aui-nav
-                li class=('aui-nav-selected' unless params[:category_id])
-                  a href=pipelines_path  All
-                - for category in all_categories
-                  li class=('aui-nav-selected' if category.id == params[:category_id].to_i)
-                    a href=category_pipelines_path(category) = category.name
-
+  table.aui
+    thead
+      tr
+        th Title
+        th width='200px' Created At
+        th width='100px' Shared
+        th width='350px' Operations
+    tbody
+      - for pipeline in @private_pipelines
+        tr data-pid=pipeline.id
+          td
+            a href=pipeline_path(pipeline) = pipeline.title
+          td = ptime pipeline.created_at, current_user.try(:timezone)
+          td = shared_tag pipeline.shared
+          td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}

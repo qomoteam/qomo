@@ -17,6 +17,15 @@ Rails.application.routes.draw do
 
   root 'workspaces#show'
 
+  namespace :explore do
+    get 'index'
+    resources :categories do
+      get :pipelines, to: '/explore#index'
+    end
+  end
+
+
+
   get 'about', to: 'home#about'
   get 'agreement', to: 'home#agreement'
   get 'tutorial', to: 'home#tutorial'
@@ -77,11 +86,6 @@ Rails.application.routes.draw do
       post :run
       post :star
     end
-  end
-
-
-  resources :categories do
-    resources :pipelines
   end
 
 

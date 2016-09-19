@@ -1,0 +1,34 @@
+.page-panel
+  .aui-tabs.horizontal-tabs
+    ul.tabs-menu
+      li.menu-item.active-tab
+        a href='#tabs-all-pipelines'
+          strong Pipelines
+      li.menu-item
+        a href='#tabs-all-tools'
+          strong Tools
+
+    #tabs-all-pipelines.tabs-pane.active-pane
+      .aui-group
+        .aui-item style='width: 80%'
+          = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
+        .aui-item
+          nav.aui-navgroup.aui-navgroup-vertical
+            .aui-navgroup-inner
+              ul.aui-nav
+                li class=('aui-nav-selected' unless params[:category_id])
+                  a href=explore_index_path  All
+                - for category in all_categories
+                  li class=('aui-nav-selected' if category.id == params[:category_id].to_i)
+                    a href=explore_category_pipelines_path(category) = category.name
+
+    #tabs-all-tools.tabs-pane
+      - for category in @categories
+        table.aui
+          tbody
+            tr
+              td colspan='2'
+                h5
+                  ' Category:
+                  = category.name
+          = render partial: 'tools/rich_list_tr', locals: {tools: category.active_tools}

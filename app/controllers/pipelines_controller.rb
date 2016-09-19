@@ -4,13 +4,6 @@ class PipelinesController < ApplicationController
 
   def index
     @private_pipelines = current_user.try :pipelines
-
-    if params[:category_id]
-      @pipelines = Pipeline.where shared: true, category_id: params[:category_id]
-    else
-      @pipelines = Pipeline.where shared: true
-    end
-
   end
 
 
