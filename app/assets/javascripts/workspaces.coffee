@@ -596,7 +596,7 @@ within 'workspaces', 'show', ->
       restore_workspace()
 
 
-    #Click link in left sidebar tool list
+    # Click tool link in left sidebar tool list
     $('#tools-selector a.tool-link').click ->
       tool_id = this.dataset.tid
       $.ajax
@@ -610,7 +610,8 @@ within 'workspaces', 'show', ->
 
           cache_box $box.attr('id'), $box.data('tid')
           add_toolbox $box.attr('id'), $box.data('tid'), null, $box
-
+        error: (response) ->
+          notie.alert(3, "An error occured when add tool into workspace")
       return false
 
 
