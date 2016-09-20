@@ -1,49 +1,52 @@
 .page-panel
   h3 Pipeline: #{@pipeline.title}
-  = render partial: 'pipelines/operations', locals: {pipeline: @pipeline, compact: false}
+  .aui-group
+    .aui-item style='width: 65%'
+      = render partial: 'pipelines/operations', locals: {pipeline: @pipeline, compact: false}
 
-  table.aui.def
-    tr
-      td width='100px' Accession
-      td  = @pipeline.accession
-    tr
-      td Title
-      td  = @pipeline.title
-    tr
-      td Contributors
-      td == contributors_tag @pipeline.contributors
-    tr
-      td Permalink
-      td
-        a href=pipeline_path(@pipeline) = pipeline_url @pipeline
-    tr
-      td Citation
-      td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
-    tr
-      td Created At
-      td = ptime @pipeline.created_at, current_user.try(:timezone)
-    tr
-      td Updated At
-      td = ptime @pipeline.updated_at, current_user.try(:timezone)
-    tr
-      td Description
-      td
-        .paragraph == @pipeline.desc
-    tr
-      td Owner
-      td = user_tag @pipeline.owner
+      table.aui.def
+        tr
+          td width='100px' Accession
+          td  = @pipeline.accession
+        tr
+          td Title
+          td  = @pipeline.title
+        tr
+          td Contributors
+          td == contributors_tag @pipeline.contributors
+        tr
+          td Permalink
+          td
+            a href=pipeline_path(@pipeline) = pipeline_url @pipeline
+        tr
+          td Citation
+          td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
+        tr
+          td Created At
+          td = ptime @pipeline.created_at, current_user.try(:timezone)
+        tr
+          td Updated At
+          td = ptime @pipeline.updated_at, current_user.try(:timezone)
+        tr
+          td Description
+          td
+            .paragraph == @pipeline.desc
+        tr
+          td Owner
+          td = user_tag @pipeline.owner
 
-  = form_tag run_pipeline_path(@pipeline), class: 'aui top-label pipeline-runner'
-    = hidden_field_tag :pipelinevalues, ''
-    .field-group
-      label Job Name
-      input name='jobName' value="#{@pipeline.title} #{Time.now.hour}#{Time.now.min}"
+    .aui-item
+      = form_tag run_pipeline_path(@pipeline), class: 'aui top-label pipeline-runner'
+        = hidden_field_tag :pipelinevalues, ''
+        .field-group
+          label Job Name
+          input.text.long-field name='jobName' value="#{@pipeline.title} #{Time.now.hour}#{Time.now.min}"
 
-    h5 Params:
-    - for p in @pipeline.params_ui
-      .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
-        label #{p['label']} (#{p['tool'].name}: #{p['tool'].params.select {|e| e['name'] == p['name']}[0]['label']})
-        = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
+        h5 Params:
+        - for p in @pipeline.params_ui
+          .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
+            label #{p['label']} (#{p['tool'].name}: #{p['tool'].params.select {|e| e['name'] == p['name']}[0]['label']})
+            = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
 
-    .aui-group
-      = submit_tag 'Run', class: 'aui-button aui-button-primary'
+        .aui-group
+          = submit_tag 'Run', class: 'aui-button aui-button-primary'

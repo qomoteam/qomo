@@ -59,9 +59,14 @@ class PipelinesController < ApplicationController
       @pipeline = @pipeline.export_to_user(current_user)
     end
     values = JSON.parse params[:pipelinevalues]
-    jid = current_user.job_engine.submit params[:jobName], @pipeline.merge_params(values), @pipeline.connections
+    result = current_user.job_engine.submit params[:jobName], @pipeline.merge_params(values), @pipeline.connections
+    if result[:success]
+      redirect_to job_path(result[:job_id])
+    else
+      flash[:notice] = 'Error occured when submit pipeline'
+      redirect_to pipeline_path(@pipeline)
+    end
 
-    redirect_to job_path(jid)
   end
 
 
