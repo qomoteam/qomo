@@ -18,6 +18,7 @@ class ToolsController < ApplicationController
     if @current_user.has_role? :admin
       @tool.active!
     end
+
     @tool.save
     @tool.copy_upload!
     redirect_to action: 'edit', id: @tool.id

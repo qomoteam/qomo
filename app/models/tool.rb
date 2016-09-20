@@ -57,7 +57,7 @@ class Tool < ApplicationRecord
 
 
   def dirpath
-    File.join Config.dir_tools, self.owner.id, self.dirname || self.id
+    File.join Config.dir_tools, self.owner.id, self.dirname.blank? ? self.id : self.dirname
   end
 
   def copy_upload!
