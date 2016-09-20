@@ -1,6 +1,6 @@
 class PipelinesController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:show]
 
   def index
     @private_pipelines = current_user.try :pipelines

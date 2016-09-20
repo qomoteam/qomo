@@ -1,5 +1,7 @@
 class ToolsController < ApplicationController
 
+  before_action :authenticate_user!, except: [:show]
+
   def index
     @tools = current_user&.tools
   end

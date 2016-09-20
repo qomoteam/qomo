@@ -48,6 +48,12 @@
             = f.text_field :last_name, autofocus: true, class: 'text long-field'
 
           .field-group.top-label
+            = f.label :organization
+              | Organization
+              span.aui-icon.icon-required
+            = f.text_field :organization, autofocus: true, class: 'text long-field'
+
+          .field-group.top-label
             = f.label :last_name
               | Captcha
               span.aui-icon.icon-required
