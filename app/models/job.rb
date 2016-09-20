@@ -29,7 +29,7 @@ class Job < ApplicationRecord
 
 
   def status
-    for unit in units.reverse
+    units.reverse.each do |unit|
       if unit && (unit.status != 'waiting')
         return unit.status
       end
