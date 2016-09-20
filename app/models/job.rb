@@ -9,7 +9,7 @@ class Job < ApplicationRecord
   default_scope -> { order('created_at DESC') }
 
   def outdir
-    "jobs/#{self.name}"
+    "jobs/#{self.name}".gsub('\\s', '_')
   end
 
 
