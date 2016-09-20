@@ -7,15 +7,16 @@
   #tools-selector.tabs-pane.active-pane
     input.search type='text'
     - for c in Category.roots
-      ul
-        li
-          h5
-            i.fa.fa-folder-open
-            = c.name
-          ul
-            - for tool in c.tools.active
-              li
-                a.tool-link data-tid=tool.id href='#' = tool.name
-                - unless tool.usage.blank?
-                  a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
+      - if c.tools.active.size > 0
+        ul
+          li
+            h5
+              i.fa.fa-folder-open
+              = c.name
+            ul
+              - for tool in c.tools.active
+                li
+                  a.tool-link data-tid=tool.id href='#' = tool.name
+                  - unless tool.usage.blank?
+                    a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
 
