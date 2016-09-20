@@ -14,12 +14,16 @@
               | Username
               span.aui-icon.icon-required
             = f.text_field :username, autofocus: true, class: 'text long-field'
+            small.tip
+              ' 5 characters minimum
 
           .field-group.top-label
             = f.label :email
               | Email
               span.aui-icon.icon-required
             = f.email_field :email, autofocus: true, class: 'text long-field'
+            small.tip
+              ' You will use this address to recieve an confirm email
 
           .field-group.top-label
             = f.label :password
@@ -27,7 +31,8 @@
               span.aui-icon.icon-required
             = f.password_field :password, autocomplete: 'off', class: 'text long-field'
             - if @minimum_password_length
-              .description #{@minimum_password_length} characters minimum
+              small.tip
+                | #{@minimum_password_length} characters minimum
 
           .field-group.top-label
             = f.label :password_confirmation
