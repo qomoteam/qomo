@@ -87,7 +87,7 @@ within 'tools', 'new, edit', ->
     'tool[name]':
       presence: true
       length:
-        minimum: 5
+        minimum: 2
         maximum: 25
     'tool[command]':
       presence: true

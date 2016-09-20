@@ -27,7 +27,8 @@
       td = ptime @pipeline.updated_at, current_user.try(:timezone)
     tr
       td Description
-      td == @pipeline.desc
+      td
+        .paragraph == @pipeline.desc
     tr
       td Owner
       td = user_tag @pipeline.owner
