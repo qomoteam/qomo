@@ -33,9 +33,13 @@
       td Owner
       td = user_tag @pipeline.owner
 
-  h5 Params to be set:
   = form_tag run_pipeline_path(@pipeline), class: 'aui top-label pipeline-runner'
     = hidden_field_tag :pipelinevalues, ''
+    .field-group
+      label Job Name
+      input name='jobName' value="#{@pipeline.title} #{Time.now.hour}#{Time.now.min}"
+
+    h5 Params:
     - for p in @pipeline.params_ui
       .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
         label #{p['label']} (#{p['tool'].name}: #{p['tool'].params.select {|e| e['name'] == p['name']}[0]['label']})

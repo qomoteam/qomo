@@ -59,7 +59,7 @@ class PipelinesController < ApplicationController
       @pipeline = @pipeline.export_to_user(current_user)
     end
     values = JSON.parse params[:pipelinevalues]
-    jid = current_user.job_engine.submit @pipeline.merge_params(values), @pipeline.connections
+    jid = current_user.job_engine.submit params[:jobName], @pipeline.merge_params(values), @pipeline.connections
 
     redirect_to job_path(jid)
   end
