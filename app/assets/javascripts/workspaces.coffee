@@ -688,9 +688,10 @@ within 'workspaces', 'show', ->
       q = this.value.toLowerCase()
       hl = _.each $('#tools-selector a.tool-link'), (toollink) ->
         if toollink.textContent.toLowerCase().indexOf(q) == -1
-          $(toollink).parents('li').hide()
+          console.debug $(toollink).parents('li')
+          $(toollink).parent().hide()
         else
-          $(toollink).parents('li').show()
+          $(toollink).parent().show()
 
 
     $(document).on 'click', '.delete-job-summary', ->
