@@ -196,6 +196,10 @@ add_toolboxes = (boxes, hook)->
         box = cached_boxes()[this.id]
         init_box this, box.id, box.position
       hook()
+    error: (response) ->
+      clean_workspace()
+      App.unfreeze_canvas()
+      notie.alert(3, 'An error occured when loading workspace pipeline')
 
 
 add_toolbox = (bid, tool_id, position, box)->
@@ -507,6 +511,7 @@ within 'workspaces', 'show', ->
             populate_pform $form
             $form.ajaxSubmit success: (pid) ->
               set_pid(pid)
+              notie.alert(1, 'Pipeline saved')
             return true
           cancelValue: 'Cancel'
           cancel: ->
