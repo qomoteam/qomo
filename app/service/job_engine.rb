@@ -19,7 +19,7 @@ class JobEngine
         errors: []
     }
 
-    outdir = job.outdir
+    outdir = job.outdir.gsub('\\s', '_')
     @datastore.mkdir! outdir
 
     preset = {}
