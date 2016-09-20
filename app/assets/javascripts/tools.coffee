@@ -18,19 +18,21 @@ within 'tools', 'new, edit', ->
 
   $(document).on 'click', '.param-def .edit-options', ->
     $options = $(this).parents('td').find('.options')
-    console.debug $options
-    offset = $(this).position()
-    width = $(this).outerWidth()
-    height = $(this).outerHeight()
-    popupWidth = $options.width()
+    if $options.is(':visible')
+      $options.hide()
+    else
+      console.debug $options
+      offset = $(this).position()
+      width = $(this).outerWidth()
+      height = $(this).outerHeight()
+      popupWidth = $options.width()
 
-    $options.css
-      top    : offset.top + height + 1
-      left   : offset.left + (width / 2) - (popupWidth / 2) + 1
-      bottom : 'auto'
-      right  : 'auto'
-
-    $options.show()
+      $options.css
+        top    : offset.top + height + 1
+        left   : offset.left + (width / 2) - (popupWidth / 2) + 1
+        bottom : 'auto'
+        right  : 'auto'
+      $options.show()
 
   $(document).on 'click', '.remove-param', ->
     $(this).parents('.param-def').fadeOut ->
