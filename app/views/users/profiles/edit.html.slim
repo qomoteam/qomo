@@ -10,6 +10,13 @@
             input.text.long-field value=@user.username readonly='readonly'
 
           .field-group.top-label
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: 'text long-field'
+            small.tip
+              ' Edit your email-bundled portrait at
+              a href='https://gravatar.com/' target='_blank' Gravatar.com
+
+          .field-group.top-label
             = f.label :first_name
             = f.text_field :first_name, autofocus: true, class: 'text long-field'
 

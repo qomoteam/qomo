@@ -2,15 +2,15 @@ ul.menu
   li
     .aui-buttons
       - if pipeline.owner != current_user
-        a.aui-button.load href=import_pipeline_path(pipeline) Import
+        a.aui-button.hint--bottom.load href=import_pipeline_path(pipeline) aria-label='Import pipeline to your own namespace' Import
 
-      a.aui-button.load href=load_workspace_path(pipeline) Load
-      a.aui-button.merge href=merge_workspace_path(pipeline) Merge
+      a.aui-button.hint--bottom.load href=load_workspace_path(pipeline) aria-label='Replace current workspace with this pipeline' Load
+      a.aui-button.hint--bottom.merge href=merge_workspace_path(pipeline) aria-label='Add this pipeline to current workspace' Merge
   li
     .aui-buttons
-      a.aui-button.export href=export_pipeline_path(pipeline) Export
+      a.aui-button.hint--bottom.export href=export_pipeline_path(pipeline) aria-label='Export pipeline specification and download' Export
   li
     - if pipeline.owner == current_user
       .aui-buttons
-        a.aui-button href=edit_pipeline_path(pipeline) Edit
-        a.aui-button href=pipeline_path(pipeline) data-method='delete' data-confirm='Are you sure want to delete this pipeline?' Delete
+        a.aui-button.hint--bottom href=edit_pipeline_path(pipeline) aria-label='Edit pipeline basic infomation' Edit
+        a.aui-button.hint--bottom.hint--warning href=pipeline_path(pipeline) data-method='delete' data-confirm='Are you sure want to delete this pipeline?' aria-label='Delete this pipeline' Delete

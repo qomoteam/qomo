@@ -2,6 +2,8 @@
   = form_for @tool, multipart: true, html: {class: 'aui', id: 'edit-tool-form'} do |f|
     .aui-group
       .aui-item
+        h4
+          ' Basic Infomation
         .aui-group
           .aui-item
             .field-group
@@ -22,7 +24,6 @@
               = f.collection_select :tech_id, Tech.all, :id, :name, {include_blank: true}, {class: 'select long-field'}
         .aui-group
           .aui-item
-
             - if current_user.has_role? :admin
               .field-group
                 = f.label :dirname, 'Dirname'

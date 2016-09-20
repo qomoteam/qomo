@@ -10,10 +10,6 @@
               = devise_error_messages!
 
           .field-group.top-label
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: 'text long-field'
-
-          .field-group.top-label
             = f.label :password
             = f.password_field :password, autocomplete: 'off', class: 'text long-field'
             - if @minimum_password_length

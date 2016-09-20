@@ -1,5 +1,5 @@
 .page-panel
-  a.aui-button href=new_tool_path Create Tool
+  a.aui-button.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
   table.aui
     thead
       tr
@@ -16,6 +16,6 @@
           td
             ul.menu
               li
-                a href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' title='delete this tool'
+                a.hint--bottom.hint--warning href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' aria-label='delete this tool'
                   i.fa.fa-trash-o
 
