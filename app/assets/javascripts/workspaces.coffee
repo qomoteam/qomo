@@ -499,6 +499,10 @@ within 'workspaces', 'show', ->
           'pipeline[connections]': localStorage.connections
           'pipeline[boxes]': localStorage.boxes
           'pipeline[params]': localStorage.params
+        success: ->
+          notie.alert(1, 'Pipeline saved')
+        error: ->
+          notie.alert(3, 'An error occured when save pipeline')
     else
       $.get Routes.new_pipeline(), (data)->
         dia = dialog

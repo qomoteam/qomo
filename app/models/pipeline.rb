@@ -31,7 +31,7 @@ class Pipeline < ApplicationRecord
       box = self.boxes[p['box_id']]
       tool = Tool.find box['tool_id']
       p['tool'] = tool
-      p['tool_param'] = tool.params.select {|e| e['name'] == p['name']}[0]
+      p['tool_param'] = tool.params.find {|e| e['name'] == p['name']}
       value = box['values'].select {|k, _| k == p['name']}[p['name']]
 
       if p['tool_param']['options']
