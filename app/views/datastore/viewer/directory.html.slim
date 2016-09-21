@@ -1,7 +1,7 @@
 .page-panel.wider
   = render 'datastore/viewer/toolbar'
 
-  table.aui.tbl-files.aui-table-sortable
+  table.aui.aui-table-sortable.tbl-files
     thead
       tr
         th width='50%' File Name
@@ -19,7 +19,12 @@
       - for file in @files
         tr data-path=file.path
           td
-            a href=datastore_path(file.path, uid: params[:uid]) = file.name
+            a href=datastore_path(file.path, uid: params[:uid])
+              - if file.directory?
+                i.fa.fa-folder-o.file-icon>
+              - else
+                i.fa.fa-file-text-o.file-icon>
+              = file.name
           td
             - if file.directory?
               | --
