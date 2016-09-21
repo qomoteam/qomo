@@ -4,7 +4,9 @@
       section.aui-page-panel-content
         h2
           ' Log in |
-          a.aui-button.aui-button-link href=guest_signin_path data-method="post" Or Try with Guest
+          a.aui-button.aui-button-link.hint--right.hint--warning { href=guest_signin_path data-method="post"
+            aria-label='Guest user will be restricted to limited resource and deleted periodically' }
+           | Or Try with Guest
         - if flash[:alert]
           .aui-message.aui-message-error
             p.title Login Error

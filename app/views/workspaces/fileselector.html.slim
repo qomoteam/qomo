@@ -1,11 +1,14 @@
 form.aui
-  input.path.text value="" /
+  input.path.text value=''
+  a.aui-button.hint--bottom.hint--info href=datastore_upload_path aria-label='You may upload new file here'
+   i.fa.fa-upload
+
   .aui-tabs.horizontal-tabs
     ul.tabs-menu
       li.menu-item.active-tab
-        a href="#myfiles-tab"  My Files
+        a href="#myfiles-tab" My Files
       li.menu-item
-        a href="#library-tab"  Dataset Library
+        a href="#library-tab" Library
     #myfiles-tab.tabs-pane.active-pane
       .tree data-url=datastore_filetree_path
     #library-tab.tabs-pane
