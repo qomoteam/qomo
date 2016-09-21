@@ -47,7 +47,9 @@ nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" rol
   .aui-header-secondary
     ul.aui-nav
       li
-        a class=active_class('explore') href=explore_index_path Explore
+        a.btn-explore href=explore_index_path
+          i.fa.fa-newspaper-o>
+          | Explore
 
       - if user_signed_in?
         - if current_user.has_role? :admin
@@ -59,6 +61,7 @@ nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" rol
             span.aui-avatar.aui-avatar-small
               span.aui-avatar-inner
                 = gravatar_image_tag current_user.email, alt: current_user.email, gravatar: {secure: true}
+
           #menu-user.aui-dropdown2.aui-style-default.aui-dropdown2-in-header.aui-layer aria-hidden='true'
             .aui-dropdown2-section
               ul
