@@ -77,6 +77,7 @@ class User < ApplicationRecord
                     password: password, password_confirmation: password,
                     timezone: 'Beijing'
     user.add_role :guest
+    user.skip_confirmation!
     user.save
     user
   end
