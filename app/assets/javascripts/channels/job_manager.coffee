@@ -5,10 +5,10 @@ $ ->
       disconnected: ->
 
       received: (data) ->
-        if app.controller == 'workspace' and app.action == 'show'
+        if app.controller == 'workspaces' and app.action == 'show'
           updateJobStatus()
 
-        if app.controller == 'jobs' and app.action = 'show'
+        if app.controller == 'jobs' and app.action == 'show'
           if gon.job_id == data.job_id
             window.location.reload()
 
