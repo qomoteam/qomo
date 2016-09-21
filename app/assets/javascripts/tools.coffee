@@ -60,6 +60,11 @@ within 'tools', 'new, edit', ->
     $target.append $(sel_tpl_tr).text()
     return false
 
+  $('.add-param').click ->
+    $target = $('#param-defs')
+    $target.append $('#tpl_table_param_def').text()
+    return false
+
   $(document).on 'click', '.remove-tr', ->
     remote = false
     params = {}

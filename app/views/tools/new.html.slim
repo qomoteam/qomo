@@ -37,12 +37,13 @@
               = f.label :params
                 | Parameters
                 br
-                a.aui-icon.aui-icon-small.aui-iconfont-add.add-tr href='javascript:;' data-tpl='#tpl_tr_param' data-target='table.params-def'
+                a.add-param.hint--info.hint--right href='javascript:;' aria-label='Add param'
+                  i.fa.fa-plus
               .full-width-field
                 #param-defs
                   - if @tool.params
                     - for param in @tool.params
-                      = render 'tools/tr_param', param: param
+                      = render 'tools/table_param_def', param: param
 
             .field-group
               = f.label :command
@@ -85,8 +86,8 @@
               tr
                 td colspan=3 style='text-align: center' Empty
 
-script#tpl_tr_param type='text/html'
-  = render partial: 'tools/tr_param', locals: {param: {'type' => 'string'}}
+script#tpl_table_param_def type='text/html'
+  = render partial: 'tools/table_param_def', locals: {param: {'type' => 'string'}}
 
 script#tpl_tr_option type='text/html'
   = render partial: 'tools/param_select_option', locals: {option: {}}
