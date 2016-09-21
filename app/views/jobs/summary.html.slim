@@ -5,9 +5,10 @@
         a href=job_path(job)
           = job.name
       td width='80px' style='text-align: right'
-        a> href=datastore_path(job.outdir) title='Job output folder'
+        a.hint--left.hint--info> href=datastore_path(job.outdir) aria-label='Job output folder'
           i.fa.fa-folder-o
-        a.delete-job-summary> href=job_path(job) style='margin-left: 1em' title='Delete this job'
+
+        a.hint--left.hint--error.delete-job-summary> href=job_path(job) style='margin-left: 1em' aria-label='Delete this job'
           i.fa.fa-trash-o
 
     tr

@@ -19,4 +19,9 @@ module DatastoreHelper
     filemeta.owner_id == current_user.id
   end
 
+
+  def tsv_header(row)
+    row[0]&.start_with?('#') ? 'header' : ''
+  end
+
 end

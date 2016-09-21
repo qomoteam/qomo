@@ -3,7 +3,7 @@
   table.aui
     tbody
       - for row in @content
-        tr
+        tr class=tsv_header(row)
           - for col in row
-            td width="50px" = col
+            td = col
 
