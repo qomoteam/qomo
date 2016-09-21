@@ -8,49 +8,54 @@
           - unless resource.errors.empty?
             .aui-message.aui-message-error.error
               = devise_error_messages!
+          .aui-group
+            .aui-item style='width: 500px'
+              .field-group.top-label
+                = f.label :username
+                  | Username
+                  span.aui-icon.icon-required
+                = f.text_field :username, autofocus: true, class: 'text long-field'
+                small.tip
+                  ' 5 characters minimum
+            .aui-item
+              .field-group.top-label
+                = f.label :email
+                  | Email
+                  span.aui-icon.icon-required
+                = f.email_field :email, autofocus: true, class: 'text long-field'
+                small.tip
+                  ' You will use this address to recieve an confirm email
 
-          .field-group.top-label
-            = f.label :username
-              | Username
-              span.aui-icon.icon-required
-            = f.text_field :username, autofocus: true, class: 'text long-field'
-            small.tip
-              ' 5 characters minimum
+          .aui-group
+            .aui-item style='width: 500px'
+              .field-group.top-label
+                = f.label :password
+                  | Password
+                  span.aui-icon.icon-required
+                = f.password_field :password, autocomplete: 'off', class: 'text long-field'
+                - if @minimum_password_length
+                  small.tip
+                    | #{@minimum_password_length} characters minimum
+            .aui-item
+              .field-group.top-label
+                = f.label :password_confirmation
+                  | Password Confirmation
+                  span.aui-icon.icon-required
+                = f.password_field :password_confirmation, autocomplete: 'off', class: 'text long-field'
 
-          .field-group.top-label
-            = f.label :email
-              | Email
-              span.aui-icon.icon-required
-            = f.email_field :email, autofocus: true, class: 'text long-field'
-            small.tip
-              ' You will use this address to recieve an confirm email
-
-          .field-group.top-label
-            = f.label :password
-              | Password
-              span.aui-icon.icon-required
-            = f.password_field :password, autocomplete: 'off', class: 'text long-field'
-            - if @minimum_password_length
-              small.tip
-                | #{@minimum_password_length} characters minimum
-
-          .field-group.top-label
-            = f.label :password_confirmation
-              | Password Confirmation
-              span.aui-icon.icon-required
-            = f.password_field :password_confirmation, autocomplete: 'off', class: 'text long-field'
-
-          .field-group.top-label
-            = f.label :first_name
-              | First Name
-              span.aui-icon.icon-required
-            = f.text_field :first_name, autofocus: true, class: 'text long-field'
-
-          .field-group.top-label
-            = f.label :last_name
-              | Last Name
-              span.aui-icon.icon-required
-            = f.text_field :last_name, autofocus: true, class: 'text long-field'
+          .aui-group
+            .aui-item style='width: 500px'
+              .field-group.top-label
+                = f.label :first_name
+                  | First Name
+                  span.aui-icon.icon-required
+                = f.text_field :first_name, autofocus: true, class: 'text long-field'
+            .aui-item
+              .field-group.top-label
+                = f.label :last_name
+                  | Last Name
+                  span.aui-icon.icon-required
+                = f.text_field :last_name, autofocus: true, class: 'text long-field'
 
           .field-group.top-label
             = f.label :organization
@@ -58,12 +63,22 @@
               span.aui-icon.icon-required
             = f.text_field :organization, autofocus: true, class: 'text long-field'
 
-          .field-group.top-label
-            = f.label :last_name
-              | Captcha
-              span.aui-icon.icon-required
-            = rucaptcha_input_tag class: 'text'
-            = rucaptcha_image_tag alt: 'Captcha', style: 'margin: 5px 0;display:block'
+          .aui-group
+            .aui-item style='width: 500px'
+              .field-group.top-label
+                = f.label :last_name
+                  | Captcha
+                  span.aui-icon.icon-required
+                = rucaptcha_input_tag class: 'text'
+                = rucaptcha_image_tag alt: 'Captcha', style: 'margin: -16px 8px;'
+
+            .aui-item style='vertical-align: bottom'
+              .checkbox.top-label
+                = f.check_box :term_of_service, autofocus: true, include_hidden: false, class: 'checkbox'
+                = f.label :term_of_service
+                  ' I am agree to
+                  a href=agreement_path target='_blank'
+                    em Qomo Term of Service
 
           .aui-group
             = f.submit 'Sign up', class: 'aui-button aui-button-primary'

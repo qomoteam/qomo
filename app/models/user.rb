@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   validates_uniqueness_of :username, :email
 
+  validates_acceptance_of :term_of_service, allow_nil: false, on: :create, message: 'must be accepted'
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -13,7 +15,7 @@ class User < ApplicationRecord
 
   after_create :setup_new
 
-  attr_accessor :login
+  attr_accessor :login, :term_of_service
 
   has_many :filerecords, foreign_key: :owner_id, dependent: :destroy
   has_many :jobs, dependent: :destroy
