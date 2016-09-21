@@ -17,8 +17,7 @@ class DatastoreController < ApplicationController
       not_found
     end
 
-    if params[:uid] and
-        params[:uid] != current_user.id and !Filerecord.shared?(params[:uid], @meta.path)
+    if params[:uid] and params[:uid] != current_user.id and !Filerecord.shared?(params[:uid], @meta.path)
       unauthorized
     end
 
