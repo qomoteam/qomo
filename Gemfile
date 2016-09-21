@@ -19,6 +19,7 @@ gem 'settingslogic'
 
 # Security
 gem 'devise'
+gem 'cancancan'
 gem 'rucaptcha'
 gem 'rolify'
 

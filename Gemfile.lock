@@ -52,6 +52,7 @@ GEM
     bunny (2.5.1)
       amq-protocol (>= 2.0.1)
     byebug (9.0.5)
+    cancancan (1.15.0)
     coderay (1.1.1)
     coffee-rails (4.2.1)
       coffee-script (>= 2.2.0)
@@ -240,6 +241,7 @@ DEPENDENCIES
   bourbon
   bunny
   byebug
+  cancancan
   coffee-rails
   devise
   dvm
