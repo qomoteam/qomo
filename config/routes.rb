@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     post 'users/guest_signin', to: 'users/sessions#guest_signin', as: 'guest_signin'
   end
 
-  root 'workspaces#show'
+  root 'home#index'
 
   namespace :explore do
     get 'index'
@@ -23,7 +23,6 @@ Rails.application.routes.draw do
       get :pipelines, to: '/explore#index'
     end
   end
-
 
 
   get 'about', to: 'home#about'

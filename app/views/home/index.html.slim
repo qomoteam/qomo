@@ -1,0 +1,28 @@
+#home
+  header.aui-page-header
+    .aui-page-header-inner
+      .aui-page-header-main
+        h1 Qomo
+        p.subtitle
+          | Cloud platform for biological data storage, analysis and sharing in one stop. Qomo features modularized tools and customized pipelines.
+        a.aui-button.aui-button-primary href=tutorial_path Get started
+        a.aui-button.aui-button-primary href=explore_index_path Explore
+
+  .aui-page-panel
+    .aui-page-panel-inner
+      section.aui-page-panel-content
+        .aui-group.page-panel
+          .aui-item
+            h3 Featured Pipelines
+            = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
+          .aui-item.tools
+            h3 Featured Tools
+            ul
+              - for tool in @tools
+                li
+                  => user_tag tool.owner
+                  ' /
+                  a href=tool_path(tool)
+                    => tool.name
+                  - if tool.tech
+                    span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name

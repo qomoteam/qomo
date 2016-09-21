@@ -641,9 +641,9 @@ within 'workspaces', 'show', ->
       else
         now = new Date()
         if get_pid()
-          defaultJobName = "#{get_ptitle()}_#{now.getHours()}#{now.getMinutes()}"
+          defaultJobName = "#{get_ptitle()} #{now.getHours()}#{now.getMinutes()}"
         else
-          defaultJobName = "Untitled Job_#{now.getHours()}#{now.getMinutes()}"
+          defaultJobName = "Untitled Job #{now.getHours()}#{now.getMinutes()}"
         notie.input {
           type: 'text'
           placeholder: "Job name, default: #{defaultJobName}"
