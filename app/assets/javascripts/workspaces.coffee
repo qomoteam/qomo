@@ -543,6 +543,7 @@ within 'workspaces', 'show', ->
 
 
   if gon.user_signed_in
+    # TODO move to `App` namespace
     window.updateJobStatus = ->
       $('#job-summary .summary-content').load Routes.summary_jobs()
 

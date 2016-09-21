@@ -19,6 +19,7 @@ class JobsController < ApplicationController
       raise ActiveRecord::RecordNotFound
     else
       @job = r[0]
+      gon.job_id = @job.id
     end
   end
 
