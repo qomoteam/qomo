@@ -95,9 +95,10 @@ restore_workspace = ->
   if get_pid()
     $.ajax
       method: 'get'
-      url: Routes.pipeline(get_pid(), data: {simple: true, format: 'json'})
+      url: Routes.pipeline(get_pid(), {simple: true, format: 'json'})
       success: (pipeline) ->
         purl = Routes.pipeline(get_pid())
+        console.debug pipeline.title
         $('.pipeline-meta-title').data('title', pipeline.title).html(
           "<a href='#{purl}'><strong>#{pipeline.title}</strong></a>"
         )
@@ -591,7 +592,7 @@ within 'workspaces', 'show', ->
 
     plumb.bind 'click', (c)->
       delete_connection c.sourceId, c.endpoints[0].paramName, c.targetId, c.endpoints[1].paramName
-      $(".box-props[data-bid=#{c.targetId}] .param[data-paramname=#{c.endpoints[1].paramName}] input").prop('disabled', false)
+      $(".box-props[data-bid=#{c.targetId}] .param[data-paramname=\"#{c.endpoints[1].paramName}\"] input").prop('disabled', false)
       plumb.detach c
 
       return true
@@ -602,7 +603,7 @@ within 'workspaces', 'show', ->
       targetParamName = info.dropEndpoint.paramName
       cache_connection info.sourceId, sourceParamName, info.targetId, targetParamName
 
-      $(".box-props[data-bid=#{info.targetId}] .param[data-paramname=#{targetParamName}] input").val('').prop('disabled', true)
+      $(".box-props[data-bid=#{info.targetId}] .param[data-paramname=\"#{targetParamName}\"] input").val('').prop('disabled', true)
 
       return true
 
