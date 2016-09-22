@@ -111,9 +111,10 @@ class DatastoreController < ApplicationController
             id: e.path,
             children: e.directory?,
             #TODO remove frontend html class
-            icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o'
+            icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o',
+            type: e.directory? ? 'dir' : 'file'
         }
-      end
+      end.sort_by { |e| [e[:type], e[:text]]}
     end
 
     render json: files_tree
