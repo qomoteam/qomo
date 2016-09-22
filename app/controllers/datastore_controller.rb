@@ -114,7 +114,7 @@ class DatastoreController < ApplicationController
             icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o',
             type: e.directory? ? 'dir' : 'file'
         }
-      end.sort_by { |e| [e[:type], e[:text]]}
+      end.sort_by { |e| [e[:type], e[:text].downcase]}
     end
 
     render json: files_tree
