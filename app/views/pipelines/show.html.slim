@@ -47,7 +47,7 @@
           .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
             - tp = p['tool'].params.find {|e| e['name'] == p['name']}
             label
-              span.hint--right.hint--info aria-label=tp['desc'] #{p['label']}(#{p['tool'].name}: #{tp['label']})
+              span.hint--right.hint--info aria-label=tp['desc'] #{p['label']} (#{p['tool'].name}: #{tp['label']})
             = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
 
         .aui-group
