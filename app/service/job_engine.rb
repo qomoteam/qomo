@@ -173,7 +173,7 @@ class JobEngine
   def inject_param(command, ka, va)
     va = va.to_s
     if ka.start_with? 'hdfs:'
-      va = "\"hdfs:#{va[Config.hadoop.hdfs.length+1..-1]}"
+      va = "\"hdfs://#{va[Config.hadoop.hdfs.length+1..-1]}"
     end
     command.gsub! /\#{#{ka}}/, va
   end
