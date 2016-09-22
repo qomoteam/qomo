@@ -93,11 +93,16 @@ reset_ptitle = () ->
 restore_workspace = ->
   App.freeze_canvas()
   if get_pid()
-    $.get Routes.pipeline(get_pid(), {simple: true, format: 'json'}), (pipeline) ->
-      purl = Routes.pipeline(get_pid())
-      $('.pipeline-meta-title').data('title', pipeline.title).html(
-        "<a href='#{purl}'><strong>#{pipeline.title}</strong></a>"
-      )
+    $.ajax
+      method: 'get'
+      url: Routes.pipeline(get_pid(), data: {simple: true, format: 'json'})
+      success: (pipeline) ->
+        purl = Routes.pipeline(get_pid())
+        $('.pipeline-meta-title').data('title', pipeline.title).html(
+          "<a href='#{purl}'><strong>#{pipeline.title}</strong></a>"
+        )
+      error: ->
+        clean_workspace()
   boxes = cached_boxes()
 
   if $.isEmptyObject(cached_boxes())
