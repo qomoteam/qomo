@@ -117,7 +117,7 @@ add_connection = (connection)->
     drawEndpoints: false
     source: sourceEp
     target: targetEp
-  $(".box-props[data-bid=#{connection.targetId}] .param[data-paramname=#{connection.targetParamName}] input").val('').prop('disabled', true)
+  $(".box-props[data-bid=#{connection.targetId}] .param[data-paramname=\"#{connection.targetParamName}\"] input").val('').prop('disabled', true)
 
 
 save_cached_boxes = (boxes)->
