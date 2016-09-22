@@ -321,7 +321,7 @@ init_box = (box_html, bid, position)->
 
     on_param_click = ->
       label = this.innerText
-      paramName = $(this).parents('tr').data('paramname')
+      paramName = $(this).parents('.param').data('paramname')
       plabel = ''
       for p in get_pipeline_params()
         if p['box_id'] == bid and p['name'] == paramName
