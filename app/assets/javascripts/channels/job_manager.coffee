@@ -12,3 +12,5 @@ $ ->
           if gon.job_id == data.job_id
             window.location.reload()
 
+        if app.controller == 'jobs' and app.action == 'index'
+          window.location.reload()
