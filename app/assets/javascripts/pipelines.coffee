@@ -1,3 +1,19 @@
+$ ->
+  $('.pipeline-star').click (e) ->
+    e.preventDefault()
+    self = this
+    $i = $(self).find('i')
+    if $i.hasClass('fa-star')
+      $i.removeClass('fa-star')
+      $i.addClass('fa-star-o')
+    else
+      $i.removeClass('fa-star-o')
+      $i.addClass('fa-star')
+    $.ajax
+      method: 'post'
+      url: self.href
+
+
 within 'pipelines', 'show', ->
   $('input.input.value').each ->
     App.bindFileSelector(this)

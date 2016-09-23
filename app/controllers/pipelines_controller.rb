@@ -10,7 +10,7 @@ class PipelinesController < ApplicationController
   def my
     @pipelines = current_user.pipelines
     if params[:inline]
-     render 'inline', layout: nil
+      render 'inline', layout: nil
     else
 
     end
@@ -94,7 +94,7 @@ class PipelinesController < ApplicationController
   def export
     @pipeline = Pipeline.find params['id']
     send_data @pipeline.to_json(except: [:owner_id, :shared]),
-        filename: "#{@pipeline.accession}.qomo-pipeline"
+              filename: "#{@pipeline.accession}.qomo-pipeline"
   end
 
 
@@ -150,7 +150,7 @@ class PipelinesController < ApplicationController
     else
       pipeline.liked_by user
     end
-    redirect_to pipeline_path(pipeline)
+    render json: {success: true}
   end
 
 
