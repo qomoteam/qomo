@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def index
-    @pipelines = Pipeline.where(shared: true).order(:cached_votes_score => :desc).limit(6)
-    @tools = Tool.active.limit(20)
+    @pipelines = Pipeline.where(shared: true).order(:cached_votes_score => :desc).limit(5)
+    @tools = Tool.active.limit(16)
   end
 
   def about
