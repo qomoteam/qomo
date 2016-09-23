@@ -150,4 +150,4 @@ $ ->
   $.expr[':'].external = (obj) ->
     !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname) && !obj.href.match(/^javascript:/) && !obj.href.match(/^$/)
 
-  $('a:external').attr('target', '_blank').addClass('external-link')
+  $('a:external:not(.no-external-link)').attr('target', '_blank').addClass('external-link')

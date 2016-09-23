@@ -26,15 +26,20 @@ html lang='en'
       section class="footer-body"
         ul
           li
-            ' Copyright © 2016 Qomo,
-            a> href='http://bigd.big.ac.cn/' target="_blank" BIG Data Center,
-            a> href='http://english.big.cas.cn/' target="_blank" Beijing Institute of Genomics,
-            a> href='http://english.cas.cn/' target="_blank" Chinese Academy of Sciences
+            ' Copyright © #{Time.now.year} Qomo,
+            a.no-external-link> href='http://bigd.big.ac.cn/' target='_blank' BIG Data Center
+            ',
+            a.no-external-link> href='http://english.big.cas.cn/' target='_blank' Beijing Institute of Genomics
+            ',
+            a.no-external-link> href='http://english.cas.cn/' target='_blank' Chinese Academy of Sciences
           li
             a href=agreement_path Agreement
           li
-            a href='https://github.com/qomoteam/qomo' target="_blank" Source
+            a.no-external-link href='https://github.com/qomoteam/qomo' target='_blank' Source
           li = revision_tag
+        .partners-logo
+          a.no-external-link href='http://bigd.big.ac.cn/' target='_blank'
+            img.bigd src=image_url('bigd-logo-blue.png')
 
     #freeze_layer
     = javascript_include_tag 'application'
