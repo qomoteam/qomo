@@ -145,3 +145,9 @@ $ ->
     ]
     toolbar: 'styleselect | bold italic underline | forecolor backcolor | bullist numlist outdent indent | link image table | fullscreen'
     image_advtab: true
+
+
+  $.expr[':'].external = (obj) ->
+    !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname) && !obj.href.match(/^javascript:/) && !obj.href.match(/^$/)
+
+  $('a:external').attr('target', '_blank').addClass('external-link')

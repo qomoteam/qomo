@@ -10,12 +10,14 @@
     tbody
       - for tool in @tools
         tr
-          td: a href=edit_tool_path(tool) = tool.name
+          td: a href=tool_path(tool) = tool.name
           td = tool.category.name
           td = tool.desc
           td
             ul.menu
               li
-                a.hint--bottom.hint--warning href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' aria-label='delete this tool'
+                a.hint--bottom.hint--info href=edit_tool_path(tool) aria-label='Edit this tool'
+                  i.fa.fa-edit
+              li
+                a.hint--bottom.hint--warning href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' aria-label='Delete this tool'
                   i.fa.fa-trash-o
-
