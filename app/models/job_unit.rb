@@ -6,7 +6,7 @@ class JobUnit < ApplicationRecord
   belongs_to :tool
 
   def out
-    Docker::Container.get(self.docker.cid, {}, Docker::Connection.new(self.docker.host, {})).logs
+    Docker::Container.get(self.docker['cid'], {}, Docker::Connection.new(self.docker['host'], {})).logs
   end
 
 end
