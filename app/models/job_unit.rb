@@ -27,7 +27,7 @@ class JobUnit < ApplicationRecord
   end
 
   def drop_runner_script
-    File.delete(File.join(dir_tmp, 'runner-scripts', "#{self.id}.sh"))
+    File.delete(File.join(Config.dir_tmp, 'runner-scripts', "#{self.id}.sh"))
   end
 
 end
