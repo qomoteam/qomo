@@ -8,21 +8,22 @@ class JobUnit < ApplicationRecord
   belongs_to :tool
 
   def out
-    if self.docker
-      docker_container.logs(stdout: true, stderr: true)
-    else
-      ''
-    end
+      docker_container&.logs(stdout: true, stderr: true)
   end
 
   def drop_docker_container
-    if self.docker
-      docker_container.remove(v: true, force: true)
-    end
+    docker_container&.remove(v: true, force: true)
   end
 
   def docker_container
-    Docker::Container.get(self.docker['cid'], {}, Docker::Connection.new(self.docker['host'], {}))
+    if self.docker
+      begin
+        return Docker::Container.get(self.docker['cid'], {}, Docker::Connection.new(self.docker['host'], {}))
+      rescue
+        # ignored
+      end
+    end
+    nil
   end
 
 end
