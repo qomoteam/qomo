@@ -2,7 +2,7 @@ class JobUnit < ApplicationRecord
 
   include StatusAware
 
-  before_destroy :drop_docker_container
+  before_destroy :drop_docker_container, :drop_runner_script
 
   belongs_to :job
   belongs_to :tool
@@ -24,6 +24,10 @@ class JobUnit < ApplicationRecord
       end
     end
     nil
+  end
+
+  def drop_runner_script
+    File.delete(File.join(dir_tmp, 'runner-scripts', "#{self.id}.sh"))
   end
 
 end

@@ -16,6 +16,10 @@ class Config < Settingslogic
     File.join nfs, 'tools'
   end
 
+  def self.dir_tmp
+    File.join nfs, 'tmp'
+  end
+
   def self.dir_lib(*p)
     File.join nfs, 'lib', p
   end
