@@ -15,7 +15,7 @@
           .aui-item
             h3 Featured Pipelines
             = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
-            h3: a href=explore_index_path ... ...
+            a.btn-load-more href=explore_index_path Show more pipelines ... ...
           .aui-item.tools
             h3 Featured Tools
             ul
@@ -28,5 +28,5 @@
                   - if tool.tech
                     span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name
               li
-                h3: a href=explore_index_path ... ...
+                a.btn-load-more href=explore_index_path Show more tools ... ...
 
