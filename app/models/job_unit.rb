@@ -8,7 +8,7 @@ class JobUnit < ApplicationRecord
   belongs_to :tool
 
   def out
-      docker_container&.logs(stdout: true, stderr: true)
+    docker_container&.logs(stdout: true, stderr: true)
   end
 
   def drop_docker_container
