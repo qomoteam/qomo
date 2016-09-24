@@ -1,12 +1,23 @@
 .page-panel
   h2
     ' Job: #{@job.name}
-    a.small href=datastore_path(@job.outdir) [OUTPUT]
+
   .meta
     span Created At: #{ptime @job.created_at, current_user.timezone}
     span Updated At: #{ptime @job.updated_at, current_user.timezone}
     span Progress: #{number_to_percentage @job.progress*100, precision: 0}
     span = status_label @job.status
+
+    a.right href=job_path(@job) data-method='delete' data-confirm='Are you sure want to delete this job?'
+      i.fa.fa-trash>
+      | Delete
+    a.right href=datastore_path(@job.outdir)
+      i.fa.fa-folder-o>
+      | Outputs
+    a.right href=job_path(@job)
+      i.fa.fa-refresh>
+      | Refresh
+
 
   - for unit in @job.units
     table.aui.job-units
