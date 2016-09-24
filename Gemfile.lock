@@ -70,11 +70,15 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    docker-api (1.31.0)
+      excon (>= 0.38.0)
+      json
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     dvm (0.1.7)
       colorize (~> 0.7)
     erubis (2.7.0)
+    excon (0.52.0)
     execjs (2.7.0)
     font-awesome-sass (4.6.2)
       sass (>= 3.2)
@@ -244,6 +248,7 @@ DEPENDENCIES
   cancancan
   coffee-rails
   devise
+  docker-api
   dvm
   font-awesome-sass
   gon

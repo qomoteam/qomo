@@ -47,6 +47,7 @@ gem 'turnout'
 
 gem 'jimson'
 gem 'rgl'
+gem 'docker-api'
 
 # RabbitMQ client
 gem 'bunny'
