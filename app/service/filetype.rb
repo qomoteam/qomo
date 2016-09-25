@@ -12,6 +12,7 @@ class Filetype
       typemapping[:fa] = Filetype.new :fa, 'Fasta', 'fa-file-text-o', 'fa', Reader::TextReader.new
       typemapping[:fna] = Filetype.new :fa, 'Fasta', 'fa-file-text-o', 'fa', Reader::TextReader.new
       typemapping[:faa] = Filetype.new :fa, 'Fasta', 'fa-file-text-o', 'fa', Reader::TextReader.new
+      typemapping[:fastaq] = Filetype.new :fastaq, 'Fastaq', 'fa-file-text-o', 'text', Reader::TextReader.new
       typemapping[:tsv] = Filetype.new :tsv, 'TSV', 'fa-file-text-o', 'tsv', Reader::TsvReader.new
       typemapping[:csv] = Filetype.new :csv, 'CSV', 'fa-file-text-o', 'tsv', Reader::CsvReader.new
       typemapping[:axt] = Filetype.new :axt, 'AXT', 'fa-file-text-o', 'text', Reader::TextReader.new
