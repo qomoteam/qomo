@@ -1,4 +1,5 @@
 class Reader::TextReader
+
   def read(path, offset, len)
     File.open(path) do |file|
       offset ||= 0
@@ -22,7 +23,7 @@ class Reader::TextReader
         file.seek(offset)
         content = file.read(len)
         unless content.ends_with? "\n"
-          left_line = file.gets
+          left_line = file.gets || ''
           content += left_line
         end
       end

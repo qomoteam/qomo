@@ -19,11 +19,8 @@
       - for file in @files
         tr data-path=file.path
           td
-            a href=datastore_path(file.path, uid: params[:uid])
-              - if file.directory?
-                i.fa.fa-folder-o.file-icon>
-              - else
-                i.fa.fa-file-text-o.file-icon>
+            a href=viewer_path(file)
+              i.fa.file-icon> class=file.type.icon
               = file.name
           td
             - if file.directory?
