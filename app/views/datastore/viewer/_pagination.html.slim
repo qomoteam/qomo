@@ -9,7 +9,7 @@ ol.aui-nav.aui-nav-pagination.pagination
       ]  Prev
 
   li
-    | #{@read_result[:offset]} Bytes - #{@read_result[:offset]+@read_result[:len]} Bytes, Total: #{@meta.size} Bytes
+    | #{@read_result[:offset]} Bytes - #{@read_result[:offset]+@read_result[:len]} Bytes, Total: #{number_to_human_size(@meta.size, precision: 3)}
 
   - unless @read_result[:offset] + @read_result[:len] >= @meta.size
     li.aui-nav-next
