@@ -1,0 +1,19 @@
+.page-panel
+  .nav-toolbar
+    .primary
+      h3 Explore
+    .secondary
+      .aui-buttons
+        a.aui-button href=explore_pipelines_path Pipelines
+        a.aui-button.aui-button-primary href=explore_tools_path Tools
+
+  #all-tools
+    - for category in @categories
+      table.aui
+        tbody
+          tr
+            td colspan='2'
+              h5
+                ' Category:
+                = category.name
+        = render partial: 'tools/rich_list_tr', locals: {tools: category.active_tools}

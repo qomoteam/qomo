@@ -1,0 +1,18 @@
+.page-panel
+  = render partial: 'explore/nav_bar'
+
+  #all-pipelines
+    .aui-group
+      .aui-item style='width: 80%'
+        = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
+      .aui-item
+        nav.aui-navgroup.aui-navgroup-vertical
+          .aui-navgroup-inner
+            ul.aui-nav
+              li class=('aui-nav-selected' unless params[:category_id])
+                a href=explore_pipelines_path  All
+              - for category in all_categories
+                li class=('aui-nav-selected' if category.id == params[:category_id].to_i)
+                  a href=explore_category_pipelines_path(category)
+                    => category.name
+                    | (#{category.pipelines.count})

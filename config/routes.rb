@@ -18,9 +18,10 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :explore do
-    get 'index'
+    get 'pipelines'
+    get 'tools'
     resources :categories do
-      get :pipelines, to: '/explore#index'
+      get :pipelines, to: '/explore#pipelines'
     end
   end
 
