@@ -21,7 +21,7 @@ class Reader::TextReader
         return read_result
       else
         file.seek(offset)
-        content = file.read(len)
+        content = file.read(len) || ''
         unless content.ends_with? "\n"
           left_line = file.gets || ''
           content += left_line
