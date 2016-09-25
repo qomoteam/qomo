@@ -6,6 +6,7 @@ class Tool < ApplicationRecord
   attr_accessor :upload
 
   before_destroy :rmdir
+  before_save :sanitize
 
   enum status: {
       inactive: 0,
@@ -157,7 +158,12 @@ class Tool < ApplicationRecord
     end
 
     result
+  end
 
+  private
+
+  def sanitize
+    self.command = self.command.split(/\r?\n/).each { |e| e.strip }.join("\n")
   end
 
 end
