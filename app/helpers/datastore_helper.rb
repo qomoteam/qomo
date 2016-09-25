@@ -25,7 +25,7 @@ module DatastoreHelper
   end
 
   def viewer_path(file)
-    if file.type.reader
+    if file.directory? or file.type.reader
       datastore_path(file.path, uid: params[:uid])
     else
       datastore_download_path(file.path, uid: params[:uid])
