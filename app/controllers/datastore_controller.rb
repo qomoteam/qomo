@@ -163,7 +163,7 @@ class DatastoreController < ApplicationController
     path = params[:path]
     f = datastore.get(path)
     if f.is_rdout
-      send_data f.read
+      send_data f.raw_read
     else
       send_file datastore.apath(path)
     end
