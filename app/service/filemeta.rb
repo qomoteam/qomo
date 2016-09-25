@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'csv'
 
 class Filemeta
@@ -55,7 +56,7 @@ class Filemeta
 
 
   def delete!
-    Dir.delete @apath
+    FileUtils.rmtree @apath
   end
 
 end
