@@ -9,6 +9,7 @@ class Filetype
       typemapping[:directory] = Filetype.new :directory, 'Directory', 'fa-folder', 'directory'
       typemapping[:nwk] = Filetype.new :nwk, 'Newick', 'fa-file-text-o', 'nwk', Reader::TextReader.new
       typemapping[:newick] = Filetype.new :nwk, 'Newick', 'fa-file-text-o', 'nwk', Reader::TextReader.new
+      typemapping[:fasta] = Filetype.new :fa, 'Fasta', 'fa-file-text-o', 'fa', Reader::TextReader.new
       typemapping[:fa] = Filetype.new :fa, 'Fasta', 'fa-file-text-o', 'fa', Reader::TextReader.new
       typemapping[:fna] = Filetype.new :fa, 'Fasta', 'fa-file-text-o', 'fa', Reader::TextReader.new
       typemapping[:faa] = Filetype.new :fa, 'Fasta', 'fa-file-text-o', 'fa', Reader::TextReader.new
