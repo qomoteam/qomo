@@ -3,7 +3,7 @@ class Reader::TextReader
   def read(path, offset, len)
     File.open(path) do |file|
       offset ||= 0
-      len ||= 1.kilobytes
+      len ||= 10.kilobytes
       content = ''
       if file.is_rdout?
         parts = Dir.glob(File.join path, 'part-*')
