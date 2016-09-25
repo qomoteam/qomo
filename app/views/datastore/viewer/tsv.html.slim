@@ -1,9 +1,10 @@
-.page-panel.wider.viewer-tsv
+.page-panel.wider.viewer.viewer-tsv
   = render 'datastore/viewer/toolbar'
   table.aui
     tbody
-      - for row in @content
+      - for row in @read_result[:content]
         tr class=tsv_header(row)
           - for col in row
             td = col
 
+  = render 'datastore/viewer/pagination'

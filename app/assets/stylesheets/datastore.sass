@@ -1,13 +1,13 @@
 //= require jquery-fine-uploader
 
-.nav-path
-  height: 26px
-  margin: 0 10px 0 0
-  float: left
-  li
-    margin-top: 14px
-  a
-    line-height: 0.428571
+#nav-datastore
+  .nav-path
+    margin: 0 10px 0 0
+    float: left
+    li
+      margin-top: 5px
+    a
+      line-height: 0.428571
 
 table.tbl-files
   a
@@ -16,12 +16,20 @@ table.tbl-files
     margin-right: 5px
 
 .viewer-text
-  overflow: auto
-  margin-top: 1em
-  background-color: white
+  .content
+    overflow: auto
+    margin-top: 1em
+    padding: 10px 20px
+    background-color: white
 
 .viewer-tsv
   table tr.header td
     background-color: #DEDEDE
     color: black
     font-weight: bold
+
+.viewer
+  .pagination
+    width: 600px
+    margin: 16px auto
+

@@ -1,0 +1,21 @@
+ol.aui-nav.aui-nav-pagination.pagination
+  li.aui-nav-first
+    a href=datastore_path(@meta.path, uid: params[:uid])  First Part
+
+  - unless @read_result[:offset] <= 0 or params[:last]
+    li.aui-nav-previous
+      a [
+        href=datastore_path(@meta.path, uid: params[:uid], offset: params[:prev_offset])
+      ]  Prev
+
+  li
+    | #{@read_result[:offset]} Bytes - #{@read_result[:offset]+@read_result[:len]} Bytes, Total: #{@meta.size} Bytes
+
+  - unless @read_result[:offset] + @read_result[:len] >= @meta.size
+    li.aui-nav-next
+      a [
+        href=datastore_path(@meta.path, uid: params[:uid], offset: @read_result[:offset]+@read_result[:len], prev_offset: @read_result[:offset])
+      ]  Next
+
+  li.aui-nav-last
+    a href=datastore_path(@meta.path, uid: params[:uid], offset: @meta.size, last: true)  Last Part

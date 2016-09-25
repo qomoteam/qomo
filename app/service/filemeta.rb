@@ -37,14 +37,12 @@ class Filemeta
   end
 
 
-  def read
-    if @type.name == :tsv
-      raw_read.split("\n").collect {|line| line.split("\t")}
-    elsif @type.name == :csv
-      CSV.read(@apath)
-    else
-      raw_read
-    end
+  def read(offset, len)
+    @type.reader.read(@apath, offset, len)
+  end
+
+  def read_last(boffset, len)
+    @type.reader.read_last @apath, boffset, len
   end
 
   def raw_read

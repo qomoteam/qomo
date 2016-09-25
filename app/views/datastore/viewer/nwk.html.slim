@@ -1,4 +1,7 @@
-= render 'datastore/viewer/toolbar'
+.page-panel.wider.viewer.viewer-text
+  = render 'datastore/viewer/toolbar'
+  section.content
+    pre
+      = @read_result[:content]
 
-#nwktree
-  pre == @content
+  = render 'datastore/viewer/pagination'

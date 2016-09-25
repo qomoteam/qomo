@@ -28,8 +28,16 @@ class DatastoreController < ApplicationController
     if @meta.directory?
       @files = datastore.list(path).sort_by { |f| f.name.downcase }
     else
-      @content = @meta.read
+      params[:offset] ||= 0
+      params[:offset] = params[:offset].to_i
+      params[:len] = params[:len]&.to_i
+      if params[:last]
+        @read_result = @meta.read_last(params[:offset], params[:len])
+      else
+        @read_result = @meta.read(params[:offset], params[:len])
+      end
     end
+
     render template: "datastore/viewer/#{@meta.type.tpl}", formats: [:html]
   end
 
@@ -114,7 +122,7 @@ class DatastoreController < ApplicationController
             icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o',
             type: e.directory? ? 'dir' : 'file'
         }
-      end.sort_by { |e| [e[:type], e[:text].downcase]}
+      end.sort_by { |e| [e[:type], e[:text].downcase] }
     end
 
     render json: files_tree

@@ -1,4 +1,4 @@
-.aui-toolbar2 role='toolbar'
+#nav-datastore.aui-toolbar2 role='toolbar'
   .aui-toolbar2-inner
     .aui-toolbar2-group
       .aui-toolbar2-primary
@@ -21,9 +21,12 @@
               button.aui-button.btn-rename Rename
 
           .aui-buttons
-            button.aui-button Copy
-            button.aui-button Cut
-            button.aui-button Paste
+            button.aui-button.hint--bottom aria-label='Copy'
+              i.fa.fa-files-o
+            button.aui-button.hint--bottom aria-label='Cut'
+              i.fa.fa-scissors
+            button.aui-button.hint--bottom aria-label='Paste'
+              i.fa.fa-clipboard
 
           .aui-buttons
             a.aui-button.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' Clear Empty Folders

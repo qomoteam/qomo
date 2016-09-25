@@ -1,5 +1,7 @@
-.page-panel.wider
+.page-panel.wider.viewer.viewer-text
   = render 'datastore/viewer/toolbar'
-  section.viewer-text
+  section.content
     pre
-      = @content
+      = @read_result[:content]
+
+  = render 'datastore/viewer/pagination'
