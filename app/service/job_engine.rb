@@ -22,13 +22,6 @@ class JobEngine
     outdir = job.outdir
     @datastore.mkdir! outdir
 
-    preset = {}
-    preset['STREAMING_JAR'] = Config.dir_lib Config.lib.streaming
-    preset['QOMO_COMMON'] = Config.dir_lib Config.lib.common
-    preset['HADOOP_BIN'] = Config.hadoop.bin
-    preset['SPARK_SUBMIT'] = Config.spark.submit
-    preset['SPARK_MASTER'] = Config.spark.master
-
     env = {}
     env['HADOOP_USER_NAME'] = Config.hadoop.username
 
@@ -86,7 +79,8 @@ class JobEngine
         end
       end
 
-      preset.merge(pvalues).each do |ka, va|
+      rendered_params = {}
+      pvalues.each do |ka, va|
         if va.kind_of? Array
           separator = ','
           tool.params.each do |p|
@@ -127,10 +121,10 @@ class JobEngine
               # No-op
           end
         end
-
-        inject_param command, ka, va
+        rendered_params[ka] = va
       end
 
+      command = inject_param command, rendered_params
       units[k] = {id: unit_id, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}
     end
 
@@ -170,12 +164,31 @@ class JobEngine
   end
 
 
-  def inject_param(command, ka, va)
-    va = va.to_s
-    if ka.start_with? 'hdfs:'
-      va = "\"hdfs://#{va[Config.hadoop.hdfs.length+1..-1]}"
+  def inject_param(command, rendered_params)
+    eval "\"#{command}\"", CommandBinding.new(rendered_params).get_binding
+  end
+
+
+  class CommandBinding
+
+    STREAMING_JAR = Config.dir_lib Config.lib.streaming
+
+    def initialize(rendered_params)
+      @params = rendered_params
     end
-    command.gsub! /\#{#{ka}}/, va
+
+    def hdfs(va)
+      "\"hdfs://#{va[Config.hadoop.hdfs.length+1..-1]}"
+    end
+
+    def get_binding
+      b = binding
+      @params.each do |k, v|
+        b.local_variable_set k, v
+      end
+      b
+    end
+
   end
 
 end
