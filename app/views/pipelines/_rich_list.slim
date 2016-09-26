@@ -7,7 +7,7 @@ ol.pipeline-explorer
           ' /
         a> href=pipeline_path(pipeline) = pipeline.title
         = render 'pipelines/star', pipeline: pipeline
-      p.desc = pipeline.desc
+      p.desc == pipeline.desc
       .meta
         ' Category: #{pipeline.category.name} |
         ' Star: #{pipeline.votes_for.size} |
