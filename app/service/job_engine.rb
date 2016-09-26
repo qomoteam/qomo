@@ -167,6 +167,8 @@ class JobEngine
 
 
   def inject_param(command, rendered_params)
+    # Escape chars
+    command = command.gsub /"/, '\"'
     eval "\"#{command}\"", CommandBinding.new(rendered_params).get_binding
   end
 
