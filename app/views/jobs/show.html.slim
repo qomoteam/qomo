@@ -8,26 +8,25 @@
     span Progress: #{number_to_percentage @job.progress*100, precision: 0}
     span = status_label @job.status
 
+    a.right href=job_path(@job)
+      i.fa.fa-refresh>
+      | Refresh
     a.right href=job_path(@job) data-method='delete' data-confirm='Are you sure want to delete this job?'
       i.fa.fa-trash>
       | Delete
     a.right href=datastore_path(@job.outdir)
       i.fa.fa-folder-o>
       | Outputs
-    a.right href=job_path(@job)
-      i.fa.fa-refresh>
-      | Refresh
-
 
   - for unit in @job.units
-    table.aui.job-units
+    table.aui.job-unit
       tr
-        td rowspan='2' width='80px'
-          strong Order:
-        td rowspan='2' width="20px" = unit.idx + 1
+        td rowspan='2' width="100px"
+          strong ##{unit.idx + 1}
         td width='80px'
           strong Tool Name:
-        td = unit.tool.name
+        td
+          a href=tool_path(unit.tool) = unit.tool.name
         td width='80px'
           strong Status:
         td = status_label unit.status
@@ -40,22 +39,22 @@
       - if current_user.has_role? :admin
         tr
           td: strong Command:
-          td colspan='5'
-            pre = unit.command
+          td colspan='4'
+            pre.monospace = unit.command
         tr
           td: strong Env:
-          td colspan='5'
-            pre = unit.env
+          td colspan='4'
+            pre.monospace = unit.env
       tr
         td: strong Params:
-        td colspan='5' = unit.params
+        td colspan='4' = unit.params
       tr
         td: strong Log:
-        td colspan='5'
-          pre.readmore id="log-#{unit.id}"
+        td colspan='4'
+          pre.readmore.monospace id="log-#{unit.id}"
             = unit.log
       tr
         td: strong Stdout:
-        td colspan='5'
-          pre.readmore id="out-#{unit.id}"
+        td colspan='4'
+          pre.readmore.monospace id="out-#{unit.id}"
             = unit.out
