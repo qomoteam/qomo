@@ -20,6 +20,9 @@ class Tool < ApplicationRecord
 
   belongs_to :tech
 
+  def self.active_count
+    Tool.active.count
+  end
 
   def rmdir
     FileUtils.rmtree self.dirpath

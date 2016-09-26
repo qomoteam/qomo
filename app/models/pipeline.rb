@@ -8,6 +8,10 @@ class Pipeline < ApplicationRecord
 
   default_scope -> { order('created_at DESC') }
 
+  def self.shared_count
+    Pipeline.where(shared: true).count
+  end
+
   def accession
     "QP-#{self.id}"
   end

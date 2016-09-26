@@ -11,7 +11,12 @@ class Category < ApplicationRecord
   has_many :pipelines
 
   def active_tools
-    self.tools.select { |tool| tool.active? }
+    self.tools.where status: 1
+  end
+
+
+  def shared_pipelines
+    self.pipelines.where shared: true
   end
 
 

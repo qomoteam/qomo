@@ -4,8 +4,8 @@ class HomeController < ApplicationController
     @pipelines = Pipeline.where(shared: true).order(:cached_votes_score => :desc).limit(5)
     @tools = Tool.active.limit(16)
     @count = {}
-    @count[:tools] = Tool.active.count
-    @count[:pipelines] = Pipeline.where(shared: true).count
+    @count[:tools] = Tool.active_count
+    @count[:pipelines] = Pipeline.shared_count
   end
 
   def about
