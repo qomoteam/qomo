@@ -145,3 +145,14 @@ a.external-link
 .aui-nav.aui-nav-breadcrumbs
   li
     font-weight: bold
+
+ul.seplist
+  list-style: none
+  padding: 0
+  li
+    float: left
+    margin-right: 5px
+    &:after
+      content: ","
+    &:last-of-type:after
+      content: ""

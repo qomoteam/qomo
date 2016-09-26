@@ -12,6 +12,12 @@ class Pipeline < ApplicationRecord
     "QP-#{self.id}"
   end
 
+  def tools
+    self.boxes.collect do |_, box|
+      box['tool_id']
+    end.uniq.collect { |tid| Tool.find(tid) }.sort_by &:name
+  end
+
 
   def merge_params(values)
     boxes = self.boxes.dup

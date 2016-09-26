@@ -34,6 +34,12 @@
         tr
           td Maintainer
           td = user_tag @pipeline.owner
+        tr
+          td Tools
+          td
+            ul.seplist
+              - for tool in @pipeline.tools
+                li: a href=tool_path(tool) = tool.name
 
     .aui-item
       = form_tag run_pipeline_path(@pipeline), class: 'aui top-label pipeline-runner'
