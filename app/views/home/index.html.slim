@@ -13,12 +13,16 @@
       section.aui-page-panel-content
         .aui-group.page-panel
           .aui-item
-            h3 Featured Pipelines #{@count[:pipelines]}
+            h3
+              | Featured Pipelines
+              small Total: #{@count[:pipelines]}
             = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
             a.btn-load-more href=explore_pipelines_path Show more pipelines ... ...
 
           .aui-item.tools
-            h3 Featured Tools #{@count[:tools]}
+            h3
+              | Featured Tools
+              small Total: #{@count[:tools]}
             ul
               - for tool in @tools
                 li
