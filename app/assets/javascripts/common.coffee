@@ -12,6 +12,7 @@
 #= require validate
 #= require pace
 #= require dragula
+#= require readmore
 
 class GUID
   s4: ->
@@ -152,3 +153,5 @@ $ ->
     !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname) && !obj.href.match(/^javascript:/) && !obj.href.match(/^$/)
 
   $('a:external:not(.no-external-link)').attr('target', '_blank').addClass('external-link')
+
+  $('.readmore').readmore()
