@@ -20,7 +20,9 @@ class JobEngine
     }
 
     outdir = job.outdir
+    tmpdir = job.tmpdir
     @datastore.mkdir! outdir
+    @datastore.mkdir! tmpdir
 
     env = {}
     env['HADOOP_USER_NAME'] = Config.hadoop.username
@@ -32,14 +34,14 @@ class JobEngine
       tool = Tool.find v['tool_id']
       tool.params.each do |e|
         if e['type'] == 'tmp'
-          boxes[k]['values'][e['name']] = File.join outdir, '.tmp', SecureRandom.uuid
+          boxes[k]['values'][e['name']] = File.join tmpdir, SecureRandom.uuid
         end
 
         v['values'].each do |ka, va|
           if e['name'] == ka
             if e['type'] == 'output'
               if va.blank?
-                boxes[k]['values'][ka] = File.join outdir, '.tmp', SecureRandom.uuid
+                boxes[k]['values'][ka] = File.join tmpdir, SecureRandom.uuid
               else
                 boxes[k]['values'][ka] = File.join outdir, va
               end
@@ -115,7 +117,7 @@ class JobEngine
               va = @datastore.apath va
               va = '"' + va + '"'
             when 'tmp'
-              va = @datastore.apath "#{outdir}/.tmp/#{unit_id}"
+              va = @datastore.apath "#{tmpdir}/#{unit_id}"
               va = '"' + va + '"'
             else
               # No-op
