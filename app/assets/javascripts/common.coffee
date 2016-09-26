@@ -143,8 +143,9 @@ $ ->
       'insertdatetime media nonbreaking save table contextmenu directionality',
       'emoticons template paste textcolor colorpicker textpattern imagetools fullpage'
     ]
-    toolbar: 'styleselect | bold italic underline | forecolor backcolor | bullist numlist outdent indent | link image table | fullscreen'
+    toolbar: 'styleselect | bold italic underline removeformat | forecolor backcolor | bullist numlist outdent indent | link unlink | image table ｜fullscreen code'
     image_advtab: true
+    toolbar_items_size: 'small'
 
 
   $.expr[':'].external = (obj) ->
