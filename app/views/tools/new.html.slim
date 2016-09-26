@@ -1,5 +1,17 @@
 .page-panel.wider
   = form_for @tool, multipart: true, html: {class: 'aui', id: 'edit-tool-form'} do |f|
+    .nav-toolbar
+      .primary
+        ol.aui-nav.aui-nav-breadcrumbs
+          li: a href=tools_path Tools
+          - if @tool.id
+            li: a href=tool_path(@tool) = @tool.name
+            li.aui-nav-selected Edit
+          - else
+            li.aui-nav-selected New
+      .secondary
+        .aui-buttons
+          = f.submit class: 'aui-button aui-button-primary'
     .aui-group
       .aui-item
         h4
@@ -49,9 +61,6 @@
               = f.label :command
               = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '6'
 
-        .buttons-container
-          .buttons
-            = f.submit class: 'aui-button aui-button-primary'
 
       .aui-item style='width: 40%'
         h4 Usage
