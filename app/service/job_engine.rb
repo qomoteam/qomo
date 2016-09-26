@@ -174,6 +174,10 @@ class JobEngine
   class CommandBinding
 
     STREAMING_JAR = Config.dir_lib Config.lib.streaming
+    QOMO_COMMON = Config.dir_lib Config.lib.common
+    HADOOP_BIN = Config.hadoop.bin
+    SPARK_SUBMIT = Config.spark.submit
+    SPARK_MASTER = Config.spark.master
 
     def initialize(rendered_params)
       @params = rendered_params
