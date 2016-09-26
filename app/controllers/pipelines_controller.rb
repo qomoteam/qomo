@@ -116,7 +116,7 @@ class PipelinesController < ApplicationController
     pipeline = Pipeline.new params.require('pipeline').permit!
     pipeline.owner = current_user
     pipeline.save
-    render plain: pipeline.id
+    render json: {id: pipeline.id, title: pipeline.title, success: true}
   end
 
 

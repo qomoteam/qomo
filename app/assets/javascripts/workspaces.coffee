@@ -89,6 +89,10 @@ reset_ptitle = () ->
   $('.pipeline-meta-title').data('title', '')
   $('.pipeline-meta-title a').remove()
 
+set_ptitle = (title, pid) ->
+  $('.pipeline-meta-title').data('title', title)
+  $('.pipeline-meta-title').html("<a href='#{Routes.pipeline(pid)}'>#{title}</a>")
+
 
 restore_workspace = ->
   App.freeze_canvas()
@@ -98,7 +102,6 @@ restore_workspace = ->
       url: Routes.pipeline(get_pid(), {simple: true, format: 'json'})
       success: (pipeline) ->
         purl = Routes.pipeline(get_pid())
-        console.debug pipeline.title
         $('.pipeline-meta-title').data('title', pipeline.title).html(
           "<a href='#{purl}'><strong>#{pipeline.title}</strong></a>"
         )
@@ -519,8 +522,9 @@ within 'workspaces', 'show', ->
           ok: ->
             $form = $('#form-pipeline')
             populate_pform $form
-            $form.ajaxSubmit success: (pid) ->
-              set_pid(pid)
+            $form.ajaxSubmit success: (result) ->
+              set_pid(result.id)
+              set_ptitle(result.title, result.id)
               notie.alert(1, 'Pipeline saved')
             return true
           cancelValue: 'Cancel'
