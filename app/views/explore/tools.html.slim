@@ -8,8 +8,10 @@
         a.aui-button.aui-button-primary href=explore_tools_path Tools
 
   #all-tools
+    h4 style='margin-top: 16px' Total: #{@count}
+
     - for category in @categories
-      table.aui
+      table.aui.bordered
         tbody
           tr
             td colspan='2'
