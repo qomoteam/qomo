@@ -31,5 +31,6 @@
           .aui-buttons
             a.aui-button.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' Clear Empty Folders
 
-          a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
-            i.fa.fa-download
+          - if @meta.directory?
+            a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
+              i.fa.fa-download
