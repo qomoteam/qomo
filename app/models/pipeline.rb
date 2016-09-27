@@ -16,6 +16,11 @@ class Pipeline < ApplicationRecord
     "QP-#{self.id}"
   end
 
+  def all_contributors
+    allc = self.contributors.split(',').collect { |c| c.strip } + self.tools.collect { |t| t.contributors.split(',').collect { |c| c.strip } }.flatten
+    allc.uniq.join(', ')
+  end
+
   def tools
     self.boxes.collect do |_, box|
       box['tool_id']
