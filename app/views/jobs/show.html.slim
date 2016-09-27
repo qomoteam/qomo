@@ -36,7 +36,8 @@
         td = ptime unit.started_at, current_user.timezone
         td: strong Ended At:
         td = ptime unit.ended_at, current_user.timezone
-      - if current_user.has_role? :admin
+
+      - if current_user.has_role? :admin or unit.tool.owner.id == current_user.id
         tr
           td: strong Command:
           td colspan='4'
@@ -45,16 +46,20 @@
           td: strong Env:
           td colspan='4'
             pre.monospace = unit.env
+
       tr
         td: strong Params:
         td colspan='4' = unit.params
+
       tr
         td: strong Log:
         td colspan='4'
           pre.readmore.monospace id="log-#{unit.id}"
             = unit.log
-      tr
-        td: strong Stdout:
-        td colspan='4'
-          pre.readmore.monospace id="out-#{unit.id}"
-            = unit.out
+
+      - if current_user.has_role? :admin or unit.tool.owner.id == current_user.id
+        tr
+          td: strong Stdout:
+          td colspan='4'
+            pre.readmore.monospace id="out-#{unit.id}"
+              = unit.out
