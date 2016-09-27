@@ -80,11 +80,9 @@ class DatastoreController < ApplicationController
 
 
   def unshare
-    record = Filerecord.find_by(path: path, owner_id: current_user.id)
-    if record
-      record.shared = false
-      record.save
-    end
+    record = Filerecord.find_or_create_by(path: path, owner_id: current_user.id)
+    record.shared = false
+    record.save
 
     render json: {success: true}
   end

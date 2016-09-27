@@ -17,7 +17,7 @@ class Filerecord < ApplicationRecord
 
   def self.shared?(uid, path)
     parts = path.split('/')
-    (0..(parts.length-1)).each { |i|
+    (0..(parts.length-1)).reverse_each { |i|
       record = self.find_by(owner_id: uid, path: parts[0..i].join('/'))
       if record
         return record.shared
