@@ -1,4 +1,6 @@
 .page-panel
+  = render 'datastore/viewer/toolbar'
+
   = form_tag datastore_update_path(@meta.path), method: :patch, class: 'aui' do |f|
     .field-group
       = label_tag :file_name

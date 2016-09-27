@@ -18,7 +18,8 @@
 
           - if @meta.path != ''
             .aui-buttons
-              button.aui-button.btn-rename Rename
+              a.aui-button href=datastore_edit_path(@meta.path) title='Edit file metadata'
+                i.fa.fa-pencil
 
           .aui-buttons
             button.aui-button.hint--bottom aria-label='Copy'
@@ -28,9 +29,10 @@
             button.aui-button.hint--bottom aria-label='Paste'
               i.fa.fa-clipboard
 
-          .aui-buttons
-            a.aui-button.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' Clear Empty Folders
-
           - if @meta.directory?
+            .aui-buttons
+              a.aui-button.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' Clear Empty Folders
+
+          - unless @meta.directory?
             a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
               i.fa.fa-download

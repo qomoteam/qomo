@@ -47,7 +47,7 @@ Datastore =
 path_of_row = (el) ->
   $(el).parents('tr').data('path')
 
-within 'datastore', 'show', ->
+within 'datastore', 'show, edit', ->
   $('.shared-toggle').change ->
     toggle = this
     toggle.busy = true
