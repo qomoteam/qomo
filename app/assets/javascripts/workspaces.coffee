@@ -491,8 +491,10 @@ within 'workspaces', 'show', ->
   $c.layout
     west:
       size: 250
+      minSize: 220
     east:
       size: 388
+      minSize: 308
 
   canvas_resize()
 
