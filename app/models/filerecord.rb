@@ -2,7 +2,18 @@ class Filerecord < ApplicationRecord
 
   belongs_to :owner, class_name: 'User'
 
-  scope :library, -> { where(shared: true, owner: User.find_by_username(Config.admin.username)).order :path }
+
+  def self.library
+    libs = self.where(shared: true, owner: User.find_by_username(Config.admin.username)).order(:path).to_a
+    libs = libs.delete_if do |lib|
+      flag = false
+      libs.each do |other|
+        flag = true if other != lib and lib.path.starts_with?(other.path)
+      end
+      flag
+    end
+  end
+
 
   def self.shared?(uid, path)
     parts = path.split('/')
