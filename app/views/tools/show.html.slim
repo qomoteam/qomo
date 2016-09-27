@@ -28,7 +28,9 @@
     tr
       td Maintainer
       td = user_tag @tool.owner
-    tr
-      td Usage
-      td
-        .paragraph == @tool.usage
+
+    - unless @tool.usage.blank?
+      tr
+        td Usage
+        td
+          .paragraph == @tool.usage

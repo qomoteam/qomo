@@ -112,14 +112,11 @@ class JobEngine
               end
 
               va = va.join ','
-              va = '"' + va + '"'
 
             when 'output'
               va = @datastore.apath va
-              va = '"' + va + '"'
             when 'tmp'
               va = @datastore.apath "#{tmpdir}/#{unit_id}"
-              va = '"' + va + '"'
             else
               # No-op
           end
