@@ -154,4 +154,5 @@ $ ->
 
   $('a:external:not(.no-external-link)').attr('target', '_blank').addClass('external-link')
 
-  $('.readmore').readmore()
+  $('.readmore').readmore
+    blockCSS: 'overflow-x: scroll;'
