@@ -1,5 +1,5 @@
 .page-panel
-  table.aui
+  table.aui.library
     thead
       tr
         th Name
@@ -9,5 +9,7 @@
       - for record in @records
         tr
           td
-            a href=datastore_path(record.path, uid: record.owner_id) = record.name
+            a.file-item href=viewer_path(record.meta)
+              i.fa> class=record.meta.type.icon
+              = record.meta.name
           td = record.desc

@@ -19,7 +19,7 @@ class Filemeta
 
 
   def record
-    Filerecord.find_by(path: @path, owner_id: @owner_id) || Filerecord.new(path: @path, owner_id: @owner_id)
+    Filerecord.find_by(path: @path, owner_id: @owner_id) || Filerecord.new(path: @path, name: File.basename(@path), owner_id: @owner_id)
   end
 
 

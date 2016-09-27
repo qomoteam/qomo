@@ -62,7 +62,6 @@ class DatastoreController < ApplicationController
 
     @record = @meta.record
     @record.path = new_path
-    @record.name = params[:file_name]
     @record.desc = params[:description]
     @record.save
 
@@ -71,7 +70,7 @@ class DatastoreController < ApplicationController
 
 
   def share
-    record = Filerecord.find_or_create_by(name: File.basename(path), path: path, owner_id: current_user.id)
+    record = Filerecord.find_or_create_by(path: path, owner_id: current_user.id)
 
     record.shared = true
     record.save
@@ -81,7 +80,8 @@ class DatastoreController < ApplicationController
 
 
   def unshare
-    Filerecord.where(path: path, owner_id: current_user.id).each do |record|
+    record = Filerecord.find_by(path: path, owner_id: current_user.id)
+    if record
       record.shared = false
       record.save
     end

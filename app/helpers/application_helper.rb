@@ -100,4 +100,12 @@ module ApplicationHelper
     Category.all
   end
 
+  def viewer_path(file)
+    if file.directory? or file.type.reader
+      datastore_path(file.path, uid: params[:uid])
+    else
+      datastore_download_path(file.path, uid: params[:uid])
+    end
+  end
+
 end

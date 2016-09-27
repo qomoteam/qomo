@@ -19,8 +19,8 @@
       - for file in @files
         tr data-path=file.path
           td
-            a href=viewer_path(file)
-              i.fa.file-icon> class=file.type.icon
+            a.file-item href=viewer_path(file)
+              i.fa> class=file.type.icon
               = file.name
           td
             - if file.directory?

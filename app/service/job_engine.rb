@@ -63,8 +63,8 @@ class JobEngine
       end
     end
 
-    #Generate commands
-    #TODO rename variable `k, v`
+    # Generate commands
+    # TODO rename variable `k, v`
     boxes.each do |k, v|
       tool = Tool.find v['tool_id']
       unit_id = SecureRandom.uuid
@@ -75,7 +75,7 @@ class JobEngine
       # Validate all params are set correctly (not null, etc.)
       tool.params.each do |te|
         pv = pvalues[te['name']]
-        if pv&.blank?
+        if pv.blank?
           result[:success] = false
           result[:errors] << {box_id: k, param: te['name'], msg: 'need value to be set'}
         end
@@ -86,6 +86,7 @@ class JobEngine
         if va.kind_of? Array
           separator = ','
           tool.params.each do |p|
+            # TODO no palce to set `separator` in web UI
             separator = p['separator'] || separator if p['name'] == ka
           end
           va = va.join separator
