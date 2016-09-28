@@ -38,7 +38,7 @@ class ToolsController < ApplicationController
 
   def update
     tool = Tool.find params['id']
-    unauthorized if current_user != @tool.owner
+    unauthorized if current_user != tool.owner
 
     tool.update params.require(:tool).permit!
     tool.copy_upload!
