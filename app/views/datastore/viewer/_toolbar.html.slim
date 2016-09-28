@@ -4,8 +4,8 @@
       .aui-toolbar2-primary
         = render 'datastore/viewer/breadcrumb'
 
-      - if own? @meta
-        .aui-toolbar2-secondary
+      .aui-toolbar2-secondary
+        - if own? @meta
           - if @meta.directory?
             .aui-buttons
               a.aui-button href=datastore_upload_path(@meta.path) target='_blank' Upload
@@ -33,6 +33,6 @@
             .aui-buttons
               a.aui-button.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' Clear Empty Folders
 
-          - unless @meta.directory?
-            a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
-              i.fa.fa-download
+      - unless @meta.directory?
+        a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
+          i.fa.fa-download
