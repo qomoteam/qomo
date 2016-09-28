@@ -2,6 +2,11 @@
   .aui-page-panel
     .aui-page-panel-inner
       section.aui-page-panel-content
+        #nav-datastore.aui-toolbar2 role='toolbar'
+          .aui-toolbar2-inner
+            .aui-toolbar2-group
+              .aui-toolbar2-primary
+                = render 'datastore/viewer/breadcrumb'
         #uploader data-endpoint=datastore_upload_path
         #trigger-upload.aui-button.aui-button-primary Uplaod now
 

@@ -147,6 +147,7 @@ class DatastoreController < ApplicationController
 
 
   def upload
+    @meta = datastore.get(params[:dir] || '')
     if request.post?
       datastore.save! File.join(params[:dir], params[:filename]), params[:file].tempfile
       render json: {success: true}
