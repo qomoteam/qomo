@@ -3,6 +3,6 @@
     td width='300'
       a href=tool_path(tool)
         => tool.name
-        - if tool.tech
-          span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name
+      - if tool.tech
+        span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name
     td.nowrap title=tool.desc = tool.desc

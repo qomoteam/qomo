@@ -8,6 +8,8 @@ class Pipeline < ApplicationRecord
 
   default_scope -> { order('created_at DESC') }
 
+  scope :shared, -> { where(shared: true).order(cached_votes_score: :desc) }
+
   def self.shared_count
     Pipeline.where(shared: true).count
   end

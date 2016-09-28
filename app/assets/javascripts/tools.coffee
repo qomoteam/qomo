@@ -93,7 +93,7 @@ within 'tools', 'new, edit', ->
       presence: true
       length:
         minimum: 2
-        maximum: 25
+        maximum: 30
     'tool[command]':
       presence: true
 

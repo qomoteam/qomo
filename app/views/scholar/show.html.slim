@@ -1,6 +1,6 @@
-.page-panel.scholar
+.page-panel#scholar
   .aui-group
-    .aui-item.bio
+    .aui-item.user-profile
       h2
         = user_tag @user
       span.user-title = @user.title
@@ -26,10 +26,20 @@
           i.fa.fa-clock-o
           | Joined on #{ptime2 @user.created_at}
 
-    .aui-item
-      h5 Contributed Pipelines:
-      = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.where(shared: true), show_user_prefix: false}
+      - unless @user.bio.blank?
+        .user-bio
+          p
+            ' Bio:
+            = @user.bio
 
-      h5 Contributed Tools:
+    .aui-item
+      h5
+        | Contributed Pipelines
+        small Total: #{@user.pipelines.shared.count}
+      = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.shared, show_user_prefix: false}
+
+      h5
+        | Contributed Tools
+        small Total: #{@user.tools.active.count}
       table.aui
         = render partial: 'tools/rich_list_tr', locals: {tools: @user.tools.active}

@@ -33,4 +33,8 @@ class JobUnit < ApplicationRecord
     end
   end
 
+  def end?
+    status == 'success' or status == 'fail'
+  end
+
 end

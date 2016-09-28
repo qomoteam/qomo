@@ -38,11 +38,15 @@
 
           .field-group.top-label
             = f.label :homepage
-            = f.text_field :homepage, autocomplete: 'off', class: 'text long-field'
+            = f.text_field :homepage, autocomplete: 'off', class: 'text long-field', placeholder: 'Your website homepage'
 
           .field-group.top-label
             = f.label :timezone
             = f.time_zone_select :timezone, nil, {}, {class: 'select long-field'}
+
+          .field-group.top-label
+            = f.label :bio
+            = f.text_area :bio, {class: 'textarea long-field', rows: 10, placeholder: 'Tell a little about yourself'}
 
           .buttons-container
             .buttons

@@ -29,12 +29,9 @@ class Job < ApplicationRecord
 
 
   def status
-    units.reverse.each do |unit|
-      if unit && (unit.status != 'waiting')
-        return unit.status
-      end
-    end
-
+    return 'running' if units.any? {|u| u.status == 'running'}
+    return 'fail' if units.any? {|u| u.status == 'fail'}
+    return units[-1].status if end?
     'waiting'
   end
 
@@ -46,7 +43,7 @@ class Job < ApplicationRecord
 
 
   def end?
-    status == 'success' or status == 'fail'
+    units[-1].end?
   end
 
 end
