@@ -6,13 +6,13 @@
         th Name
         th Category
         th width='50%' Desc
-        th width='100px'
+        th width='50px'
     tbody
       - for tool in @tools
         tr
           td: a href=tool_path(tool) = tool.name
           td = tool.category.name
-          td = tool.desc
+          td.nowrap title=tool.desc = tool.desc
           td
             ul.menu
               li

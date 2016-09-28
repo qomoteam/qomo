@@ -5,4 +5,4 @@
         => tool.name
         - if tool.tech
           span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name
-    td = tool.desc
+    td.nowrap title=tool.desc = tool.desc

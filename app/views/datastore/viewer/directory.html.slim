@@ -4,22 +4,22 @@
   table.aui.aui-table-sortable.tbl-files
     thead
       tr
-        th width='50%' File Name
-        th width='80px' Size
-        th width='100px' Kind
+        th File Name
+        th width='88px' Size
+        th width='120px' Kind
 
         - if own? @meta
-          th.aui-table-column-unsortable Shared
+          th.aui-table-column-unsortable width='80px' Shared
 
-        th Date Modified
+        th width='160px' Date Modified
 
-        th.aui-table-column-unsortable Operations
+        th.aui-table-column-unsortable width='68px' Operations
 
     tbody
       - for file in @files
         tr data-path=file.path
-          td
-            a.file-item href=viewer_path(file)
+          td.nowrap
+            a.file-item href=viewer_path(file) title=file.name
               i.fa> class=file.type.icon
               = file.name
           td
