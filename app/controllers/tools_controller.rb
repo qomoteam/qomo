@@ -29,6 +29,8 @@ class ToolsController < ApplicationController
 
   def edit
     @tool = Tool.find params['id']
+    unauthorized if current_user != @tool.owner
+
     @categories = Category.all
     render 'new'
   end
@@ -36,6 +38,8 @@ class ToolsController < ApplicationController
 
   def update
     tool = Tool.find params['id']
+    unauthorized if current_user != @tool.owner
+
     tool.update params.require(:tool).permit!
     tool.copy_upload!
     redirect_to action: 'edit', id: tool.id
@@ -44,6 +48,8 @@ class ToolsController < ApplicationController
 
   def destroy
     tool = Tool.find params['id']
+    unauthorized if current_user != @tool.owner
+
     tool.destroy!
     redirect_to action: 'index', status: :see_other
   end
@@ -51,6 +57,7 @@ class ToolsController < ApplicationController
 
   def delete
     Tool.delete params['ids']
+
     redirect_to action: 'index', status: :see_other
   end
 
@@ -79,6 +86,8 @@ class ToolsController < ApplicationController
 
   def asset_mkexe
     tool = Tool.find params['id']
+    unauthorized if current_user != @tool.owner
+
     path = File.join(tool.dirpath, params[:path])
     puts path
     if File.executable? path
@@ -92,12 +101,16 @@ class ToolsController < ApplicationController
 
   def asset_download
     tool = Tool.find params['id']
+    unauthorized if current_user != @tool.owner
+
     path = File.join(tool.dirpath, params[:path])
     send_file path
   end
 
   def asset_delete
     tool = Tool.find params['id']
+    unauthorized if current_user != @tool.owner
+
     path = File.join(tool.dirpath, params[:path])
     File.delete path
     render json: {success: true}

@@ -28,6 +28,8 @@ class PipelinesController < ApplicationController
 
   def share
     pipeline = Pipeline.find params[:id]
+    unauthorized if current_user != pipeline.owner
+
     pipeline.shared = true
     pipeline.save
     pipeline.boxes.values.each do |e|
@@ -47,6 +49,8 @@ class PipelinesController < ApplicationController
 
   def unshare
     pipeline = Pipeline.find params[:id]
+    unauthorized if current_user != pipeline.owner
+
     pipeline.shared = false
     pipeline.save
     render json: {success: true}
@@ -107,6 +111,7 @@ class PipelinesController < ApplicationController
 
   def edit
     @pipeline = Pipeline.find params['id']
+    unauthorized if current_user != @pipeline.owner
     @categories = Category.all
   end
 
@@ -123,6 +128,7 @@ class PipelinesController < ApplicationController
   def update
     wrapping_json_param
     pipeline = Pipeline.find params['id']
+    unauthorized if current_user != pipeline.owner
     pipeline.update params.require('pipeline').permit!
 
     respond_to do |format|
@@ -134,9 +140,9 @@ class PipelinesController < ApplicationController
 
   def destroy
     pipeline = Pipeline.find params[:id]
-    if pipeline.owner == current_user
-      pipeline.destroy!
-    end
+    unauthorized if current_user != @pipeline.owner
+
+    pipeline.destroy!
 
     redirect_to pipelines_path
   end

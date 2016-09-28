@@ -1,6 +1,7 @@
 .page-panel
   h3
     ' Tool: #{@tool.name}
+
     - if @tool.owner == current_user
       a href=edit_tool_path(@tool)
         i.fa.fa-pencil-square-o
