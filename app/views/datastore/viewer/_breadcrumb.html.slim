@@ -7,4 +7,4 @@ ol.aui-nav.aui-nav-breadcrumbs.nav-path
   - for a, b in breadcrumb(@meta.path)
     li: a href=datastore_path(a, uid: params[:uid]) = b
 
-  li: a href=datastore_path(@meta.path, uid: params[:uid]) = @meta.name
+  li: a href=viewer_path(@meta) = @meta.name
