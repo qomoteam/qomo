@@ -101,10 +101,14 @@ module ApplicationHelper
   end
 
   def viewer_path(file)
+    uid = nil
+    if not user_signed_in? or current_user.id != file.owner_id
+      uid = file.owner_id
+    end
     if file.directory? or file.type.reader
-      datastore_path(file.path, uid: file.owner.id)
+      datastore_path(file.path, uid: uid)
     else
-      datastore_download_path(file.path, uid: file.owner.id)
+      datastore_download_path(file.path, uid: uid)
     end
   end
 
