@@ -14,8 +14,9 @@
       table.aui.bordered
         tbody
           tr
-            td colspan='2'
+            td width='300'
               h5
                 ' Category:
                 = category.name
+            td
         = render partial: 'tools/rich_list_tr', locals: {tools: category.active_tools}
