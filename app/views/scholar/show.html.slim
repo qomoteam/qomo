@@ -11,12 +11,17 @@
         li
           i.fa.fa-envelope-o
           a href="mailto:#{@user.email}" #{@user.email}
-        li
-          i.fa.fa-map-marker
-          | #{@user.location}
-        li
-          i.fa.fa-sitemap
-          | #{@user.organization}
+
+        - unless @user.location.blank?
+          li
+            i.fa.fa-map-marker
+            | #{@user.location}
+
+        - unless @user.organization.blank?
+          li
+            i.fa.fa-sitemap
+            | #{@user.organization}
+
         li
           i.fa.fa-clock-o
           | Joined on #{ptime2 @user.created_at}
