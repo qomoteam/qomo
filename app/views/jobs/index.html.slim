@@ -1,23 +1,21 @@
 .page-panel
-  h1 Jobs History
-
-  .aui-toolbar2 role='toolbar'
-    .aui-toolbar2-inner
-      .aui-toolbar2-group
-        .aui-toolbar2-primary
-          .aui-buttons
-            a.aui-button.clear-failed-jobs href=clear_jobs_path data-method='PUT' data-confirm='All failed jobs and their output dirs will be deleted, are you sure?'
-              | Clear Finished Jobs
+  .nav-toolbar
+    .primary
+      h3 Job Manager
+    .secondary
+      .aui-buttons
+        a.aui-button.clear-failed-jobs href=clear_jobs_path data-method='PUT' data-confirm='All failed jobs and their output dirs will be deleted, are you sure?'
+          | Clear Finished Jobs
 
   table.aui
     thead
       tr
-        th width='270px' Job
-        th Status
-        td Progress
-        th Created At
-        th Updated At
-        th
+        th Job
+        th width='88px' Status
+        th width='108px' Running Time
+        th width='68px' Progress
+        th width='108px' Updated At
+        th width='50px'
 
     tbody
       - for job in @jobs
@@ -25,14 +23,14 @@
           td
             a href=job_path(job) = job.name
           td = status_label job.status
+          td = running_time job
           td #{number_to_percentage job.progress*100, precision: 0}
-          td = ptime job.created_at, current_user.timezone
-          td = ptime job.updated_at, current_user.timezone
+          td #{time_ago_in_words job.updated_at} ago
           td
             ul.menu
               li
                 a> href=datastore_path(job.outdir) title='Job output folder'
-                  i.fa.fa-folder-o
+                  i.fa.fa-folder
               li
                 a href=job_path(job) data-method='DELETE' data-confirm='Are you sure to delete this job?'
                   i.fa.fa-trash-o
