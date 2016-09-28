@@ -176,6 +176,7 @@ GEM
     rgl (0.5.2)
       lazy_priority_queue (~> 0.1.0)
       stream (~> 0.5.0)
+    rmagick (2.16.0)
     rolify (5.1.0)
     rubyzip (1.2.0)
     rucaptcha (1.0.0)
@@ -263,6 +264,7 @@ DEPENDENCIES
   rails
   redis
   rgl
+  rmagick
   rolify
   rubyzip
   rucaptcha

@@ -1,0 +1,5 @@
+.page-panel.wider.viewer.viewer-image
+  = render 'datastore/viewer/toolbar'
+  section.content
+    img src=datastore_image_path(@meta.path, uid: params[:uid])
+

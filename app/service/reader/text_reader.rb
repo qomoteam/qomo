@@ -1,4 +1,4 @@
-class Reader::TextReader
+class Reader::TextReader < Reader::Reader
 
   def read(path, offset, len)
     File.open(path) do |file|

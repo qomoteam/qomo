@@ -22,6 +22,18 @@ class Filetype
       typemapping[:sam] = Filetype.new :sam, 'SAM', 'fa-file-text-o', 'text', Reader::TextReader.new
       typemapping[:bam] = Filetype.new :bam, 'BAM', 'fa-file-o'
 
+      typemapping[:png] = Filetype.new :png, 'Image', 'fa-file-image-o', 'image', Reader::NullReader.new
+      typemapping[:jpeg] = Filetype.new :jpeg, 'Image', 'fa-file-image-o', 'image', Reader::NullReader.new
+      typemapping[:jpg] = Filetype.new :jpg, 'Image', 'fa-file-image-o', 'image', Reader::NullReader.new
+      typemapping[:gif] = Filetype.new :gif, 'Image', 'fa-file-image-o', 'image', Reader::NullReader.new
+
+      typemapping[:tif] = Filetype.new :tif, 'Image', 'fa-file-image-o'
+      typemapping[:tiff] = Filetype.new :tiff, 'Image', 'fa-file-image-o'
+      typemapping[:eps] = Filetype.new :eps, 'Image', 'fa-file-image-o'
+
+      typemapping[:svg] = Filetype.new :svg, 'Image', 'fa-file-image-o', 'svg', Reader::Reader.new
+
+
       typemapping[kind]
     end
   end

@@ -50,6 +50,7 @@ Rails.application.routes.draw do
 
     match 'upload/-/(*dir)', action: 'upload', as: 'upload', constraints: { :path => /.*/ }, via: [:get, :post]
     get 'download/-/(*path)', action: 'download', as: 'download', constraints: { :path => /.*/ }
+    get 'image/-/(*path)', action: 'image', as: 'image', constraints: { :path => /.*/ }
   end
 
 

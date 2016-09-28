@@ -166,7 +166,14 @@ class DatastoreController < ApplicationController
     else
       send_file datastore.apath(path)
     end
+  end
 
+  include Magick
+
+  def image
+    path = params[:path]
+    f = datastore.get(path)
+    send_data f.raw_read
   end
 
 end
