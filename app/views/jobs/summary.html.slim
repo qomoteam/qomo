@@ -1,23 +1,28 @@
-- for job in @jobs
-  table.job
-    tr
-      td
-        a href=job_path(job)
-          = job.name
-      td width='80px' style='text-align: right'
-        a.hint--left.hint--info> href=datastore_path(job.outdir) aria-label='Job output folder'
-          i.fa.fa-folder-o
-
-        a.hint--left.hint--error.delete-job-summary> href=job_path(job) style='margin-left: 1em' aria-label='Delete this job'
-          i.fa.fa-trash-o
-
-    tr
-      td Progress: #{number_to_percentage job.progress*100, precision: 0}
-      td = status_label job.status
-
-    - for unit in job.units
+- if @jobs.count > 0
+  - for job in @jobs
+    table.job
       tr
         td
-          | #{unit.idx+1}. #{unit.tool.name}
-        td
-          = status_label unit.status
+          a href=job_path(job)
+            = job.name
+        td width='80px' style='text-align: right'
+          a.hint--left.hint--info> href=datastore_path(job.outdir) aria-label='Job output folder'
+            i.fa.fa-folder-o
+
+          a.hint--left.hint--error.delete-job-summary> href=job_path(job) style='margin-left: 1em' aria-label='Delete this job'
+            i.fa.fa-trash-o
+
+      tr
+        td Progress: #{number_to_percentage job.progress*100, precision: 0}
+        td = status_label job.status
+
+      - for unit in job.units
+        tr
+          td
+            | #{unit.idx+1}. #{unit.tool.name}
+          td
+            = status_label unit.status
+
+- else
+  .empty-placeholder
+    p There is no job launched recently.

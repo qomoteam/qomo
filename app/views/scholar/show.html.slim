@@ -26,7 +26,13 @@
           i.fa.fa-clock-o
           | Joined on #{ptime2 @user.created_at}
 
-      - unless @user.bio.blank?
+      - if @user.bio.blank?
+        .empty-placeholder
+          p
+            ' Your biography is blank
+          p
+            a href=edit_users_profile_path Say something about yourself
+      - else
         .user-bio
           p
             ' Bio:
@@ -36,10 +42,21 @@
       h5
         | Contributed Pipelines
         small Total: #{@user.pipelines.shared.count}
-      = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.shared, show_user_prefix: false}
+
+      - if @user.pipelines.shared.count > 0
+        = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.shared, show_user_prefix: false}
+      - else
+        .empty-placeholder
+          p You haven't shared any pipeline yet ...
 
       h5
         | Contributed Tools
         small Total: #{@user.tools.active.count}
-      table.aui
-        = render partial: 'tools/rich_list_tr', locals: {tools: @user.tools.active}
+      - if @user.tools.active.count > 0
+        table.aui
+          = render partial: 'tools/rich_list_tr', locals: {tools: @user.tools.active}
+      - else
+        .empty-placeholder
+          p You don't have any public tool yet ...
+          p
+           | (For security reasons, you may contact administrator to make your tool public available)

@@ -1,51 +1,58 @@
 .page-panel.wider
   = render 'datastore/viewer/toolbar'
 
-  table.aui.aui-table-sortable.tbl-files
-    thead
-      tr
-        th File Name
-        th width='88px' Size
-        th width='120px' Kind
+  - if @files.count > 0
+    table.aui.aui-table-sortable.tbl-files
+      thead
+        tr
+          th File Name
+          th width='88px' Size
+          th width='120px' Kind
 
-        - if own? @meta
-          th.aui-table-column-unsortable width='80px' Shared
+          - if own? @meta
+            th.aui-table-column-unsortable width='80px' Shared
 
-        th width='160px' Date Modified
+          th width='160px' Date Modified
 
-        th.aui-table-column-unsortable width='68px' Operations
+          th.aui-table-column-unsortable width='68px' Operations
 
-    tbody
-      - for file in @files
-        tr data-path=file.path
-          td.nowrap
-            a.file-item href=viewer_path(file) title=file.name
-              i.fa> class=file.type.icon
-              = file.name
-          td
-            - if file.directory?
-              | --
-            - else
-              = number_to_human_size(file.size, precision: 3)
+      tbody
+        - for file in @files
+          tr data-path=file.path
+            td.nowrap
+              a.file-item href=viewer_path(file) title=file.name
+                i.fa> class=file.type.icon
+                = file.name
+            td
+              - if file.directory?
+                | --
+              - else
+                = number_to_human_size(file.size, precision: 3)
 
-          td = file.type.desc
+            td = file.type.desc
 
-          - if own? file
-            td = shared_tag Filerecord.shared? file.record.owner.id, file.record.path
+            - if own? file
+              td = shared_tag Filerecord.shared? file.record.owner.id, file.record.path
 
-          td = ptime file.mtime.to_s, current_user.timezone
+            td = ptime file.mtime.to_s, current_user.timezone
 
-          td
-            ul.menu
-              - if own? file
-                li
-                  a href=datastore_edit_path(file.path) title='Edit file metadata'
-                    i.fa.fa-pencil
-                li
-                  a.btn-trash href='javascript:void(0);' title='Delete this file'
-                    i.fa.fa-trash-o
+            td
+              ul.menu
+                - if own? file
+                  li
+                    a href=datastore_edit_path(file.path) title='Edit file metadata'
+                      i.fa.fa-pencil
+                  li
+                    a.btn-trash href='javascript:void(0);' title='Delete this file'
+                      i.fa.fa-trash-o
 
-              - unless file.directory?
-                li
-                  a href=datastore_download_path(file.path, uid: params[:uid]) title='Download this file'
-                    i.fa.fa-download
+                - unless file.directory?
+                  li
+                    a href=datastore_download_path(file.path, uid: params[:uid]) title='Download this file'
+                      i.fa.fa-download
+  - else
+    .empty-placeholder
+      p This folder is empty...
+      a href=datastore_upload_path(@meta.path) target='_blank'
+        i.fa.fa-cloud-upload>
+        | Upload

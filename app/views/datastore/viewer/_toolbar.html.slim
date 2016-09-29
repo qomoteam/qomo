@@ -8,8 +8,12 @@
         - if own? @meta
           - if @meta.directory?
             .aui-buttons
-              a.aui-button href=datastore_upload_path(@meta.path) target='_blank' Upload
-              button.aui-button.btn-mkdir New Folder
+              a.aui-button href=datastore_upload_path(@meta.path) target='_blank'
+                i.fa.fa-cloud-upload>
+                | Upload
+              button.aui-button.btn-mkdir
+                i.fa.fa-folder-o>
+                | New Folder
 
           .aui-buttons
             a.aui-button href=datastore_path(parent_dir(@meta.path))

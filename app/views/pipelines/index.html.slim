@@ -1,16 +1,24 @@
 .page-panel
-  table.aui
-    thead
-      tr
-        th Title
-        th width='200px' Created At
-        th width='100px' Shared
-        th width='350px' Operations
-    tbody
-      - for pipeline in @private_pipelines
-        tr data-pid=pipeline.id
-          td
-            a href=pipeline_path(pipeline) = pipeline.title
-          td = ptime pipeline.created_at, current_user.try(:timezone)
-          td = shared_tag pipeline.shared
-          td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
+  .nav-toolbar
+    .primary
+      h3 My pipelines
+
+  - if @private_pipelines.count > 0
+    table.aui
+      thead
+        tr
+          th Title
+          th width='200px' Created At
+          th width='100px' Shared
+          th width='350px' Operations
+      tbody
+        - for pipeline in @private_pipelines
+          tr data-pid=pipeline.id
+            td
+              a href=pipeline_path(pipeline) = pipeline.title
+            td = ptime pipeline.created_at, current_user.try(:timezone)
+            td = shared_tag pipeline.shared
+            td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
+  - else
+    .empty-placeholder
+      p You don't have any saved pipeline by now ...

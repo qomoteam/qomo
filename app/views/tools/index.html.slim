@@ -1,23 +1,35 @@
 .page-panel
-  a.aui-button.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
-  table.aui
-    thead
-      tr
-        th Name
-        th Category
-        th width='50%' Desc
-        th width='50px'
-    tbody
-      - for tool in @tools
+  .nav-toolbar
+    .primary
+      h3 My tools
+    .secondary
+      .aui-buttons
+        a.aui-button.aui-button-primary.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
+
+  - if @tools.count > 0
+
+    table.aui
+      thead
         tr
-          td: a href=tool_path(tool) = tool.name
-          td = tool.category.name
-          td.nowrap title=tool.desc = tool.desc
-          td
-            ul.menu
-              li
-                a.hint--bottom.hint--info href=edit_tool_path(tool) aria-label='Edit this tool'
-                  i.fa.fa-edit
-              li
-                a.hint--bottom.hint--warning href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' aria-label='Delete this tool'
-                  i.fa.fa-trash-o
+          th Name
+          th Category
+          th width='50%' Desc
+          th width='50px'
+      tbody
+        - for tool in @tools
+          tr
+            td: a href=tool_path(tool) = tool.name
+            td = tool.category.name
+            td.nowrap title=tool.desc = tool.desc
+            td
+              ul.menu
+                li
+                  a.hint--bottom.hint--info href=edit_tool_path(tool) aria-label='Edit this tool'
+                    i.fa.fa-edit
+                li
+                  a.hint--bottom.hint--warning href=tool_path(tool) data-method='delete' data-confirm='Are you sure to delete this tool?' aria-label='Delete this tool'
+                    i.fa.fa-trash-o
+
+  - else
+    .empty-placeholder
+      p You haven't created any tool yet ...

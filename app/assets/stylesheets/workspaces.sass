@@ -128,10 +128,12 @@ body[data-controller=workspaces][data-action=show]
 
 #job-summary
   padding: 0
-  .refresh
-    margin-right: 10px
-    font-size: 1em
-    float: right
+  .toolbar
+    border-bottom: 1px solid #D1D1D1
+    .refresh
+      margin-right: 10px
+      font-size: 1em
+      float: right
   table.job
     padding: 0 5px
     margin-bottom: 10px
@@ -142,6 +144,7 @@ body[data-controller=workspaces][data-action=show]
         color: green
       &.FAILED
         color: darkred
+
 
 .ui-layout-east.tabs-pane
   font-size: 0.8rem
