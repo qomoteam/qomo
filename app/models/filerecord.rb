@@ -31,5 +31,4 @@ class Filerecord < ApplicationRecord
     Datastore.new(owner.id, Config.dir_users).get(path)
   end
 
-
 end

@@ -17,6 +17,10 @@
 
 
   .box-props id="box-props-#{box[:id]}" data-tid=box[:tool].id data-bid=box[:id]
+    - tool = Tool.find(box[:tool].id)
+    h5.tool-title
+      ' Tool:
+      a href=tool_path(tool) target="_blank" = tool.name
     ol.params
       - for input in box[:tool].inputs
         li.input.param data-paramname=input['name']
