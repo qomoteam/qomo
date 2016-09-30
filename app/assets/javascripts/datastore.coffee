@@ -94,8 +94,11 @@ within 'datastore', 'show, edit', ->
       Datastore.trash path_of_row(self)
 
   $('.btn-go').click ->
-    path = prompt('Go to:')
-    Datastore.goto path if path
+    notie.input {
+      type: 'text'
+    }, 'Go to path:', 'OK', 'Cancel',
+      (path) ->
+        Datastore.goto path if path
 
   $('.btn-rename').click ->
     self = this
