@@ -120,8 +120,11 @@ class DatastoreController < ApplicationController
     if path == ''
       unauthorized
     end
-    datastore.trash! path
+
     Filerecord.destroy_all path: params[:path], owner_id: current_user.id
+    Filerecord.destroy_subrecords params[:path], current_user.id
+
+    datastore.trash! path
     render json: {success: true}
   end
 
@@ -135,7 +138,6 @@ class DatastoreController < ApplicationController
     datastore.cp params[:src].strip, params[:dest].strip
     render json: {success: true}
   end
-
 
 
   def upload

@@ -34,8 +34,6 @@ class LibraryController < ApplicationController
         }
       end
     end
-
-
     render json: tree.sort_by { |e| [e[:type], e[:text].downcase]}
   end
 

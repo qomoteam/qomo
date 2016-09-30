@@ -2,6 +2,7 @@ class Filerecord < ApplicationRecord
 
   belongs_to :owner, class_name: 'User'
 
+  after_destroy :santize
 
   def self.library
     libs = self.where(shared: true, owner: User.find_by_username(Config.admin.username)).order(:path).to_a
@@ -12,6 +13,10 @@ class Filerecord < ApplicationRecord
       end
       flag
     end
+  end
+
+  def self.destroy_subrecords(path, owner_id)
+    Filerecord.where("path LIKE :path_like AND owner_id=:owner_id", {path_like: "#{path}%", owner_id: owner_id}).destroy_all
   end
 
 
@@ -32,6 +37,13 @@ class Filerecord < ApplicationRecord
 
   def meta
     Datastore.new(owner.id, Config.dir_users).get(path)
+  end
+
+
+  private
+
+  def santize
+    Filerecord.destroy_subrecords self.path, self.owner.id
   end
 
 end
