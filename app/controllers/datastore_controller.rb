@@ -132,7 +132,14 @@ class DatastoreController < ApplicationController
 
 
   def mv
-    datastore.mv! params[:src].strip, params[:dest].strip
+    src = params[:src].strip
+    dest = params[:dest].strip
+    datastore.mv! src, dest
+    record = Filerecord.find_by path: src, owner_id: current_user.id
+    if record
+      record.path = File.join(dest, File.basename(src))
+      record.save
+    end
     render json: {success: true}
   end
 
