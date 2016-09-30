@@ -101,7 +101,11 @@ class DatastoreController < ApplicationController
 
 
   def path
-    params[:path]&.strip || ''
+    p = params[:path]&.strip || ''
+    if p == '/'
+      p = ''
+    end
+    p
   end
 
 
@@ -112,6 +116,10 @@ class DatastoreController < ApplicationController
 
 
   def trash
+    # Use cannot delete its home dir
+    if path == ''
+      unauthorized
+    end
     datastore.trash! path
     Filerecord.destroy_all path: params[:path], owner_id: current_user.id
     render json: {success: true}
