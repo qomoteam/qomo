@@ -7,30 +7,34 @@
         a.aui-button.clear-failed-jobs href=clear_jobs_path data-method='PUT' data-confirm='All failed jobs and their output dirs will be deleted, are you sure?'
           | Clear Finished Jobs
 
-  table.aui
-    thead
-      tr
-        th Job
-        th width='88px' Status
-        th width='180px' Running Time
-        th width='68px' Progress
-        th width='180px' Updated At
-        th width='50px'
-
-    tbody
-      - for job in @jobs
+  - if @jobs.count > 0
+    table.aui
+      thead
         tr
-          td
-            a href=job_path(job) = job.name
-          td = status_label job.status
-          td = running_time job
-          td #{number_to_percentage job.progress*100, precision: 0}
-          td #{time_ago_in_words job.updated_at} ago
-          td
-            ul.menu
-              li
-                a> href=datastore_path(job.outdir) title='Job output folder'
-                  i.fa.fa-folder
-              li
-                a href=job_path(job) data-method='DELETE' data-confirm='Are you sure to delete this job?'
-                  i.fa.fa-trash-o
+          th Job
+          th width='88px' Status
+          th width='180px' Running Time
+          th width='68px' Progress
+          th width='180px' Updated At
+          th width='50px'
+
+      tbody
+        - for job in @jobs
+          tr
+            td
+              a href=job_path(job) = job.name
+            td = status_label job.status
+            td = running_time job
+            td #{number_to_percentage job.progress*100, precision: 0}
+            td #{time_ago_in_words job.updated_at} ago
+            td
+              ul.menu
+                li
+                  a> href=datastore_path(job.outdir) title='Job output folder'
+                    i.fa.fa-folder
+                li
+                  a href=job_path(job) data-method='DELETE' data-confirm='Are you sure to delete this job?'
+                    i.fa.fa-trash-o
+  - else
+    .empty-placeholder
+      p You haven't launched any job recently ...
