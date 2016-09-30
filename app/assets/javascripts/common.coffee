@@ -97,6 +97,7 @@ window.App =
           selectedPath = currentTree.jstree('get_selected')[0]
           onOk(selectedPath)
           return true
+        cancel: ->
         cancelValue: 'Cancel'
 
       dia.showModal()
