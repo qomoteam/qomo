@@ -59,4 +59,8 @@ class Filemeta
     FileUtils.rmtree @apath
   end
 
+  def root?
+    @path == ''
+  end
+
 end

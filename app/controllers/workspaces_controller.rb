@@ -30,9 +30,4 @@ class WorkspacesController < ApplicationController
   end
 
 
-  def fileselector
-    render layout: nil
-  end
-
-
 end

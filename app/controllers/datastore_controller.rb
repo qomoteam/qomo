@@ -101,49 +101,33 @@ class DatastoreController < ApplicationController
 
 
   def path
-    params[:path] || ''
-  end
-
-
-  def filetree
-    files_tree = {}
-    if user_signed_in?
-      @dir = params['dir'] || ''
-      @files = datastore.list @dir
-
-      files_tree = @files.collect do |e|
-        {
-            text: e.name,
-            id: e.path,
-            children: e.directory?,
-            #TODO remove frontend html class
-            icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o',
-            type: e.directory? ? 'dir' : 'file'
-        }
-      end.sort_by { |e| [e[:type], e[:text].downcase] }
-    end
-
-    render json: files_tree
+    params[:path]&.strip || ''
   end
 
 
   def mkdir
-    datastore.mkdir! params[:path]
+    datastore.mkdir! path
     render json: {success: true}
   end
 
 
   def trash
-    datastore.trash! params[:path]
+    datastore.trash! path
     Filerecord.destroy_all path: params[:path], owner_id: current_user.id
     render json: {success: true}
   end
 
 
   def mv
-    datastore.mv! params[:src], params[:dest]
+    datastore.mv! params[:src].strip, params[:dest].strip
     render json: {success: true}
   end
+
+  def cp
+    datastore.cp params[:src].strip, params[:dest].strip
+    render json: {success: true}
+  end
+
 
 
   def upload
@@ -168,12 +152,52 @@ class DatastoreController < ApplicationController
     end
   end
 
-  include Magick
-
   def image
     path = params[:path]
     f = datastore.get(path)
     send_data f.raw_read
+  end
+
+  def filetree
+    files_tree = {}
+    if user_signed_in?
+      @dir = params['dir'] || ''
+      @files = datastore.list @dir
+
+      files_tree = @files.reject { |e| params[:only_dir] and !e.directory? }.collect do |e|
+        {
+            text: e.name,
+            id: e.path,
+            children: e.directory?,
+            #TODO remove frontend html class
+            icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o',
+            type: e.directory? ? 'dir' : 'file'
+        }
+      end.sort_by { |e| [e[:type], e[:text].downcase] }
+
+      if params[:only_dir] and @dir == ''
+        files_tree = [{
+            text: '[Root Folder]',
+            id: ' ',
+            children: files_tree,
+            icon: 'fa fa-folder',
+            type:'dir',
+            state: {opened: true}
+
+        }]
+      end
+    end
+
+    render json: files_tree
+  end
+
+
+  def fileselector
+    render layout: nil
+  end
+
+  def dirselector
+    render layout: nil
   end
 
 end

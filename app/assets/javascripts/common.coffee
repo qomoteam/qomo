@@ -85,10 +85,37 @@ window.App =
   token: ->
     $('meta[name=csrf-token]').attr('content')
 
+  dirSelector: (onOk) ->
+    $.get Routes.datastore_dirselector(), (dirselector) ->
+      currentTree = null
+      dia = dialog
+        title: 'Select Directory'
+        content: dirselector
+        width: 700
+        okValue: 'OK'
+        ok: ->
+          selectedPath = currentTree.jstree('get_selected')[0]
+          onOk(selectedPath)
+          return true
+        cancelValue: 'Cancel'
+
+      dia.showModal()
+      tree = $(dia.node).find('.tree')
+      currentTree = tree.jstree
+        core:
+          animation: 0
+          themes:
+            stripes: true
+          data:
+            url: tree.data('url')
+            data: (node) ->
+              'dir' : if node.id == '#' then '' else node.id
+
+
   bindFileSelector: (e)->
     $e = $(e)
     window.filetree = null
-    $.get Routes.fileselector_workspace(), (fileselector) ->
+    $.get Routes.datastore_fileselector(), (fileselector) ->
       $e.click ->
         did = App.guid()
         dia = dialog

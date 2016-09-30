@@ -14,6 +14,20 @@ Datastore =
       error: ->
         console.debug 'a'
 
+  cp: (src, dest) ->
+    App.freeze_canvas()
+    $.ajax Routes.datastore_cp(),
+      method: 'PATCH'
+      data:
+        src: src
+        dest: dest
+      success: ->
+        App.unfreeze_canvas()
+        Datastore.goto(dest)
+      error: ->
+        App.unfreeze_canvas()
+        notie.alert(3, 'Error occured when copying file')
+
   mv: (src, dest, goto=false) ->
     $.ajax Routes.datastore_mv(),
       method: 'PATCH'
@@ -26,7 +40,7 @@ Datastore =
         else
           Datastore.reload_files()
       error: ->
-        console.debug 'a'
+        notie.alert(3, 'Error occured when moving file')
 
   rename: (path, new_name, goto=false) ->
     Datastore.mv path, "#{path.split('/')[0..-2].join('/')}/#{new_name}", goto
@@ -39,7 +53,7 @@ Datastore =
       success: ->
         Datastore.reload_files()
       error: ->
-        console.debug 'a'
+        notie.alert(3, 'Error occured when deleting file')
 
   goto: (path) ->
     window.location.href = Routes.datastore path: path
@@ -96,3 +110,15 @@ within 'datastore', 'show, edit', ->
             src = gon.path
             goto = true
           Datastore.rename src, name, goto if name
+
+  $('.btn-paste').click ->
+
+  $('.btn-copy').click ->
+    src = path_of_row this
+    App.dirSelector (dest) ->
+      Datastore.cp src, dest
+
+  $('.btn-move').click ->
+    src = path_of_row this
+    App.dirSelector (dest) ->
+      Datastore.mv src, dest, true

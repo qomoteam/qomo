@@ -14,7 +14,7 @@
 
           th width='160px' Date Modified
 
-          th.aui-table-column-unsortable width='68px' Operations
+          th.aui-table-column-unsortable width='128px' Operations
 
       tbody
         - for file in @files
@@ -38,21 +38,28 @@
 
             td
               ul.menu
+                li
+                  a.hint--bottom.btn-copy aria-label='Copy' href='javascript:;'
+                    i.fa.fa-files-o
+
                 - if own? file
                   li
-                    a href=datastore_edit_path(file.path) title='Edit file metadata'
+                    a.hint--bottom.btn-move aria-label='Cut' href='javascript:;'
+                      i.fa.fa-scissors
+                  li
+                    a.hint--bottom href=datastore_edit_path(file.path) aria-label='Edit file metadata'
                       i.fa.fa-pencil
                   li
-                    a.btn-trash href='javascript:void(0);' title='Delete this file'
+                    a.hint--bottom.btn-trash href='javascript:void(0);' aria-label='Delete this file'
                       i.fa.fa-trash-o
 
                 - unless file.directory?
                   li
-                    a href=datastore_download_path(file.path, uid: params[:uid]) title='Download this file'
+                    a.hint--bottom href=datastore_download_path(file.path, uid: params[:uid]) aria-label='Download this file'
                       i.fa.fa-download
   - else
     .empty-placeholder
       p This folder is empty...
-      a href=datastore_upload_path(@meta.path) target='_blank'
+      a.hint--bottom href=datastore_upload_path(@meta.path) target='_blank'
         i.fa.fa-cloud-upload>
         | Upload

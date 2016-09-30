@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
     put '/clear/-/(*path)', action: 'clear', as: :clear, constraints: { :path => /.*/ }
     patch :mkdir
+    patch :cp
     patch :mv
     delete :trash
 
@@ -48,6 +49,9 @@ Rails.application.routes.draw do
 
     get :filetree
 
+    get :fileselector
+    get :dirselector
+
     match 'upload/-/(*dir)', action: 'upload', as: 'upload', constraints: { :path => /.*/ }, via: [:get, :post]
     get 'download/-/(*path)', action: 'download', as: 'download', constraints: { :path => /.*/ }
     get 'image/-/(*path)', action: 'image', as: 'image', constraints: { :path => /.*/ }
@@ -57,7 +61,7 @@ Rails.application.routes.draw do
   resource :workspace do
     get 'load/:id', action: :load, as: :load
     get 'merge/:id', action: :merge, as: :merge
-    get 'fileselector'
+
     post :run
   end
 

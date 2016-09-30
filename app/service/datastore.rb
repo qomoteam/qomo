@@ -35,8 +35,20 @@ class Datastore
     FileUtils.rmtree apath(dirpath)
   end
 
+  def cp(src, dest)
+    src = apath(src)
+    dest = apath(dest)
+    if File.dirname(src) != File.absolute_path(dest)
+      FileUtils.cp_r src, dest
+    end
+  end
+
   def mv!(src, dest)
-    FileUtils.move apath(src), apath(dest)
+    src = apath(src)
+    dest = apath(dest)
+    if File.dirname(src) != File.absolute_path(dest)
+      FileUtils.move src, dest
+    end
   end
 
   def save!(path, file)

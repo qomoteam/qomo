@@ -26,6 +26,9 @@ class Filerecord < ApplicationRecord
     return false
   end
 
+  def name
+    File.basename self.path
+  end
 
   def meta
     Datastore.new(owner.id, Config.dir_users).get(path)
