@@ -4,6 +4,12 @@ class Filerecord < ApplicationRecord
 
   after_destroy :santize
 
+  before_update :update_subrecords
+
+  def self.subrecords(path, owner_id)
+    where("path LIKE :path_like AND owner_id=:owner_id", {path_like: "#{path}/%", owner_id: owner_id})
+  end
+
   def self.library
     libs = self.where(shared: true, owner: User.find_by_username(Config.admin.username)).order(:path).to_a
     libs = libs.delete_if do |lib|
@@ -16,7 +22,7 @@ class Filerecord < ApplicationRecord
   end
 
   def self.destroy_subrecords(path, owner_id)
-    Filerecord.where("path LIKE :path_like AND owner_id=:owner_id", {path_like: "#{path}%", owner_id: owner_id}).destroy_all
+    subrecords(path, owner_id).destroy_all
   end
 
 
@@ -44,6 +50,13 @@ class Filerecord < ApplicationRecord
 
   def santize
     Filerecord.destroy_subrecords self.path, self.owner.id
+  end
+
+  def update_subrecords
+    Filerecord.subrecords(self.path_was, self.owner.id).each do |record|
+      record.path = self.path + record.path[self.path_was.length..-1]
+      record.save
+    end
   end
 
 end

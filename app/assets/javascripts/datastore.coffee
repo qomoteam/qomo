@@ -10,7 +10,7 @@ Datastore =
       data:
         path: path
       success: ->
-        Datastore.reload_files()
+        Datastore.goto(path)
       error: ->
         console.debug 'a'
 

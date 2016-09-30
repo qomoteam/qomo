@@ -56,14 +56,16 @@ class DatastoreController < ApplicationController
     dirname = dirname == '.' ? '' : dirname+'/'
     new_path = dirname+params[:file_name]
 
-    if @meta.name != params[:file_name]
-      datastore.mv! path, new_path
-    end
-
     @record = @meta.record
+    @record.save unless @record.id
+
     @record.path = new_path
     @record.desc = params[:description]
     @record.save
+
+    if @meta.name != params[:file_name]
+      datastore.mv! path, new_path
+    end
 
     redirect_to datastore_edit_path(new_path)
   end
