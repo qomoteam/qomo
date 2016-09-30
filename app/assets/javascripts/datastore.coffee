@@ -59,7 +59,7 @@ Datastore =
     window.location.href = Routes.datastore path: path
 
 path_of_row = (el) ->
-  $(el).parents('tr').data('path')
+  $(el).parents('tr').data('path') || $(el).parents('.nav-toolbar').data('path')
 
 within 'datastore', 'show, edit', ->
   $('.shared-toggle').change ->

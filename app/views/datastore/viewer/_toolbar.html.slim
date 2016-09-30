@@ -1,4 +1,4 @@
-#nav-datastore.nav-toolbar
+#nav-datastore.nav-toolbar data-path=@meta.path
   .primary
     = render 'datastore/viewer/breadcrumb'
 
@@ -25,9 +25,9 @@
 
       .aui-buttons
         - unless @meta.root?
-          button.aui-button.hint--bottom aria-label='Copy'
+          button.aui-button.hint--bottom.btn-copy aria-label='Copy'
             i.fa.fa-files-o
-          button.aui-button.hint--bottom aria-label='Cut'
+          button.aui-button.hint--bottom.btn-move aria-label='Cut'
             i.fa.fa-scissors
 
       - if @meta.directory?
