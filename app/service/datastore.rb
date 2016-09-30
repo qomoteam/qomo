@@ -35,12 +35,15 @@ class Datastore
     FileUtils.rmtree apath(dirpath)
   end
 
+  # Copy the `src` to `dest` dir
   def cp(src, dest)
     src = apath(src)
     dest = apath(dest)
-    if File.dirname(src) != File.absolute_path(dest)
-      FileUtils.cp_r src, dest
+    if File.dirname(src) == File.absolute_path(dest)
+      dest = File.join(dest, "Copy_of_#{File.basename(src)}")
     end
+    FileUtils.cp_r src, dest
+    dest
   end
 
   def mv!(src, dest)
