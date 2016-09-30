@@ -1,42 +1,40 @@
-#nav-datastore.aui-toolbar2 role='toolbar'
-  .aui-toolbar2-inner
-    .aui-toolbar2-group
-      .aui-toolbar2-primary
-        = render 'datastore/viewer/breadcrumb'
+#nav-datastore.nav-toolbar
+  .primary
+    = render 'datastore/viewer/breadcrumb'
 
-      .aui-toolbar2-secondary
-        - if own? @meta
-          - if @meta.directory?
-            .aui-buttons
-              a.aui-button.hint--bottom href=datastore_upload_path(@meta.path) target='_blank' aria-label='Upload new file to this folder'
-                i.fa.fa-cloud-upload>
-                | Upload
-              button.aui-button.btn-mkdir
-                i.fa.fa-folder-o>
-                | New Folder
+  .secondary
+    - if own? @meta
+      - if @meta.directory?
+        .aui-buttons
+          a.aui-button.hint--bottom href=datastore_upload_path(@meta.path) target='_blank' aria-label='Upload new file to this folder'
+            i.fa.fa-cloud-upload>
+            | Upload
+          button.aui-button.btn-mkdir
+            i.fa.fa-folder-o>
+            | New Folder
 
-          .aui-buttons
-            a.aui-button.hint--bottom href=datastore_path(parent_dir(@meta.path)) aria-label='Go to parent folder'
-              .aui-icon.aui-icon-small.aui-iconfont-up
-            button.aui-button.btn-go Go to ...
+      .aui-buttons
+        a.aui-button.hint--bottom href=datastore_path(parent_dir(@meta.path)) aria-label='Go to parent folder'
+          .aui-icon.aui-icon-small.aui-iconfont-up
+        button.aui-button.btn-go Go to ...
 
-          - unless @meta.root?
-            .aui-buttons
-              a.aui-button.hint--bottom href=datastore_edit_path(@meta.path) aria-label=='Edit file metadata'
-                i.fa.fa-pencil
+      - unless @meta.root?
+        .aui-buttons
+          a.aui-button.hint--bottom href=datastore_edit_path(@meta.path) aria-label=='Edit file metadata'
+            i.fa.fa-pencil
 
-          .aui-buttons
-            - unless @meta.root?
-              button.aui-button.hint--bottom aria-label='Copy'
-                i.fa.fa-files-o
-              button.aui-button.hint--bottom aria-label='Cut'
-                i.fa.fa-scissors
+      .aui-buttons
+        - unless @meta.root?
+          button.aui-button.hint--bottom aria-label='Copy'
+            i.fa.fa-files-o
+          button.aui-button.hint--bottom aria-label='Cut'
+            i.fa.fa-scissors
 
-          - if @meta.directory?
-            .aui-buttons
-              a.aui-button.hint--bottom.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' aria-label='Delete empty folder in current path'
-                | Clear Empty Folders
+      - if @meta.directory?
+        .aui-buttons
+          a.aui-button.hint--bottom.clear-job-dirs href=datastore_clear_path(@meta.path) data-method='PUT' aria-label='Delete empty folder in current path'
+            | Clear Empty Folders
 
-        - unless @meta.directory?
-          a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
-            i.fa.fa-download
+    - unless @meta.directory?
+      a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
+        i.fa.fa-download
