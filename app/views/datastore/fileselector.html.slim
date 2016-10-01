@@ -5,11 +5,13 @@ form.aui
 
   .aui-tabs.horizontal-tabs
     ul.tabs-menu
-      li.menu-item.active-tab
+      li.menu-item class=(@active[:myfiles] ? 'active-tab' : '')
         a href="#myfiles-tab" My Files
-      li.menu-item
+      li.menu-item class=(@active[:library] ? 'active-tab' : '')
         a href="#library-tab" Library
-    #myfiles-tab.tabs-pane.active-pane
+
+    #myfiles-tab.tabs-pane class=(@active[:myfiles] ? 'active-pane' : '')
       .tree data-url=datastore_filetree_path
-    #library-tab.tabs-pane
+
+    #library-tab.tabs-pane class=(@active[:library] ? 'active-pane' : '')
       .tree data-url=library_filetree_path

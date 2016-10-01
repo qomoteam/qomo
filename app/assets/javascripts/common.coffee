@@ -116,7 +116,7 @@ window.App =
   bindFileSelector: (e)->
     $e = $(e)
     window.filetree = null
-    $.get Routes.datastore_fileselector(), (fileselector) ->
+    $.get Routes.datastore_fileselector(selected: $e.val()), (fileselector) ->
       $e.click ->
         did = App.guid()
         dia = dialog
@@ -146,7 +146,8 @@ window.App =
                 data:
                   url: url
                   data: (node) ->
-                    'dir' : if node.id == '#' then '' else node.id
+                    dir : if node.id == '#' then '' else node.id
+                    selected: $e.val()
             ).on 'changed.jstree', (je, e) ->
               # Use comma to seqerate multiple inputs
               $(document.getElementById("content:#{did}")).find('.path').val e.selected.join(',')

@@ -183,16 +183,7 @@ class DatastoreController < ApplicationController
       @dir = params['dir'] || ''
       @files = datastore.list @dir
 
-      files_tree = @files.reject { |e| params[:only_dir] and !e.directory? }.collect do |e|
-        {
-            text: e.name,
-            id: e.path,
-            children: e.directory?,
-            #TODO remove frontend html class
-            icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o',
-            type: e.directory? ? 'dir' : 'file'
-        }
-      end.sort_by { |e| [e[:type], e[:text].downcase] }
+      files_tree = jstree_response(@dir, params[:only_dir], params[:selected])
 
       if params[:only_dir] and @dir == ''
         files_tree = [{
@@ -212,11 +203,45 @@ class DatastoreController < ApplicationController
 
 
   def fileselector
+    @active = {}
+    if params[:selected].start_with? '@'
+      @active[:library] = true
+    else
+      @active[:myfiles] = true
+    end
     render layout: nil
   end
 
   def dirselector
     render layout: nil
   end
+
+
+  private
+
+  def jstree_response(path, only_dir, selected)
+    files = datastore.list path
+    files.reject { |e| only_dir and !e.directory? }.collect do |e|
+      children = e.directory?
+      state = {}
+
+      if selected == e.path
+        state = {selected: true}
+      elsif selected.starts_with?(e.path) and e.directory?
+        children = jstree_response(e.path, only_dir, selected)
+        state = {opened: true}
+      end
+      {
+          text: e.name,
+          id: e.path,
+          children: children,
+          state: state,
+          #TODO remove frontend html class
+          icon: e.directory? ? 'fa fa-folder' : 'fa fa-file-o',
+          type: e.directory? ? 'dir' : 'file'
+      }
+    end.sort_by { |e| [e[:type], e[:text].downcase] }
+  end
+
 
 end
