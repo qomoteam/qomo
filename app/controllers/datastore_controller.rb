@@ -227,10 +227,11 @@ class DatastoreController < ApplicationController
 
       if selected == e.path
         state = {selected: true}
-      elsif selected.starts_with?(e.path) and e.directory?
+      elsif !only_dir and selected.starts_with?(e.path) and e.directory?
         children = jstree_response(e.path, only_dir, selected)
         state = {opened: true}
       end
+
       {
           text: e.name,
           id: e.path,
