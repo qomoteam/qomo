@@ -53,6 +53,9 @@ class JobEngine
 
     #Copy output param to input param for connected tools
     dg = RGL::DirectedAdjacencyGraph.new
+    boxes.each do |bid, _|
+      dg.add_vertex bid
+    end
     conns.each do |e|
       dg.add_edge e['sourceId'], e['targetId']
 
@@ -127,12 +130,8 @@ class JobEngine
 
     ordere_units = dg.topsort_iterator.to_a
 
-    if ordere_units.length == 0
-      ordere_units = units.values
-    else
-      ordere_units = ordere_units.collect do |e|
-        units[e]
-      end
+    ordere_units = ordere_units.collect do |e|
+      units[e]
     end
 
     # Persist to DB and submit to job engine only when everything is OK
