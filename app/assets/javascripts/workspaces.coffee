@@ -457,7 +457,6 @@ remove_toolbox = ($box)->
   for connection, i in connections
     continue unless connection
     if bid == connection.sourceId
-      console.debug connection
       $("\##{connection.targetId}").find("input[name=#{connection.targetParamName}]").val('').prop 'disabled', false
 
     if bid in [connection.sourceId, connection.targetId]
@@ -688,7 +687,7 @@ within 'workspaces', 'show', ->
                   hparam = result.errors[0].param
                   highlight_box(hboxId)
               error: (data) ->
-                alert("Pipeline has an error: #{data.content}")
+                notie.alert(3, 'Error occured when launch job')
       false
 
 
@@ -705,7 +704,6 @@ within 'workspaces', 'show', ->
       q = this.value.toLowerCase()
       hl = _.each $('#tools-selector a.tool-link'), (toollink) ->
         if toollink.textContent.toLowerCase().indexOf(q) == -1
-          console.debug $(toollink).parents('li')
           $(toollink).parent().hide()
         else
           $(toollink).parent().show()
@@ -713,7 +711,6 @@ within 'workspaces', 'show', ->
 
     $(document).on 'click', '.delete-job-summary', ->
       self = this
-      console.debug self.href
       notie.confirm 'Are you sure want to delete this job?', 'Yes', 'Cancel', ->
         $.ajax
           url: self.href

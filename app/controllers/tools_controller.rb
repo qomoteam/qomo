@@ -23,7 +23,7 @@ class ToolsController < ApplicationController
 
     @tool.save
     @tool.copy_upload!
-    redirect_to action: 'edit', id: @tool.id
+    redirect_to edit_tool_path(@tool)
   end
 
 
@@ -42,7 +42,8 @@ class ToolsController < ApplicationController
 
     tool.update params.require(:tool).permit!
     tool.copy_upload!
-    redirect_to action: 'edit', id: tool.id
+    puts 1
+    redirect_to edit_tool_path(tool)
   end
 
 

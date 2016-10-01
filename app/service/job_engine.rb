@@ -73,56 +73,44 @@ class JobEngine
       pvalues = v['values']
 
       # Validate all params are set correctly (not null, etc.)
-      tool.params.each do |te|
-        pv = pvalues[te['name']]
-        if pv.blank?
-          result[:success] = false
-          result[:errors] << {box_id: k, param: te['name'], msg: 'need value to be set'}
-        end
-      end
-
-      rendered_params = {}
-      pvalues.each do |ka, va|
-        if va.kind_of? Array
-          separator = ','
-          tool.params.each do |p|
-            # TODO no palce to set `separator` in web UI
-            separator = p['separator'] || separator if p['name'] == ka
+      rendered_params = tool.params.collect do |param_def|
+        param_name = param_def['name']
+        param_value = pvalues[param_name]
+        if param_value.blank?
+          unless param_def['nullable'] or param_def['type'] == 'output'
+            result[:success] = false
+            result[:errors] << {box_id: k, param: param_def['label'], msg: 'need value to be set'}
           end
-          va = va.join separator
-        end
-
-        #TODO check this and rename variable `e`
-        e = tool.params.find { |e| e['name'] == ka }
-        if e
-          case e['type']
+          param_value = nil
+        else
+          separator = param_def['separator'] || ','
+          case param_def['type']
             when 'input'
-              va = va.split ','
-              va = va.collect do |ev|
-                if ev.start_with? '@'
-                  username = ev[1, ev.index(':')-1]
+              param_value = param_value.split(separator).collect do |path|
+                if path.start_with? '@'
+                  username = path[1, path.index(':')-1]
                   user = User.find_by username: username
                   # TODO: Remove this ugly implementation
                   ud = Datastore.new user.id, Config.dir_users
-                  ev = ud.apath ev[ev.index(':')+1 .. -1]
+                  path = ud.apath path[path.index(':')+1 .. -1]
                 else
-                  ev = @datastore.apath ev
+                  path = @datastore.apath path
                 end
-                ev
-              end
-
-              va = va.join ','
+                path
+              end.join(separator)
 
             when 'output'
-              va = @datastore.apath va
+              param_value = @datastore.apath param_value
             when 'tmp'
-              va = @datastore.apath "#{tmpdir}/#{unit_id}"
+              param_value = @datastore.apath "#{tmpdir}/#{unit_id}"
             else
               # No-op
           end
         end
-        rendered_params[ka] = va
+        [param_name, param_value]
       end
+
+      rendered_params = Hash[*rendered_params.flatten]
 
       command = inject_param command, rendered_params
       units[k] = {id: unit_id, tool_id: tool.id, params: tool.params, command: command, wd: tool.dirpath, env: env}

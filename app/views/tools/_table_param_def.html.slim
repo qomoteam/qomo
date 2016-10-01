@@ -6,7 +6,9 @@ table.param-def
       td.label width='100px' Param Name
       td
         input type='text' name='tool[params][][name]' value=param['name']
-      td.label width='100px' Param Label
+      td.label width='100px'
+        - if param['type'] != 'tmp'
+          | Param Label
       td
         - if param['type'] != 'tmp'
           input type='text' name='tool[params][][label]' value=param['label']
@@ -17,9 +19,14 @@ table.param-def
           = options_for_select %w[input string bool select path output tmp].map { |e| [e.humanize, e] }, selected: param['type']
       td.label Default Value
       td.defautl-value-td = render partial: "tools/param_#{param['type']}", locals: {param: param}
+      td
+        - unless param['type'] == 'output' or param['type'] == 'tmp'
+          label
+            ' Nullable
+            input type='checkbox' name='tool[params][][nullable]' checked=param['nullable'] value='true'
     tr
-      td.label Description
-      td colspan=3
+      td.label = param['nullable']
+      td colspan=4
         textarea rows=4 name='tool[params][][desc]' = param['desc']
 
 

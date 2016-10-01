@@ -12,7 +12,6 @@ Datastore =
       success: ->
         Datastore.goto(path)
       error: ->
-        console.debug 'a'
 
   cp: (src, dest) ->
     App.freeze_canvas()

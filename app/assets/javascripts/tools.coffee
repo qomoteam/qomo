@@ -21,7 +21,6 @@ within 'tools', 'new, edit', ->
     if $options.is(':visible')
       $options.hide()
     else
-      console.debug $options
       offset = $(this).position()
       width = $(this).outerWidth()
       height = $(this).outerHeight()
