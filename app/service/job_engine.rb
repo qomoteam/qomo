@@ -83,10 +83,14 @@ class JobEngine
           end
           param_value = nil
         else
-          separator = param_def['separator'] || ','
+          if param_def['multiple'] and (not param_value.kind_of? Array)
+            param_value = [param_value]
+          end
+
           case param_def['type']
             when 'input'
-              param_value = param_value.collect do |path|
+              separator = param_def['separator'] || ','
+              param_value = param_value.split(separator).collect do |path|
                 if path.start_with? '@'
                   username = path[1, path.index(':')-1]
                   user = User.find_by username: username
