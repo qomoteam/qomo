@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928104123) do
+ActiveRecord::Schema.define(version: 20161008021248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20160928104123) do
     t.integer  "cached_weighted_score",   default: 0
     t.integer  "cached_weighted_total",   default: 0
     t.float    "cached_weighted_average", default: 0.0
+    t.integer  "featured",                default: 0
     t.index ["cached_votes_down"], name: "index_pipelines_on_cached_votes_down", using: :btree
     t.index ["cached_votes_score"], name: "index_pipelines_on_cached_votes_score", using: :btree
     t.index ["cached_votes_total"], name: "index_pipelines_on_cached_votes_total", using: :btree
@@ -93,6 +94,7 @@ ActiveRecord::Schema.define(version: 20160928104123) do
     t.index ["cached_weighted_average"], name: "index_pipelines_on_cached_weighted_average", using: :btree
     t.index ["cached_weighted_score"], name: "index_pipelines_on_cached_weighted_score", using: :btree
     t.index ["cached_weighted_total"], name: "index_pipelines_on_cached_weighted_total", using: :btree
+    t.index ["featured"], name: "index_pipelines_on_featured", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -123,7 +125,9 @@ ActiveRecord::Schema.define(version: 20160928104123) do
     t.datetime "updated_at"
     t.text     "desc"
     t.integer  "tech_id"
+    t.integer  "featured",     default: 0
     t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
+    t.index ["featured"], name: "index_tools_on_featured", using: :btree
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree
     t.index ["owner_id"], name: "index_tools_on_owner_id", using: :btree
   end

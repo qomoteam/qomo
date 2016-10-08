@@ -75,6 +75,7 @@ Rails.application.routes.draw do
       post :asset_mkexe
       get :asset_download
       post :asset_delete
+      patch :toogle_featured
     end
   end
 
@@ -87,6 +88,7 @@ Rails.application.routes.draw do
       get :import
       patch :share
       patch :unshare
+      patch :toogle_featured
       get :export
       post :run
       post :star

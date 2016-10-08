@@ -9,6 +9,7 @@ class Pipeline < ApplicationRecord
   default_scope -> { order('created_at DESC') }
 
   scope :shared, -> { where(shared: true).order(cached_votes_score: :desc) }
+  scope :featured, -> { where('featured>?', 0).where(shared: true).order(featured: :desc) }
 
   def self.shared_count
     Pipeline.where(shared: true).count

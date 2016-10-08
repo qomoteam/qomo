@@ -160,6 +160,22 @@ class PipelinesController < ApplicationController
   end
 
 
+  def toogle_featured
+    unauthorized unless current_user.has_role? :admin
+
+    pipeline = Pipeline.find(params[:id])
+    if pipeline.featured == 0
+      pipeline.featured = 1
+    else
+      pipeline.featured = 0
+    end
+
+    pipeline.save
+
+    redirect_to pipeline_path(pipeline)
+  end
+
+
   def wrapping_json_param
     # In RAILS 5 we have to do this manully
     params[:pipeline][:boxes] = JSON.parse(params[:pipeline][:boxes]) if params[:pipeline][:boxes]

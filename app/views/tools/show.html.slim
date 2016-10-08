@@ -1,10 +1,19 @@
 .page-panel
-  h3
-    ' Tool: #{@tool.name}
+  .nav-toolbar
+    .primary
+      h3 Tool: #{@tool.name}
+    .secondary
+      - if @tool.owner == current_user
+        .aui-buttons
+          a.aui-button href=edit_tool_path(@tool) Edit
 
-    - if @tool.owner == current_user
-      a href=edit_tool_path(@tool)
-        i.fa.fa-pencil-square-o
+      - if current_user.has_role? :admin
+        .aui-buttons
+          - if @tool.featured == 0
+            - flabel = 'Featured'
+          - else
+            - flabel = 'Unfeatured'
+          a.aui-button data-method='patch' href=toogle_featured_tool_path(@tool) = flabel
 
   table.aui.def
     tr

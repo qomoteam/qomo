@@ -8,6 +8,8 @@ class Tool < ApplicationRecord
   before_destroy :rmdir
   before_save :sanitize
 
+  scope :featured, -> { where('featured>?', 0).where(status: 1).order(featured: :desc) }
+
   enum status: {
       inactive: 0,
       active: 1

@@ -117,4 +117,19 @@ class ToolsController < ApplicationController
     render json: {success: true}
   end
 
+  def toogle_featured
+    unauthorized unless current_user.has_role? :admin
+
+    tool = Tool.find(params[:id])
+    if tool.featured == 0
+      tool.featured = 1
+    else
+      tool.featured = 0
+    end
+
+    tool.save
+
+    redirect_to tool_path(tool)
+  end
+
 end
