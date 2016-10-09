@@ -18,7 +18,7 @@
           a.aui-button href=edit_pipeline_path(@pipeline) Edit
           a.aui-button href=pipeline_path(@pipeline) data-method='delete' data-confirm='Are you sure want to delete this pipeline?' Delete
 
-      - if current_user.has_role? :admin
+      - if current_user&.has_role? :admin
         .aui-buttons
           - if @pipeline.featured == 0
             - flabel =  'Featured'
