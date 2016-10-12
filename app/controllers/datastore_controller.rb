@@ -143,6 +143,7 @@ class DatastoreController < ApplicationController
     render json: {success: true}
   end
 
+
   def cp
     datastore.cp params[:src].strip, params[:dest].strip
     render json: {success: true}
@@ -214,6 +215,14 @@ class DatastoreController < ApplicationController
 
   def dirselector
     render layout: nil
+  end
+
+
+  def search
+    q = params[:q]
+    @meta = datastore.get path
+    @files = datastore.search(path, q)
+    render 'datastore/viewer/directory'
   end
 
 

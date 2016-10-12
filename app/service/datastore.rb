@@ -66,6 +66,11 @@ class Datastore
     path[@home.length+1..-1]
   end
 
+  def search(path, q)
+    spath = apath(path, '**', "*#{q}*")
+    Dir.glob(spath, File::FNM_CASEFOLD).collect {|e| filemeta(e)}
+  end
+
   def filemeta(abs_path)
     if File.directory?(abs_path)
       kind = :directory
@@ -79,6 +84,7 @@ class Datastore
     end
     size = File.size(abs_path)
     is_rdout = false
+    # There is a '_SUCCESS' file located in Hadoop output directory
     if kind == :directory and File.exist?(File.join abs_path, '_SUCCESS')
       is_rdout = :true
       extname = File.extname(abs_path)

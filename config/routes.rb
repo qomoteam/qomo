@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
     put '/clear/-/(*path)', action: 'clear', as: :clear, constraints: { :path => /.*/ }
+
+    post :search
     patch :mkdir
     patch :cp
     patch :mv

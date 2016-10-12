@@ -59,7 +59,10 @@
                       i.fa.fa-download
   - else
     .empty-placeholder
-      p This folder is empty...
-      a href=datastore_upload_path(@meta.path) target='_blank'
-        i.fa.fa-cloud-upload>
-        | Upload
+      - if params[:action] == 'search'
+        p No matching result
+      - else
+        p This folder is empty...
+        a href=datastore_upload_path(@meta.path) target='_blank'
+          i.fa.fa-cloud-upload>
+          | Upload

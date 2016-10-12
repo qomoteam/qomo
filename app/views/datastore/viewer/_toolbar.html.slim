@@ -3,6 +3,13 @@
     = render 'datastore/viewer/breadcrumb'
 
   .secondary
+    - if @meta.directory?
+      = form_tag datastore_search_path, method: 'post', class: 'quicksearch aui' do
+        = hidden_field_tag 'path', @meta.path
+        input autocomplete="off" placeholder='Find a file...' type='text' name='q' value=params[:q]
+        button.aui-button
+          i.fa.fa-search
+
     - if own? @meta
       - if @meta.directory?
         .aui-buttons

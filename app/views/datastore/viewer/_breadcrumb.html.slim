@@ -1,4 +1,6 @@
 ol.aui-nav.aui-nav-breadcrumbs.nav-path
+  - if params[:action] == 'search'
+    li Search
   - if params[:uid]
     li: a href=library_path Library
   - else
