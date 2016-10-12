@@ -70,7 +70,7 @@
         = hidden_field_tag :pipelinevalues, ''
         .field-group
           label Job Name
-          input.text.long-field name='jobName' value="#{@pipeline.title} #{Time.now.hour}#{Time.now.min}"
+          input.text.long-field name='jobName' value="#{@pipeline.title} #{Time.now.hour}#{Time.now.min}#{Time.now.sec}"
 
         h5 Params:
         - for p in @pipeline.params_ui
