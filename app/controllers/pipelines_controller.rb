@@ -63,7 +63,9 @@ class PipelinesController < ApplicationController
       @pipeline = @pipeline.export_to_user(current_user)
     end
     values = JSON.parse params[:pipelinevalues]
-    result = current_user.job_engine.submit params[:jobName], @pipeline.merge_params(values), @pipeline.connections
+
+    job_name = params[:job_name] || "#{@pipeline.title} #{Time.now.hour}#{Time.now.min}#{Time.now.sec}"
+    result = current_user.job_engine.submit job_name, @pipeline.merge_params(values), @pipeline.connections
 
     if result[:success]
       redirect_to job_path(result[:job_id])
