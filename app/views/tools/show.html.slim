@@ -39,8 +39,18 @@
       td Maintainer
       td = user_tag @tool.owner
 
-    - unless @tool.usage.blank?
+    tr
+      td Introduction
+      td
+        .paragraph == @tool.introduction
+
+    tr
+      td Publications
+      td
+        .paragraph == @tool.publications
+
+    - unless @tool.manual.blank?
       tr
-        td Usage
+        td Manual
         td
-          .paragraph == @tool.usage
+          .paragraph == @tool.manual

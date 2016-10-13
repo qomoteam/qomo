@@ -9,9 +9,7 @@
             li.aui-nav-selected Edit
           - else
             li.aui-nav-selected New
-      .secondary
-        .aui-buttons
-          = f.submit class: 'aui-button aui-button-primary'
+
     .aui-group
       .aui-item
         h4
@@ -61,11 +59,23 @@
               = f.label :command
               = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '6'
 
+            .field-group
+              = f.label :introduction
+              = f.text_area :introduction, placeholder: 'Introduction for your tool', class: 'textarea full-width-field tinymce', rows: '10'
+
+            .field-group
+              = f.label :publications
+              = f.text_area :publications, placeholder: 'Publications and citation for your tool', class: 'textarea full-width-field tinymce', rows: '5'
+
+            .field-group
+              = f.label :manual
+              = f.text_area :manual, placeholder: 'Details about this tool', class: 'textarea full-width-field tinymce', rows: '20'
+
+            .buttons-container
+              .buttons
+                = f.submit 'Save', class: 'aui-button aui-button-primary'
 
       .aui-item style='width: 40%'
-        h4 Usage
-        = f.text_area :usage, placeholder: 'Details about this tool. References are recommended to be included.', class: 'textarea full-width-field tinymce', rows: '20'
-
         h4 Tool Assets
         = f.file_field :upload, class: 'upfile'
         small.tip Notice: If you upload a zip (*.zip) file, it will be unziped automatically
