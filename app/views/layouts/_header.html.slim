@@ -1,11 +1,12 @@
 nav#header.aui-header.aui-dropdown2-trigger-group data-aui-responsive="true" role="navigation"
   .aui-header-primary
     h1#logo.aui-header-logo.aui-header-logo-textonly
+      a.bigd-logo href='http://bigd.big.ac.cn/' target='_blank'
+        = image_tag 'bigd-logo.png'
       a href=root_url
         span.aui-header-logo-device Qomo
-      .version
-        ' Version:
-        = revision_tag
+      .subtitle = '/* on the cloud */'
+
 
     ul.aui-nav
       li

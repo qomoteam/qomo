@@ -11,11 +11,13 @@
 @import font-awesome
 @import bourbon
 
+$topnav_color: #0c64b6
+
 *:focus
   outline: none !important
 
 body
-  min-width: 1100px
+  min-width: 1250px
 
 table
   table-layout: fixed
@@ -42,8 +44,11 @@ tr.empty td
 
 #header
   float: none
-  .aui-nav a.active
-    background-color: #406091
+  background-color: $topnav_color
+  border-bottom-color: $topnav_color
+  .aui-nav
+    a.active
+      background-color: #0154a6
     color: #C8E4FF
 
 .clearfix
@@ -51,13 +56,19 @@ tr.empty td
 
 #logo
   margin-right: 2em
-  .version
+  .bigd-logo
+    padding: 0
+    margin-right: 5px
+    &:hover, &:active
+      background-color: $topnav_color
+  .subtitle
     float: left
     color: honeydew
-    font-size: 10px
+    font-size: 11px
+    font-style: italic
     height: 40px
     line-height: 50px
-    margin-left: 10px
+    margin-left: 2px
 
 fieldset.section
   legend
