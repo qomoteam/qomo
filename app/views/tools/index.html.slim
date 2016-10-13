@@ -7,7 +7,6 @@
         a.aui-button.aui-button-primary.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
 
   - if @tools.count > 0
-
     table.aui
       thead
         tr
@@ -18,7 +17,7 @@
       tbody
         - for tool in @tools
           tr
-            td: a href=tool_path(tool) = tool.name
+            td: a href=user_tool_path(tool.owner.username, tool.name) = tool.name
             td = tool.category.name
             td.nowrap title=tool.desc = tool.desc
             td

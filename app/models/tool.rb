@@ -26,6 +26,11 @@ class Tool < ApplicationRecord
     Tool.active.count
   end
 
+
+  def active?
+    self.status == 1
+  end
+
   def rmdir
     FileUtils.rmtree self.dirpath
   end

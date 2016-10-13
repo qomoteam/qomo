@@ -41,10 +41,10 @@
         tr
           td Permalink
           td
-            a href=pipeline_path(@pipeline) = pipeline_url @pipeline
+            a href=user_pipeline_url(@pipeline.owner.username, @pipeline.title) = user_pipeline_url @pipeline.owner.username, @pipeline.title
         tr
           td Citation
-          td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_url @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
+          td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{user_pipeline_url @pipeline.owner.username, @pipeline.title} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
         tr
           td Created At
           td = ptime @pipeline.created_at, current_user.try(:timezone)

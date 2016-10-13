@@ -75,7 +75,16 @@ class ToolsController < ApplicationController
 
 
   def show
-    @tool = Tool.find params['id']
+    if params[:user_id]
+      user = User.find_by_username params[:user_id]
+      not_found unless user
+      @tool = Tool.find_by_owner_id_and_name user.id, params['id']
+    else
+      @tool = Tool.find params['id']
+    end
+
+    not_found unless @tool
+    unauthorized unless @tool.active? or @tool.owner == current_user
   end
 
 

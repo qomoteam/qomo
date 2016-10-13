@@ -5,7 +5,7 @@
         ol.aui-nav.aui-nav-breadcrumbs
           li: a href=tools_path Tools
           - if @tool.id
-            li: a href=tool_path(@tool) = @tool.name
+            li: a href=user_tool_path(@tool.owner.username, @tool.name) = @tool.name
             li.aui-nav-selected Edit
           - else
             li.aui-nav-selected New

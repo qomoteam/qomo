@@ -17,24 +17,28 @@
 
   table.aui.def
     tr
-      td width='100px' Title
+      td width='100px' Name
       td  = @tool.name
     tr
       td Permalink
       td
-        a href=tool_path(@tool) = tool_url @tool
+        a href=user_tool_url(@tool.owner.username, @tool.name) = user_tool_url @tool.owner.username, @tool.name
     tr
       td Contributors
       td == contributors_tag @tool.contributors
     tr
-      td Citation
-      td #{contributors_tag @tool.contributors, false} Tool: "#{@tool.name}" in Qomo, available at #{tool_url @tool} (Last update: #{ptime @tool.updated_at, current_user.try(:timezone)})
+      - if @tool.publications.blank?
+        td Citation
+        td #{contributors_tag @tool.contributors, false} Tool: "#{@tool.name}" in Qomo, available at #{user_tool_url @tool.owner.username, @tool.name} (Last update: #{ptime @tool.updated_at, current_user.try(:timezone)})
+      - else
+        td Publications
+        td: .paragraph == @tool.publications
     tr
       td Created At
-      td = ptime @tool.created_at, current_user.try(:timezone)
+      td = ptime2 @tool.created_at
     tr
       td Updated At
-      td = ptime @tool.updated_at, current_user.try(:timezone)
+      td = ptime2 @tool.updated_at
     tr
       td Maintainer
       td = user_tag @tool.owner
@@ -43,11 +47,6 @@
       td Introduction
       td
         .paragraph == @tool.introduction
-
-    tr
-      td Publications
-      td
-        .paragraph == @tool.publications
 
     - unless @tool.manual.blank?
       tr

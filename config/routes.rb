@@ -110,8 +110,11 @@ Rails.application.routes.draw do
   resources :filemetas
 
 
-  namespace :users do
-    resource :profile, :setting
+  resources :users do
+    collection do
+      resource :profile, :setting
+    end
+    resources :pipelines, :tools
   end
 
 

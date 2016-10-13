@@ -77,10 +77,17 @@ class PipelinesController < ApplicationController
 
 
   def show
-    @pipeline = Pipeline.find params['id']
-    if !@pipeline.shared and @pipeline.owner != current_user
-      unauthorized
+    if params[:user_id]
+      user = User.find_by_username params[:user_id]
+      not_found unless user
+      @pipeline = Pipeline.find_by_owner_id_and_title user.id, params['id']
+    else
+      @pipeline = Pipeline.find params['id']
     end
+
+    not_found unless @pipeline
+    unauthorized unless @pipeline.shared or @pipeline.owner == current_user
+
     respond_to do |format|
       format.html
       format.json do

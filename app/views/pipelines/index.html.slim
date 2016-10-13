@@ -15,7 +15,7 @@
         - for pipeline in @private_pipelines
           tr data-pid=pipeline.id
             td
-              a href=pipeline_path(pipeline) = pipeline.title
+              a href=user_pipeline_path(pipeline.owner.username, pipeline.title) = pipeline.title
             td = ptime pipeline.created_at, current_user.try(:timezone)
             td = shared_tag pipeline.shared
             td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}

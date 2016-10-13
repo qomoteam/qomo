@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013105703) do
+ActiveRecord::Schema.define(version: 20161013122106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 20161013105703) do
     t.text     "publications"
     t.integer  "download_count", default: 0
     t.string   "website"
+    t.string   "version"
     t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
     t.index ["featured"], name: "index_tools_on_featured", using: :btree
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree

@@ -17,7 +17,7 @@
               - for tool in c.tools.active
                 li
                   a.tool-link data-tid=tool.id href='#' = tool.name
-                  - unless tool.usage.blank?
+                  - unless tool.manual.blank?
                     a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
 
     ul
@@ -29,5 +29,5 @@
           - for tool in current_user.tools.inactive
             li
               a.tool-link data-tid=tool.id href='#' = tool.name
-              - unless tool.usage.blank?
+              - unless tool.manual.blank?
                 a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
