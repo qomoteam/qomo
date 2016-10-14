@@ -26,6 +26,11 @@
           i.fa.fa-clock-o
           | Joined on #{ptime2 @user.created_at}
 
+        - unless @user.homepage.blank?
+          li
+            i.fa.fa-globe
+            a.no-external-link href=@user.homepage target='_blank' = @user.homepage
+
       - if @user.bio.blank?
         .empty-placeholder
           p
