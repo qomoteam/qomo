@@ -161,4 +161,11 @@ class ToolsController < ApplicationController
     redirect_to tool_path(tool)
   end
 
+  # Return tags in Select2 JSON format
+  def tags
+    q = params[:q]
+    tags = ActsAsTaggableOn::Tag.where('name like ?', "#{q}%")
+    render json: tags.collect {|t| {id: t.name, text: t.name}}
+  end
+
 end

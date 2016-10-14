@@ -104,3 +104,31 @@ within 'tools', 'new, edit', ->
       $('.runtime-settings').fadeIn()
     else
       $('.runtime-settings').fadeOut()
+
+  $('input[name="tool[tag_list]"]').auiSelect2
+    tags: true
+    tokenSeparators: [',']
+    minimumInputLength: 1
+    multiple: true
+    initSelection: (e, callback) ->
+      data = []
+      $(e.val().split(',')).each ->
+        data.push
+          id: this
+          text: this
+      callback(data)
+    createSearchChoice: (term, data) ->
+      if ($(data).filter(-> this.text.localeCompare(term) == 0).length == 0)
+        {
+          id: term
+          text: term
+        }
+    ajax:
+      url: Routes.tags_tools()
+      dataType: 'json'
+      delay: 250
+      cache: true
+      data: (term) ->
+        q: term
+      results: (data) ->
+        results: data

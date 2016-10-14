@@ -15,15 +15,18 @@
             - flabel = 'Unfeatured'
           a.aui-button data-method='patch' href=toogle_featured_tool_path(@tool) = flabel
   .aui-group
-    .aui-item style='width:68%'
-      h3 Introduction
-      p.paragraph == @tool.introduction
+    .aui-item style='width:66%'
+      .section-separator
+        h3.section-separator-title Introduction
+      .paragraph == @tool.introduction
 
-      h3 Publications
-      p.paragraph == @tool.publications
+      .section-separator
+        h3.section-separator-title Publications
+      .paragraph == @tool.publications
 
-      h3 Manual
-      p.paragraph == @tool.manual
+      .section-separator
+        h3.section-separator-title Manual
+      .paragraph == @tool.manual
 
     .aui-item
       .panel
@@ -39,22 +42,29 @@
               td Version
               td = @tool.version
             tr
-              td Permalink
-              td
-                a href=user_tool_url(@tool.owner.username, @tool.name) = user_tool_url @tool.owner.username, @tool.name
-            tr
               td Contributors
               td == contributors_tag @tool.contributors
             tr
               td Website
               td
-                a href=@tool.website target='_blank' = @tool.website
+                - if @tool.website
+                  a href=@tool.website target='_blank' = @tool.website
+                - else
+                  a href=user_tool_url(@tool.owner.username, @tool.name) = user_tool_url @tool.owner.username, @tool.name
             tr
               td Created At
               td = ptime2 @tool.created_at
             tr
               td Updated At
               td = ptime2 @tool.updated_at
+
+      .panel
+        .panel-heading
+          h3.panel-title
+            | Tags
+        .panel-body
+          - for tag in @tool.tag_list
+            span.aui-lozenge.aui-lozenge-subtle.aui-lozenge-success> = tag
 
       - if @tool.download_files.size > 0
         .panel

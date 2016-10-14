@@ -71,7 +71,9 @@ Rails.application.routes.draw do
   resources :tools do
     collection do
       post :boxes
+      get :tags
     end
+
     member do
       get :help
       get :download

@@ -57,7 +57,11 @@
             - if current_user.has_role? :admin
               .field-group
                 = f.label :dirname, 'Dirname'
-                = f.text_field :dirname, placeholder: 'Dirname', class: 'text full-width-field novalidation'
+                = f.text_field :dirname, placeholder: 'Dirname', class: 'text full-width-field'
+
+            .field-group
+              = f.label :tag_list, 'Tags'
+              = f.text_field :tag_list, value: @tool.tag_list.join(','), class: 'text full-width-field'
 
             .field-group
               = f.label :desc, 'Description'

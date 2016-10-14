@@ -5,6 +5,8 @@ class Tool < ApplicationRecord
 
   attr_accessor :upload, :downloads
 
+  acts_as_ordered_taggable
+
   before_destroy :rmdir
   before_save :sanitize
 
