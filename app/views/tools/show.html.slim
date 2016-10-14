@@ -14,42 +14,56 @@
           - else
             - flabel = 'Unfeatured'
           a.aui-button data-method='patch' href=toogle_featured_tool_path(@tool) = flabel
+  .aui-group
+    .aui-item style='width:68%'
+      h3 Introduction
+      p.paragraph == @tool.introduction
 
-  table.aui.def
-    tr
-      td width='100px' Name
-      td  = @tool.name
-    tr
-      td Permalink
-      td
-        a href=user_tool_url(@tool.owner.username, @tool.name) = user_tool_url @tool.owner.username, @tool.name
-    tr
-      td Contributors
-      td == contributors_tag @tool.contributors
-    tr
-      - if @tool.publications.blank?
-        td Citation
-        td #{contributors_tag @tool.contributors, false} Tool: "#{@tool.name}" in Qomo, available at #{user_tool_url @tool.owner.username, @tool.name} (Last update: #{ptime @tool.updated_at, current_user.try(:timezone)})
-      - else
-        td Publications
-        td: .paragraph == @tool.publications
-    tr
-      td Created At
-      td = ptime2 @tool.created_at
-    tr
-      td Updated At
-      td = ptime2 @tool.updated_at
-    tr
-      td Maintainer
-      td = user_tag @tool.owner
+      h3 Publications
+      p.paragraph == @tool.publications
 
-    tr
-      td Introduction
-      td
-        .paragraph == @tool.introduction
+      h3 Manual
+      p.paragraph == @tool.manual
 
-    - unless @tool.manual.blank?
-      tr
-        td Manual
-        td
-          .paragraph == @tool.manual
+    .aui-item
+      .panel
+        .panel-heading
+          h3.panel-title
+            | Basic Infomation
+        .panel-body
+          table.def
+            tr
+              td width='100px' Name
+              td = @tool.name
+            tr
+              td Version
+              td = @tool.version
+            tr
+              td Permalink
+              td
+                a href=user_tool_url(@tool.owner.username, @tool.name) = user_tool_url @tool.owner.username, @tool.name
+            tr
+              td Contributors
+              td == contributors_tag @tool.contributors
+            tr
+              td Website
+              td
+                a href=@tool.website target='_blank' = @tool.website
+            tr
+              td Created At
+              td = ptime2 @tool.created_at
+            tr
+              td Updated At
+              td = ptime2 @tool.updated_at
+
+      - if @tool.download_files.size > 0
+        .panel
+          .panel-heading
+            h3.panel-title
+              | Downloads
+              small Total download count: #{@tool.download_count}
+          .panel-body
+            ul
+              - for df in @tool.download_files
+                li
+                  a href=download_tool_path(@tool, filename: df[:filename]) = df[:filename]

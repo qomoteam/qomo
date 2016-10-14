@@ -23,6 +23,11 @@ table
   table-layout: fixed
   td
     word-wrap: break-word
+    &.empty
+      text-align: center !important
+
+h3:first-child
+  margin-top: 0 !important
 
 .monospace
   font-family: monospace !important
@@ -82,10 +87,13 @@ fieldset.section
     text-align: left
 
 table.def
-  tr td:first-child
-    font-weight: bold
-    &:after
-      content: ":"
+  width: 100%
+  td
+    vertical-align: top
+    &:first-child
+      font-weight: bold
+      &:after
+        content: ":"
 
 .aui-expander-content
   min-height: 1.5em
@@ -206,3 +214,28 @@ table.bordered
   background-color: #FAFAFA
   p
     font-style: italic
+
+.panel
+  margin-bottom: 20px
+  background-color: #ffffff
+  border: 1px solid #DDDDDD
+  border-radius: 4px
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05)
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05)
+  .panel-heading
+    padding: 3px 10px
+    color: #555555
+    background-color: #f5f5f5
+    border-bottom: 1px solid #dddddd
+    border-top-right-radius: 3px
+    border-top-left-radius: 3px
+    .panel-title
+      margin-top: 0
+      margin-bottom: 0
+      font-size: 14px
+      font-weight: bold
+  .panel-body
+    padding: 2px 8px
+    ul
+      padding-left: 16px
+

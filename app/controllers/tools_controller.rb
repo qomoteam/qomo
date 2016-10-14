@@ -41,8 +41,8 @@ class ToolsController < ApplicationController
     unauthorized if current_user != tool.owner
 
     tool.update params.require(:tool).permit!
+    tool.copy_downloads!
     tool.copy_upload!
-    puts 1
     redirect_to edit_tool_path(tool)
   end
 
@@ -109,19 +109,39 @@ class ToolsController < ApplicationController
     render json: {success: true}
   end
 
+
+  def download
+    tool = Tool.find params['id']
+    tool.download_count += 1
+    tool.update_record_without_timestamping
+    send_file File.join(tool.download_path, params[:filename])
+  end
+
   def asset_download
     tool = Tool.find params['id']
-    unauthorized if current_user != @tool.owner
+    unauthorized if current_user != tool.owner
 
-    path = File.join(tool.dirpath, params[:path])
+    if params[:download]
+      prefix = tool.download_path
+    else
+      prefix = tool.dirpath
+    end
+
+    path = File.join(prefix, params[:path])
     send_file path
   end
 
   def asset_delete
     tool = Tool.find params['id']
-    unauthorized if current_user != @tool.owner
+    unauthorized if current_user != tool.owner
 
-    path = File.join(tool.dirpath, params[:path])
+    if params[:download]
+      prefix = tool.download_path
+    else
+      prefix = tool.dirpath
+    end
+
+    path = File.join(prefix, params[:path])
     File.delete path
     render json: {success: true}
   end

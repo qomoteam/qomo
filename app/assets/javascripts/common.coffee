@@ -185,3 +185,6 @@ $ ->
 
   $('.readmore').readmore
     blockCSS: 'overflow-x: scroll !important;'
+
+  $('aui-toggle input[type=checkbox]').change ->
+    $(this).parent().prev().val(this.checked)

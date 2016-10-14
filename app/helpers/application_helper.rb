@@ -8,7 +8,7 @@ module ApplicationHelper
     end
 
     if title.kind_of? Array
-      title = (title.map {|e| e.humanize}).join ' » '
+      title = (title.map { |e| e.humanize }).join ' » '
     end
 
     title = "#{title} | Qomo"
@@ -68,11 +68,18 @@ module ApplicationHelper
     content_tag 'aui-toggle', nil, opts
   end
 
+  def aui_toggle(k, v)
+    opts = {name: k, label: k}
+    opts[:checked] = 'on' if v
+    content_tag 'aui-toggle', nil, opts
+  end
+
 
   def user_tag(user)
     display = user.full_name.blank? ? user.username : user.full_name
     content_tag :a, display, href: scholar_path(user.username)
   end
+
 
   def contributors_tag(str, link=true)
     str.split(',').map do |c|
@@ -110,6 +117,11 @@ module ApplicationHelper
     else
       datastore_download_path(file.path, uid: uid)
     end
+  end
+
+
+  def hide_style(b)
+    'display: none' unless b
   end
 
 end

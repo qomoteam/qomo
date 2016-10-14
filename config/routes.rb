@@ -74,6 +74,7 @@ Rails.application.routes.draw do
     end
     member do
       get :help
+      get :download
       post :asset_mkexe
       get :asset_download
       post :asset_delete
@@ -103,7 +104,6 @@ Rails.application.routes.draw do
       get :summary
       put :clear
     end
-
   end
 
 

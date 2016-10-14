@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013122106) do
+ActiveRecord::Schema.define(version: 20161013145355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20161013122106) do
   end
 
   create_table "tools", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string   "name",                       null: false
+    t.string   "name",                          null: false
     t.string   "contributors"
     t.uuid     "owner_id"
     t.integer  "category_id"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20161013122106) do
     t.integer  "download_count", default: 0
     t.string   "website"
     t.string   "version"
+    t.boolean  "runnable",       default: true
     t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
     t.index ["featured"], name: "index_tools_on_featured", using: :btree
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree

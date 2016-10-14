@@ -61,6 +61,7 @@ within 'tools', 'new, edit', ->
 
   $('.add-param').click ->
     $target = $('#param-defs')
+    $target.find('.empty-placeholder').hide()
     $target.append $('#tpl_table_param_def').text()
     return false
 
@@ -97,3 +98,9 @@ within 'tools', 'new, edit', ->
       presence: true
 
   App.validate($('#edit-tool-form'), constrains)
+
+  $('aui-toggle input[name=runnable]').change ->
+    if this.checked
+      $('.runtime-settings').fadeIn()
+    else
+      $('.runtime-settings').fadeOut()

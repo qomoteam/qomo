@@ -14,7 +14,7 @@
               i.fa.fa-folder-open
               = c.name
             ul
-              - for tool in c.tools.active
+              - for tool in c.tools.active_runnable
                 li
                   a.tool-link data-tid=tool.id href='#' = tool.name
                   - unless tool.manual.blank?
