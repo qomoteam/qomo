@@ -43,7 +43,6 @@ class ToolsController < ApplicationController
     unauthorized if current_user != tool.owner
 
     tool.update params.require(:tool).permit!
-    tool.copy_downloads!
     tool.copy_upload!
     redirect_to edit_tool_path(tool)
   end
@@ -86,6 +85,8 @@ class ToolsController < ApplicationController
     end
 
     not_found unless @tool
+    @page_title = @tool.name
+
     unauthorized unless @tool.active? or @tool.owner == current_user
   end
 
@@ -98,10 +99,9 @@ class ToolsController < ApplicationController
 
   def asset_mkexe
     tool = Tool.find params['id']
-    unauthorized if current_user != @tool.owner
+    unauthorized if current_user != tool.owner
 
     path = File.join(tool.dirpath, params[:path])
-    puts path
     if File.executable? path
       File.chmod(0655, path)
     else
@@ -111,20 +111,19 @@ class ToolsController < ApplicationController
     render json: {success: true}
   end
 
-
-  def download
-    tool = Tool.find params['id']
-    tool.download_count += 1
-    tool.update_record_without_timestamping
-    send_file File.join(tool.download_path, params[:filename])
-  end
-
   def asset_download
-    tool = Tool.find params['id']
+    if params[:release_id]
+      release = Release.find params[:release_id]
+      not_found unless release
+      tool = release.tool
+    else
+      tool = Tool.find params['id']
+    end
+
     unauthorized if current_user != tool.owner
 
-    if params[:download]
-      prefix = tool.download_path
+    if release
+      prefix = release.download_path
     else
       prefix = tool.dirpath
     end
@@ -134,17 +133,23 @@ class ToolsController < ApplicationController
   end
 
   def asset_delete
-    tool = Tool.find params['id']
+    if params[:release_id]
+      release = Release.find params[:release_id]
+      not_found unless release
+      tool = release.tool
+    else
+      tool = Tool.find params['id']
+    end
+
     unauthorized if current_user != tool.owner
 
-    if params[:download]
-      prefix = tool.download_path
+    if release
+      prefix = release.download_path
     else
       prefix = tool.dirpath
     end
 
-    path = File.join(prefix, params[:path])
-    File.delete path
+    File.delete File.join(prefix, params[:path])
     render json: {success: true}
   end
 

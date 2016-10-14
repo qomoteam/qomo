@@ -1,15 +1,14 @@
 .page-panel.wider
+  .nav-toolbar
+    .primary
+      ol.aui-nav.aui-nav-breadcrumbs
+        li: a href=tools_path Tools
+        - if @tool.id
+          li: a href=user_tool_path(@tool.owner.username, @tool.name) = @tool.name
+          li.aui-nav-selected Edit
+        - else
+          li.aui-nav-selected New
   = form_for @tool, multipart: true, html: {class: 'aui top-label', id: 'edit-tool-form'} do |f|
-    .nav-toolbar
-      .primary
-        ol.aui-nav.aui-nav-breadcrumbs
-          li: a href=tools_path Tools
-          - if @tool.id
-            li: a href=user_tool_path(@tool.owner.username, @tool.name) = @tool.name
-            li.aui-nav-selected Edit
-          - else
-            li.aui-nav-selected New
-
     .aui-group
       .aui-item
         h4
@@ -80,32 +79,26 @@
               = f.text_area :manual, placeholder: 'Details about this tool', class: 'textarea full-width-field tinymce', rows: '20'
 
       .aui-item style='width: 50%'
-        h4 Downloads
-        = f.file_field :downloads, multiple: true, class: 'upfile'
-        small.tip Files provided to users to download
+        h4 Releases
         table.aui
           thead
             tr
-              th width='60%' File Name
-              th width='30%' Updated At
-              th
+              th Version
+              th Created At
           tbody
-            - if @tool.id and @tool.download_files.size > 0
-              - for file in @tool.download_files
-                tr
-                  td = file[:filename]
-                  td = ptime file[:updated_at], current_user.try(:timezone)
-                  td
-                    ul.menu
-                      li
-                        a.delete-asset href=asset_delete_tool_path(@tool, path: file[:filename], download: true) title='Delete this file' data-confirm='Are you sure to delete this file?'
-                          i.fa.fa-trash-o
-                      li
-                        a href=asset_download_tool_path(@tool, path: file[:filename], download: true) title='Download this file'
-                          i.fa.fa-download
-            - else
+            - for release in @tool.releases
               tr
-                td.empty colspan=3 Empty
+                td
+                  a href=edit_tool_release_path(release.tool, release) = release.version
+                td = ptime2 release.created_at
+                td
+                  ul.menu
+                    li
+                      a.remove-tr href=tool_release_path(release.tool, release) title='Delete this release' data-confirm='Are you sure to delete this release?'
+                        i.fa.fa-trash-o
+            tr
+              td.empty colspan=3
+                a.aui-button href=new_tool_release_url(@tool) Create Release
 
         fieldset.runtime-settings style=hide_style(@tool.runnable)
           h4 Runtime Information
@@ -122,6 +115,7 @@
               - else
                 .empty-placeholder
                   p No parameters defined
+
           .field-group
             = f.label :command
           = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '6'
@@ -146,7 +140,7 @@
                     td
                       ul.menu
                         li
-                          a.delete-asset href=asset_delete_tool_path(@tool, path: file[:path]) title='Delete this file' data-confirm='Are you sure to delete this file?'
+                          a.remove-tr href=asset_delete_tool_path(@tool, path: file[:path]) title='Delete this file' data-confirm='Are you sure to delete this file?'
                             i.fa.fa-trash-o
                         li
                           a href=asset_download_tool_path(@tool, path: file[:path]) title='Download this file'

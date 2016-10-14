@@ -1,0 +1,51 @@
+.page-panel
+  .nav-toolbar
+    .primary
+      ol.aui-nav.aui-nav-breadcrumbs
+        li: a href=tools_path Tools
+        li: a href=edit_tool_path(@release.tool.id) = @release.tool.name
+        li Releases
+        - if @release.id
+          li: a href=edit_tool_release_path(@release.tool, @release) = @release.version
+        - else
+          li.aui-nav-selected New
+
+  = form_for [@release.tool, @release], multipart: true, html: {class: 'aui', id: 'edit-release-form'} do |f|
+    .aui-group
+      .aui-item style='width: 38%'
+        .field-group
+          = f.label :version
+            | Version
+            i.aui-icon.icon-required
+          = f.text_field :version, placeholder: 'Current version', class: 'text'
+      .aui-item style='width: 50%'
+        .field-group
+          label Download Files
+          = f.file_field :downloads, multiple: true, class: 'upfile'
+      .aui-item
+        = f.submit 'Save', class: 'aui-button aui-button-primary'
+    table.aui
+      thead
+        tr
+          th width='38%' File Name
+          th width='25%' File Size
+          th width='25%' Updated At
+          th
+      tbody
+        - if @release.id and @release.download_files.size > 0
+          - for file in @release.download_files
+            tr
+              td = file[:filename]
+              td = number_to_human_size(file[:size], precision: 3)
+              td = ptime file[:updated_at], current_user.timezone
+              td
+                ul.menu
+                  li
+                    a.delete-asset href=asset_delete_tool_path(@release.tool, path: file[:filename], release_id: @release.id) title='Delete this file' data-confirm='Are you sure to delete this file?'
+                      i.fa.fa-trash-o
+                  li
+                    a href=asset_download_tool_path(@release.tool, path: file[:filename], release_id: @release.id) title='Download this file'
+                      i.fa.fa-download
+        - else
+          tr
+            td.empty colspan=4 Empty

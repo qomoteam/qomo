@@ -69,6 +69,12 @@ Rails.application.routes.draw do
 
 
   resources :tools do
+    resources :releases do
+      member do
+        get :download
+      end
+    end
+
     collection do
       post :boxes
       get :tags
@@ -76,10 +82,9 @@ Rails.application.routes.draw do
 
     member do
       get :help
-      get :download
       post :asset_mkexe
       get :asset_download
-      post :asset_delete
+      delete :asset_delete
       patch :toogle_featured
     end
   end
@@ -116,7 +121,11 @@ Rails.application.routes.draw do
     collection do
       resource :profile, :setting
     end
-    resources :pipelines, :tools
+    resources :pipelines
+
+    resources :tools do
+      resources :releases
+    end
   end
 
 

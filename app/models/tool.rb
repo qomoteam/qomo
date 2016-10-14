@@ -3,7 +3,7 @@ require 'zip'
 
 class Tool < ApplicationRecord
 
-  attr_accessor :upload, :downloads
+  attr_accessor :upload
 
   acts_as_ordered_taggable
 
@@ -27,6 +27,8 @@ class Tool < ApplicationRecord
   belongs_to :category
 
   belongs_to :tech
+
+  has_many :releases, -> { order(created_at: :desc) }
 
   def self.active_count
     Tool.active.count
@@ -91,26 +93,6 @@ class Tool < ApplicationRecord
     end
   end
 
-  def download_path
-    File.join dirpath, '.downloads'
-  end
-
-  def copy_downloads!
-    unless Dir.exist? download_path
-      FileUtils.mkdir_p download_path
-    end
-    self.downloads ||= []
-    self.downloads.each do |df|
-      File.open("#{download_path}/#{df.original_filename}", "wb") { |f| f.write(df.tempfile.read) }
-    end
-  end
-
-  def download_files
-    pl = download_path.length + 1
-    Dir.glob(File.join download_path, '*').collect do |e|
-      {filename: e[pl..-1], updated_at: File.mtime(e)}
-    end
-  end
 
   def files
     pl = self.dirpath.length + 1

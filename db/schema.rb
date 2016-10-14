@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014081811) do
+ActiveRecord::Schema.define(version: 20161014124218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,14 @@ ActiveRecord::Schema.define(version: 20161014081811) do
     t.index ["cacheable_id", "cacheable_type"], name: "index_rating_caches_on_cacheable_id_and_cacheable_type", using: :btree
   end
 
+  create_table "releases", force: :cascade do |t|
+    t.string   "version"
+    t.uuid     "tool_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "download_count", default: 0
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -177,26 +185,25 @@ ActiveRecord::Schema.define(version: 20161014081811) do
   end
 
   create_table "tools", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string   "name",                          null: false
+    t.string   "name",                        null: false
     t.string   "contributors"
     t.uuid     "owner_id"
     t.integer  "category_id"
     t.text     "command"
     t.json     "params"
     t.text     "manual"
-    t.integer  "status",         default: 0
+    t.integer  "status",       default: 0
     t.string   "dirname"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "desc"
     t.integer  "tech_id"
-    t.integer  "featured",       default: 0
+    t.integer  "featured",     default: 0
     t.text     "introduction"
     t.text     "publications"
-    t.integer  "download_count", default: 0
     t.string   "website"
     t.string   "version"
-    t.boolean  "runnable",       default: true
+    t.boolean  "runnable",     default: true
     t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
     t.index ["featured"], name: "index_tools_on_featured", using: :btree
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree

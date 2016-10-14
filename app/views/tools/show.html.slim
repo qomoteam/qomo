@@ -83,14 +83,19 @@
               ' Performance
               = rating_for @tool, :performance, disable_after_rate: false, enable_half: true
 
-      - if @tool.download_files.size > 0
+      - if @tool.releases.size > 0
         .panel
           .panel-heading
             h3.panel-title
               | Downloads
-              small Total download count: #{@tool.download_count}
           .panel-body
-            ul
-              - for df in @tool.download_files
-                li
-                  a href=download_tool_path(@tool, filename: df[:filename]) = df[:filename]
+            - for release in @tool.releases
+              .release
+                h5
+                  | Version: #{release.version}
+                  small #{ptime2 release.updated_at}; Download count: #{release.download_count}
+                ul
+                  - for df in release.download_files
+                    li
+                      a> href=download_tool_release_path(release.tool, release, filename: df[:filename])  #{df[:filename]}
+                      | (#{number_to_human_size df[:size]})

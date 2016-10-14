@@ -157,6 +157,24 @@ window.App =
 $ ->
   AJS.$('select.select2').auiSelect2()
 
+  $(document).on 'click', '.remove-tr', (e) ->
+    e.preventDefault()
+    href = this.href
+    params = {}
+    $this = $(this)
+    delete_tr = ->
+      $this.closest('tr').remove()
+    for k of this.dataset
+      if k.indexOf('param') == 0
+        remote = true
+        params[k.substring('param'.length)] = this.dataset[k]
+    $.ajax
+      url: href
+      method: 'delete'
+      data: params
+      success: delete_tr
+
+
   if gon.notice
     notie.alert 4, gon.notice, 100
 

@@ -1,15 +1,7 @@
 within 'tools', 'new, edit', ->
-
   $('input[type=checkbox].mkexe-asset').click ->
     $.post Routes.asset_mkexe_tool(this.dataset.tid),
       path: this.dataset.path
-
-  $('a.delete-asset').click ->
-    $this = $(this)
-    $.post this.href,
-      success: ->
-        $this.parents('tr').remove()
-    return false
 
   $(document).on 'change', 'select[name="tool[params][][type]"]', ->
     $(this).parents('.param-def').find('td.defautl-value-td').html $("#tpl_param_#{this.value}").text()
@@ -63,28 +55,6 @@ within 'tools', 'new, edit', ->
     $target = $('#param-defs')
     $target.find('.empty-placeholder').hide()
     $target.append $('#tpl_table_param_def').text()
-    return false
-
-  $(document).on 'click', '.remove-tr', ->
-    remote = false
-    params = {}
-    $this = $(this)
-    delete_tr = ->
-      $this.closest('tr').remove()
-    for k of this.dataset
-      if k.indexOf('param') == 0
-        remote = true
-        params[k.substring('param'.length)] = this.dataset[k]
-
-    if remote
-      $.ajax
-        url: this.href
-        method: 'delete'
-        data: params
-        success: run
-    else
-      delete_tr()
-
     return false
 
 
