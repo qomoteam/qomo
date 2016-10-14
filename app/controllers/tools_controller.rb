@@ -14,6 +14,8 @@ class ToolsController < ApplicationController
 
 
   def create
+    unauthorized if current_user.has_role? :guest
+
     @tool = Tool.new params.require(:tool).permit!
     @tool.owner = current_user
 
