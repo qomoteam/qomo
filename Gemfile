@@ -31,6 +31,9 @@ gem 'awesome_nested_set'
 gem 'acts-as-taggable-on'
 gem 'ratyrate'
 
+gem 'countries'
+gem 'country_select'
+
 # Assets
 gem 'coffee-rails'
 gem 'slim-rails'

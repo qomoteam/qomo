@@ -15,7 +15,7 @@
         - unless @user.location.blank?
           li
             i.fa.fa-map-marker
-            | #{@user.location}
+            = location_label @user
 
         - unless @user.organization.blank?
           li
