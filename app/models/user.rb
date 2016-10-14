@@ -2,6 +2,8 @@ class User < ApplicationRecord
 
   acts_as_voter
 
+  ratyrate_rater
+
   rolify
 
   validates_uniqueness_of :username, :email

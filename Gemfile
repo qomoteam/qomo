@@ -29,6 +29,7 @@ gem 'rubyzip'
 gem 'acts_as_votable'
 gem 'awesome_nested_set'
 gem 'acts-as-taggable-on'
+gem 'ratyrate'
 
 # Assets
 gem 'coffee-rails'

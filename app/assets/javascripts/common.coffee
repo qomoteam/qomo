@@ -13,6 +13,8 @@
 #= require pace
 #= require dragula
 #= require readmore
+#= require jquery.raty
+#= require ratyrate
 
 class GUID
   s4: ->

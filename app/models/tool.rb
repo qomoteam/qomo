@@ -7,6 +7,8 @@ class Tool < ApplicationRecord
 
   acts_as_ordered_taggable
 
+  ratyrate_rateable :usability, :performance, :reliability
+
   before_destroy :rmdir
   before_save :sanitize
 
@@ -30,10 +32,6 @@ class Tool < ApplicationRecord
     Tool.active.count
   end
 
-
-  def active?
-    self.status == 1
-  end
 
   def rmdir
     FileUtils.rmtree self.dirpath

@@ -1,7 +1,7 @@
 - for tool in tools
   tr
     td width='300'
-      a href=user_tool_path(tool.user.username, tool.name)
+      a href=user_tool_path(tool.owner.username, tool.name)
         => tool.name
       - if tool.tech
         span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name
