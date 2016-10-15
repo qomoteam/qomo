@@ -1,8 +1,8 @@
-table.param-def
+table.draggable.param-def
   tbody
     tr
-      td.remove-param-td rowspan=3 width='18px'
-        a.aui-icon.aui-icon-small.aui-iconfont-remove-label.remove-param href='javascript:;' title='Delete this param'
+      td.remove-table-td rowspan=3 width='18px'
+        a.aui-icon.aui-icon-small.aui-iconfont-remove-label.remove-table href='javascript:;' title='Delete this param'
       td.label width='100px' Param Name
       td
         input type='text' name='tool[params][][name]' value=param['name']
@@ -12,6 +12,7 @@ table.param-def
       td
         - if param['type'] != 'tmp'
           input type='text' name='tool[params][][label]' value=param['label']
+      td width='100px'
     tr
       td.label Param Type
       td
@@ -28,5 +29,3 @@ table.param-def
       td.label Description
       td colspan=4
         textarea rows=4 name='tool[params][][desc]' = param['desc']
-
-

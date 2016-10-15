@@ -266,3 +266,46 @@ table.bordered
     ul
       padding-left: 16px
 
+table.draggable
+  cursor: grab
+  cursor: -webkit-grab
+  width: 100%
+  border: 1px dotted #0fbad6
+  margin: 12px 0
+  &:first-of-type
+    margin-top: 0
+  td
+    padding-right: 10px
+    &.label
+      padding-left: 10px
+    &.remove-table-td
+      padding-right: 0
+      border-right: 1px dotted #0fbad6
+  label
+    input[type=checkbox]
+      width: 20px
+  input[type=text], select
+    width: 100%
+  input[type=checkbox]
+    margin-top: 2px
+  textarea
+    width: 100%
+    border-color: #ccc
+  .edit-options
+    margin-left: 10px
+  .options
+    display: none
+    max-width: 600px !important
+  th
+    height: 22px
+  td, th
+    text-align: left
+
+.publications
+  padding-left: 20px
+  .meta
+    margin-top: 0
+    font-size: 12px
+  .citation
+    font-size: 12px
+    color: green

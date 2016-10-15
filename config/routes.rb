@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'publication_search', to: 'home#publication_search'
+
 
   get 'about', to: 'home#about'
   get 'agreement', to: 'home#agreement'

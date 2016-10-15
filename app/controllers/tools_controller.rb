@@ -10,6 +10,7 @@ class ToolsController < ApplicationController
   def new
     @tool = Tool.new
     @categories = Category.all
+    render template: 'tools/edit'
   end
 
 
@@ -34,7 +35,6 @@ class ToolsController < ApplicationController
     unauthorized if current_user != @tool.owner
 
     @categories = Category.all
-    render 'new'
   end
 
 
@@ -59,7 +59,6 @@ class ToolsController < ApplicationController
 
   def delete
     Tool.delete params['ids']
-
     redirect_to action: 'index', status: :see_other
   end
 

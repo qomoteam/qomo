@@ -1,0 +1,36 @@
+table.draggable.publication
+  input type='hidden' name='tool[publications][][doi]' value=publication['doi']
+  tbody
+    tr
+      td.remove-table-td rowspan=5 width='18px'
+        a.aui-icon.aui-icon-small.aui-iconfont-remove-label.remove-table href='javascript:;' title='Delete this publication'
+      td.label width='75px' Pubmed ID
+      td width='180px'
+        input type='text' name='tool[publications][][pmid]' value=publication['pmid']
+      td width='40px'
+        a.publication_search.hint--info.hint--right href='javascript:;' aria-label='Auto fill with Pubmed ID'
+          i.fa.fa-search
+      td
+      td width='45px'
+      td
+      td.label width='50px' Citation
+      td
+        input type='text' name='tool[publications][][citation]' value=publication['citation']
+    tr
+      td.label Title
+      td colspan=7
+        input type='text' name='tool[publications][][title]' value=publication['title']
+    tr
+      td.label Authors
+      td colspan=7
+        input type='text' name='tool[publications][][authors]' value=publication['authors']
+    tr
+      td.label Journal
+      td
+        input type='text' name='tool[publications][][journal]' value=publication['journal']
+      td.label Date
+      td: input type='text' name='tool[publications][][date]' value=publication['date']
+      td.label Issue
+      td: input type='text' name='tool[publications][][issue]' value=publication['issue']
+      td.label Volume
+      td: input type='text' name='tool[publications][][volume]' value=publication['volume']

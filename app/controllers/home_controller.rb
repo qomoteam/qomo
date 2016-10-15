@@ -17,4 +17,9 @@ class HomeController < ApplicationController
   def tutorial
   end
 
+
+  def publication_search
+    render json: PubmedApi.find(params[:pmid])[0] || {}
+  end
+
 end

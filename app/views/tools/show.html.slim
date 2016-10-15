@@ -23,7 +23,16 @@
 
       .section-separator
         h3.section-separator-title Publications
-      .paragraph == @tool.publications
+      - for publication in @tool.publications
+        ol.publications
+          li
+            h5
+              a href="http://dx.doi.org/#{publication['doi']}" target='blank' = publication['title']
+            .meta
+              ' #{publication['authors']}, #{publication['date']} -
+              em #{publication['journal']}
+            .citation Cited by #{publication['citation']} (Google Schoolar as of #{ptime2 @tool.updated_at})
+
 
       .section-separator
         h3.section-separator-title Manual
@@ -40,8 +49,8 @@
               td width='100px' Name
               td = @tool.name
             tr
-              td Version
-              td = @tool.version
+              td Citation
+              td = @tool.citation
             tr
               td Contributors
               td == contributors_tag @tool.contributors

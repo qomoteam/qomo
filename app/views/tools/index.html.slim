@@ -4,7 +4,7 @@
       h3 My tools
     .secondary
       .aui-buttons
-        - user_signed_in? and (not current_user.has_role? :guest)
+        - if user_signed_in? and (not current_user.has_role? :guest)
           a.aui-button.aui-button-primary.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
 
   - if @tools.count > 0

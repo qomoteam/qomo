@@ -1,8 +1,16 @@
 form#edit-tool-form
-  h4
-    margin: 20px 0 5px 0
+  fieldset
+    border: 1px solid #DEDEDE
+    margin-bottom: 10px
+    border-radius: 5px
+    padding: 10px 10px
     &:first-of-type
       margin-top: 0
+    h4
+      margin: 20px 0 5px 0
+      &:first-of-type
+        margin-top: 0
+
   .field-group
     input, select
       width: 96%
@@ -20,43 +28,17 @@ form#edit-tool-form
 .add-param
   margin-left: 15px
 
-#param-defs
+fieldset
   .empty-placeholder
     margin: 0 0 20px 0
+
+#param-defs
   .param-def
-    cursor: grab
-    cursor: -webkit-grab
-    width: 100%
-    border: 1px dotted #0fbad6
-    margin: 12px 0
-    &:first-of-type
-      margin-top: 0
-    td
-      padding-right: 10px
-      &.label
-        padding-left: 10px
-      &.remove-param-td
-        padding-right: 0
-        border-right: 1px dotted #0fbad6
-    label
-      input[type=checkbox]
-        width: 20px
-    input[type=text], select
-      width: 100%
-    input[type=checkbox]
-      margin-top: 2px
-    textarea
-      width: 100%
-      border-color: #ccc
     .edit-options
       margin-left: 10px
     .options
       display: none
       max-width: 600px !important
-    th
-      height: 22px
-    td, th
-      text-align: left
     .options
       button
         font-size: 10px

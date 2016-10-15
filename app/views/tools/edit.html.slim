@@ -1,0 +1,179 @@
+.page-panel.wider
+  .nav-toolbar
+    .primary
+      ol.aui-nav.aui-nav-breadcrumbs
+        li: a href=tools_path Tools
+        - if @tool.id
+          li: a href=user_tool_path(@tool.owner.username, @tool.name) = @tool.name
+          li.aui-nav-selected Edit
+        - else
+          li.aui-nav-selected New
+  = form_for @tool, multipart: true, html: {class: 'aui top-label', id: 'edit-tool-form'} do |f|
+    .aui-group
+      .aui-item
+        fieldset
+          h4
+            ' Basic Infomation
+          .aui-group
+            .aui-item style='width: 50%'
+              .field-group
+                = f.label :name
+                  | Name
+                  i.aui-icon.icon-required
+                = f.text_field :name, placeholder: 'Tool name', class: 'text long-field'
+            .aui-item style='width: 38%'
+              .field-group
+                = f.label :version
+                  | Version
+                  i.aui-icon.icon-required
+                = f.text_field :version, placeholder: 'Current version', class: 'text long-field'
+            .aui-item
+              .field-group
+                = f.label :runnable
+                = f.hidden_field :runnable
+                = aui_toggle :runnable, @tool.runnable
+          .aui-group
+            .aui-item
+              .field-group
+                = f.label :category_id, 'Category'
+                = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
+            .aui-item
+              .field-group
+                = f.label :tech_id, 'Technology'
+                = f.collection_select :tech_id, Tech.all, :id, :name, {include_blank: true}, {class: 'select long-field'}
+
+          .aui-group
+            .aui-item
+              .field-group
+                = f.label :website
+                = f.text_field :website, placeholder: 'Website', class: 'text full-width-field'
+            .aui-item
+              .field-group
+                = f.label :contributors
+                = f.text_field :contributors, placeholder: 'Seperated by semicolon', class: 'text full-width-field'
+
+          .aui-group
+            .aui-item
+              - if current_user.has_role? :admin
+                .field-group
+                  = f.label :dirname, 'Dirname'
+                  = f.text_field :dirname, placeholder: 'Dirname', class: 'text full-width-field'
+
+              .field-group
+                = f.label :tag_list, 'Tags'
+                = f.text_field :tag_list, value: @tool.tag_list.join(','), class: 'text full-width-field'
+
+              .field-group
+                = f.label :desc, 'Description'
+                = f.text_field :desc, placeholder: 'Simple description.', class: 'text full-width-field novalidation'
+
+              .field-group
+                = f.label :introduction
+                = f.text_area :introduction, placeholder: 'Introduction for your tool', class: 'textarea full-width-field tinymce', rows: '10'
+
+              .field-group
+                = f.label :manual
+                = f.text_area :manual, placeholder: 'Details about this tool', class: 'textarea full-width-field tinymce', rows: '20'
+
+      .aui-item style='width: 50%'
+        fieldset
+          h4.fieldset-title
+            ' Publications
+            a.add-el-from-template data-target='publications' data-template='tpl_publication' href='javascript:;'
+              i.fa.fa-plus
+          #publications.draggable-container
+            - if @tool.publications.size > 0
+              - for publication in @tool.publications
+                = render partial: 'tools/publication', locals: {publication: publication}
+            - else
+              .empty-placeholder
+                p No publications attached
+        fieldset
+          h4.fieldset-title
+            ' Releases
+            a href=new_tool_release_url(@tool)
+              i.fa.fa-plus
+          table.aui
+            thead
+              tr
+                th width='38%' Version
+                th Download Count
+                th Created At
+                th width='20px'
+            tbody
+              - for release in @tool.releases
+                tr
+                  td
+                    a href=edit_tool_release_path(release.tool, release) = release.version
+                  td = release.download_count
+                  td = ptime2 release.created_at
+                  td
+                    ul.menu
+                      li
+                        a.remove-tr href=tool_release_path(release.tool, release) title='Delete this release' data-confirm='Are you sure to delete this release?'
+                          i.fa.fa-trash-o
+
+        fieldset.runtime-settings style=hide_style(@tool.runnable)
+          h4 Runtime Information
+          .field-group
+            = f.label :params
+              ' Parameters
+              a.add-el-from-template.hint--info.hint--right data-template='tpl_table_param_def' data-target='param-defs' href='javascript:;' aria-label='Add param'
+                i.fa.fa-plus
+          .full-width-field
+            #param-defs.draggable-container
+              - if @tool.params
+                - for param in @tool.params
+                  = render 'tools/table_param_def', param: param
+              - else
+                .empty-placeholder
+                  p No parameters defined
+
+          .field-group
+            = f.label :command
+          = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '6'
+
+          h4 Tool Assets
+          = f.file_field :upload, class: 'upfile'
+          small.tip Notice: If you upload a zip (*.zip) file, it will be unziped automatically
+
+          table.aui
+            thead
+              tr
+                th style='width: 75%' File Name
+                th Executable
+                th
+            tbody
+              - if @tool.id and @tool.files.length > 0
+                - for file in @tool.files
+                  tr
+                    td = file[:path]
+                    td
+                      input.mkexe-asset type='checkbox' data-path=file[:path] data-tid=@tool.id checked=file[:exe]
+                    td
+                      ul.menu
+                        li
+                          a.remove-tr href=asset_delete_tool_path(@tool, path: file[:path]) title='Delete this file' data-confirm='Are you sure to delete this file?'
+                            i.fa.fa-trash-o
+                        li
+                          a href=asset_download_tool_path(@tool, path: file[:path]) title='Download this file'
+                            i.fa.fa-download
+              - else
+                tr
+                  td.empty colspan=3 Empty
+
+    .buttons
+      = f.submit 'Save', class: 'aui-button aui-button-primary'
+
+script#tpl_table_param_def type='text/html'
+  = render partial: 'tools/table_param_def', locals: {param: {'type' => 'string'}}
+
+script#tpl_tr_option type='text/html'
+  = render partial: 'tools/param_select_option', locals: {option: {}}
+
+- for type in %w[input string bool select path output]
+  script id="tpl_param_#{type}" type='text/html'
+    = render partial: "tools/param_#{type}", locals: {param: {'type' => type}}
+
+script#tpl_publication type='text/html'
+  = render partial: 'tools/publication',locals: {publication: {}}

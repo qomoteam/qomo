@@ -175,6 +175,10 @@ $ ->
       success: delete_tr
 
 
+  $(document).on 'click', '.remove-table', ->
+    $(this).closest('table').fadeOut ->
+      $(this).remove()
+
   if gon.notice
     notie.alert 4, gon.notice, 100
 
@@ -208,3 +212,13 @@ $ ->
 
   $('aui-toggle input[type=checkbox]').change ->
     $(this).parent().prev().val(this.checked)
+
+  $('.add-el-from-template').click (e) ->
+    e.preventDefault()
+    $tpl = $(document.getElementById(this.dataset.template))
+    $target = $(document.getElementById(this.dataset.target))
+    $target.find('.empty-placeholder').hide()
+    $target.append $tpl.text()
+
+  $('.draggable-container').each ->
+    dragula [this]

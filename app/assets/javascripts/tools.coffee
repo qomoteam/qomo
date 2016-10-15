@@ -6,8 +6,6 @@ within 'tools', 'new, edit', ->
   $(document).on 'change', 'select[name="tool[params][][type]"]', ->
     $(this).parents('.param-def').find('td.defautl-value-td').html $("#tpl_param_#{this.value}").text()
 
-  dragula([document.getElementById('param-defs')])
-
   $(document).on 'click', '.param-def .edit-options', ->
     $options = $(this).parents('td').find('.options')
     if $options.is(':visible')
@@ -24,10 +22,6 @@ within 'tools', 'new, edit', ->
         bottom : 'auto'
         right  : 'auto'
       $options.show()
-
-  $(document).on 'click', '.remove-param', ->
-    $(this).parents('.param-def').fadeOut ->
-      $(this).remove()
 
 
   $(document).on 'click', '.param-def .options button.ok', ->
@@ -50,13 +44,6 @@ within 'tools', 'new, edit', ->
 
     $target.append $(sel_tpl_tr).text()
     return false
-
-  $('.add-param').click ->
-    $target = $('#param-defs')
-    $target.find('.empty-placeholder').hide()
-    $target.append $('#tpl_table_param_def').text()
-    return false
-
 
   constrains =
     'tool[name]':
@@ -102,3 +89,19 @@ within 'tools', 'new, edit', ->
         q: term
       results: (data) ->
         results: data
+
+  $('.publication_search').click (e) ->
+    e.preventDefault()
+    $table = $(this).closest('table.publication')
+    pmid = $table.find('input[name="tool[publications][][pmid]"]').val()
+    return unless pmid
+    $.get Routes.publication_search(), {pmid: pmid}, (p) ->
+      return unless p.pmid
+      $table.find('input[name="tool[publications][][title]"]').val(p.title)
+      $table.find('input[name="tool[publications][][authors]"]').val(p.authors.join(', '))
+      $table.find('input[name="tool[publications][][journal]"]').val(p.journal)
+      $table.find('input[name="tool[publications][][date]"]').val(p.date)
+      $table.find('input[name="tool[publications][][issue]"]').val(p.issue)
+      $table.find('input[name="tool[publications][][volume]"]').val(p.volume)
+      $table.find('input[name="tool[publications][][doi]"]').val(p.doi)
+      $table.find('input[name="tool[publications][][citation]"]').val(p.citation)

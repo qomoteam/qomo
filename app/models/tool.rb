@@ -100,6 +100,11 @@ class Tool < ApplicationRecord
   end
 
 
+  def citation
+    self.publications.collect { |e| e['citation'].to_i }.sum
+  end
+
+
   private
 
   def sanitize
