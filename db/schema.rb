@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161015034403) do
+ActiveRecord::Schema.define(version: 20161016081610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,9 +34,11 @@ ActiveRecord::Schema.define(version: 20161015034403) do
     t.integer "depth",          default: 0, null: false
     t.integer "children_count", default: 0, null: false
     t.integer "tech_id_id"
+    t.string  "slug"
     t.index ["lft"], name: "index_categories_on_lft", using: :btree
     t.index ["parent_id"], name: "index_categories_on_parent_id", using: :btree
     t.index ["rgt"], name: "index_categories_on_rgt", using: :btree
+    t.index ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
   end
 
   create_table "filerecords", id: :integer, default: -> { "nextval('filemeta_id_seq'::regclass)" }, force: :cascade do |t|
@@ -45,6 +47,18 @@ ActiveRecord::Schema.define(version: 20161015034403) do
     t.text    "desc"
     t.boolean "shared",   default: false
     t.index ["owner_id"], name: "index_filemeta_on_owner_id", using: :btree
+  end
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
   end
 
   create_table "job_units", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
@@ -104,6 +118,7 @@ ActiveRecord::Schema.define(version: 20161015034403) do
     t.integer  "cached_weighted_total",   default: 0
     t.float    "cached_weighted_average", default: 0.0
     t.integer  "featured",                default: 0
+    t.string   "slug"
     t.index ["cached_votes_down"], name: "index_pipelines_on_cached_votes_down", using: :btree
     t.index ["cached_votes_score"], name: "index_pipelines_on_cached_votes_score", using: :btree
     t.index ["cached_votes_total"], name: "index_pipelines_on_cached_votes_total", using: :btree
@@ -112,6 +127,7 @@ ActiveRecord::Schema.define(version: 20161015034403) do
     t.index ["cached_weighted_score"], name: "index_pipelines_on_cached_weighted_score", using: :btree
     t.index ["cached_weighted_total"], name: "index_pipelines_on_cached_weighted_total", using: :btree
     t.index ["featured"], name: "index_pipelines_on_featured", using: :btree
+    t.index ["slug"], name: "index_pipelines_on_slug", unique: true, using: :btree
   end
 
   create_table "rates", force: :cascade do |t|
@@ -186,7 +202,7 @@ ActiveRecord::Schema.define(version: 20161015034403) do
 
   create_table "tools", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name",                        null: false
-    t.string   "contributors"
+    t.text     "contributors"
     t.uuid     "owner_id"
     t.integer  "category_id"
     t.text     "command"
@@ -204,10 +220,12 @@ ActiveRecord::Schema.define(version: 20161015034403) do
     t.string   "version"
     t.boolean  "runnable",     default: true
     t.json     "publications", default: []
+    t.string   "slug"
     t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
     t.index ["featured"], name: "index_tools_on_featured", using: :btree
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree
     t.index ["owner_id"], name: "index_tools_on_owner_id", using: :btree
+    t.index ["slug"], name: "index_tools_on_slug", unique: true, using: :btree
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|

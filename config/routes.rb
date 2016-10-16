@@ -27,7 +27,6 @@ Rails.application.routes.draw do
 
   get 'publication_search', to: 'home#publication_search'
 
-
   get 'about', to: 'home#about'
   get 'agreement', to: 'home#agreement'
   get 'tutorial', to: 'home#tutorial'
@@ -69,6 +68,9 @@ Rails.application.routes.draw do
     post :run
   end
 
+  resources :categories do
+    resources :tools
+  end
 
   resources :tools do
     resources :releases do

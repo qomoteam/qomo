@@ -3,6 +3,10 @@ require 'zip'
 
 class Tool < ApplicationRecord
 
+  extend FriendlyId
+
+  friendly_id :name, use: :slugged
+
   attr_accessor :upload
 
   acts_as_ordered_taggable

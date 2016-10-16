@@ -34,6 +34,8 @@ gem 'ratyrate'
 gem 'countries'
 gem 'country_select'
 
+gem 'friendly_id'
+
 # Assets
 gem 'coffee-rails'
 gem 'slim-rails'

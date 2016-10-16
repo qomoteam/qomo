@@ -5,7 +5,9 @@
         li
           a href=tools_path Tools
         - for category in @tool.category_path
-          li = category.name
+          li
+            a href=category_tools_path(category.slug) = category.name
+
     .secondary
       - if @tool.owner == current_user
         .aui-buttons

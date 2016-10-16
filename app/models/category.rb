@@ -1,8 +1,11 @@
 class Category < ApplicationRecord
+  extend FriendlyId
 
-  UNCATEGORY_ID = -1
+  friendly_id :name, use: :slugged
 
   acts_as_nested_set
+
+  UNCATEGORY_ID = -1
 
   default_scope -> { order :name }
 
