@@ -3,7 +3,13 @@ class PipelinesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
   def index
-    @private_pipelines = current_user.try :pipelines
+    @categories = Category.roots
+    if params[:category_id]
+      @current = Category.friendly.find params[:category_id]
+      @pipelines = @current.descendant_shared_pipelines
+    else
+      @pipelines = Pipeline.shared
+    end
   end
 
 
@@ -11,8 +17,7 @@ class PipelinesController < ApplicationController
     @pipelines = current_user.pipelines
     if params[:inline]
       render 'inline', layout: nil
-    else
-
+      return
     end
 
   end

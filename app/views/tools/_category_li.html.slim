@@ -1,0 +1,8 @@
+li class=('aui-nav-selected' if category == @current)
+  = category_tools_link(category, true)
+
+  - if category.children.size > 0
+    ul.aui-nav
+      - for cc in category.children
+        li class=('aui-nav-selected' if cc == @current)
+          = category_tools_link(cc, true)

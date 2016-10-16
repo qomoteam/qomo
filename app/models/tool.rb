@@ -119,6 +119,10 @@ class Tool < ApplicationRecord
     path.reverse
   end
 
+  def download_count
+    self.releases.sum &:download_count
+  end
+
 
   private
 

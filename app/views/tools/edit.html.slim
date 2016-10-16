@@ -82,11 +82,16 @@
             - else
               .empty-placeholder
                 p No publications attached
+
         fieldset
           h4.fieldset-title
             ' Releases
-            a href=new_tool_release_url(@tool)
-              i.fa.fa-plus
+            - if @tool.new_record?
+              a href='javascript:;' data-warning='Your need to save the tool first, then create its new release'
+                i.fa.fa-plus
+            - else
+              a href=new_tool_release_path(@tool)
+                i.fa.fa-plus
           table.aui
             thead
               tr
@@ -95,17 +100,22 @@
                 th Created At
                 th width='20px'
             tbody
-              - for release in @tool.releases
+              - if @tool.releases.empty?
                 tr
-                  td
-                    a href=edit_tool_release_path(release.tool, release) = release.version
-                  td = release.download_count
-                  td = ptime2 release.created_at
-                  td
-                    ul.menu
-                      li
-                        a.remove-tr href=tool_release_path(release.tool, release) title='Delete this release' data-confirm='Are you sure to delete this release?'
-                          i.fa.fa-trash-o
+                  td.empty colspan=4 No Release
+              - else
+                - for release in @tool.releases
+                  tr
+                    td
+                      a href=edit_tool_release_path(release.tool, release) = release.version
+                    td = release.download_count
+                    td = ptime2 release.created_at
+                    td
+                      ul.menu
+                        li
+                          a.remove-tr href=tool_release_path(release.tool, release) title='Delete this release' data-confirm='Are you sure to delete this release?'
+                            i.fa.fa-trash-o
+
 
         fieldset.runtime-settings style=hide_style(@tool.runnable)
           h4 Runtime Information

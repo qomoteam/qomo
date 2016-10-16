@@ -1,5 +1,7 @@
 module ApplicationHelper
 
+  include LinksHelper
+
   def title_tag
     if @page_title
       title = @page_title
@@ -125,8 +127,8 @@ module ApplicationHelper
   end
 
 
-  def tool_link(tool)
-    link_to tool.name, user_tool_path(tool.owner.username, tool.name)
+  def not_guest_user?
+    user_signed_in? and (not current_user.has_role? :guest)
   end
 
 end

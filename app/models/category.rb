@@ -30,6 +30,23 @@ class Category < ApplicationRecord
   end
 
 
+  def descendant_active_tools
+    if self.leaf?
+      self.tools.active
+    else
+      self.leaves.collect { |c| c.tools.active }.flatten
+    end
+  end
+
+  def descendant_shared_pipelines
+    if self.leaf?
+      self.pipelines.shared
+    else
+      self.leaves.collect { |c| c.pipelines.shared }.flatten
+    end
+  end
+
+
   def self.uncategory
     Category.find Category::UNCATEGORY_ID
   end

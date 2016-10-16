@@ -69,7 +69,7 @@ Rails.application.routes.draw do
   end
 
   resources :categories do
-    resources :tools
+    resources :tools, :pipelines
   end
 
   resources :tools do
@@ -82,6 +82,7 @@ Rails.application.routes.draw do
     collection do
       post :boxes
       get :tags
+      get :my
     end
 
     member do

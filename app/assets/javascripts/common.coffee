@@ -222,3 +222,7 @@ $ ->
 
   $('.draggable-container').each ->
     dragula [this]
+
+  $('*[data-warning]').click ->
+    content = this.dataset.warning
+    notie.alert(2, content)

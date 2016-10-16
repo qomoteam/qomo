@@ -1,0 +1,30 @@
+.page-panel
+  .nav-toolbar
+    .primary
+      ol.aui-nav.aui-nav-breadcrumbs
+        li: a href=pipelines_path Pipelines
+        li My
+    .secondary
+      .aui-buttons
+        - if not_guest_user?
+          a.aui-button.aui-button-primary.hint--bottom href=my_pipelines_path aria-label='My own pipelines' My Pipelines
+
+  - if @pipelines.count > 0
+    table.aui
+      thead
+        tr
+          th Title
+          th width='200px' Created At
+          th width='100px' Shared
+          th width='350px' Operations
+      tbody
+        - for pipeline in @pipelines
+          tr data-pid=pipeline.id
+            td
+              a href=user_pipeline_path(pipeline.owner.username, pipeline.title) = pipeline.title
+            td = ptime pipeline.created_at, current_user.try(:timezone)
+            td = shared_tag pipeline.shared
+            td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
+  - else
+    .empty-placeholder
+      p You don't have any saved pipeline by now ...

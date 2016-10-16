@@ -45,7 +45,7 @@
 
     .aui-item
       h5
-        | Contributed Pipelines
+        | Shared Pipelines
         small Total: #{@user.pipelines.shared.count}
 
       - if @user.pipelines.shared.count > 0
@@ -55,7 +55,7 @@
           p You haven't shared any pipeline yet ...
 
       h5
-        | Contributed Tools
+        | Shared Tools
         small Total: #{@user.tools.active.count}
       - if @user.tools.active.count > 0
         table.aui

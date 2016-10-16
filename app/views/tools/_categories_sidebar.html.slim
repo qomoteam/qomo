@@ -1,0 +1,7 @@
+nav.aui-navgroup.aui-navgroup-vertical
+  .aui-navgroup-inner
+    ul.aui-nav.categories
+      li class=('aui-nav-selected' unless @current)
+        a href=tools_path  All (#{Tool.active_count})
+      - for category in categories
+        = render 'tools/category_li', category: category

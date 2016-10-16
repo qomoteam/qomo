@@ -1,24 +1,12 @@
 .page-panel
   .nav-toolbar
     .primary
-      h3 My pipelines
+      h3 Pipelines
+    .secondary
+      a.aui-button.aui-button-primary href=my_pipelines_path My Pipelines
 
-  - if @private_pipelines.count > 0
-    table.aui
-      thead
-        tr
-          th Title
-          th width='200px' Created At
-          th width='100px' Shared
-          th width='350px' Operations
-      tbody
-        - for pipeline in @private_pipelines
-          tr data-pid=pipeline.id
-            td
-              a href=user_pipeline_path(pipeline.owner.username, pipeline.title) = pipeline.title
-            td = ptime pipeline.created_at, current_user.try(:timezone)
-            td = shared_tag pipeline.shared
-            td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
-  - else
-    .empty-placeholder
-      p You don't have any saved pipeline by now ...
+  .aui-group
+    .aui-item style='width: 20%'
+      = render 'pipelines/categories_sidebar', categories: @categories
+    .aui-item
+      = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}

@@ -1,0 +1,7 @@
+nav.aui-navgroup.aui-navgroup-vertical
+  .aui-navgroup-inner
+    ul.aui-nav.categories
+      li class=('aui-nav-selected' unless @current)
+        a href=pipelines_path  All (#{Pipeline.shared_count})
+      - for category in categories
+        = render 'pipelines/category_li', category: category

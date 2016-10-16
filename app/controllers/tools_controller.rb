@@ -1,11 +1,20 @@
 class ToolsController < ApplicationController
 
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @tools = current_user&.tools
+    @categories = Category.roots
+    if params[:category_id]
+      @current = Category.friendly.find params[:category_id]
+      @tools = @current.descendant_active_tools
+    else
+      @tools = Tool.active
+    end
   end
 
+  def my
+    @tools = current_user.tools
+  end
 
   def new
     @tool = Tool.new
