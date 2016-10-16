@@ -1,11 +1,4 @@
-= form_for [:admin, @category], html: {class: 'aui'} do |f|
-  .field-group
-    = f.label :name
-    = f.text_field :name, placeholder: 'Category name', class: 'text long-field'
-
-  .buttons-container
-    .buttons
-      = f.submit class: 'button submit'
+= render partial: 'admin/categories/form', locals: {category: @category}
 
 table.aui
   thead

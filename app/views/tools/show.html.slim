@@ -1,7 +1,11 @@
 .page-panel
   .nav-toolbar
     .primary
-      h3 Tool: #{@tool.name}
+      ol.aui-nav.aui-nav-breadcrumbs
+        li
+          a href=tools_path Tools
+        - for category in @tool.category_path
+          li = category.name
     .secondary
       - if @tool.owner == current_user
         .aui-buttons
@@ -17,6 +21,9 @@
 
   .aui-group
     .aui-item style='width:66%'
+      .title
+        h2 = @tool.name
+
       .section-separator
         h3.section-separator-title Introduction
       .paragraph == @tool.introduction

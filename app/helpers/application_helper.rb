@@ -124,4 +124,9 @@ module ApplicationHelper
     'display: none' unless b
   end
 
+
+  def tool_link(tool)
+    link_to tool.name, user_tool_path(tool.owner.username, tool.name)
+  end
+
 end

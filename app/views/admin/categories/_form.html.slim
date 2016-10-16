@@ -1,0 +1,13 @@
+= form_for [:admin, category], html: {class: 'aui'} do |f|
+  .field-group
+    = f.label :name
+    = f.text_field :name, class: 'text long-field'
+
+  .field-group
+    = f.label :parent_id
+      | Parent
+    = f.collection_select :parent_id, @categories, :id, :name, {include_blank: true}, {class: 'select long-field'}
+
+  .buttons-container
+    .buttons
+      = f.submit class: 'button submit'

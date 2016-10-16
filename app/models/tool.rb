@@ -105,6 +105,17 @@ class Tool < ApplicationRecord
   end
 
 
+  def category_path
+    path = []
+    c = self.category
+    while c
+      path << c
+      c = c.parent
+    end
+    path.reverse
+  end
+
+
   private
 
   def sanitize
