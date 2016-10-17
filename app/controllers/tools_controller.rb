@@ -5,7 +5,7 @@ class ToolsController < ApplicationController
   def index
     @categories = Category.roots
     if params[:category_id]
-      @current = Category.friendly.find params[:category_id]
+      @current = Category.find_by_slug params[:category_id]
       @tools = @current.descendant_active_tools
     else
       @tools = Tool.active
