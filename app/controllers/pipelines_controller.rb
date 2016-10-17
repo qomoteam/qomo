@@ -5,7 +5,7 @@ class PipelinesController < ApplicationController
   def index
     @categories = Category.roots
     if params[:category_id]
-      @current = Category.friendly.find params[:category_id]
+      @current = Category.find params[:category_id]
       @pipelines = @current.descendant_shared_pipelines
     else
       @pipelines = Pipeline.shared
