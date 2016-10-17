@@ -15,6 +15,8 @@
 #= require readmore
 #= require jquery.raty
 #= require ratyrate
+#= require social-share-button
+#= require social-share-button/wechat
 
 class GUID
   s4: ->

@@ -24,7 +24,7 @@
   .aui-group
     .aui-item style='width:66%'
       .title
-        h2 = @tool.name
+        h2 = tool_link(@tool)
 
       .section-separator
         h3.section-separator-title Introduction
@@ -76,14 +76,18 @@
             tr
               td Updated At
               td = ptime2 @tool.updated_at
+            tr
+              td Share
+              td = social_share_button_tag @tool.name
 
-      .panel
-        .panel-heading
-          h3.panel-title
-            | Tags
-        .panel-body
-          - for tag in @tool.tag_list
-            span.aui-lozenge.aui-lozenge-subtle.aui-lozenge-success> = tag
+      - unless @tool.tag_list.empty?
+        .panel
+          .panel-heading
+            h3.panel-title
+              | Tags
+          .panel-body
+            - for tag in @tool.tag_list
+              span.aui-lozenge.aui-lozenge-subtle.aui-lozenge-success> = tag
 
       .panel
         .panel-heading
@@ -101,7 +105,7 @@
               ' Performance
               = rating_for @tool, :performance, disable_after_rate: false, enable_half: true
 
-      - if @tool.releases.size > 0
+      - unless @tool.releases.empty?
         .panel
           .panel-heading
             h3.panel-title

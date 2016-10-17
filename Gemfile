@@ -48,6 +48,7 @@ gem 'bourbon'
 gem 'vam'
 
 gem 'gravatar_image_tag'
+gem 'social-share-button'
 
 # Maintaince mode
 gem 'turnout'
