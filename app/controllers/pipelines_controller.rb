@@ -7,6 +7,7 @@ class PipelinesController < ApplicationController
     if params[:category_id]
       @current = Category.find_by_slug params[:category_id]
       @pipelines = @current.descendant_shared_pipelines
+      @page_title = "Pipelines: #{@current.name}"
     else
       @pipelines = Pipeline.shared
     end
@@ -26,7 +27,7 @@ class PipelinesController < ApplicationController
 
   def search
     @categories = Category.roots
-    @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{params[:q].downcase}%")
+    @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{params[:q].downcase}%").page params[:page]
     render :index
   end
 

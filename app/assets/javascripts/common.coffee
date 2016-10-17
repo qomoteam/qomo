@@ -9,7 +9,7 @@
 #= require notie
 #= require aui
 #= require spin
-#= require validate
+#= require rails.validations
 #= require pace
 #= require dragula
 #= require readmore
@@ -45,24 +45,6 @@ window.App =
   unfreeze_canvas: ->
     $('#freeze_layer').hide()
     spinner.stop()
-
-  validate: ($form, constrains) ->
-    $form.submit (e) ->
-      errors = validate this, constrains
-      $form = $(this)
-      if errors
-        for field, msgs of errors
-          errorMsg = ''
-          if msgs.length > 1
-            errorMsg = '"' + ("#{msg}" for msg in msgs).join(',') + '"'
-          else
-            errorMsg = msgs[0]
-          $form.find("*[name='#{field}']")
-          .attr('data-aui-notification-field', true)
-          .attr('data-aui-notification-error', errorMsg)
-        return false
-      else
-        return true
 
   goto: (url) ->
     Turbolinks.visit(url)

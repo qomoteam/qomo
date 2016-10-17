@@ -7,6 +7,7 @@ class ToolsController < ApplicationController
     if params[:category_id]
       @current = Category.find_by_slug params[:category_id]
       @tools = @current.descendant_active_tools
+      @page_title = "Tools: #{@current.name}"
     else
       @tools = Tool.active
     end
@@ -20,7 +21,7 @@ class ToolsController < ApplicationController
 
   def search
     @categories = Category.roots
-    @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{params[:q].downcase}%")
+    @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{params[:q].downcase}%").page params[:page]
     render :index
   end
 

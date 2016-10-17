@@ -49,16 +49,6 @@ within 'tools', 'new, edit', ->
     $target.append $(sel_tpl_tr).text()
     return false
 
-  constrains =
-    'tool[name]':
-      presence: true
-      length:
-        minimum: 2
-        maximum: 30
-    'tool[command]':
-      presence: true
-
-  App.validate($('#edit-tool-form'), constrains)
 
   $('aui-toggle input[name=runnable]').change ->
     if this.checked

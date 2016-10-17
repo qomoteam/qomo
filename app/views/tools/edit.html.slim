@@ -8,7 +8,8 @@
           li.aui-nav-selected Edit
         - else
           li.aui-nav-selected New
-  = form_for @tool, multipart: true, html: {class: 'aui top-label', id: 'edit-tool-form'} do |f|
+
+  = form_for @tool, validate: true, html: {class: 'aui top-label', id: 'edit-tool-form', multipart: true} do |f|
     .aui-group
       .aui-item
         fieldset
@@ -33,7 +34,9 @@
                 = f.select :category_id, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, {}, {class: 'select long-field'}
             .aui-item
               .field-group
-                = f.label :tech_id, 'Technology'
+                = f.label :tech_id
+                  | Technology
+                  i.aui-icon.icon-required
                 = f.collection_select :tech_id, Tech.all, :id, :name, {include_blank: true}, {class: 'select long-field'}
 
           .aui-group
@@ -44,6 +47,8 @@
             .aui-item
               .field-group
                 = f.label :contributors
+                  | Contributors
+                  i.aui-icon.icon-required
                 = f.text_field :contributors, placeholder: 'Seperated by semicolon', class: 'text full-width-field'
 
           .aui-group
@@ -58,7 +63,9 @@
                 = f.text_field :tag_list, value: @tool.tag_list.join(','), class: 'text full-width-field'
 
               .field-group
-                = f.label :desc, 'Description'
+                = f.label :desc
+                  | Description
+                  i.aui-icon.icon-required
                 = f.text_field :desc, placeholder: 'Simple description.', class: 'text full-width-field novalidation'
 
               .field-group

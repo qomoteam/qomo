@@ -16,6 +16,8 @@ class Tool < ApplicationRecord
 
   before_save :update_slug
 
+  validates_presence_of :name, :category, :contributors, :desc, :tech
+
   def update_slug
     self.slug = self.name.parameterize
     if Tool.find_by_slug(self.slug)
@@ -91,7 +93,7 @@ class Tool < ApplicationRecord
     unless Dir.exist? dirpath
       FileUtils.mkdir_p dirpath
     end
-    if self.upload
+    unless self.upload.nil?
       if self.upload.original_filename.end_with? '.zip'
         Zip::File.open(self.upload.path) do |zip_file|
           zip_file.each do |entry|

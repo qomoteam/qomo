@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016081610) do
+ActiveRecord::Schema.define(version: 20161017141211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 20161016081610) do
     t.integer "rgt",                        null: false
     t.integer "depth",          default: 0, null: false
     t.integer "children_count", default: 0, null: false
-    t.integer "tech_id_id"
     t.string  "slug"
     t.index ["lft"], name: "index_categories_on_lft", using: :btree
     t.index ["parent_id"], name: "index_categories_on_parent_id", using: :btree
@@ -127,6 +126,7 @@ ActiveRecord::Schema.define(version: 20161016081610) do
     t.index ["cached_weighted_score"], name: "index_pipelines_on_cached_weighted_score", using: :btree
     t.index ["cached_weighted_total"], name: "index_pipelines_on_cached_weighted_total", using: :btree
     t.index ["featured"], name: "index_pipelines_on_featured", using: :btree
+    t.index ["shared"], name: "index_pipelines_on_shared", using: :btree
     t.index ["slug"], name: "index_pipelines_on_slug", using: :btree
   end
 
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 20161016081610) do
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree
     t.index ["owner_id"], name: "index_tools_on_owner_id", using: :btree
     t.index ["slug"], name: "index_tools_on_slug", using: :btree
+    t.index ["status"], name: "index_tools_on_status", using: :btree
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|

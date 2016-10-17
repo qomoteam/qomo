@@ -8,6 +8,8 @@ class Category < ApplicationRecord
 
   before_save :update_slug
 
+  validates_uniqueness_of :name
+
   def update_slug
     self.slug = self.name.parameterize
     if Category.find_by_slug(self.slug)
@@ -37,11 +39,11 @@ class Category < ApplicationRecord
 
 
   def descendant_active_tools
-    Tool.where(id: self.self_and_descendants.ids)
+    Tool.where(status: 1, category_id: self.self_and_descendants.ids)
   end
 
   def descendant_shared_pipelines
-    Pipeline.where(id: self.self_and_descendants.ids)
+    Pipeline.where(shared: true, category_id: self.self_and_descendants.ids)
   end
 
 

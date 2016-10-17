@@ -36,6 +36,8 @@ gem 'country_select'
 
 gem 'kaminari'
 
+gem 'client_side_validations', github: 'DavyJonesLocker/client_side_validations', branch: 'rails5'
+
 # Assets
 gem 'coffee-rails'
 gem 'slim-rails'
