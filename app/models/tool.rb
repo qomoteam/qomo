@@ -3,10 +3,6 @@ require 'zip'
 
 class Tool < ApplicationRecord
 
-  extend FriendlyId
-
-  friendly_id :name, use: [:slugged, :scoped, :finders], scope: :owner
-
   attr_accessor :upload
 
   acts_as_ordered_taggable
@@ -15,6 +11,15 @@ class Tool < ApplicationRecord
 
   before_destroy :rmdir
   before_save :sanitize
+
+  before_save :update_slug
+
+  def update_slug
+    self.slug = self.name.parameterize
+    if Tool.find_by_slug(self.slug)
+      self.slug = self.slug + '-1'
+    end
+  end
 
   scope :featured, -> { where('featured>?', 0).where(status: 1).order(featured: :desc) }
 

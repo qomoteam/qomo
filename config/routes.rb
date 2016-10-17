@@ -92,6 +92,7 @@ Rails.application.routes.draw do
       get :asset_download
       delete :asset_delete
       patch :toogle_featured
+      post :run
     end
   end
 

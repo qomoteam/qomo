@@ -20,7 +20,7 @@
     - tool = Tool.find(box[:tool].id)
     h5.tool-title
       ' Tool:
-      a href=tool_path(tool) target="_blank" = tool.name
+      = tool_link(tool)
     ol.params
       - for input in box[:tool].inputs
         li.input.param data-paramname=input['name']

@@ -91,8 +91,6 @@ GEM
     execjs (2.7.0)
     font-awesome-sass (4.6.2)
       sass (>= 3.2)
-    friendly_id (5.1.0)
-      activerecord (>= 4.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     gon (6.1.0)
@@ -275,7 +273,6 @@ DEPENDENCIES
   docker-api
   dvm
   font-awesome-sass
-  friendly_id
   gon
   gravatar_image_tag
   jbuilder

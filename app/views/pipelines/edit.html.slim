@@ -1,5 +1,5 @@
 .page-panel
-  = form_for @pipeline, html: {id: 'form-pipeline', class: 'aui'} do |f|
+  = form_for @pipeline, url: pipeline_path(@pipeline.id), html: {id: 'form-pipeline', class: 'aui'} do |f|
     .field-group
       = f.label :title
       = f.text_field :title, class: 'text long-field'

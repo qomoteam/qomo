@@ -15,7 +15,7 @@
 
       - if @pipeline.owner == current_user
         .aui-buttons
-          a.aui-button href=edit_pipeline_path(@pipeline) Edit
+          a.aui-button href=edit_pipeline_path(@pipeline.id) Edit
           a.aui-button href=pipeline_path(@pipeline) data-method='delete' data-confirm='Are you sure want to delete this pipeline?' Delete
 
       - if current_user&.has_role? :admin

@@ -31,7 +31,9 @@ class JobEngine
 
     #Fill the blank output param
     boxes.each do |k, v|
+      puts v
       tool = Tool.find v['tool_id']
+
       tool.params.each do |e|
         if e['type'] == 'tmp'
           boxes[k]['values'][e['name']] = File.join tmpdir, SecureRandom.uuid
@@ -50,6 +52,7 @@ class JobEngine
         end
       end
     end
+
 
     #Copy output param to input param for connected tools
     dg = RGL::DirectedAdjacencyGraph.new

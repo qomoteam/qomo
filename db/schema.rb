@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20161016081610) do
     t.index ["cached_weighted_score"], name: "index_pipelines_on_cached_weighted_score", using: :btree
     t.index ["cached_weighted_total"], name: "index_pipelines_on_cached_weighted_total", using: :btree
     t.index ["featured"], name: "index_pipelines_on_featured", using: :btree
-    t.index ["slug"], name: "index_pipelines_on_slug", unique: true, using: :btree
+    t.index ["slug"], name: "index_pipelines_on_slug", using: :btree
   end
 
   create_table "rates", force: :cascade do |t|
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(version: 20161016081610) do
     t.index ["featured"], name: "index_tools_on_featured", using: :btree
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree
     t.index ["owner_id"], name: "index_tools_on_owner_id", using: :btree
-    t.index ["slug"], name: "index_tools_on_slug", unique: true, using: :btree
+    t.index ["slug"], name: "index_tools_on_slug", using: :btree
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|

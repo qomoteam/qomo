@@ -21,6 +21,7 @@ class Admin::CategoriesController < Admin::ApplicationController
 
   def update
     category = Category.find params['id']
+    category.slug = nil
     category.update params.require('category').permit!
     redirect_to admin_categories_path
   end

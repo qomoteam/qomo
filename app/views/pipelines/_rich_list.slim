@@ -6,7 +6,7 @@
           - if show_user_prefix
             => user_tag pipeline.owner
             ' /
-          a> href=user_pipeline_path(pipeline.owner.username, pipeline.title) = pipeline.title
+          = pipeline_link(pipeline)
           = render 'pipelines/star', pipeline: pipeline
         p.desc == pipeline.desc
         .meta

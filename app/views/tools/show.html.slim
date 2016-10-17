@@ -92,7 +92,7 @@
       .panel
         .panel-heading
           h3.panel-title
-            | Community reviews
+            | Community Reviews
         .panel-body
           ul
             li
@@ -121,3 +121,41 @@
                     li
                       a> href=download_tool_release_path(release.tool, release, filename: df[:filename])  #{df[:filename]}
                       | (#{number_to_human_size df[:size]})
+
+      - if @tool.runnable
+        .panel
+          .panel-heading
+            h3.panel-title
+              | Run
+          .panel-body
+            = form_tag run_tool_path(@tool), method: :post, class: 'aui top-label'
+              - for input in @tool.inputs
+                .field-group
+                  = render 'tools/param_label', param: input
+                  = render 'tools/param_setter', param: input
+                  - unless input['desc'].blank?
+                    p.desc
+                      ' Description:
+                      = input['desc']
+
+              - for param in @tool.normal_params
+                .field-group
+                  = render 'tools/param_label', param: param
+                  = render 'tools/param_setter', param: param
+                  - unless param['desc'].blank?
+                    p.desc
+                      ' Description:
+                      = param['desc']
+
+              - for output in @tool.outputs
+                .field-group
+                  = render 'tools/param_label', param: output
+                  = render 'tools/param_setter', param: output
+                  - unless output['desc'].blank?
+                    p.desc
+                      ' Description:
+                      = output['desc']
+
+              .buttons-container
+                .buttons
+                  button.button.submit Submit

@@ -1,13 +1,19 @@
 class Category < ApplicationRecord
-  extend FriendlyId
-
-  friendly_id :name, use: [:slugged, :scoped, :finders]
 
   acts_as_nested_set
 
   UNCATEGORY_ID = -1
 
   default_scope -> { order :name }
+
+  before_save :update_slug
+
+  def update_slug
+    self.slug = self.name.parameterize
+    if Category.find_by_slug(self.slug)
+      self.slug = self.slug + '-1'
+    end
+  end
 
   has_many :tools
 

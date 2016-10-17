@@ -75,7 +75,7 @@ class PipelinesController < ApplicationController
     end
     values = JSON.parse params[:pipelinevalues]
 
-    job_name = params[:job_name] || "#{@pipeline.title} #{Time.now.hour}#{Time.now.min}#{Time.now.sec}"
+    job_name = params[:job_name].blank? ? "#{@pipeline.title} #{Time.now.hour}#{Time.now.min}#{Time.now.sec}" : params[:job_name]
     result = current_user.job_engine.submit job_name, @pipeline.merge_params(values), @pipeline.connections
 
     if result[:success]
@@ -91,7 +91,7 @@ class PipelinesController < ApplicationController
     if params[:user_id]
       user = User.find_by_username params[:user_id]
       not_found unless user
-      @pipeline = Pipeline.find_by_owner_id_and_title user.id, params['id']
+      @pipeline = Pipeline.find_by_owner_id_and_slug user.id, params['id']
     else
       @pipeline = Pipeline.find params['id']
     end
@@ -148,12 +148,14 @@ class PipelinesController < ApplicationController
   def update
     wrapping_json_param
     pipeline = Pipeline.find params['id']
+    not_found unless pipeline
+
     unauthorized if current_user != pipeline.owner
     pipeline.slug = nil
     pipeline.update params.require('pipeline').permit!
 
     respond_to do |format|
-      format.html { redirect_to pipeline_path(pipeline) }
+      format.html { redirect_to user_pipeline_path(pipeline.owner.username, pipeline.slug) }
       format.json { render json: {success: true} }
     end
   end

@@ -1,7 +1,11 @@
 module LinksHelper
 
   def tool_link(tool)
-    link_to tool.name, user_tool_path(tool.owner.username, tool.name)
+    link_to tool.name, user_tool_path(tool.owner.username, tool.slug)
+  end
+
+  def pipeline_link(pipeline)
+    link_to pipeline.title, user_pipeline_path(pipeline.owner.username, pipeline.slug)
   end
 
   def category_tools_link(category, show_count=false)

@@ -47,7 +47,7 @@ class ToolsController < ApplicationController
 
 
   def edit
-    @tool = Tool.friendly.find params['id']
+    @tool = Tool.find params['id']
     unauthorized if current_user != @tool.owner
 
     @categories = Category.all
@@ -95,7 +95,7 @@ class ToolsController < ApplicationController
     if params[:user_id]
       user = User.find_by_username params[:user_id]
       not_found unless user
-      @tool = Tool.find_by_owner_id_and_name user.id, params['id']
+      @tool = Tool.find_by_owner_id_and_slug user.id, params['id']
     else
       @tool = Tool.find params['id']
     end
@@ -189,6 +189,33 @@ class ToolsController < ApplicationController
     q = params[:q]
     tags = ActsAsTaggableOn::Tag.where('name like ?', "#{q}%")
     render json: tags.collect {|t| {id: t.name, text: t.name}}
+  end
+
+
+  def run
+    tool = Tool.find(params[:id])
+
+    not_found unless tool
+    unauthorized unless tool.runnable
+
+    job_name = "#{tool.name} #{Time.now.hour}#{Time.now.min}#{Time.now.sec}"
+
+    bid = SecureRandom.uuid
+    boxes = {}
+    boxes[bid] = {
+        id: bid,
+        tool_id: tool.id,
+        values: Hash[*tool.params.collect {|p| [p['name'], params[p['name']]]}.flatten]
+    }.stringify_keys
+
+    result = current_user.job_engine.submit job_name, boxes, []
+
+    if result[:success]
+      redirect_to job_path(result[:job_id])
+    else
+      flash[:notice] = 'Error occured when submit pipeline'
+      redirect_to user_tool_path(tool.owner.username, tool.slug)
+    end
   end
 
 end

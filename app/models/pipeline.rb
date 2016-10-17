@@ -1,14 +1,19 @@
 class Pipeline < ApplicationRecord
 
-  extend FriendlyId
-
-  friendly_id :title, use: [:slugged, :scoped, :finders], scope: :owner
-
   acts_as_votable
 
   belongs_to :owner, class_name: 'User'
 
   belongs_to :category
+
+  before_save :update_slug
+
+  def update_slug
+    self.slug = self.title.parameterize
+    if Pipeline.find_by_slug(self.slug)
+      self.slug = self.slug + '-1'
+    end
+  end
 
   default_scope -> { order('created_at DESC') }
 
