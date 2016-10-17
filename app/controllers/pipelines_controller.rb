@@ -1,6 +1,6 @@
 class PipelinesController < ApplicationController
 
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:index, :search, :show]
 
   def index
     @categories = Category.roots
@@ -19,7 +19,13 @@ class PipelinesController < ApplicationController
       render 'inline', layout: nil
       return
     end
+  end
 
+
+  def search
+    @categories = Category.roots
+    @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{params[:q].downcase}%")
+    render :index
   end
 
 

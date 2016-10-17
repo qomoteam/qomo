@@ -1,6 +1,6 @@
 class ToolsController < ApplicationController
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :search, :show]
 
   def index
     @categories = Category.roots
@@ -15,6 +15,13 @@ class ToolsController < ApplicationController
   def my
     @tools = current_user.tools
   end
+
+  def search
+    @categories = Category.roots
+    @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{params[:q].downcase}%")
+    render :index
+  end
+
 
   def new
     @tool = Tool.new

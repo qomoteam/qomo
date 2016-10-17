@@ -3,6 +3,10 @@
     .primary
       h3 Tools
     .secondary
+      = form_tag search_tools_path, method: 'get', class: 'quicksearch aui' do
+        input autocomplete="off" placeholder='Search' type='text' name='q' value=params[:q]
+        button.aui-button
+          i.fa.fa-search
       .aui-buttons
         - if not_guest_user?
           a.aui-button.aui-button-primary.hint--bottom href=my_tools_path aria-label='My own tools' My Tools
@@ -18,6 +22,7 @@
               h3 = tool_link(tool)
               p.desc == tool.desc
               .meta
+                span Category: #{category_tools_link(tool.category)}
                 span Contributors: #{tool.contributors}
                 span Downloads: #{tool.download_count}
                 span Citation: #{tool.citation}

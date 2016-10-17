@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     end
 
     collection do
+      get :search
       post :boxes
       get :tags
       get :my
@@ -97,6 +98,7 @@ Rails.application.routes.draw do
 
   resources :pipelines do
     collection do
+      get :search
       get :my
     end
     member do

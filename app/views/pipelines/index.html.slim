@@ -3,6 +3,10 @@
     .primary
       h3 Pipelines
     .secondary
+      = form_tag search_pipelines_path, method: 'get', class: 'quicksearch aui' do
+        input autocomplete="off" placeholder='Search' type='text' name='q' value=params[:q]
+        button.aui-button
+          i.fa.fa-search
       a.aui-button.aui-button-primary href=my_pipelines_path My Pipelines
 
   .aui-group
