@@ -6,7 +6,7 @@
   .field-group
     = f.label :parent_id
       | Parent
-    = f.select :parent_id, nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }.unshift(["No Parent", nil]), {}, {class: 'select long-field'}
+    = f.select :parent_id, nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }.unshift(['No Parent', nil]), {}, {class: 'select long-field'}
 
   .buttons-container
     .buttons
