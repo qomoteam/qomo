@@ -10,6 +10,8 @@ class PipelinesController < ApplicationController
     else
       @pipelines = Pipeline.shared
     end
+
+    @pipelines = @pipelines.page params[:page]
   end
 
 

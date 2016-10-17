@@ -22,11 +22,13 @@
               h3 = tool_link(tool)
               p.desc == tool.desc
               .meta
-                span Category: #{category_tools_link(tool.category)}
                 span Contributors: #{tool.contributors}
+              .meta
+                span Category: #{category_tools_link(tool.category)}
                 span Downloads: #{tool.download_count}
                 span Citation: #{tool.citation}
                 span Updated At: #{ptime2 tool.updated_at}
+        = paginate @tools
       - else
         .empty-placeholder
           | No tools

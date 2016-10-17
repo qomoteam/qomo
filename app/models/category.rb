@@ -37,19 +37,11 @@ class Category < ApplicationRecord
 
 
   def descendant_active_tools
-    if self.leaf?
-      self.tools.active
-    else
-      self.leaves.collect { |c| c.tools.active }.flatten
-    end
+    Tool.where(id: self.self_and_descendants.ids)
   end
 
   def descendant_shared_pipelines
-    if self.leaf?
-      self.pipelines.shared
-    else
-      self.leaves.collect { |c| c.pipelines.shared }.flatten
-    end
+    Pipeline.where(id: self.self_and_descendants.ids)
   end
 
 

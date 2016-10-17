@@ -2,6 +2,8 @@ class Pipeline < ApplicationRecord
 
   acts_as_votable
 
+  paginates_per 10
+
   belongs_to :owner, class_name: 'User'
 
   belongs_to :category

@@ -10,6 +10,8 @@ class ToolsController < ApplicationController
     else
       @tools = Tool.active
     end
+
+    @tools = @tools.page params[:page]
   end
 
   def my

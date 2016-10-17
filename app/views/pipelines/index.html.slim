@@ -14,3 +14,4 @@
       = render 'pipelines/categories_sidebar', categories: @categories
     .aui-item
       = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
+      = paginate @pipelines

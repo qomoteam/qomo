@@ -9,6 +9,8 @@ class Tool < ApplicationRecord
 
   ratyrate_rateable :usability, :performance, :reliability
 
+  paginates_per 10
+
   before_destroy :rmdir
   before_save :sanitize
 
