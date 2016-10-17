@@ -30,7 +30,7 @@
             .aui-item
               .field-group
                 = f.label :category_id, 'Category'
-                = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
+                = f.select :category_id, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, {}, {class: 'select long-field'}
             .aui-item
               .field-group
                 = f.label :tech_id, 'Technology'

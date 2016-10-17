@@ -2,7 +2,7 @@ class Pipeline < ApplicationRecord
 
   extend FriendlyId
 
-  friendly_id :title, use: :slugged
+  friendly_id :title, use: [:slugged, :scoped, :finders], scope: :owner
 
   acts_as_votable
 

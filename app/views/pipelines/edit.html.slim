@@ -10,7 +10,7 @@
 
     .field-group
       = f.label :category
-      = f.collection_select :category_id, @categories, :id, :name, {}, {class: 'select long-field'}
+      = f.select :category_id, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, {}, {class: 'select long-field'}
 
     .field-group
       = f.label :desc, 'Description'

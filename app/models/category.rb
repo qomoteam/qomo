@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   extend FriendlyId
 
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: [:slugged, :scoped, :finders]
 
   acts_as_nested_set
 

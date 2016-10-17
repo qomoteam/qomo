@@ -47,7 +47,7 @@ class ToolsController < ApplicationController
 
 
   def edit
-    @tool = Tool.find params['id']
+    @tool = Tool.friendly.find params['id']
     unauthorized if current_user != @tool.owner
 
     @categories = Category.all
@@ -58,6 +58,7 @@ class ToolsController < ApplicationController
     tool = Tool.find params['id']
     unauthorized if current_user != tool.owner
 
+    tool.slug = nil
     tool.update params.require(:tool).permit!
     tool.copy_upload!
     redirect_to edit_tool_path(tool)

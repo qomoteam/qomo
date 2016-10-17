@@ -5,7 +5,7 @@ class Tool < ApplicationRecord
 
   extend FriendlyId
 
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: [:slugged, :scoped, :finders], scope: :owner
 
   attr_accessor :upload
 

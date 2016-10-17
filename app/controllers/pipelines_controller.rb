@@ -149,6 +149,7 @@ class PipelinesController < ApplicationController
     wrapping_json_param
     pipeline = Pipeline.find params['id']
     unauthorized if current_user != pipeline.owner
+    pipeline.slug = nil
     pipeline.update params.require('pipeline').permit!
 
     respond_to do |format|
