@@ -55,7 +55,7 @@ class Tool < ApplicationRecord
 
 
   def inputs
-    self.params.select { |k| k['type'].downcase == 'input' } || []
+    self.params&.select { |k| k['type'].downcase == 'input' } || []
   end
 
 
@@ -66,7 +66,7 @@ class Tool < ApplicationRecord
 
 
   def outputs
-    self.params.select { |k| k['type'].downcase == 'output' } || []
+    self.params&.select { |k| k['type'].downcase == 'output' } || []
   end
 
 
@@ -76,7 +76,7 @@ class Tool < ApplicationRecord
 
 
   def normal_params
-    self.params.reject { |k| %w(input output tmp).include? k['type'].downcase } || []
+    self.params&.reject { |k| %w(input output tmp).include? k['type'].downcase } || []
   end
 
 
