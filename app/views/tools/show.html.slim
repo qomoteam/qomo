@@ -129,33 +129,13 @@
               | Run
           .panel-body
             = form_tag run_tool_path(@tool), method: :post, class: 'aui top-label'
-              - for input in @tool.inputs
-                .field-group
-                  = render 'tools/param_label', param: input
-                  = render 'tools/param_setter', param: input
-                  - unless input['desc'].blank?
-                    p.desc
-                      ' Description:
-                      = input['desc']
-
-              - for param in @tool.normal_params
-                .field-group
-                  = render 'tools/param_label', param: param
-                  = render 'tools/param_setter', param: param
-                  - unless param['desc'].blank?
-                    p.desc
-                      ' Description:
-                      = param['desc']
-
-              - for output in @tool.outputs
-                .field-group
-                  = render 'tools/param_label', param: output
-                  = render 'tools/param_setter', param: output
-                  - unless output['desc'].blank?
-                    p.desc
-                      ' Description:
-                      = output['desc']
+              = render partial: 'tools/params_fields', locals: {params: @tool.inputs}
+              = render partial: 'tools/params_fields', locals: {params: @tool.normal_params}
+              = render partial: 'tools/params_fields', locals: {params: @tool.outputs}
 
               .buttons-container
                 .buttons
-                  button.button.submit Submit
+                  - if user_signed_in?
+                    button.button.submit Submit
+                  - else
+                    button.button.submit.hint--warning.hint--bottom-right disabled='disabled' aria-label='You need sign in to run this tool' Submit

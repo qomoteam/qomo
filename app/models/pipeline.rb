@@ -12,7 +12,8 @@ class Pipeline < ApplicationRecord
 
   def update_slug
     self.slug = self.title.parameterize
-    if Pipeline.find_by_slug(self.slug)
+    s = Pipeline.find_by_slug(self.slug)
+    if s and s != self
       self.slug = self.slug + '-1'
     end
   end

@@ -12,7 +12,8 @@ class Category < ApplicationRecord
 
   def update_slug
     self.slug = self.name.parameterize
-    if Category.find_by_slug(self.slug)
+    s = Category.find_by_slug(self.slug)
+    if s and s != self
       self.slug = self.slug + '-1'
     end
   end

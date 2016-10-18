@@ -1,19 +1,19 @@
 - case param['type']
   - when 'input'
-    input.value.input.text.long-field type='text' name=param['name'] value=param['value']
+    input.value.input.text.long-field type='text' name=param['name'] value=param['value'] disabled=param['disabled']
 
   - when 'output'
-    input.value.output.text.long-field type='text' name=param['name'] value=param['value']
+    input.value.output.text.long-field type='text' name=param['name'] value=param['value'] disabled=param['disabled']
 
   - when 'string'
-    input.value.text.long-field type='text' name=param['name'] value=param['value']
+    input.value.text.long-field type='text' name=param['name'] value=param['value'] disabled=param['disabled']
 
   - when 'path'
-    input.value.text.long-field type='text' name=param['name'] value=param['value']
+    input.value.text.long-field type='text' name=param['name'] value=param['value'] disabled=param['disabled']
 
   - when 'bool'
-    input.value type='checkbox' name=param['name'] checked=param['value']
+    input.value type='checkbox' name=param['name'] checked=param['value'] disabled=param['disabled']
 
   - when 'select'
-    select.value.select.long-field name=param['name'] multiple=param['multiple']
+    select.value.select.long-field name=param['name'] multiple=param['multiple']  disabled=param['disabled']
       = options_for_select param['options'].map {|e| [e['label'], e['value']]}, (param['options'].select {|e| e['selected']}).map {|e| e['value']}
