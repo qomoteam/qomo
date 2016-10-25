@@ -133,6 +133,18 @@ class Tool < ApplicationRecord
     self.releases.sum &:download_count
   end
 
+  def abbrev
+    pa = self.name.split
+    if pa.size > 1
+      r = pa.collect { |e| e[0].upcase }.join
+    else
+      r = self.name.chars.select { |e| /[[:upper:]]/.match(e)}.join
+    end
+    if r.size < 2
+      r = self.name[0..3].upcase
+    end
+    r
+  end
 
   private
 

@@ -69,6 +69,20 @@
                 = f.text_field :desc, placeholder: 'Simple description.', class: 'text full-width-field novalidation'
 
               .field-group
+                = f.label :publications
+                  ' Publications
+                  a.add-el-from-template data-target='publications' data-template='tpl_publication' href='javascript:;'
+                    i.fa.fa-plus
+                .full-width-field
+                  #publications.draggable-container
+                    - if @tool.publications.size > 0
+                      - for publication in @tool.publications
+                        = render partial: 'tools/publication', locals: {publication: publication}
+                    - else
+                      .empty-placeholder
+                        p No publications attached
+
+              .field-group
                 = f.label :introduction
                 = f.text_area :introduction, placeholder: 'Introduction for your tool', class: 'textarea full-width-field tinymce', rows: '10'
 
@@ -77,19 +91,6 @@
                 = f.text_area :manual, placeholder: 'Details about this tool', class: 'textarea full-width-field tinymce', rows: '20'
 
       .aui-item style='width: 50%'
-        fieldset
-          h4.fieldset-title
-            ' Publications
-            a.add-el-from-template data-target='publications' data-template='tpl_publication' href='javascript:;'
-              i.fa.fa-plus
-          #publications.draggable-container
-            - if @tool.publications.size > 0
-              - for publication in @tool.publications
-                = render partial: 'tools/publication', locals: {publication: publication}
-            - else
-              .empty-placeholder
-                p No publications attached
-
         fieldset
           h4.fieldset-title
             ' Releases
