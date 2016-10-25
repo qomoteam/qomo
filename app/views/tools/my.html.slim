@@ -6,8 +6,10 @@
         li My
     .secondary
       .aui-buttons
-        - if user_signed_in? and (not current_user.has_role? :guest)
+        - if not_guest_user?
           a.aui-button.aui-button-primary.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
+        - else
+          a.aui-button.aui-button-primary.hint--bottom href='#' aria-label='Guest users are not allowed to create new tool' Create Tool
 
   - if @tools.count > 0
     table.aui
