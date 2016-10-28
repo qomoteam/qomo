@@ -10,6 +10,9 @@
       .aui-buttons
         - if not_guest_user?
           a.aui-button.aui-button-primary.hint--bottom href=my_tools_path aria-label='My own tools' My Tools
+          
+      .aui-buttons
+        - if not_guest_user?
           a.aui-button.aui-button-primary.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
         - else
           a.aui-button.aui-button-primary.hint--bottom href='#' disabled='disabled' aria-label='Guest users are not allowed to create new tool' Create Tool
