@@ -15,5 +15,5 @@
     input.value type='checkbox' name=param['name'] checked=param['value'] disabled=param['disabled']
 
   - when 'select'
-    select.value.select.long-field name=param['name'] multiple=param['multiple']  disabled=param['disabled']
+    select.value.select.select2.long-field name=param['name'] multiple=param['multiple']  disabled=param['disabled']
       = options_for_select param['options'].map {|e| [e['label'], e['value']]}, (param['options'].select {|e| e['selected']}).map {|e| e['value']}
