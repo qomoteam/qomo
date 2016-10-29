@@ -31,21 +31,22 @@
       table.aui.def
         tr
           td width='100px' Title
-          td = @pipeline.title
+          td = pipeline_link @pipeline
         - if @pipeline.shared
         tr
           td Accession
-          td = @pipeline.accession_label
+          td
+            a href=pipeline_path(@pipeline.accession_label) = @pipeline.accession_label
         tr
           td Contributors
           td == contributors_tag @pipeline.all_contributors
         tr
           td Permalink
           td
-            a href=user_pipeline_url(@pipeline.owner.username, @pipeline.title) = user_pipeline_url @pipeline.owner.username, @pipeline.title
+            = pipeline_permalink @pipeline
         tr
           td Citation
-          td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{user_pipeline_url @pipeline.owner.username, @pipeline.title} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
+          td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_permalink @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
         tr
           td Created At
           td = ptime @pipeline.created_at, current_user.try(:timezone)

@@ -56,17 +56,24 @@
           table.def
             tr
               td width='100px' Name
-              td = @tool.name
+              td = tool_link @tool
+
             - if @tool.active?
               tr
                 td Accession
-                td = @tool.accession_label
+                td
+                  a href=tool_path(@tool.accession_label) = @tool.accession_label
             tr
               td Citation
               td = @tool.citation
             tr
               td Contributors
               td == contributors_tag @tool.contributors
+
+            - if @tool.active!
+              tr
+                td Permalink
+                td = tool_permalink @tool
             tr
               td Website
               td
