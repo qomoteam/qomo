@@ -10,7 +10,7 @@
         - else
           li.aui-nav-selected New
 
-  = form_for [@release.tool, @release], multipart: true, html: {class: 'aui', id: 'edit-release-form'} do |f|
+  = form_for [@release.tool, @release], html: {class: 'aui', id: 'edit-release-form', multipart: true} do |f|
     .aui-group
       .aui-item style='width: 38%'
         .field-group
