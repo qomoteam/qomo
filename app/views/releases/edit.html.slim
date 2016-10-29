@@ -41,7 +41,7 @@
               td
                 ul.menu
                   li
-                    a.delete-asset href=asset_delete_tool_path(@release.tool, path: file[:filename], release_id: @release.id) title='Delete this file' data-confirm='Are you sure to delete this file?'
+                    a.remove-tr href=asset_delete_tool_path(@release.tool, path: file[:filename], release_id: @release.id) title='Delete this file' data-confirm='Are you sure to delete this file?'
                       i.fa.fa-trash-o
                   li
                     a href=asset_download_tool_path(@release.tool, path: file[:filename], release_id: @release.id) title='Download this file'

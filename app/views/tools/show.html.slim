@@ -57,6 +57,10 @@
             tr
               td width='100px' Name
               td = @tool.name
+            - if @tool.active?
+              tr
+                td Accession
+                td = @tool.accession_label
             tr
               td Citation
               td = @tool.citation
@@ -76,9 +80,11 @@
             tr
               td Updated At
               td = ptime2 @tool.updated_at
-            tr
-              td Share
-              td = social_share_button_tag @tool.name
+
+            - if @tool.active?
+              tr
+                td Share
+                td = social_share_button_tag @tool.name
 
       - unless @tool.tag_list.empty?
         .panel
@@ -89,21 +95,22 @@
             - for tag in @tool.tag_list
               span.aui-lozenge.aui-lozenge-subtle.aui-lozenge-success> = tag
 
-      .panel
-        .panel-heading
-          h3.panel-title
-            | Community Reviews
-        .panel-body
-          ul
-            li
-              ' Reliability
-              = rating_for @tool, :reliability, disable_after_rate: false, enable_half: true
-            li
-              ' Usability
-              = rating_for @tool, :usability, disable_after_rate: false, enable_half: true
-            li
-              ' Performance
-              = rating_for @tool, :performance, disable_after_rate: false, enable_half: true
+      - if @tool.active?
+        .panel
+          .panel-heading
+            h3.panel-title
+              | Community Reviews
+          .panel-body
+            ul
+              li
+                ' Reliability
+                = rating_for @tool, :reliability, disable_after_rate: false, enable_half: true
+              li
+                ' Usability
+                = rating_for @tool, :usability, disable_after_rate: false, enable_half: true
+              li
+                ' Performance
+                = rating_for @tool, :performance, disable_after_rate: false, enable_half: true
 
       - unless @tool.releases.empty?
         .panel

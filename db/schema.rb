@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017141211) do
+ActiveRecord::Schema.define(version: 20161029082416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 20161017141211) do
   end
 
   create_table "pipelines", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string   "accession"
     t.string   "title"
     t.string   "contributors"
     t.text     "desc"
@@ -118,6 +117,8 @@ ActiveRecord::Schema.define(version: 20161017141211) do
     t.float    "cached_weighted_average", default: 0.0
     t.integer  "featured",                default: 0
     t.string   "slug"
+    t.integer  "accession"
+    t.index ["accession"], name: "index_pipelines_on_accession", unique: true, using: :btree
     t.index ["cached_votes_down"], name: "index_pipelines_on_cached_votes_down", using: :btree
     t.index ["cached_votes_score"], name: "index_pipelines_on_cached_votes_score", using: :btree
     t.index ["cached_votes_total"], name: "index_pipelines_on_cached_votes_total", using: :btree
@@ -221,6 +222,8 @@ ActiveRecord::Schema.define(version: 20161017141211) do
     t.boolean  "runnable",     default: true
     t.json     "publications", default: []
     t.string   "slug"
+    t.integer  "accession"
+    t.index ["accession"], name: "index_tools_on_accession", unique: true, using: :btree
     t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
     t.index ["featured"], name: "index_tools_on_featured", using: :btree
     t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree

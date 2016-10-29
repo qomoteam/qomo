@@ -8,7 +8,7 @@ class Pipeline < ApplicationRecord
 
   belongs_to :category
 
-  before_save :update_slug
+  before_save :update_slug, :set_accession
 
   def update_slug
     self.slug = self.title.parameterize
@@ -25,10 +25,6 @@ class Pipeline < ApplicationRecord
 
   def self.shared_count
     Pipeline.where(shared: true).count
-  end
-
-  def accession
-    "QP-#{self.id}"
   end
 
   def all_contributors
@@ -137,6 +133,20 @@ class Pipeline < ApplicationRecord
       end
     end
     self.boxes = jb
+  end
+
+
+  def accession_label
+    "QP#{sprintf '%06d', self.accession}"
+  end
+
+
+  private
+
+  def set_accession
+    if (not self.accession) and self.shared
+      self.accession = (Pipeline.maximum(:accession) || 0) + 1
+    end
   end
 
 

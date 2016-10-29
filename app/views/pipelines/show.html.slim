@@ -30,11 +30,12 @@
     .aui-item style='width: 65%'
       table.aui.def
         tr
-          td width='100px' Accession
-          td  = @pipeline.accession
+          td width='100px' Title
+          td = @pipeline.title
+        - if @pipeline.shared
         tr
-          td Title
-          td  = @pipeline.title
+          td Accession
+          td = @pipeline.accession_label
         tr
           td Contributors
           td == contributors_tag @pipeline.all_contributors

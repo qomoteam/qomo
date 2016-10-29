@@ -14,7 +14,7 @@ class Tool < ApplicationRecord
   before_destroy :rmdir
   before_save :sanitize
 
-  before_save :update_slug
+  before_save :update_slug, :set_accession
 
   validates_presence_of :name, :category, :contributors, :desc, :tech
 
@@ -146,10 +146,20 @@ class Tool < ApplicationRecord
     r
   end
 
+  def accession_label
+    "QT#{sprintf '%06d', self.accession}"
+  end
+
   private
 
   def sanitize
     self.command = self.command.split(/\r?\n/).each { |e| e.strip }.join("\n")
+  end
+
+  def set_accession
+    if (not self.accession) and self.active?
+      self.accession = (Tool.maximum(:accession) || 0) + 1
+    end
   end
 
 end
