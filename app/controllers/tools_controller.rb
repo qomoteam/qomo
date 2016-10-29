@@ -21,7 +21,15 @@ class ToolsController < ApplicationController
 
   def search
     @categories = Category.roots
-    @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{params[:q].downcase}%").page params[:page]
+    q = params[:q]
+    if q.upcase.starts_with? 'QT'
+      accession = q[2..-1].to_i
+      tool = Tool.find_by_accession accession
+      if tool&.active?
+        return redirect_to user_tool_path(tool.owner.username, tool.slug)
+      end
+    end
+    @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{q.downcase}%").page params[:page]
     render :index
   end
 

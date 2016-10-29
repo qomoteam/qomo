@@ -27,7 +27,15 @@ class PipelinesController < ApplicationController
 
   def search
     @categories = Category.roots
-    @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{params[:q].downcase}%").page params[:page]
+    q = params[:q]
+    if q.upcase.starts_with? 'QP'
+      accession = q[2..-1].to_i
+      pipeline = Pipeline.find_by_accession accession
+      if pipeline&.shared
+        return redirect_to user_pipeline_path(pipeline.owner.username, pipeline.slug)
+      end
+    end
+    @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{q.downcase}%").page params[:page]
     render :index
   end
 
