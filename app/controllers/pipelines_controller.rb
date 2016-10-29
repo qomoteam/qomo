@@ -18,23 +18,15 @@ class PipelinesController < ApplicationController
 
   def my
     @pipelines = current_user.pipelines
-    if params[:inline]
-      render 'inline', layout: nil
-      return
-    end
+    render 'inline', layout: nil if params[:inline]
   end
 
 
   def search
     @categories = Category.roots
     q = params[:q]
-    if q.upcase.starts_with? 'QP'
-      accession = q[2..-1].to_i
-      pipeline = Pipeline.find_by_accession accession
-      if pipeline&.shared
-        return redirect_to user_pipeline_path(pipeline.owner.username, pipeline.slug)
-      end
-    end
+    pipeline = Pipeline.find_by_accession_label q
+    return redirect_to user_pipeline_path(pipeline.owner.username, pipeline.slug) if pipeline&.shared
     @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{q.downcase}%").page params[:page]
     render :index
   end
@@ -104,7 +96,8 @@ class PipelinesController < ApplicationController
       not_found unless user
       @pipeline = Pipeline.find_by_owner_id_and_slug user.id, params['id']
     else
-      @pipeline = Pipeline.find params['id']
+      @pipeline = Pipeline.find_by_accession_label params['id']
+      @pipeline = Pipeline.find params['id'] unless @pipeline&.shared
     end
 
     not_found unless @pipeline

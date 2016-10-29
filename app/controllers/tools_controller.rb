@@ -22,13 +22,10 @@ class ToolsController < ApplicationController
   def search
     @categories = Category.roots
     q = params[:q]
-    if q.upcase.starts_with? 'QT'
-      accession = q[2..-1].to_i
-      tool = Tool.find_by_accession accession
-      if tool&.active?
-        return redirect_to user_tool_path(tool.owner.username, tool.slug)
-      end
-    end
+    tool = Tool.find_by_accession_label q
+
+    return redirect_to user_tool_path(tool.owner.username, tool.slug) if tool&.active?
+
     @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{q.downcase}%").page params[:page]
     render :index
   end
@@ -107,7 +104,8 @@ class ToolsController < ApplicationController
       not_found unless user
       @tool = Tool.find_by_owner_id_and_slug user.id, params['id']
     else
-      @tool = Tool.find params['id']
+      @tool = Tool.find_by_accession_label params['id']
+      @tool = Tool.find params['id'] unless @tool&.active?
     end
 
     not_found unless @tool
