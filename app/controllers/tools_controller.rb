@@ -32,7 +32,6 @@ class ToolsController < ApplicationController
     render template: 'tools/edit'
   end
 
-
   def create
     unauthorized if current_user.has_role? :guest
 

@@ -42,12 +42,7 @@ class PubmedApi # a very basic Pubmed API
   end
 
   def self.query_citation(doi)
-    doc = Nokogiri::HTML(open("https://xs.glgoo.com/scholar?hl=en-us&q=#{doi}",
-                            'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
-                            'Referer' => 'https://xs.glgoo.com/',
-                            'Cookie' => 'NID=84=FBVe58-dCCvIKoqVn0nwNuuy1z7qx96YO_W0dlou-blufSQK-nQYx62_uW8_nUqBM_ZSL4WplsQhjGLu3T7uW4XVl36t4HulQ7Ep_epyJiIOgKcOsrpj-7QdBL3SPLyn; GSP=LM=1470905923:S=oEVc65NwjFtRAhTb; xip=124.16.129.6'
-                       ))
-    doc.css('.gs_r:first-of-type .gs_fl>a:first-child').text.strip['Cited by '.length..-1]
+    open("http://xingjianxu.me:8000/?doi=#{doi}")
   end
 
 end
