@@ -44,24 +44,29 @@
             = @user.bio
 
     .aui-item
-      h5
-        | Shared Pipelines
-        small Total: #{@user.pipelines.shared.count}
+      .panel
+        .panel-heading
+          h3.panel-title
+            | Shared Pipelines
+            small Total: #{@user.pipelines.shared.count}
+        .panel-body
+          - if @user.pipelines.shared.count > 0
+            = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.shared, show_user_prefix: false}
+          - else
+            .empty-placeholder
+              p You haven't shared any pipeline yet ...
 
-      - if @user.pipelines.shared.count > 0
-        = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.shared, show_user_prefix: false}
-      - else
-        .empty-placeholder
-          p You haven't shared any pipeline yet ...
-
-      h5
-        | Shared Tools
-        small Total: #{@user.tools.active.count}
-      - if @user.tools.active.count > 0
-        table.aui
-          = render partial: 'tools/rich_list_tr', locals: {tools: @user.tools.active}
-      - else
-        .empty-placeholder
-          p You don't have any public tool yet ...
-          p
-            | (For security reasons, you may contact administrator to make your tool public available)
+      .panel
+        .panel-heading
+          h3.panel-title
+            | Shared Tools
+            small Total: #{@user.tools.shared.count}
+        .panel-body
+          - if @user.tools.shared.count > 0
+            table.aui
+              = render partial: 'tools/rich_list_tr', locals: {tools: @user.tools.shared}
+          - else
+            .empty-placeholder
+              p You don't have any public tool yet ...
+              p
+                | (For security reasons, you may contact administrator to make your tool public available)
