@@ -4,8 +4,8 @@ class HomeController < ApplicationController
     @pipelines = Pipeline.featured.limit(5)
     @tools = Tool.featured.limit(16)
     @count = {}
-    @count[:tools] = Tool.active_count
-    @count[:pipelines] = Pipeline.shared_count
+    @count[:tools] = Tool.shared.count
+    @count[:pipelines] = Pipeline.shared.count
   end
 
   def about
