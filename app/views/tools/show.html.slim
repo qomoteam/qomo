@@ -58,7 +58,7 @@
               td width='100px' Name
               td = tool_link @tool
 
-            - if @tool.active?
+            - if @tool.shared
               tr
                 td Accession
                 td
@@ -70,7 +70,7 @@
               td Contributors
               td == contributors_tag @tool.contributors
 
-            - if @tool.active!
+            - if @tool.shared
               tr
                 td Permalink
                 td = tool_permalink @tool
@@ -88,7 +88,7 @@
               td Updated At
               td = ptime2 @tool.updated_at
 
-            - if @tool.active?
+            - if @tool.shared
               tr
                 td Share
                 td = social_share_button_tag @tool.name
@@ -102,7 +102,7 @@
             - for tag in @tool.tag_list
               span.aui-lozenge.aui-lozenge-subtle.aui-lozenge-success> = tag
 
-      - if @tool.active?
+      - if @tool.shared
         .panel
           .panel-heading
             h3.panel-title

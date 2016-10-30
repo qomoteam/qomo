@@ -26,14 +26,11 @@ class Tool < ApplicationRecord
     end
   end
 
-  scope :featured, -> { where('featured>?', 0).where(status: 1).order(featured: :desc) }
+  scope :featured, -> { where('featured>?', 0).where(shared: true).order(featured: :desc) }
 
-  scope :active_runnable, -> { where(runnable: true, status: 1).order(:name) }
-
-  enum status: {
-      inactive: 0,
-      active: 1
-  }
+  scope :shared, -> { where(shared: true).order(:name) }
+  scope :shared_runnable, -> { where(runnable: true, shared: true).order(:name) }
+  scope :private_runnable, -> { where(runnable: true, shared: false).order(:name) }
 
   default_scope -> { order('name ASC') }
 
@@ -43,10 +40,6 @@ class Tool < ApplicationRecord
   belongs_to :tech
 
   has_many :releases, -> { order(created_at: :desc) }
-
-  def self.active_count
-    Tool.active.count
-  end
 
 
   def rmdir
@@ -163,7 +156,7 @@ class Tool < ApplicationRecord
   end
 
   def set_accession
-    if (not self.accession) and self.active?
+    if (not self.accession) and self.shared
       self.accession = (Tool.maximum(:accession) || 0) + 1
     end
   end

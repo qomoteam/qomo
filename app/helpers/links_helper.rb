@@ -20,7 +20,7 @@ module LinksHelper
   def category_tools_link(category, show_count=false)
     text = category.name
     if show_count
-      text = "#{text} (#{category.descendant_active_tools.count})"
+      text = "#{text} (#{category.descendant_shared_tools.count})"
     end
     link_to text, category_tools_path(category.slug)
   end

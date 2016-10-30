@@ -6,10 +6,10 @@ class ToolsController < ApplicationController
     @categories = Category.roots
     if params[:category_id]
       @current = Category.find_by_slug params[:category_id]
-      @tools = @current.descendant_active_tools
+      @tools = @current.descendant_shared_tools
       @page_title = "Tools: #{@current.name}"
     else
-      @tools = Tool.active
+      @tools = Tool.shared
     end
 
     @tools = @tools.page params[:page]
@@ -24,7 +24,7 @@ class ToolsController < ApplicationController
     q = params[:q]
     tool = Tool.find_by_accession_label q
 
-    return redirect_to user_tool_path(tool.owner.username, tool.slug) if tool&.active?
+    return redirect_to user_tool_path(tool.owner.username, tool.slug) if tool&.shared
 
     @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{q.downcase}%").page params[:page]
     render :index
@@ -44,7 +44,7 @@ class ToolsController < ApplicationController
     @tool.owner = current_user
 
     if @current_user.has_role? :admin
-      @tool.active!
+      @tool.shared = true
     end
 
     @tool.save
@@ -105,13 +105,13 @@ class ToolsController < ApplicationController
       @tool = Tool.find_by_owner_id_and_slug user.id, params['id']
     else
       @tool = Tool.find_by_accession_label params['id']
-      @tool = Tool.find params['id'] unless @tool&.active?
+      @tool = Tool.find params['id'] unless @tool&.shared
     end
 
     not_found unless @tool
     @page_title = @tool.name
 
-    unauthorized unless @tool.active? or @tool.owner == current_user
+    unauthorized unless @tool.shared or @tool.owner == current_user
   end
 
 

@@ -22,7 +22,7 @@ class Category < ApplicationRecord
 
   has_many :pipelines
 
-  def active_tools
+  def shared_tools
     self.tools.where status: 1
   end
 
@@ -39,8 +39,8 @@ class Category < ApplicationRecord
   end
 
 
-  def descendant_active_tools
-    Tool.where(status: 1, category_id: self.self_and_descendants.ids)
+  def descendant_shared_tools
+    Tool.where(shared: true, category_id: self.self_and_descendants.ids)
   end
 
   def descendant_shared_pipelines
