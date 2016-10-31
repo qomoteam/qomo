@@ -17,7 +17,7 @@
               | Featured Pipelines
               small Total: #{@count[:pipelines]}
             = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
-            a.btn-load-more href=explore_pipelines_path Show more pipelines ... ...
+            a.btn-load-more href=pipelines_path Show more pipelines ... ...
 
           .aui-item.tools
             h3
@@ -26,12 +26,10 @@
             ul
               - for tool in @tools
                 li
-                  => user_tag tool.owner
-                  ' /
                   a href=tool_path(tool)
                     => tool.name
                   - if tool.tech
                     span.aui-lozenge.tech-label class="tech-label-#{tool.tech.name.downcase.dasherize}" = tool.tech.name
               li
-                a.btn-load-more href=explore_tools_path Show more tools ... ...
+                a.btn-load-more href=tools_path Show more tools ... ...
 
