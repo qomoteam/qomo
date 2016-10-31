@@ -1,0 +1,6 @@
+- if not_guest_user?
+  a> href=bookmark_pipeline_path(pipeline)
+    - if current_user.voted_for? pipeline
+      i.fa.fa-bookmark
+    - else
+      i.fa.fa-bookmark-o

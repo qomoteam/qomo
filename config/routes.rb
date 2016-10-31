@@ -103,6 +103,7 @@ Rails.application.routes.draw do
     collection do
       get :search
       get :my
+      get :bookmarks
     end
     member do
       get :import
@@ -112,6 +113,7 @@ Rails.application.routes.draw do
       get :export
       post :run
       post :star
+      get :bookmark
     end
   end
 

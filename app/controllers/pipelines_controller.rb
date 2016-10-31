@@ -103,6 +103,8 @@ class PipelinesController < ApplicationController
     not_found unless @pipeline
     unauthorized unless @pipeline.shared or @pipeline.owner == current_user
 
+    set_page_title "Pipeline: #{@pipeline.title}"
+
     respond_to do |format|
       format.html
       format.json do
@@ -175,18 +177,6 @@ class PipelinesController < ApplicationController
   end
 
 
-  def star
-    pipeline = Pipeline.find(params[:id])
-    user = current_user
-    if user.voted_for? pipeline
-      pipeline.unliked_by user
-    else
-      pipeline.liked_by user
-    end
-    render json: {success: true}
-  end
-
-
   def toogle_featured
     unauthorized unless current_user.has_role? :admin
 
@@ -208,6 +198,28 @@ class PipelinesController < ApplicationController
     params[:pipeline][:boxes] = JSON.parse(params[:pipeline][:boxes]) if params[:pipeline][:boxes]
     params[:pipeline][:connections] = JSON.parse(params[:pipeline][:connections]) if params[:pipeline][:connections]
     params[:pipeline][:params] = JSON.parse(params[:pipeline][:params])if params[:pipeline][:params]
+  end
+
+
+  def bookmark
+    pipeline = Pipeline.find params[:id]
+    not_found unless pipeline
+    #unauthorized unless pipeline.shared
+    unauthorized if current_user.guest?
+
+    if current_user.liked? pipeline
+      current_user.unlike pipeline
+    else
+      current_user.likes pipeline
+    end
+
+    redirect_back fallback_location: user_pipeline_path(pipeline.owner.username, pipeline.slug)
+  end
+
+
+  def bookmarks
+    set_page_title 'Pipeline Bookmarks'
+    @pipelines = current_user.get_voted(Pipeline).page params[:page]
   end
 
 end

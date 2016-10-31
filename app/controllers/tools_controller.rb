@@ -135,6 +135,7 @@ class ToolsController < ApplicationController
     render json: {success: true}
   end
 
+
   def asset_download
     if params[:release_id]
       release = Release.find params[:release_id]
@@ -155,6 +156,7 @@ class ToolsController < ApplicationController
     path = File.join(prefix, params[:path])
     send_file path
   end
+
 
   def asset_delete
     if params[:release_id]
@@ -177,6 +179,7 @@ class ToolsController < ApplicationController
     render json: {success: true}
   end
 
+
   def toogle_featured
     unauthorized unless current_user.has_role? :admin
 
@@ -191,6 +194,7 @@ class ToolsController < ApplicationController
 
     redirect_to tool_path(tool)
   end
+
 
   # Return tags in Select2 JSON format
   def tags
@@ -230,7 +234,7 @@ class ToolsController < ApplicationController
   def bookmark
     tool = Tool.find params[:id]
     not_found unless tool
-    unauthorized unless tool.shared
+    #unauthorized unless tool.shared
     unauthorized if current_user.guest?
 
     if current_user.liked? tool
@@ -244,7 +248,8 @@ class ToolsController < ApplicationController
 
 
   def bookmarks
-    @tools = current_user.get_voted Tool
+    set_page_title 'Tool Bookmarks'
+    @tools = current_user.get_voted(Tool).page params[:page]
   end
 
 end

@@ -1,1 +1,8 @@
-= render partial: 'tools/rich_list', locals: {tools: @tools}
+.page-panel
+  .nav-toolbar
+    .primary
+      ol.aui-nav.aui-nav-breadcrumbs
+        li: a href=tools_path Tools
+        li Bookmarks
+
+  = render partial: 'tools/rich_list', locals: {tools: @tools}

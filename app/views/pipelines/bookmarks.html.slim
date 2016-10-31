@@ -1,0 +1,8 @@
+.page-panel
+  .nav-toolbar
+    .primary
+      ol.aui-nav.aui-nav-breadcrumbs
+        li: a href=pipelines_path Pipelines
+        li Bookmarks
+
+  = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines}

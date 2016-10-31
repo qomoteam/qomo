@@ -1,5 +1,5 @@
 $ ->
-  $('.pipeline-star').click (e) ->
+  $('#pipeline-star').click (e) ->
     e.preventDefault()
     self = this
     $i = $(self).find('i')

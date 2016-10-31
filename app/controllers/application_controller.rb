@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     raise UnAuthorized.new
   end
 
+  def set_page_title(title)
+    @page_title = title
+  end
+
   private
 
   def handle_not_found

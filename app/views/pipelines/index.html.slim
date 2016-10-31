@@ -7,7 +7,14 @@
         input autocomplete="off" placeholder='Search' type='text' name='q' value=params[:q]
         button.aui-button
           i.fa.fa-search
-      a.aui-button.aui-button-primary href=my_pipelines_path My Pipelines
+
+      .aui-buttons
+        a.aui-button href=my_pipelines_path My Pipelines
+
+      .aui-buttons
+        a.aui-button.hint--bottom href=bookmarks_pipelines_path aria-label='My bookmarks'
+          i.fa.fa-bookmark>
+          | Bookmarks
 
   .aui-group
     .aui-item style='width: 20%'

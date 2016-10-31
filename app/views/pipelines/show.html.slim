@@ -1,8 +1,20 @@
 .page-panel
   .nav-toolbar
     .primary
-      h3 Pipeline: #{@pipeline.title}
+      h3
+        ' Pipeline: #{@pipeline.title}
+
     .secondary
+      .aui-buttons
+        - if current_user.liked? @pipeline
+          a.aui-button.hint--bottom.hint--info aria-label='Unbookmark this item!' href=bookmark_pipeline_path(@pipeline)
+            i.fa.fa-bookmark>
+            | Unbookmark
+        - else
+          a.aui-button.hint--bottom.hint--info aria-label='Bookmark this item!' href=bookmark_pipeline_path(@pipeline)
+            i.fa.fa-bookmark-o>
+            | Bookmark
+
       .aui-buttons
         - if @pipeline.owner != current_user
           a.aui-button.load href=import_pipeline_path(@pipeline) Import
