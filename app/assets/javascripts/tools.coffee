@@ -84,12 +84,15 @@ within 'tools', 'new, edit', ->
       results: (data) ->
         results: data
 
-  $('.publication_search').click (e) ->
+  $(document).on 'click', '.publication_search', (e) ->
     e.preventDefault()
     $table = $(this).closest('table.publication')
     pmid = $table.find('input[name="tool[publications][][pmid]"]').val()
     return unless pmid
+    $i = $(this).find('i')
+    $i.attr('class', 'fa fa-spinner fa-spin fa-fw')
     $.get Routes.publication_search(), {pmid: pmid}, (p) ->
+      $i.attr('class', 'fa fa-search')
       return unless p.pmid
       $table.find('input[name="tool[publications][][title]"]').val(p.title)
       $table.find('input[name="tool[publications][][authors]"]').val(p.authors.join(', '))
