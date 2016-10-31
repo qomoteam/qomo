@@ -20,13 +20,15 @@
               i.fa.fa-bookmark-o>
               | Bookmark
 
-      - if @tool.owner == current_user and (not @tool.shared)
+      - if @tool.owner == current_user
         .aui-buttons
           a.aui-button href=edit_tool_path(@tool) Edit
-          - if @tool.audit
-            a.aui-button href=request_audit_tool_path(@tool) disabled='disabled' Request Shareable
-          - else
-            a.aui-button href=request_audit_tool_path(@tool) Request Shareable
+          
+          - unless @tool.shared
+            - if @tool.audit
+              a.aui-button href=request_audit_tool_path(@tool) disabled='disabled' Request Shareable
+            - else
+              a.aui-button href=request_audit_tool_path(@tool) Request Shareable
 
 
       - if current_user&.has_role? :admin
