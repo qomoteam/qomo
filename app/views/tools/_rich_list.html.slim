@@ -11,9 +11,12 @@
               h3
                 = tool_link(tool)
               .secondary
-                a.aui-button.hint--bottom.hint--info aria-label='Unbookmark this item!' href=bookmark_tool_path(tool)
-                  i.fa.fa-bookmark>
-                  | Unbookmark
+                - if not_guest_user?
+                  a> href=bookmark_tool_path(tool)
+                    - if current_user.voted_for? tool
+                      i.fa.fa-bookmark
+                    - else
+                      i.fa.fa-bookmark-o
 
             p.desc == tool.desc
             .meta

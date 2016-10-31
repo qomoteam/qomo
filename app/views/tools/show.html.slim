@@ -23,7 +23,7 @@
       - if @tool.owner == current_user
         .aui-buttons
           a.aui-button href=edit_tool_path(@tool) Edit
-          
+
           - unless @tool.shared
             - if @tool.audit
               a.aui-button href=request_audit_tool_path(@tool) disabled='disabled' Request Shareable
