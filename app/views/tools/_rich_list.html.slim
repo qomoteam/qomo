@@ -23,7 +23,7 @@
               span Downloads: #{tool.download_count}
               span Citation: #{tool.citation}
               span Updated At: #{ptime2 tool.updated_at}
-      = paginate tools
+  = paginate tools
 - else
   .empty-placeholder
     | No tools
