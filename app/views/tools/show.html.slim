@@ -9,6 +9,15 @@
             a href=category_tools_path(category.slug) = category.name
 
     .secondary
+      - if not_guest_user?
+        .aui-buttons
+          - if current_user.liked? @tool
+            a.aui-button.hint--bottom.hint--info aria-label='Bookmark this item!' href=bookmark_tool_path(@tool)
+              i.fa.fa-bookmark-o
+          - else
+            a.aui-button.hint--bottom.hint--info aria-label='Unbookmark this item!' href=bookmark_tool_path(@tool)
+              i.fa.fa-bookmark
+
       - if @tool.owner == current_user
         .aui-buttons
           a.aui-button href=edit_tool_path(@tool) Edit

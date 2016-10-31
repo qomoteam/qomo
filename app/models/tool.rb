@@ -5,6 +5,7 @@ class Tool < ApplicationRecord
 
   attr_accessor :upload
 
+  acts_as_votable
   acts_as_ordered_taggable
 
   ratyrate_rateable :usability, :performance, :reliability

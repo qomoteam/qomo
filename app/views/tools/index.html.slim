@@ -7,9 +7,13 @@
         input autocomplete="off" placeholder='Search' type='text' name='q' value=params[:q]
         button.aui-button
           i.fa.fa-search
-      .aui-buttons
-        - if not_guest_user?
-          a.aui-button.aui-button-primary.hint--bottom href=my_tools_path aria-label='My own tools' My Tools
+
+      - if not_guest_user?
+        .aui-buttons
+          a.aui-button.hint--bottom href=my_tools_path aria-label='My own tools' My Tools
+
+        .aui-buttons
+          a.aui-button.hint--bottom href=bookmarks_tools_path aria-label='My own tools' Bookmarks
 
       .aui-buttons
         - if not_guest_user?
@@ -21,25 +25,4 @@
     .aui-item style='width: 20%'
       = render 'tools/categories_sidebar', categories: @categories
     .aui-item
-      - if @tools.size > 0
-        ol.rich-list.tools
-          - for tool in @tools
-            li
-              .aui-group
-                .aui-item style='width: 100px'
-                  .logo-container
-                    h5 = tool.abbrev
-                .aui-item
-                  h3 = tool_link(tool)
-                  p.desc == tool.desc
-                  .meta
-                    span Contributors: #{tool.contributors}
-                  .meta
-                    span Category: #{category_tools_link(tool.category)}
-                    span Downloads: #{tool.download_count}
-                    span Citation: #{tool.citation}
-                    span Updated At: #{ptime2 tool.updated_at}
-        = paginate @tools
-      - else
-        .empty-placeholder
-          | No tools
+      = render partial: 'tools/rich_list', locals: {tools: @tools}

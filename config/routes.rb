@@ -84,6 +84,7 @@ Rails.application.routes.draw do
       post :boxes
       get :tags
       get :my
+      get :bookmarks
     end
 
     member do
@@ -93,6 +94,7 @@ Rails.application.routes.draw do
       delete :asset_delete
       patch :toogle_featured
       post :run
+      get :bookmark
     end
   end
 
