@@ -95,6 +95,7 @@ Rails.application.routes.draw do
       patch :toogle_featured
       post :run
       get :bookmark
+      get :request_audit
     end
   end
 
@@ -148,6 +149,16 @@ Rails.application.routes.draw do
     root to: 'home#index', as: :root
     get 'dashboard', to: 'home#index'
     resources :categories
+
+    resources :tools do
+      member do
+        get :approve_audit
+      end
+      collection do
+        get :audit
+      end
+    end
+
     resources :users do
       collection do
         delete :destroy_expired

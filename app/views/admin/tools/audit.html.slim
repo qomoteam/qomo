@@ -1,0 +1,13 @@
+table.aui
+  thead
+    tr
+      th Name
+      th User
+      th
+  tbody
+    - for tool in @tools
+      tr
+        td = tool.name
+        td = user_tag(tool.owner)
+        td
+          a href=approve_audit_admin_tool_path(tool) Approve

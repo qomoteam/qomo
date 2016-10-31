@@ -234,7 +234,7 @@ class ToolsController < ApplicationController
   def bookmark
     tool = Tool.find params[:id]
     not_found unless tool
-    #unauthorized unless tool.shared
+    unauthorized unless tool.shared
     unauthorized if current_user.guest?
 
     if current_user.liked? tool
@@ -250,6 +250,16 @@ class ToolsController < ApplicationController
   def bookmarks
     set_page_title 'Tool Bookmarks'
     @tools = current_user.get_voted(Tool).page params[:page]
+  end
+
+
+  def request_audit
+    tool = Tool.find params[:id]
+    not_found unless tool
+    unauthorized if tool.shared or current_user.guest?
+    tool.audit = true
+    tool.save
+    redirect_back fallback_location: user_tool_path(tool.owner.username, tool.slug)
   end
 
 end

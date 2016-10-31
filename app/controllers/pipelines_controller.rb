@@ -204,7 +204,7 @@ class PipelinesController < ApplicationController
   def bookmark
     pipeline = Pipeline.find params[:id]
     not_found unless pipeline
-    #unauthorized unless pipeline.shared
+    unauthorized unless pipeline.shared
     unauthorized if current_user.guest?
 
     if current_user.liked? pipeline

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030070726) do
+ActiveRecord::Schema.define(version: 20161031081812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -223,6 +223,7 @@ ActiveRecord::Schema.define(version: 20161030070726) do
     t.string   "slug"
     t.integer  "accession"
     t.boolean  "shared",       default: false
+    t.boolean  "audit",        default: false
     t.index ["accession"], name: "index_tools_on_accession", unique: true, using: :btree
     t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
     t.index ["featured"], name: "index_tools_on_featured", using: :btree
@@ -259,6 +260,7 @@ ActiveRecord::Schema.define(version: 20161030070726) do
     t.datetime "updated_at",                          null: false
     t.text     "bio"
     t.string   "country"
+    t.uuid     "uid"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
@@ -271,9 +273,9 @@ ActiveRecord::Schema.define(version: 20161030070726) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.string   "votable_id"
+    t.uuid     "votable_id"
     t.string   "votable_type"
-    t.string   "voter_id"
+    t.uuid     "voter_id"
     t.string   "voter_type"
     t.boolean  "vote_flag"
     t.string   "vote_scope"
