@@ -153,6 +153,7 @@ Rails.application.routes.draw do
     resources :tools do
       member do
         get :approve_audit
+        get :decline_audit
       end
       collection do
         get :audit

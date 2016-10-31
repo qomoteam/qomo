@@ -31,13 +31,17 @@
               a.aui-button href=request_audit_tool_path(@tool) Request Shareable
 
 
-      - if current_user&.has_role? :admin
+      - if current_user&.admin?
         .aui-buttons
           - if @tool.featured == 0
             - flabel = 'Featured'
           - else
             - flabel = 'Unfeatured'
           a.aui-button data-method='patch' href=toogle_featured_tool_path(@tool) = flabel
+          - if @tool.shared
+            a.aui-button href=decline_audit_admin_tool_path(@tool) Unshare
+          - else
+            a.aui-button href=approve_audit_admin_tool_path(@tool) Share
 
   .aui-group
     .aui-item style='width:66%'
