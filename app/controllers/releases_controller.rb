@@ -18,7 +18,7 @@ class ReleasesController < ApplicationController
 
     release.copy_download_files!
 
-    redirect_to edit_tool_release_path(release.tool, release)
+    redirect_to user_tool_path(release.tool.owner.username, release.tool.slug)
   end
 
 
@@ -38,7 +38,7 @@ class ReleasesController < ApplicationController
 
     release.copy_download_files!
 
-    redirect_to edit_tool_release_path(release.tool, release)
+    redirect_to user_tool_path(release.tool.owner.username, release.tool.slug)
   end
 
 
@@ -47,7 +47,7 @@ class ReleasesController < ApplicationController
     unauthorized if current_user != release.tool.owner
 
     release.destroy!
-    render json: {success: true}
+    redirect_back fallback_location: user_tool_path(release.tool.owner.username, release.tool.slug)
   end
 
 

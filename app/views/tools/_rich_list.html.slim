@@ -11,13 +11,7 @@
               h3
                 = tool_link(tool)
               .secondary
-                - if not_guest_user?
-                  a> href=bookmark_tool_path(tool)
-                    - if current_user.voted_for? tool
-                      i.fa.fa-bookmark
-                    - else
-                      i.fa.fa-bookmark-o
-
+                = render partial: 'tools/bookmark', locals: {tool: tool}
             p.desc == tool.desc
             .meta
               span Contributors: #{tool.contributors}

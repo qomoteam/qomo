@@ -2,7 +2,7 @@
   h2
     ' Job: #{@job.name}
 
-  .meta
+  .job-meta
     span Created At: #{ptime @job.created_at, current_user.timezone}
     span Updated At: #{ptime @job.updated_at, current_user.timezone}
     span Progress: #{number_to_percentage @job.progress*100, precision: 0}

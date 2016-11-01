@@ -2,7 +2,7 @@ within 'tools', 'show', ->
   $('input.input.value').each ->
     App.bindFileSelector(this)
 
-within 'tools', 'new, edit', ->
+within 'tools', 'new, edit, edit_runtimeconf', ->
   $('input[type=checkbox].mkexe-asset').click ->
     $.post Routes.asset_mkexe_tool(this.dataset.tid),
       path: this.dataset.path

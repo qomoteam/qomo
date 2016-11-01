@@ -29,7 +29,7 @@ class ToolsController < ApplicationController
 
     return redirect_to user_tool_path(tool.owner.username, tool.slug) if tool&.shared
 
-    @tools = Tool.where(status: 1).where('lower(name) like ?', "%#{q.downcase}%").page params[:page]
+    @tools = Tool.shared.where('lower(name) like ?', "%#{q.downcase}%").page params[:page]
     render :index
   end
 
@@ -40,8 +40,9 @@ class ToolsController < ApplicationController
     render template: 'tools/edit'
   end
 
+
   def create
-    unauthorized if current_user.has_role? :guest
+    authorize! :create, Tool
 
     @tool = Tool.new params.require(:tool).permit!
     @tool.owner = current_user
@@ -52,32 +53,37 @@ class ToolsController < ApplicationController
 
     @tool.save
     @tool.copy_upload!
-    redirect_to edit_tool_path(@tool)
+    redirect_to user_tool_path(tool.owner.username, tool.slug)
   end
 
 
   def edit
     @tool = Tool.find params['id']
-    unauthorized if current_user != @tool.owner
-
+    authorize! :edit, @tool
     @categories = Category.all
+  end
+
+  def edit_runtimeconf
+    @tool = Tool.find params['id']
+    authorize! :edit, @tool
   end
 
 
   def update
     tool = Tool.find params['id']
-    unauthorized if current_user != tool.owner
+    authorize! :update, @tool
 
     tool.slug = nil
     tool.update params.require(:tool).permit!
     tool.copy_upload!
-    redirect_to edit_tool_path(tool)
+
+    redirect_back fallback_location: user_tool_path(tool.owner.username, tool.slug)
   end
 
 
   def destroy
     tool = Tool.find params['id']
-    unauthorized if current_user != @tool.owner
+    authorize! :destroy, @tool
 
     tool.destroy!
     redirect_to action: 'index', status: :see_other
@@ -114,7 +120,8 @@ class ToolsController < ApplicationController
     not_found unless @tool
     @page_title = @tool.name
 
-    unauthorized unless @tool.shared or @tool.owner == current_user
+    authorize! :show, @tool
+
   end
 
 

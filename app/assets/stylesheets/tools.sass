@@ -47,12 +47,27 @@ small.tip
   margin-left: 10px
   font-size: 12px !important
 
-.release
-  margin-bottom: 5px
-  padding-bottom: 5px
-  border-bottom: 1px dashed #DEDEDE
-  ul
-    margin-top: 0
+ul.releases
+  list-style: none
+  padding-left: 0 !important
+  margin-right: 5px
+  & > li
+    margin-top: 10px
+    padding-bottom: 10px
+    border-bottom: 1px dashed #DEDEDE
+    &:last-child
+      border-bottom: none
+    .meta
+      margin-left: 17px
+      span
+        margin-right: 20px
+        color: #888
+        font-size: 0.8em
+    h5
+      color: #666
+    ul
+      margin-top: 0
+      list-style: none
 
 .title
   h2

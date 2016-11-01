@@ -1,0 +1,6 @@
+- if can? :bookmark, tool
+  a.hint--bottom.hint--info> href=bookmark_tool_path(tool) aria-label='Bookmark this item'
+    - if current_user.voted_for? tool
+      i.fa.fa-bookmark
+    - else
+      i.fa.fa-bookmark-o

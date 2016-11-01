@@ -9,17 +9,6 @@
             a href=category_tools_path(category.slug) = category.name
 
     .secondary
-      - if can? :bookmark, @tool
-        .aui-buttons
-          - if current_user.liked? @tool
-            a.aui-button.hint--bottom.hint--info aria-label='Unbookmark this item!' href=bookmark_tool_path(@tool)
-              i.fa.fa-bookmark>
-              | Unbookmark
-          - else
-            a.aui-button.hint--bottom.hint--info aria-label='Bookmark this item!' href=bookmark_tool_path(@tool)
-              i.fa.fa-bookmark-o>
-              | Bookmark
-
       - if can? :edit, @tool
         .aui-buttons
           a.aui-button href=edit_tool_path(@tool) Edit
@@ -29,7 +18,6 @@
                 a.aui-button href=request_audit_tool_path(@tool) disabled='disabled' Request Shareable
               - else
                 a.aui-button href=request_audit_tool_path(@tool) Request Shareable
-
 
       - if can? :audit, @tool
         .aui-buttons
@@ -47,6 +35,8 @@
     .aui-item style='width:66%'
       .title
         h2 = tool_link(@tool)
+        .secondary
+          = render partial: 'tools/bookmark', locals: {tool: @tool}
 
       .section-separator
         h3.section-separator-title Introduction
@@ -109,19 +99,17 @@
               td Updated At
               td = ptime2 @tool.updated_at
 
+            - unless @tool.tag_list.empty?
+              tr
+                td Tags
+                td
+                  - for tag in @tool.tag_list
+                    span.aui-lozenge.aui-lozenge-subtle.aui-lozenge-success> = tag
+
             - if @tool.shared
               tr
                 td Share
                 td = social_share_button_tag @tool.name
-
-      - unless @tool.tag_list.empty?
-        .panel
-          .panel-heading
-            h3.panel-title
-              | Tags
-          .panel-body
-            - for tag in @tool.tag_list
-              span.aui-lozenge.aui-lozenge-subtle.aui-lozenge-success> = tag
 
       - if @tool.shared
         .panel
@@ -140,29 +128,49 @@
                 ' Performance
                 = rating_for @tool, :performance, disable_after_rate: false, enable_half: true
 
-      - unless @tool.releases.empty?
-        .panel
-          .panel-heading
-            h3.panel-title
-              | Downloads
-          .panel-body
-            - for release in @tool.releases
-              .release
-                h5
-                  | Version: #{release.version}
-                  small #{ptime2 release.updated_at}; Download count: #{release.download_count}
-                ul
-                  - for df in release.download_files
-                    li
-                      a> href=download_tool_release_path(release.tool, release, filename: df[:filename])  #{df[:filename]}
-                      | (#{number_to_human_size df[:size]})
+      .panel
+        .panel-heading
+          h3.panel-title
+            | Downloads
+          .secondary
+            - if can? :update, @tool
+              a href=new_tool_release_path(@tool)
+                i.fa.fa-plus.fa-fw
+        .panel-body
+          - if @tool.releases.empty?
+            .empty-placeholder
+              p No downloads avaialble
+          - else
+            ul.releases
+              - for release in @tool.releases
+                li
+                  .title
+                    h5
+                      i.fa.fa-tag>
+                      | Version: #{release.version}
+                    .secondary
+                      - if can? :update, @tool
+                        a href=tool_release_path(release.tool, release) title='Delete this release' data-method='delete' data-confirm='Are you sure to delete this release?'
+                          i.fa.fa-trash-o
+                  .meta
+                    span Download count: #{release.download_count}
+                    span = ptime2 release.updated_at
+                  ul
+                    - for df in release.download_files
+                      li
+                        a> href=download_tool_release_path(release.tool, release, filename: df[:filename]) #{df[:filename]}
+                        | (#{number_to_human_size df[:size]})
 
-      - if @tool.runnable
-        .panel
-          .panel-heading
-            h3.panel-title
-              | Run
-          .panel-body
+      .panel
+        .panel-heading
+          h3.panel-title
+            | Run
+          .secondary
+            - if can? :update, @tool
+              a.hint--bottom.hint--info href=edit_runtimeconf_tool_path(@tool) aria-label='Edit runtime configuration'
+                i.fa.fa-edit.fa-fw
+        .panel-body
+          - if @tool.runnable
             = form_tag run_tool_path(@tool), method: :post, class: 'aui top-label'
               = render partial: 'tools/params_fields', locals: {params: @tool.inputs}
               = render partial: 'tools/params_fields', locals: {params: @tool.normal_params}
@@ -174,3 +182,6 @@
                     button.button.submit Submit
                   - else
                     button.button.submit.hint--warning.hint--bottom-right disabled='disabled' aria-label='You need sign in to run this tool' Submit
+          - else
+            .empty-placeholder
+              p This tool is not runnable in Qomo

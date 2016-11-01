@@ -1,0 +1,77 @@
+.page-panel.wider
+  .nav-toolbar
+    .primary
+      ol.aui-nav.aui-nav-breadcrumbs
+        li: a href=tools_path Tools
+        - if @tool.id
+          li = tool_link(@tool)
+          li.aui-nav-selected Edit
+          li Runtime Configuration
+        - else
+          li.aui-nav-selected New
+
+  = form_for @tool, validate: true, html: {class: 'aui', id: 'edit-tool-form', multipart: true} do |f|
+    .field-group
+      = f.label :runnable
+      = f.hidden_field :runnable
+      = aui_toggle :runnable, @tool.runnable
+    .runtime-settings style=hide_style(@tool.runnable)
+      .field-group
+        = f.label :params
+          ' Parameters
+          a.add-el-from-template.hint--info.hint--right data-template='tpl_table_param_def' data-target='param-defs' href='javascript:;' aria-label='Add param'
+            i.fa.fa-plus
+      .full-width-field
+        #param-defs.draggable-container
+          - if @tool.params
+            - for param in @tool.params
+              = render 'tools/table_param_def', param: param
+          - else
+            .empty-placeholder
+              p No parameters defined
+
+      .field-group
+        = f.label :command
+        = f.text_area :command, spellcheck: 'false', class: 'monospace textarea full-width-field', placeholder: 'command line', rows: '6'
+
+      h4 Tool Assets
+      = f.file_field :upload, class: 'upfile'
+      small.tip Notice: If you upload a zip (*.zip) file, it will be unziped automatically
+
+      table.aui
+        thead
+          tr
+            th style='width: 75%' File Name
+            th Executable
+            th
+        tbody
+          - if @tool.id and @tool.files.length > 0
+            - for file in @tool.files
+              tr
+                td = file[:path]
+                td
+                  input.mkexe-asset type='checkbox' data-path=file[:path] data-tid=@tool.id checked=file[:exe]
+                td
+                  ul.menu
+                    li
+                      a.remove-tr href=asset_delete_tool_path(@tool, path: file[:path]) title='Delete this file' data-confirm='Are you sure to delete this file?'
+                        i.fa.fa-trash-o
+                    li
+                      a href=asset_download_tool_path(@tool, path: file[:path]) title='Download this file'
+                        i.fa.fa-download
+          - else
+            tr
+                td.empty colspan=3 Empty
+
+    .buttons
+      = f.submit 'Save', class: 'aui-button aui-button-primary'
+
+script#tpl_table_param_def type='text/html'
+  = render partial: 'tools/table_param_def', locals: {param: {'type' => 'string'}}
+
+script#tpl_tr_option type='text/html'
+  = render partial: 'tools/param_select_option', locals: {option: {}}
+
+- for type in %w[input string bool select path output]
+  script id="tpl_param_#{type}" type='text/html'
+    = render partial: "tools/param_#{type}", locals: {param: {'type' => type}}

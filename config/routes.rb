@@ -96,6 +96,7 @@ Rails.application.routes.draw do
       post :run
       get :bookmark
       get :request_audit
+      get :edit_runtimeconf
     end
   end
 
