@@ -9,7 +9,7 @@
             a href=category_tools_path(category.slug) = category.name
 
     .secondary
-      - if not_guest_user?
+      - if can? :bookmark, @tool
         .aui-buttons
           - if current_user.liked? @tool
             a.aui-button.hint--bottom.hint--info aria-label='Unbookmark this item!' href=bookmark_tool_path(@tool)
@@ -20,18 +20,18 @@
               i.fa.fa-bookmark-o>
               | Bookmark
 
-      - if @tool.owner == current_user
+      - if can? :edit, @tool
         .aui-buttons
           a.aui-button href=edit_tool_path(@tool) Edit
+          - if can? :manage, @tool
+            - unless @tool.shared
+              - if @tool.audit
+                a.aui-button href=request_audit_tool_path(@tool) disabled='disabled' Request Shareable
+              - else
+                a.aui-button href=request_audit_tool_path(@tool) Request Shareable
 
-          - unless @tool.shared
-            - if @tool.audit
-              a.aui-button href=request_audit_tool_path(@tool) disabled='disabled' Request Shareable
-            - else
-              a.aui-button href=request_audit_tool_path(@tool) Request Shareable
 
-
-      - if current_user&.admin?
+      - if can? :audit, @tool
         .aui-buttons
           - if @tool.featured == 0
             - flabel = 'Featured'
@@ -63,7 +63,6 @@
               ' #{publication['authors']}, #{publication['date']} -
               em #{publication['journal']}
             .citation Cited by #{publication['citation']} (Google Schoolar as of #{ptime2 @tool.updated_at})
-
 
       .section-separator
         h3.section-separator-title Manual

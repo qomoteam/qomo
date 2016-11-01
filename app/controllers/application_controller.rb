@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
               ActionController::MethodNotAllowed,
               with: :handle_not_found
 
-  rescue_from UnAuthorized, with: :handle_unauthorized
+  rescue_from UnAuthorized, CanCan::AccessDenied, with: :handle_unauthorized
 
   def not_found
     raise NotFound.new

@@ -3,6 +3,8 @@ class ToolsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :search, :show]
 
   def index
+    authorize! :index, Tool
+
     @categories = Category.roots
     if params[:category_id]
       @current = Category.find_by_slug params[:category_id]
@@ -16,6 +18,7 @@ class ToolsController < ApplicationController
   end
 
   def my
+    authorize! :my, Tool
     @tools = current_user.tools
   end
 

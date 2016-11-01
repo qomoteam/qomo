@@ -8,17 +8,18 @@
         button.aui-button
           i.fa.fa-search
 
-      - if not_guest_user?
+      - if can? :my, Tool
         .aui-buttons
           a.aui-button.hint--bottom href=my_tools_path aria-label='My own tools' My Tools
 
+      - if can? :bookmark, Tool
         .aui-buttons
           a.aui-button.hint--bottom href=bookmarks_tools_path aria-label='My bookmarks'
             i.fa.fa-bookmark>
             | Bookmarks
 
       .aui-buttons
-        - if not_guest_user?
+        - if can? :create, Tool
           a.aui-button.aui-button-primary.hint--bottom href=new_tool_path aria-label='Create new tool' Create Tool
         - else
           a.aui-button.aui-button-primary.hint--bottom href='#' disabled='disabled' aria-label='Guest users are not allowed to create new tool' Create Tool
