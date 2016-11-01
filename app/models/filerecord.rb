@@ -11,7 +11,7 @@ class Filerecord < ApplicationRecord
   end
 
   def self.library
-    libs = self.where(shared: true, owner: User.find_by_username(Config.admin.username)).order(:path).to_a
+    libs = self.where(shared: true, owner: User.with_role(:admin)).order(:path).to_a
     libs = libs.delete_if do |lib|
       flag = false
       libs.each do |other|
