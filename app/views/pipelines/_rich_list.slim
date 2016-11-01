@@ -6,7 +6,8 @@
           h3
             = pipeline_link(pipeline)
           .secondary
-            = render 'pipelines/bookmark', pipeline: pipeline
+            - if can? :bookmark, Pipeline
+              = render 'pipelines/bookmark', pipeline: pipeline
         p.desc == pipeline.desc
         .meta
           span Category: #{pipeline.category.name}
