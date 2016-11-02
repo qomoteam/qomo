@@ -6,7 +6,7 @@ class Ability
 
     return unless user
 
-    if user.admin?
+    if user.is_admin?
       can :manage, :all
       return
     end
@@ -15,7 +15,7 @@ class Ability
     can [:run, :bookmark], [Pipeline, Tool], shared: true
 
 
-    cannot [:my, :create, :bookmark], [Pipeline, Tool] if user.guest?
+    cannot [:my, :create, :bookmark], [Pipeline, Tool] if user.is_guest?
 
   end
 end

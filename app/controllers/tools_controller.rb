@@ -245,7 +245,7 @@ class ToolsController < ApplicationController
     tool = Tool.find params[:id]
     not_found unless tool
     unauthorized unless tool.shared
-    unauthorized if current_user.guest?
+    unauthorized if current_user.is_guest?
 
     if current_user.liked? tool
       current_user.unlike tool
@@ -266,7 +266,7 @@ class ToolsController < ApplicationController
   def request_audit
     tool = Tool.find params[:id]
     not_found unless tool
-    unauthorized if tool.shared or current_user.guest?
+    unauthorized if tool.shared or current_user.is_guest?
     tool.audit = true
     tool.save
     redirect_back fallback_location: user_tool_path(tool.owner.username, tool.slug)

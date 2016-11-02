@@ -128,7 +128,7 @@ module ApplicationHelper
 
 
   def not_guest_user?
-    user_signed_in? and (not current_user.guest?)
+    user_signed_in? and (not current_user.is_guest?)
   end
 
 end

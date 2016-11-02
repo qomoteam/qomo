@@ -59,13 +59,6 @@ class User < ApplicationRecord
     end
   end
 
-  def guest?
-    self.has_role? :guest
-  end
-
-  def admin?
-    self.has_role? :admin
-  end
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
