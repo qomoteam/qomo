@@ -101,7 +101,7 @@ class PipelinesController < ApplicationController
     end
 
     not_found unless @pipeline
-    unauthorized unless @pipeline.shared or @pipeline.owner == current_user
+    authorize! :read, @pipeline
 
     set_page_title "Pipeline: #{@pipeline.title}"
 

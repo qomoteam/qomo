@@ -145,7 +145,7 @@ class Tool < ApplicationRecord
   end
 
   def self.find_by_accession_label(label)
-    nil unless label.upcase.starts_with? 'QT'
+    return nil unless label.upcase.starts_with? 'QT'
     accession = label[2..-1].to_i
     self.find_by_accession accession
   end

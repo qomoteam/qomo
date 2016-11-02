@@ -141,7 +141,7 @@ class Pipeline < ApplicationRecord
   end
 
   def self.find_by_accession_label(label)
-    nil unless label.upcase.starts_with? 'QP'
+    return nil unless label.upcase.starts_with? 'QP'
     accession = label[2..-1].to_i
     self.find_by_accession accession
   end

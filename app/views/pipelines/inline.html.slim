@@ -8,7 +8,6 @@ table.aui
     = empty_row @pipelines, 3
     - for pipeline in @pipelines
       tr
-        td
-          a href=user_pipeline_path(pipeline.owner.username, pipeline.title) = pipeline.title
+        td = pipeline_link(pipeline)
         td = ptime pipeline.created_at, current_user.try(:timezone)
         td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
