@@ -48,7 +48,12 @@
         ol.publications
           li
             h5
-              a href="http://dx.doi.org/#{publication['doi']}" target='blank' = publication['title']
+              - if publication['doi'].present?
+                a href="http://dx.doi.org/#{publication['doi']}" target='blank' = publication['title']
+              - elsif publication['pmid'].present?
+                a href="http://www.ncbi.nlm.nih.gov/pubmed/#{publication['pmid']}" target='blank' = publication['title']
+              - else
+                = publication['title']
             .meta
               ' #{publication['authors']}, #{publication['date']} -
               em #{publication['journal']}
