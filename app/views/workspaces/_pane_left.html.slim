@@ -6,30 +6,8 @@
 
   #tools-selector.tabs-pane.active-pane
     input.search type='text'
-    - for root in Category.roots
-      - for c in [root] + root.leaves
-        - if c.tools.shared_runnable.size > 0
-          ul
-            li
-              h5
-                i.fa.fa-folder-open
-                | #{root.name}: #{c.name}
-              ul
-                - for tool in c.tools.shared_runnable
-                  li
-                    a.tool-link data-tid=tool.id href='#' = tool.name
-                    - unless tool.manual.blank?
-                      a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
 
-    - if current_user.tools.private_runnable.size > 0
-      ul
-        li
-          h5
-            i.fa.fa-folder-open
-            | Private
-          ul
-            - for tool in current_user.tools.private_runnable
-              li
-                a.tool-link data-tid=tool.id href='#' = tool.name
-                - unless tool.manual.blank?
-                  a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?
+    - for root in Category.roots
+      = render partial: 'workspaces/category_tools', locals: {category: root}
+
+    = render partial: 'workspaces/ul_tools', locals: {title: 'Private', tools: current_user.tools.private_runnable}

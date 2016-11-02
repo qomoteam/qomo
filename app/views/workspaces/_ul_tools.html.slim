@@ -1,0 +1,12 @@
+- if tools.size > 0
+  ul
+    li
+      h5
+        i.fa.fa-folder-open
+        = title
+      ul
+        - for tool in tools
+          li
+            a.tool-link data-tid=tool.id href='#' = tool.name
+            - unless tool.manual.blank?
+              a.tool-help data-tid=tool.id data-title=tool.name href=help_tool_path(tool) ?

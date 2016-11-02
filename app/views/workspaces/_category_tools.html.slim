@@ -1,0 +1,10 @@
+- if category.root?
+  - title = category.name
+- else
+  - title = "#{category.root.name}: #{category.name}"
+
+= render partial: 'workspaces/ul_tools', locals: {title: title, tools: category.tools.shared_runnable}
+
+- if category.root?
+  - for c in category.leaves
+    = render partial: 'workspaces/category_tools', locals: {category: c}
