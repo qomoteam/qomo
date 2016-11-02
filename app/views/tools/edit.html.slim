@@ -19,6 +19,10 @@
             i.aui-icon.icon-required
           = f.text_field :name, placeholder: 'Tool name', class: 'text long-field'
       .aui-item
+        - if current_user.has_role? :admin
+          .field-group
+            = f.label :dirname, 'Dirname'
+            = f.text_field :dirname, placeholder: 'Dirname', class: 'text full-width-field'
     .aui-group
       .aui-item
         .field-group
@@ -42,24 +46,19 @@
             | Contributors
             i.aui-icon.icon-required
           = f.text_field :contributors, placeholder: 'Seperated by semicolon', class: 'text full-width-field'
-
     .aui-group
       .aui-item
-        - if current_user.has_role? :admin
-          .field-group
-            = f.label :dirname, 'Dirname'
-            = f.text_field :dirname, placeholder: 'Dirname', class: 'text full-width-field'
-
         .field-group
           = f.label :tag_list, 'Tags'
           = f.text_field :tag_list, value: @tool.tag_list.join(','), class: 'text full-width-field'
-
+      .aui-item
         .field-group
           = f.label :desc
             | Description
             i.aui-icon.icon-required
           = f.text_field :desc, placeholder: 'Simple description.', class: 'text full-width-field novalidation'
-
+    .aui-group
+      .aui-item
         .field-group
           = f.label :publications
             ' Publications

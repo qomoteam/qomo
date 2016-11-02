@@ -23,6 +23,5 @@ module Qomo
 
     config.action_cable.allowed_request_origins = [/.*/]
     config.action_cable.disable_request_forgery_protection = true
-
   end
 end

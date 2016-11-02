@@ -67,6 +67,7 @@ gem 'dvm'
 
 # Support Websockets
 gem 'redis'
+gem 'redis-rails'
 
 group :development, :test do
   gem 'byebug'

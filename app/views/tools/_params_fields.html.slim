@@ -1,9 +1,8 @@
 - for param in params
   - param['disabled'] = true unless user_signed_in?
-  .field-group
+  .field-group.param
     = render 'tools/param_label', param: param
     = render 'tools/param_setter', param: param
     - unless param['desc'].blank?
-      p.desc
-        ' Description:
+      p.param-desc
         = param['desc']

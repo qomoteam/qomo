@@ -171,7 +171,7 @@
                 i.fa.fa-edit.fa-fw
         .panel-body
           - if @tool.runnable
-            = form_tag run_tool_path(@tool), method: :post, class: 'aui top-label'
+            = form_tag run_tool_path(@tool), method: :post, class: 'aui top-label', id: 'tool-runner'
               = render partial: 'tools/params_fields', locals: {params: @tool.inputs}
               = render partial: 'tools/params_fields', locals: {params: @tool.normal_params}
               = render partial: 'tools/params_fields', locals: {params: @tool.outputs}

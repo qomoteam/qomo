@@ -21,14 +21,14 @@
           ' Parameters
           a.add-el-from-template.hint--info.hint--right data-template='tpl_table_param_def' data-target='param-defs' href='javascript:;' aria-label='Add param'
             i.fa.fa-plus
-      .full-width-field
-        #param-defs.draggable-container
-          - if @tool.params
-            - for param in @tool.params
-              = render 'tools/table_param_def', param: param
-          - else
-            .empty-placeholder
-              p No parameters defined
+        .full-width-field
+          #param-defs.draggable-container
+            - if @tool.params
+              - for param in @tool.params
+                = render 'tools/table_param_def', param: param
+            - else
+              .empty-placeholder
+                p No parameters defined
 
       .field-group
         = f.label :command
