@@ -7,7 +7,7 @@
   #tools-selector.tabs-pane.active-pane
     input.search type='text'
     - for root in Category.roots
-      - for c in root.leaves
+      - for c in root.leaves+root
         - if c.tools.shared_runnable.size > 0
           ul
             li
