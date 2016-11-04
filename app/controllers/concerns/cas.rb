@@ -23,7 +23,7 @@ module Cas
         Rails.cache.write(ticket, resource.id, namespace: :cas, expires_in: 1000)
         redirect_to service.add_param(ticket: ticket)
       else
-        flash[:alert] = 'Username or password is incorrect!'
+        flash[:alert] = 'Invalid Login or password.'
         redirect_back fallback_location: root_path
       end
     end
