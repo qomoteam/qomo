@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     post 'users/guest_signin', to: 'users/sessions#guest_signin', as: 'guest_signin'
+    get 'cas/login', to: 'users/sessions#new'
+    get 'cas/serviceValidate', to: 'users/sessions#service_validate'
+    get 'cas/logout', to: 'users/sessions#cas_logout'
   end
 
   root 'home#index'

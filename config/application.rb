@@ -32,5 +32,6 @@ module Qomo
         html_tag
       end
     }
+    config.cache_store = :redis_store, 'redis://h2:6379/1/cache'
   end
 end

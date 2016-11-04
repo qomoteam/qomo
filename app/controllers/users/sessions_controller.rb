@@ -1,5 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
-# before_filter :configure_sign_in_params, only: [:create]
+  # before_filter :configure_sign_in_params, only: [:create]
+
+  include Cas
 
   def guest_signin
     user = User.create_guest
@@ -8,20 +10,26 @@ class Users::SessionsController < Devise::SessionsController
     sign_in_and_redirect user
   end
 
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  #GET /resource/sign_in
+  def new
+    @page_title = 'BIGD CAS Login'
+    super
+  end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    # Trapped in CAS protocal
+    if params[:service]
+      cas_login
+    else
+      super
+    end
+  end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super
+  end
 
   # protected
 

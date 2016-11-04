@@ -7,11 +7,14 @@
           a.aui-button.aui-button-link.hint--right.hint--warning { href=guest_signin_path data-method="post"
             aria-label='Guest user will be restricted to limited resource and deleted periodically' }
            | Or Try with Guest
+
         - if flash[:alert]
           .aui-message.aui-message-error
             p.title Login Error
             p = flash[:alert]
+
         = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
+          input type='hidden' name='service' value=params[:service]
           .field-group.top-label
             = f.label :login
             = f.text_field :login, autofocus: true, class: 'text long-field', placeholder: 'Username or Email'

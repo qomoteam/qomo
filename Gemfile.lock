@@ -201,6 +201,8 @@ GEM
     redis-activesupport (5.0.1)
       activesupport (>= 3, < 6)
       redis-store (~> 1.2.0)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     redis-rack (2.0.0)
       rack (~> 2.0)
       redis-store (~> 1.2.0)
@@ -323,6 +325,7 @@ DEPENDENCIES
   rails
   ratyrate
   redis
+  redis-namespace
   redis-rails
   rgl
   rmagick
