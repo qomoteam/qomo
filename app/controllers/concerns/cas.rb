@@ -40,8 +40,8 @@ module Cas
     end
 
     def cas_logout
-      signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
-      redirect_to params[:service].add_param(logout: signed_out)
+      Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+      redirect_to params[:service]
     end
   end
 
