@@ -99,6 +99,7 @@ GEM
     erubis (2.7.0)
     excon (0.54.0)
     execjs (2.7.0)
+    flamegraph (0.9.5)
     font-awesome-sass (4.7.0)
       sass (>= 3.2)
     globalid (0.3.7)
@@ -141,6 +142,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    memory_profiler (0.9.6)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -164,6 +166,8 @@ GEM
     rack (2.0.1)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-mini-profiler (0.10.1)
+      rack (>= 1.2.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.0.1)
@@ -261,6 +265,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stackprof (0.2.10)
     stream (0.5)
     temple (0.7.7)
     thor (0.19.1)
@@ -311,6 +316,7 @@ DEPENDENCIES
   devise
   docker-api
   dvm
+  flamegraph
   font-awesome-sass
   gon
   gravatar_image_tag
@@ -319,9 +325,11 @@ DEPENDENCIES
   js-routes
   kaminari
   ledermann-rails-settings
+  memory_profiler
   pg
   pry-rails
   puma
+  rack-mini-profiler
   rails
   ratyrate
   redis
@@ -338,6 +346,7 @@ DEPENDENCIES
   slim-rails
   social-share-button
   spring
+  stackprof
   turnout
   uglifier
   vam

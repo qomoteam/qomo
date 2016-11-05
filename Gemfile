@@ -70,6 +70,12 @@ gem 'redis'
 gem 'redis-rails'
 gem 'redis-namespace'
 
+# mini-profiler
+gem 'rack-mini-profiler'
+gem 'memory_profiler'
+gem 'flamegraph'
+gem 'stackprof'
+
 group :development, :test do
   gem 'byebug'
   gem 'spring'

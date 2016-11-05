@@ -4,6 +4,8 @@ module Cas
   included do
     prepend_before_action :before_login, :only => [:new]
 
+    layout :resolve_layout
+
     def before_login
       if params[:service] and user_signed_in?
         cas_login
@@ -42,6 +44,21 @@ module Cas
     def cas_logout
       Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
       redirect_to params[:service]
+    end
+
+
+    private
+
+    def resolve_layout
+      if cas_request?
+        'bigd'
+      else
+        'application'
+      end
+    end
+
+    def cas_request?
+      params[:service].present?
     end
   end
 

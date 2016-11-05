@@ -13,6 +13,11 @@ class Users::SessionsController < Devise::SessionsController
   #GET /resource/sign_in
   def new
     @page_title = 'BIGD CAS Login'
+    # if params[:service].present?
+    #   self.resource = resource_class.new(sign_in_params)
+    #   render layout: 'simple'
+    #   return
+    # end
     super
   end
 

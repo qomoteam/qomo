@@ -13,8 +13,6 @@ module ApplicationHelper
       title = (title.map { |e| e.humanize }).join ' » '
     end
 
-    title = "#{title} | Qomo"
-
     content_tag :title, title
   end
 
@@ -130,5 +128,6 @@ module ApplicationHelper
   def not_guest_user?
     user_signed_in? and (not current_user.is_guest?)
   end
+
 
 end

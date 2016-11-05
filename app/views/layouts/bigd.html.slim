@@ -1,0 +1,40 @@
+doctype 5
+html lang='en'
+  head
+    meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+    = action_cable_meta_tag
+    = csrf_meta_tags
+
+    title BIGD Central Authentication Service
+
+    = stylesheet_link_tag 'application', media: 'all'
+
+    sass:
+      .bigd-container h3
+        margin-top: 15px !important
+      .bigd-navbar-brand
+        height: auto !important
+      .aui-page-panel
+        width: 1200px !important
+        margin-top: 0 !important
+        border-radius: 0 !important
+        border-color: #f9f9f9 !important
+      header
+        height: 30px !important
+      #content
+        padding-bottom: 0 !important
+
+
+    = render partial: 'layouts/external_libs'
+
+    = Gon::Base.render_data
+    javascript:
+      gon.notice = "#{flash[:notice]}";
+
+    = javascript_include_tag 'visitor_analytics', async: true
+
+    = javascript_include_tag 'http://bigd.big.ac.cn/js/headerfooter.js'
+
+  body data-controller=params[:controller] data-action=params[:action]
+    #content
+      = yield

@@ -1,36 +1,43 @@
 .aui-page-focused.page-witdh-small
   .aui-page-panel
     .aui-page-panel-inner
-      section.aui-page-panel-content
-        h2
-          ' Log in |
-          a.aui-button.aui-button-link.hint--right.hint--warning { href=guest_signin_path data-method="post"
-            aria-label='Guest user will be restricted to limited resource and deleted periodically' }
-           | Or Try with Guest
+      section.aui-page-panel-content#login-page
+        h2.login-page-title
+          = image_tag 'bigd-logo-blue.png'
+          ' Central Authentication Service
+          - if params[:service].blank?
+            a.aui-button.aui-button-link.hint--right.hint--warning { href=guest_signin_path data-method="post"
+              aria-label='Guest user will be restricted to limited resource and deleted periodically' }
+              | Or Try with Guest
 
-        - if flash[:alert]
-          .aui-message.aui-message-error
-            p.title Login Error
-            p = flash[:alert]
+        .aui-group
+          .aui-item.login-details style='width: 68%'
+            h3
+              | Login Required
 
-        = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
-          input type='hidden' name='service' value=params[:service]
-          .field-group.top-label
-            = f.label :login
-            = f.text_field :login, autofocus: true, class: 'text long-field', placeholder: 'Username or Email'
+            - if flash[:alert]
+              .aui-message.aui-message-error
+                p.title Login Error
+                p = flash[:alert]
 
-          .field-group.top-label
-            = f.label :password
-            = f.password_field :password, autocomplete: 'off', class: 'text long-field'
+            = form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
+              input type='hidden' name='service' value=params[:service]
+              .field-group.top-label
+                = f.label :login, 'Username or Email'
+                = f.text_field :login, autofocus: true, class: 'text long-field'
 
-          - if devise_mapping.rememberable?
-            .aui-group
-              fieldset.group.checkbox
-                .checkbox
-                  = f.check_box :remember_me, class: 'checkbox'
-                  = f.label :remember_me
+              .field-group.top-label
+                = f.label :password
+                = f.password_field :password, autocomplete: 'off', class: 'text long-field'
 
-          .aui-group
-            = f.submit 'Log in', class: 'aui-button aui-button-primary'
+              - if devise_mapping.rememberable?
+                .aui-group
+                  fieldset.group.checkbox
+                    .checkbox
+                      = f.check_box :remember_me, class: 'checkbox'
+                      = f.label :remember_me
+
+              .aui-group
+                = f.submit 'Log in', class: 'aui-button aui-button-primary'
+          .aui-item.login-links
             = render 'devise/shared/links'
-
