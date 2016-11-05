@@ -210,3 +210,11 @@ $ ->
   $('*[data-warning]').click ->
     content = this.dataset.warning
     notie.alert(2, content)
+
+  $('a.rucaptcha-image-box').click (e) ->
+    console.debug 1
+    btn = $(e.currentTarget)
+    img = btn.find('img:first')
+    currentSrc = img.attr('src')
+    img.attr('src', currentSrc.split('?')[0] + '?' + (new Date()).getTime())
+    e.preventDefault()

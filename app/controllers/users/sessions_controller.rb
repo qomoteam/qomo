@@ -1,9 +1,9 @@
 class Users::SessionsController < Devise::SessionsController
   # before_filter :configure_sign_in_params, only: [:create]
 
-  include Cas
-
   prepend_before_action :valify_captcha!, only: [:create]
+
+  include Cas
 
   def guest_signin
     user = User.create_guest
@@ -44,7 +44,12 @@ class Users::SessionsController < Devise::SessionsController
 
   def valify_captcha!
     unless verify_rucaptcha?
-      redirect_to new_user_session_path, alert: 'Invalid captcha code'
+      if cas_request?
+        url = cas_login_path(service: params[:service])
+      else
+        url = new_user_session_path
+      end
+      redirect_to url, alert: 'Invalid captcha code'
       return
     end
     true
