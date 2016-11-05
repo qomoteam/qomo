@@ -66,11 +66,12 @@
           .aui-group
             .aui-item style='width: 500px'
               .field-group.top-label
-                = f.label :last_name
+                = f.label :captcha
                   | Captcha
                   span.aui-icon.icon-required
                 = rucaptcha_input_tag class: 'text'
-                = rucaptcha_image_tag alt: 'Captcha', style: 'margin: -16px 8px;'
+                a.rucaptcha-image-box href='#'
+                  = rucaptcha_image_tag alt: 'Captcha'
 
             .aui-item style='vertical-align: bottom'
               .checkbox.top-label

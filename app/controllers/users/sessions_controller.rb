@@ -3,6 +3,8 @@ class Users::SessionsController < Devise::SessionsController
 
   include Cas
 
+  prepend_before_action :valify_captcha!, only: [:create]
+
   def guest_signin
     user = User.create_guest
     flash[:notice] = "Sign in as guest user #{user.username}, temp password 123456"
@@ -13,11 +15,6 @@ class Users::SessionsController < Devise::SessionsController
   #GET /resource/sign_in
   def new
     @page_title = 'BIGD CAS Login'
-    # if params[:service].present?
-    #   self.resource = resource_class.new(sign_in_params)
-    #   render layout: 'simple'
-    #   return
-    # end
     super
   end
 
@@ -42,4 +39,15 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.for(:sign_in) << :attribute
   # end
+
+  private
+
+  def valify_captcha!
+    unless verify_rucaptcha?
+      redirect_to new_user_session_path, alert: 'Invalid captcha code'
+      return
+    end
+    true
+  end
+
 end
