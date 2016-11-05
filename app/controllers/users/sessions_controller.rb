@@ -21,7 +21,7 @@ class Users::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   def create
     # Trapped in CAS protocal
-    if params[:service].present?
+    if cas_request?
       cas_login
     else
       super

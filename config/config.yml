@@ -23,6 +23,8 @@ defaults: &defaults
     pass: qomo
     vhost: qomo
 
+  redis: redis://h2:6379/1
+
 
 development:
   <<: *defaults

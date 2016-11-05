@@ -13,11 +13,7 @@
 /config/database.yml
 /config/secrets.yml
 /config/puma.rb
-/config/intializers/devise.rb
-/config/initializers/rails_extra_config.rb
 /config/email.yml
-/config/cable.yml
-/config/initializers/application_controller_renderer.rb
 
 /public/assets
 

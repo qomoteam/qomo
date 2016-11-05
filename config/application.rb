@@ -18,6 +18,8 @@ module Qomo
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    require File.expand_path('../../app/models/config.rb', __FILE__)
+
     config.action_mailer.smtp_settings = config_for(:email)['smtp_settings'].symbolize_keys
     config.action_mailer.default_url_options = config_for(:email)['default_url_options'].symbolize_keys
 
@@ -32,6 +34,7 @@ module Qomo
         html_tag
       end
     }
-    config.cache_store = :redis_store, 'redis://h2:6379/1/cache'
+    config.cache_store = :redis_store, "#{Config.redis}/cache"
+
   end
 end
