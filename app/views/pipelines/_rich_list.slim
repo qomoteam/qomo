@@ -13,7 +13,7 @@
           span Category: #{pipeline.category.name}
           span Star: #{pipeline.votes_for.size}
           span Updated: #{ptime2 pipeline.updated_at}
-  = paginate pipelines, param_name: :tp
+  = paginate pipelines, param_name: :pp
 - else
   .empty-placeholder
     | No pipelines
