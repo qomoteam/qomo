@@ -16,7 +16,7 @@
             h3
               | Featured Pipelines
               small Total: #{@count[:pipelines]}
-            = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines, show_user_prefix: true}
+            = render partial: 'pipelines/rich_list', locals: {pipelines: @pipelines.page(params[:pp])}
             a.btn-load-more href=pipelines_path Show more pipelines ... ...
 
           .aui-item.tools
