@@ -12,7 +12,7 @@ class PipelinesController < ApplicationController
       @pipelines = Pipeline.shared
     end
 
-    @pipelines = @pipelines.page params[:page]
+    @pipelines = @pipelines.page params[:pp]
   end
 
 
@@ -27,7 +27,7 @@ class PipelinesController < ApplicationController
     q = params[:q]
     pipeline = Pipeline.find_by_accession_label q
     return redirect_to user_pipeline_path(pipeline.owner.username, pipeline.slug) if pipeline&.shared
-    @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{q.downcase}%").page params[:page]
+    @pipelines = Pipeline.shared.where('lower(title) like ?', "%#{q.downcase}%").page params[:pp]
     render :index
   end
 
@@ -219,7 +219,7 @@ class PipelinesController < ApplicationController
 
   def bookmarks
     set_page_title 'Pipeline Bookmarks'
-    @pipelines = current_user.get_voted(Pipeline).page params[:page]
+    @pipelines = current_user.get_voted(Pipeline).page params[:pp]
   end
 
 end

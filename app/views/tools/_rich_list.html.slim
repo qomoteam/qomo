@@ -2,25 +2,20 @@
   ol.rich-list.tools
     - for tool in tools
       li
-        .aui-group
-          .aui-item style='width: 100px'
-            .logo-container
-              h5 = tool.abbrev
-          .aui-item
-            .title
-              h3
-                = tool_link(tool)
-              .secondary
-                = render partial: 'tools/bookmark', locals: {tool: tool}
-            p.desc == tool.desc
-            .meta
-              span Contributors: #{tool.contributors}
-            .meta
-              span Category: #{category_tools_link(tool.category)}
-              span Downloads: #{tool.download_count}
-              span Citation: #{tool.citation}
-              span Updated At: #{ptime2 tool.updated_at}
-  = paginate tools
+        .title
+          h3
+            = tool_link(tool)
+          .secondary
+            = render partial: 'tools/bookmark', locals: {tool: tool}
+        p.desc == tool.desc
+        .meta
+          span Contributors: #{tool.contributors}
+        .meta
+          span Category: #{category_tools_link(tool.category)}
+          span Downloads: #{tool.download_count}
+          span Citation: #{tool.citation}
+          span Updated At: #{ptime2 tool.updated_at}
+  = paginate tools, param_name: :tp
 - else
   .empty-placeholder
     | No tools

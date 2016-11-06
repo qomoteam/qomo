@@ -51,7 +51,7 @@
             small Total: #{@user.pipelines.shared.count}
         .panel-body
           - if @user.pipelines.shared.count > 0
-            = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.shared, show_user_prefix: false}
+            = render partial: 'pipelines/rich_list', locals: {pipelines: @user.pipelines.shared.page(params[:pp])}
           - else
             .empty-placeholder
               p You haven't shared any pipeline yet ...
@@ -64,7 +64,7 @@
         .panel-body
           - if @user.tools.shared.count > 0
             table.aui
-              = render partial: 'tools/rich_list_tr', locals: {tools: @user.tools.shared}
+              = render partial: 'tools/rich_list', locals: {tools: @user.tools.shared.page(params[:tp])}
           - else
             .empty-placeholder
               p You don't have any public tool yet ...

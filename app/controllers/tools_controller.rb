@@ -14,7 +14,7 @@ class ToolsController < ApplicationController
       @tools = Tool.shared
     end
 
-    @tools = @tools.page params[:page]
+    @tools = @tools.page params[:tp]
   end
 
   def my
@@ -29,7 +29,7 @@ class ToolsController < ApplicationController
 
     return redirect_to user_tool_path(tool.owner.username, tool.slug) if tool&.shared
 
-    @tools = Tool.shared.where('lower(name) like ?', "%#{q.downcase}%").page params[:page]
+    @tools = Tool.shared.where('lower(name) like ?', "%#{q.downcase}%").page params[:tp]
     render :index
   end
 
@@ -259,7 +259,7 @@ class ToolsController < ApplicationController
 
   def bookmarks
     set_page_title 'Tool Bookmarks'
-    @tools = current_user.get_voted(Tool).page params[:page]
+    @tools = current_user.get_voted(Tool).page params[:tp]
   end
 
 
