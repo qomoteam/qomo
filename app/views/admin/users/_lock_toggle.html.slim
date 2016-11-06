@@ -1,0 +1,8 @@
+- if user.access_locked?
+  a.hint--bottom.hint--error aria-label='Unlock user' href=unlock_admin_user_path(user)
+    i.fa.fa-lock>
+    | Locked
+- else
+  a.hint--bottom.hint--error aria-label='Lock user' href=lock_admin_user_path(user)
+    i.fa.fa-unlock-alt>
+    | Unlocked

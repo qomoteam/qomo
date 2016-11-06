@@ -1,9 +1,9 @@
 h3 = @user.username
 
-table.aui
+table.aui.def
   tbody
     tr
-      td ID
+      td width='200px' ID
       td = @user.id
     tr
       td Email
@@ -18,6 +18,9 @@ table.aui
     tr
       td Last Sign In IP
       td = @user.last_sign_in_ip
+    tr
+      td Locked
+      td = render partial: 'admin/users/lock_toggle', locals: {user: @user}
 
 
 p

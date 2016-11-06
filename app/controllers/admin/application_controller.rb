@@ -6,7 +6,7 @@ class Admin::ApplicationController < ApplicationController
   private
   def authenticate_admin
     unless current_user.has_role? :admin
-      redirect_to root_path
+      redirect_to new_user_session_path
     end
   end
 

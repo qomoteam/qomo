@@ -168,6 +168,10 @@ Rails.application.routes.draw do
       collection do
         delete :destroy_expired
       end
+      member do
+        get :lock
+        get :unlock
+      end
     end
   end
 

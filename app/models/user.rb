@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  paginates_per 20
+
   acts_as_voter
 
   ratyrate_rater
@@ -13,7 +15,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   after_create :setup_new
 
