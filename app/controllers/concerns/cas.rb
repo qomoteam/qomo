@@ -21,9 +21,15 @@ module Cas
       end
 
       if resource
-        ticket = "ST-#{SecureRandom.uuid}"
-        Rails.cache.write(ticket, resource.id, namespace: :cas, expires_in: 1000)
-        redirect_to service.add_param(ticket: ticket)
+        # Guests are not allowed to sign in with CAS service
+        if resource.is_guest?
+          flash[:alert] = 'Guests are not allowed to sign in with CAS service'
+          redirect_back fallback_location: root_path
+        else
+          ticket = "ST-#{SecureRandom.uuid}"
+          Rails.cache.write(ticket, resource.id, namespace: :cas, expires_in: 1000)
+          redirect_to service.add_param(ticket: ticket)
+        end
       else
         flash[:alert] = 'Invalid Login or password.'
         redirect_back fallback_location: root_path
