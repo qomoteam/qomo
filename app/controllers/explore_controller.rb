@@ -16,5 +16,4 @@ class ExploreController < ApplicationController
     @count = Tool.active_count
   end
 
-
 end
