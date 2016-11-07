@@ -3,7 +3,7 @@
     .aui-item.user-profile
       h2
         = user_tag @user
-      span.user-title = @user.title
+      span.user-title = @user.profile.title
       ul.user-details
         li
           i.fa.fa-user
@@ -12,26 +12,26 @@
           i.fa.fa-envelope-o
           a href="mailto:#{@user.email}" #{@user.email}
 
-        - unless @user.location.blank?
+        - unless @user.profile.location.blank?
           li
             i.fa.fa-map-marker
             = location_label @user
 
-        - unless @user.organization.blank?
+        - unless @user.profile.organization.blank?
           li
             i.fa.fa-sitemap
-            | #{@user.organization}
+            | #{@user.profile.organization}
 
         li
           i.fa.fa-clock-o
           | Joined on #{@user.created_at.to_s :simple}
 
-        - unless @user.homepage.blank?
+        - unless @user.profile.homepage.blank?
           li
             i.fa.fa-globe
             a.no-external-link href=@user.homepage target='_blank' = @user.homepage
 
-      - if @user.bio.blank?
+      - if @user.profile.bio.blank?
         .empty-placeholder
           p
             ' Your biography is blank
@@ -41,7 +41,7 @@
         .user-bio
           p
             ' Bio:
-            = @user.bio
+            = @user.profile.bio
 
     .aui-item
       .panel

@@ -9,5 +9,5 @@ table.aui
     - for pipeline in @pipelines
       tr
         td = pipeline_link(pipeline)
-        td = ptime pipeline.created_at, current_user.try(:timezone)
+        td = ptime pipeline.created_at
         td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}

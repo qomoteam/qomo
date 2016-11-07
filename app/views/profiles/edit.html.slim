@@ -4,18 +4,7 @@
       section.aui-page-panel-content
         h2 Edit Profile
 
-        = form_for @user, url: profile_path, html: {method: :put, class: 'aui'} do |f|
-          .field-group
-            = f.label :username
-            input.text.long-field value=@user.username readonly='readonly'
-
-          .field-group
-            = f.label :email
-            = f.email_field :email, autofocus: true, class: 'text long-field'
-            small.tip
-              ' Edit your email-bundled portrait at
-              a href='https://gravatar.com/' target='_blank' Gravatar.com
-
+        = form_for @profile, url: profile_path, html: {method: :put, class: 'aui'} do |f|
           .field-group
             = f.label :first_name
             = f.text_field :first_name, autofocus: true, class: 'text long-field'
@@ -35,10 +24,9 @@
             = f.text_field :organization, autocomplete: 'off', class: 'text long-field'
             small.tip Your institute, university, etc.
 
-          .field-group
-            = f.label :location
-            = f.text_field :location, autocomplete: 'off', class: 'text long-field'
-            small.tip Your city, town, etc.
+          field-group
+            = f.label :department
+            = f.text_field :department, autocomplete: 'off', class: 'text long-field'
 
           .field-group
             = f.label :country
@@ -46,12 +34,17 @@
             = f.country_select :country, {include_blank: 'Select a country'}, {class: 'select long-field'}
 
           .field-group
-            = f.label :homepage
-            = f.text_field :homepage, autocomplete: 'off', class: 'text long-field', placeholder: 'Your website homepage'
+            = f.label :location
+            = f.text_field :location, autocomplete: 'off', class: 'text long-field'
+            small.tip Your city, town, etc.
 
           .field-group
             = f.label :timezone
             = f.time_zone_select :timezone, nil, {}, {class: 'select long-field'}
+
+          .field-group
+            = f.label :homepage
+            = f.text_field :homepage, autocomplete: 'off', class: 'text long-field', placeholder: 'Your website homepage'
 
           .field-group
             = f.label :bio

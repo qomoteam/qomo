@@ -17,7 +17,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
+  before_create :ensure_profile_atttached
+
   after_create :setup_new
+
+  after_destroy_commit :clean_datastore
 
   attr_accessor :login, :term_of_service
 
@@ -27,16 +31,12 @@ class User < ApplicationRecord
   has_many :pipelines, -> {order 'created_at DESC'}, foreign_key: :owner_id
   has_many :tools, foreign_key: :owner_id
 
+  has_one :profile, autosave: true, dependent: :destroy
+  accepts_nested_attributes_for :profile
 
   scope :expired_guests, -> {
     where 'username LIKE ? and CURRENT_DATE-current_sign_in_at>?', 'guest-%', '3 mons'
   }
-
-
-  def destroy!
-    self.destroy
-    FileUtils.rm_rf datastore.home
-  end
 
 
   def datastore
@@ -46,19 +46,6 @@ class User < ApplicationRecord
 
   def job_engine
     JobEngine.new self.id, datastore
-  end
-
-
-  def full_name
-    "#{self.first_name} #{self.last_name}"
-  end
-
-  def displayed_name
-    if full_name.blank?
-      username
-    else
-      full_name
-    end
   end
 
 
@@ -90,8 +77,16 @@ class User < ApplicationRecord
 
   private
 
+  def ensure_profile_atttached
+    self.profile ||= Profile.new
+  end
+
   def setup_new
     datastore.create!
+  end
+
+  def clean_datastore
+    FileUtils.rm_rf datastore.home
   end
 
 end

@@ -37,7 +37,7 @@
             tr
               td = file[:filename]
               td = number_to_human_size(file[:size], precision: 3)
-              td = ptime file[:updated_at], current_user.timezone
+              td = ptime file[:updated_at]
               td
                 ul.menu
                   li

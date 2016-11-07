@@ -1,12 +1,11 @@
 class ProfilesController < ApplicationController
 
   def edit
-    @user = current_user
+    @profile = current_user.profile
   end
 
   def update
-    @user = current_user
-    @user.update params.require(:user).permit!
+    current_user.profile.update params.require(:profile).permit!
     redirect_to action: 'edit'
   end
 

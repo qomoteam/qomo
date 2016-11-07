@@ -43,43 +43,35 @@
                   span.aui-icon.icon-required
                 = f.password_field :password_confirmation, autocomplete: 'off', class: 'text long-field'
 
-          .aui-group
-            .aui-item style='width: 500px'
-              .field-group.top-label
-                = f.label :first_name
-                  | First Name
-                  span.aui-icon.icon-required
-                = f.text_field :first_name, autofocus: true, class: 'text long-field'
-            .aui-item
-              .field-group.top-label
-                = f.label :last_name
-                  | Last Name
-                  span.aui-icon.icon-required
-                = f.text_field :last_name, autofocus: true, class: 'text long-field'
+          = f.fields_for :profile do |profile_form|
+            .aui-group
+              .aui-item style='width: 500px'
+                .field-group.top-label
+                  = profile_form.label :first_name
+                    | First Name
+                    span.aui-icon.icon-required
+                  = profile_form.text_field :first_name, autofocus: true, class: 'text long-field'
+              .aui-item
+                .field-group.top-label
+                  = profile_form.label :last_name
+                    | Last Name
+                    span.aui-icon.icon-required
+                  = profile_form.text_field :last_name, autofocus: true, class: 'text long-field'
 
           .field-group.top-label
-            = f.label :organization
-              | Organization
+            = f.label :captcha
+              | Captcha
               span.aui-icon.icon-required
-            = f.text_field :organization, autofocus: true, class: 'text long-field'
+            = rucaptcha_input_tag class: 'text'
+            a.rucaptcha-image-box href='#'
+              = rucaptcha_image_tag alt: 'Captcha'
 
-          .aui-group
-            .aui-item style='width: 500px'
-              .field-group.top-label
-                = f.label :captcha
-                  | Captcha
-                  span.aui-icon.icon-required
-                = rucaptcha_input_tag class: 'text'
-                a.rucaptcha-image-box href='#'
-                  = rucaptcha_image_tag alt: 'Captcha'
-
-            .aui-item style='vertical-align: bottom'
-              .checkbox.top-label
-                = f.check_box :term_of_service, autofocus: true, include_hidden: false, class: 'checkbox'
-                = f.label :term_of_service
-                  ' I am agree to
-                  a href=agreement_path target='_blank'
-                    em Qomo Term of Service
+          .checkbox.top-label
+            = f.check_box :term_of_service, autofocus: true, include_hidden: false, class: 'checkbox'
+            = f.label :term_of_service
+              ' I am agree to
+              a href=agreement_path target='_blank'
+                em Qomo Term of Service
 
           .aui-group
             = f.submit 'Sign up', class: 'aui-button aui-button-primary'

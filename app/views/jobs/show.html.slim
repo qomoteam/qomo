@@ -3,8 +3,8 @@
     ' Job: #{@job.name}
 
   .job-meta
-    span Created At: #{ptime @job.created_at, current_user.timezone}
-    span Updated At: #{ptime @job.updated_at, current_user.timezone}
+    span Created At: #{ptime @job.created_at}
+    span Updated At: #{ptime @job.updated_at}
     span Progress: #{number_to_percentage @job.progress*100, precision: 0}
     span = status_label @job.status
 
@@ -33,9 +33,9 @@
 
       tr
         td: strong Started At:
-        td = ptime unit.started_at, current_user.timezone
+        td = ptime unit.started_at
         td: strong Ended At:
-        td = ptime unit.ended_at, current_user.timezone
+        td = ptime unit.ended_at
 
       - if current_user.has_role? :admin or unit.tool.owner.id == current_user.id
         tr

@@ -34,7 +34,7 @@
             - if own? file
               td = shared_tag Filerecord.shared? file.record.owner.id, file.record.path
 
-            td = ptime file.mtime.to_s, current_user.timezone
+            td = ptime file.mtime.to_s
 
             td
               ul.menu

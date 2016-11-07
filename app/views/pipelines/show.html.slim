@@ -62,10 +62,10 @@
           td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_permalink @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
         tr
           td Created At
-          td = ptime @pipeline.created_at, current_user.try(:timezone)
+          td = ptime @pipeline.created_at
         tr
           td Updated At
-          td = ptime @pipeline.updated_at, current_user.try(:timezone)
+          td = ptime @pipeline.updated_at
         tr
           td Description
           td

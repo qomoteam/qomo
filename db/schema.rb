@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161105153528) do
+ActiveRecord::Schema.define(version: 20161107074211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,22 @@ ActiveRecord::Schema.define(version: 20161105153528) do
     t.index ["shared"], name: "index_pipelines_on_shared", using: :btree
   end
 
+  create_table "profiles", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "title"
+    t.string   "organization"
+    t.string   "department"
+    t.string   "country"
+    t.string   "location"
+    t.string   "timezone"
+    t.string   "homepage"
+    t.text     "bio"
+    t.uuid     "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "rates", force: :cascade do |t|
     t.integer  "rater_id"
     t.string   "rateable_type"
@@ -235,13 +251,6 @@ ActiveRecord::Schema.define(version: 20161105153528) do
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "username"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "title"
-    t.string   "organization"
-    t.string   "location"
-    t.string   "timezone"
-    t.string   "homepage"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -258,8 +267,6 @@ ActiveRecord::Schema.define(version: 20161105153528) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.text     "bio"
-    t.string   "country"
     t.uuid     "uid"
     t.datetime "locked_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

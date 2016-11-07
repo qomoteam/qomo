@@ -44,7 +44,7 @@ module Cas
       else
         @success = false
       end
-      render 'cas/validate'
+      render 'cas/service_validate'
     end
 
     def cas_logout

@@ -21,7 +21,7 @@
         - for pipeline in @pipelines
           tr data-pid=pipeline.id
             td = pipeline_link(pipeline)
-            td = ptime pipeline.created_at, current_user.try(:timezone)
+            td = ptime pipeline.created_at
             td = shared_tag pipeline.shared
             td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
   - else
