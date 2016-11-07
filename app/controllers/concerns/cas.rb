@@ -27,7 +27,7 @@ module Cas
           redirect_back fallback_location: root_path
         else
           ticket = "ST-#{SecureRandom.uuid}"
-          Rails.cache.write(ticket, resource.id, namespace: :cas, expires_in: 1000)
+          Rails.cache.write(ticket, resource.id, namespace: :cas, expires_in: 30.minutes)
           redirect_to service.add_param(ticket: ticket)
         end
       else
