@@ -57,7 +57,7 @@
             .meta
               ' #{publication['authors']}, #{publication['date']} -
               em #{publication['journal']}
-            .citation Cited by #{publication['citation']} (Google Schoolar as of #{ptime2 @tool.updated_at})
+            .citation Cited by #{publication['citation']} (Google Schoolar as of #{@tool.updated_at.to_s :simple})
 
       .section-separator
         h3.section-separator-title Manual
@@ -99,10 +99,10 @@
                   a href=user_tool_url(@tool.owner.username, @tool.name) = user_tool_url @tool.owner.username, @tool.name
             tr
               td Created At
-              td = ptime2 @tool.created_at
+              td = @tool.created_at.to_s :simple
             tr
               td Updated At
-              td = ptime2 @tool.updated_at
+              td = @tool.updated_at.to_s :simple
 
             - unless @tool.tag_list.empty?
               tr
@@ -159,7 +159,7 @@
                           i.fa.fa-trash-o
                   .meta
                     span Download count: #{release.download_count}
-                    span = ptime2 release.updated_at
+                    span = release.updated_at.to_s :simple
                   ul
                     - for df in release.download_files
                       li

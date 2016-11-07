@@ -41,10 +41,6 @@ module ApplicationHelper
     ts.nil? ? '' : ts.in_time_zone(timezone).strftime('%F %T')
   end
 
-  def ptime2(ts)
-    ts.nil? ? '' : ts.strftime('%B %e, %Y')
-  end
-
   def status_label(status)
     status ||= :unknown
     clz = ''

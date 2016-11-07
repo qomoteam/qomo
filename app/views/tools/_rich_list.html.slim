@@ -14,7 +14,7 @@
           span Category: #{category_tools_link(tool.category)}
           span Downloads: #{tool.download_count}
           span Citation: #{tool.citation}
-          span Updated At: #{ptime2 tool.updated_at}
+          span Updated At: #{tool.updated_at.to_s :simple}
   = paginate tools, param_name: :tp
 - else
   .empty-placeholder

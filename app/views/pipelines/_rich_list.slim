@@ -12,7 +12,7 @@
         .meta
           span Category: #{pipeline.category.name}
           span Star: #{pipeline.votes_for.size}
-          span Updated: #{ptime2 pipeline.updated_at}
+          span Updated: #{pipeline.updated_at.to_s :simple}
   = paginate pipelines, param_name: :pp
 - else
   .empty-placeholder

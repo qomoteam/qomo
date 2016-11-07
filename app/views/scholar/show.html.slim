@@ -24,7 +24,7 @@
 
         li
           i.fa.fa-clock-o
-          | Joined on #{ptime2 @user.created_at}
+          | Joined on #{@user.created_at.to_s :simple}
 
         - unless @user.homepage.blank?
           li
