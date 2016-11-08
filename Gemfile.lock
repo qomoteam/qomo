@@ -150,6 +150,8 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.1)
     multi_json (1.12.1)
+    nestive (0.6.0)
+      rails (>= 3.0.0)
     netrc (0.11.0)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
@@ -326,6 +328,7 @@ DEPENDENCIES
   kaminari
   ledermann-rails-settings
   memory_profiler
+  nestive
   pg
   pry-rails
   puma

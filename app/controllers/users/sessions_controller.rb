@@ -3,7 +3,10 @@ class Users::SessionsController < Devise::SessionsController
 
   prepend_before_action :valify_captcha!, only: [:create]
 
+  layout 'security'
+
   include Cas
+  include CasSession
 
   def guest_signin
     user = User.create_guest
@@ -14,15 +17,13 @@ class Users::SessionsController < Devise::SessionsController
 
   #GET /resource/sign_in
   def new
-    @page_title = 'BIGD CAS Login'
     super
   end
 
   # POST /resource/sign_in
   def create
     # Trapped in CAS protocal
-    pp service.present?
-    if cas_request?
+    if service.present?
       cas_login
     else
       super

@@ -4,7 +4,8 @@ module CasHelper
   end
 
   def cas_request?
-    request.path.starts_with?('/cas') || service.present?
+    pp params[:cas_request]
+    request.path.starts_with?('/cas') || service.present? || params[:cas_request] == 'true'
   end
 
 end

@@ -1,0 +1,16 @@
+- @page_title = 'BIGD Central Authentication Service'
+= extends cas_request? ? :bigd : :application
+  .aui-page-focused.page-witdh-small
+    .aui-page-panel
+      .aui-page-panel-inner
+        section.aui-page-panel-content#cas-page
+          h2.cas-page-title
+            = image_tag 'bigd-logo-blue.png'
+            ' Central Authentication Service
+
+          .aui-group
+            .aui-item.login-details style='width: 68%'
+              = yield
+
+            .aui-item.login-links
+              = render 'devise/shared/links'
