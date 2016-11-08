@@ -1,4 +1,4 @@
-source 'https://cloud.big.ac.cn/vam'
+source 'http://cloud.big.ac.cn/vam'
 
 vam 'jquery-migrate'
 vam 'jquery-ujs'
