@@ -16,7 +16,6 @@ module Cas
     end
 
     def cas_login
-      service = params[:service]
       if user_signed_in?
         self.resource = current_user
       else
