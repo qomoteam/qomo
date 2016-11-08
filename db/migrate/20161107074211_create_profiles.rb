@@ -8,7 +8,7 @@ class CreateProfiles < ActiveRecord::Migration[5.0]
       t.string :department
       t.string :country
       t.string :location
-      t.string :timezone, default: Beijing
+      t.string :timezone, default: 'Beijing'
       t.string :homepage
       t.text :bio
       t.uuid :user_id
