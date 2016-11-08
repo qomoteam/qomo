@@ -125,5 +125,4 @@ module ApplicationHelper
     user_signed_in? and (not current_user.is_guest?)
   end
 
-
 end

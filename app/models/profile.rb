@@ -8,7 +8,7 @@ class Profile < ApplicationRecord
 
   def displayed_name
     if full_name.blank?
-      username
+      self.user.username
     else
       full_name
     end

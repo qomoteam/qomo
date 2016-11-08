@@ -40,6 +40,7 @@ class Users::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.for(:sign_in) << :attribute
   # end
 
+
   private
 
   def valify_captcha!

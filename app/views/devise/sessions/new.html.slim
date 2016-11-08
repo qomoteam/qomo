@@ -5,7 +5,7 @@
         h2.login-page-title
           = image_tag 'bigd-logo-blue.png'
           ' Central Authentication Service
-          - if params[:service].blank?
+          - unless cas_request?
             a.aui-button.aui-button-link.hint--right.hint--warning { href=guest_signin_path data-method="post"
               aria-label='Guest user will be restricted to limited resource and deleted periodically' }
               | Or Try with Guest

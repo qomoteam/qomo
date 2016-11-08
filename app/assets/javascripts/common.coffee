@@ -189,7 +189,7 @@ $ ->
   $.expr[':'].external = (obj) ->
     !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname) && !obj.href.match(/^javascript:/) && !obj.href.match(/^$/)
 
-  $('a:external:not(.no-external-link)').attr('target', '_blank').addClass('external-link')
+  $('#content a:external:not(.no-external-link)').attr('target', '_blank').addClass('external-link')
 
   $('.readmore').readmore
     blockCSS: 'overflow-x: scroll !important;'

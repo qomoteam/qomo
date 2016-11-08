@@ -2,6 +2,9 @@ module Cas
   extend ActiveSupport::Concern
 
   included do
+
+    include CasHelper
+
     prepend_before_action :before_login, :only => [:new]
 
     layout :resolve_layout
@@ -63,9 +66,6 @@ module Cas
       end
     end
 
-    def cas_request?
-      params[:service].present?
-    end
   end
 
 end

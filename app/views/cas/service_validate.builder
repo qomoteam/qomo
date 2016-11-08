@@ -5,6 +5,7 @@ if @success
     xml.tag!("cas:authenticationSuccess") do
       xml.tag!("cas:user", @user.username)
       xml.tag!("cas:attributes") do
+        xml.tag! 'email', @user.email
         @user.profile.attributes.each do |key, value|
           namespace_aware_key = key[0..3]=='cas:' ? key : 'cas:' + key
           xml.tag!(namespace_aware_key, value.to_s)
