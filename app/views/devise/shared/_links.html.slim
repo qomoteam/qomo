@@ -4,7 +4,7 @@ ul
       li = link_to 'Profile', edit_profile_path, class: 'aui-button aui-button-link'
     - unless current_page? edit_user_registration_path
       li = link_to 'Security', edit_user_registration_path, class: 'aui-button aui-button-link'
-    li = link_to 'Logout', destroy_user_session_path, class: 'aui-button aui-button-link'
+    li = link_to 'Logout', destroy_user_session_path, method: 'delete', class: 'aui-button aui-button-link'
   - else
     - if controller_name != 'sessions'
       li = link_to 'Log in', new_session_path(resource_name, cas_params), class: 'aui-button aui-button-link'

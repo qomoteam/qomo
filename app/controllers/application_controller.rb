@@ -48,14 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(resource_or_scope)
-    if cas_request?
-      cas_login_path(service: service)
-    else
-      scope = Devise::Mapping.find_scope!(resource_or_scope)
-      router_name = Devise.mappings[scope].router_name
-      context = router_name ? send(router_name) : self
-      context.respond_to?(:root_path) ? context.root_path : "/"
-    end
+    new_user_session_path(cas_params)
   end
 
 
