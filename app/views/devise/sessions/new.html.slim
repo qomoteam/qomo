@@ -6,7 +6,7 @@ h3
     p.title Login Error
     p = flash[:alert]
 
-= form_for resource, as: resource_name, url: session_path(resource_name), html: {class: 'aui top-label'} do |f|
+= form_for resource, as: resource_name, url: session_path(resource_name, cas_request: cas_request?), html: {class: 'aui top-label'} do |f|
   input type='hidden' name='service' value=params[:service]
   .field-group.top-label
     = f.label :login, 'Username or Email'

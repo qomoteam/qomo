@@ -37,6 +37,8 @@ module Qomo
     config.cache_store = :redis_store, "#{Config.redis}/cache"
 
     config.to_prepare do
+      Devise::RegistrationsController.layout 'security'
+      Devise::SessionsController.layout 'security'
       Devise::ConfirmationsController.layout 'security'
       Devise::UnlocksController.layout 'security'
       Devise::PasswordsController.layout 'security'

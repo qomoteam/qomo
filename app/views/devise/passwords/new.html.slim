@@ -1,8 +1,6 @@
 h3 Forgot your password?
 
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :post, class: 'aui top-label'}) do |f|
-  = devise_error_messages!
-
+= form_for(resource, as: resource_name, url: password_path(resource_name, cas_params), html: {method: :post, class: 'aui top-label'}) do |f|
   .field-group.top-label
     = f.label :email
     = f.email_field :email, autofocus: true, class: 'text long-field'

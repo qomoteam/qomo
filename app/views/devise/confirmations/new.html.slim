@@ -1,8 +1,6 @@
 h3 Resend confirmation instructions
 
-= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'aui top-label'}) do |f|
-  = devise_error_messages!
-
+= form_for(resource, as: resource_name, url: confirmation_path(resource_name, cas_params), html: { method: :post, class: 'aui top-label'}) do |f|
   .field-group
     = f.label :email
     = f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'text long-field'

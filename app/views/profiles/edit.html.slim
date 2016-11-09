@@ -4,7 +4,7 @@
       section.aui-page-panel-content
         h2 Edit Profile
 
-        = form_for @profile, url: profile_path, html: {method: :put, class: 'aui'} do |f|
+        = form_for @profile, url: profile_path(cas_request: cas_request), html: {method: :put, class: 'aui'} do |f|
           .field-group
             = f.label :first_name
             = f.text_field :first_name, autofocus: true, class: 'text long-field'
