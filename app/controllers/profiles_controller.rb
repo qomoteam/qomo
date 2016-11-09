@@ -10,11 +10,7 @@ class ProfilesController < ApplicationController
 
   def update
     current_user.profile.update params.require(:profile).permit!
-    if cas_request?
-      redirect_to edit_profile_path(cas_request: cas_request)
-    else
-      redirect_to edit_profile_path
-    end
+    redirect_to edit_profile_path(cas_params)
   end
 
 

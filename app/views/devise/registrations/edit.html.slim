@@ -1,27 +1,25 @@
-.aui-page-focused.page-witdh-small
-  .aui-page-panel
-    .aui-page-panel-inner
-      section.aui-page-panel-content
-        h2 Edit Credentials
+h3 Edit Credentials
 
-        = form_for resource, as: resource_name, url: registration_path(resource_name), html: {method: :put, class: 'aui top-label'} do |f|
-          - unless resource.errors.empty?
-            .aui-message.aui-message-error.error
-              = devise_error_messages!
+= form_for resource, as: resource_name, url: registration_path(resource_name), html: {method: :put, class: 'aui top-label'} do |f|
+  - unless resource.errors.empty?
+    .aui-message.aui-message-error.error
+      = devise_error_messages!
 
-          .field-group.top-label
-            = f.label :password
-            = f.password_field :password, autocomplete: 'off', class: 'text long-field'
-            - if @minimum_password_length
-              .description #{@minimum_password_length} characters minimum
+  .field-group
+    = f.label :password
+    = f.password_field :password, autocomplete: 'off', class: 'text'
+    - if @minimum_password_length
+      .description #{@minimum_password_length} characters minimum
 
-          .field-group.top-label
-            = f.label :password_confirmation
-            = f.password_field :password_confirmation, autocomplete: 'off', class: 'text long-field'
+  .field-group
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, autocomplete: 'off', class: 'text'
 
-          .field-group.top-label
-            = f.label :current_password
-            = f.password_field :current_password, autocomplete: 'off', class: 'text long-field'
+  .field-group
+    = f.label :current_password
+      | Current Password
+      span.aui-icon.icon-required
+    = f.password_field :current_password, autocomplete: 'off', class: 'text'
 
-          .aui-group
-            = f.submit 'Update', class: 'aui-button aui-button-primary'
+  .aui-group
+    = f.submit 'Update', class: 'aui-button aui-button-primary'

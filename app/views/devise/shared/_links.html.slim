@@ -18,8 +18,8 @@ ul
     - resource_class.omniauth_providers.each do |provider|
       li = link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), class: 'aui-button aui-button-link'
 
-  - unless cas_request?
+  - unless cas_request? or user_signed_in?
     li: a.aui-button.aui-button-link.hint--right.hint--warning {
-        href=guest_signin_path data-method="post"
-        aria-label='Guest user will be restricted to limited resource and deleted periodically' }
-        | Try with Guest
+      href=guest_signin_path data-method="post"
+      aria-label='Guest user will be restricted to limited resource and deleted periodically' }
+      | Try with Guest
