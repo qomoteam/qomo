@@ -10,6 +10,7 @@
 #= require aui
 #= require spin
 #= require rails.validations
+#= require rails.validations.actionView
 #= require pace
 #= require dragula
 #= require readmore

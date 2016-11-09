@@ -8,7 +8,11 @@ class User < ApplicationRecord
 
   rolify
 
-  validates_uniqueness_of :username, :email
+  validates :username, presence: true, uniqueness: true, length: 5..10, format: {with: /\A[a-zA-Z0-9]+\z/}
+
+  validates :email, presence: true, uniqueness: true, email: true
+
+  validates :password, presence: true, length: {minimum: 6}
 
   validates_acceptance_of :term_of_service, allow_nil: false, on: :create, message: 'must be accepted'
 
@@ -28,7 +32,7 @@ class User < ApplicationRecord
   has_many :filerecords, foreign_key: :owner_id, dependent: :destroy
   has_many :jobs, dependent: :destroy
 
-  has_many :pipelines, -> {order 'created_at DESC'}, foreign_key: :owner_id
+  has_many :pipelines, -> { order 'created_at DESC' }, foreign_key: :owner_id
   has_many :tools, foreign_key: :owner_id
 
   has_one :profile, autosave: true, dependent: :destroy
@@ -53,7 +57,7 @@ class User < ApplicationRecord
     conditions = warden_conditions.dup
     login = conditions.delete(:login)
     if login
-      where(conditions).where(['lower(username) = :value OR lower(email) = :value', { :value => login.downcase }]).first
+      where(conditions).where(['lower(username) = :value OR lower(email) = :value', {:value => login.downcase}]).first
     else
       where(conditions).first
     end

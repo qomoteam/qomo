@@ -96,6 +96,8 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     dvm (0.1.7)
       colorize (~> 0.7)
+    email_validator (1.6.0)
+      activemodel
     erubis (2.7.0)
     excon (0.54.0)
     execjs (2.7.0)
@@ -318,6 +320,7 @@ DEPENDENCIES
   devise
   docker-api
   dvm
+  email_validator
   flamegraph
   font-awesome-sass
   gon

@@ -25,15 +25,6 @@ module Qomo
 
     config.action_cable.allowed_request_origins = [/.*/]
     config.action_cable.disable_request_forgery_protection = true
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
-      if html_tag =~ /<(input|label|textarea|select)/
-        html_field = Nokogiri::HTML::DocumentFragment.parse(html_tag)
-        html_field.children.add_class 'error'
-        html_field.to_s
-      else
-        html_tag
-      end
-    }
     config.cache_store = :redis_store, "#{Config.redis}/cache"
 
     config.to_prepare do

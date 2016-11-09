@@ -37,6 +37,7 @@ gem 'country_select'
 gem 'kaminari'
 gem 'nestive'
 gem 'client_side_validations', github: 'DavyJonesLocker/client_side_validations', branch: 'rails5'
+gem 'email_validator'
 
 # Assets
 gem 'coffee-rails'
