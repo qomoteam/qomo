@@ -39,8 +39,16 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :profile
 
   scope :expired_guests, -> {
-    where 'username LIKE ? and CURRENT_DATE-current_sign_in_at>?', 'guest-%', '3 mons'
+    where 'username LIKE ? and CURRENT_DATE-current_sign_in_at>?', 'guest-%', '1 week'
   }
+
+  def self.guests
+    User.with_role :guest
+  end
+
+  def self.admins
+    User.with_role :admin
+  end
 
 
   def datastore

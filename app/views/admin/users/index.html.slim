@@ -1,4 +1,11 @@
-a.aui-button.aui-button-primary href=destroy_expired_admin_users_path data-method='delete' data-confirm='Delete all expired guests?' Delete Expired Guests
+.nav-toolbar
+  .primary
+    h3
+      | Users
+      small Total: #{@users.count}
+      small Guest: #{User.guests.count}
+  .secondary
+    a.aui-button.aui-button-primary href=destroy_expired_admin_users_path data-method='delete' data-confirm='Delete all expired guests?' Delete Expired Guests
 
 table.aui
   thead
@@ -8,7 +15,7 @@ table.aui
       th width='150px' Full Name
       th width='120px' Last Sign In Ip
       th width='150px' Last Sign In At
-      th Quick Operations
+      th Operations
 
   tbody
     - for user in @users
@@ -17,7 +24,7 @@ table.aui
           a href=admin_user_path(user) = user.username
         td
           a href="mailto:#{user.email}" = user.email
-        td = user.full_name
+        td = user.profile.full_name
         td
           - if user.last_sign_in_ip
             a href="http://www.ip.cn/index.php?ip=#{user.last_sign_in_ip}" target="_blank" = user.last_sign_in_ip
