@@ -13,6 +13,10 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     post 'users/guest_signin', to: 'users/sessions#guest_signin', as: 'guest_signin'
+    put 'users/registrations/update_login', to: 'users/registrations#update_login', as: 'update_login'
+    get 'users/registrations/resend_confirmation_email', to: 'users/registrations#resend_confirmation_email', as: 'resend_confirmation_email'
+    get 'users/registrations/cancel_update_email', to: 'users/registrations#cancel_update_email', as: 'cancel_update_email'
+
     get 'cas/login', to: 'users/sessions#new'
     get 'cas/serviceValidate', to: 'users/sessions#service_validate'
     get 'cas/logout', to: 'users/sessions#cas_logout'

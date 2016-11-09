@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
 
   include CasHelper
 
-  layout :choose_layout
+  layout 'security'
 
   def edit
     @profile = current_user.profile
@@ -14,10 +14,5 @@ class ProfilesController < ApplicationController
   end
 
 
-  private
-
-  def choose_layout
-    cas_request? ? 'bigd' : 'application'
-  end
 
 end

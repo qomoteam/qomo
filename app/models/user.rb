@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, email: true
 
-  validates :password, presence: true, length: {minimum: 6}
+  validates :password, presence: true, length: {minimum: 6}, on: :create
 
   validates_acceptance_of :term_of_service, allow_nil: false, on: :create, message: 'must be accepted'
 

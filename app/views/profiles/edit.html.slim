@@ -1,56 +1,55 @@
-.aui-page-focused.page-witdh-small
-  .aui-page-panel
-    .aui-page-panel-inner
-      section.aui-page-panel-content
-        h2 Edit Profile
+h3 Edit Profile
 
-        = form_for @profile, url: profile_path(cas_request: cas_request), html: {method: :put, class: 'aui'} do |f|
-          .field-group
-            = f.label :first_name
-            = f.text_field :first_name, autofocus: true, class: 'text long-field'
+= form_for @profile, url: profile_path(cas_request: cas_request), html: {method: :put, class: 'aui'} do |f|
+  .aui-group
+    .aui-item
+      .field-group
+        = f.label :first_name
+        = f.text_field :first_name, autofocus: true, class: 'text full-width-field'
+    .aui-item
+      .field-group
+        = f.label :last_name
+        = f.text_field :last_name, autocomplete: 'off', class: 'text full-width-field'
 
-          .field-group
-            = f.label :last_name
-            = f.text_field :last_name, autocomplete: 'off', class: 'text long-field'
+  .field-group
+    = f.label :title
+      | Title or Position
+    = f.text_field :title, autocomplete: 'off', class: 'text full-width-field'
+    .description
+      | Professor, Student, etc.
 
-          .field-group
-            = f.label :title
-            = f.text_field :title, autocomplete: 'off', class: 'text long-field'
-            small.tip
-              | Professor, Student, etc.
+  .field-group
+    = f.label :organization
+    = f.text_field :organization, autocomplete: 'off', class: 'text full-width-field'
+    .description Your institute, university, etc.
 
-          .field-group
-            = f.label :organization
-            = f.text_field :organization, autocomplete: 'off', class: 'text long-field'
-            small.tip Your institute, university, etc.
+  .field-group
+    = f.label :department
+    = f.text_field :department, autocomplete: 'off', class: 'text full-width-field'
 
-          .field-group
-            = f.label :department
-            = f.text_field :department, autocomplete: 'off', class: 'text long-field'
+  .field-group
+    = f.label :country
+      | Country or Region
+    = f.country_select :country, {include_blank: 'Select a country'}, {class: 'select full-width-field'}
 
-          .field-group
-            = f.label :country
-              | Country or Region
-            = f.country_select :country, {include_blank: 'Select a country'}, {class: 'select long-field'}
+  .field-group
+    = f.label :location
+    = f.text_field :location, autocomplete: 'off', class: 'text full-width-field'
+    .description Your city, town, etc.
 
-          .field-group
-            = f.label :location
-            = f.text_field :location, autocomplete: 'off', class: 'text long-field'
-            small.tip Your city, town, etc.
+  .field-group
+    = f.label :timezone
+    = f.time_zone_select :timezone, nil, {}, {class: 'select full-width-field'}
 
-          .field-group
-            = f.label :timezone
-            = f.time_zone_select :timezone, nil, {}, {class: 'select long-field'}
+  .field-group
+    = f.label :homepage
+    = f.text_field :homepage, autocomplete: 'off', class: 'text full-width-field', placeholder: 'Your website homepage'
 
-          .field-group
-            = f.label :homepage
-            = f.text_field :homepage, autocomplete: 'off', class: 'text long-field', placeholder: 'Your website homepage'
+  .field-group
+    = f.label :bio
+    = f.text_area :bio, {class: 'textarea full-width-field', rows: 10, placeholder: 'Tell a little about yourself'}
 
-          .field-group
-            = f.label :bio
-            = f.text_area :bio, {class: 'textarea long-field', rows: 10, placeholder: 'Tell a little about yourself'}
-
-          .buttons-container
-            .buttons
-              = f.submit 'Update', class: 'aui-button aui-button-primary'
-              = button_tag 'Cancel', type: :reset, class: 'aui-button'
+  .buttons-container
+    .buttons
+      = f.submit 'Update', class: 'aui-button aui-button-primary'
+      = button_tag 'Cancel', type: :reset, class: 'aui-button'

@@ -39,15 +39,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def update_login
+    current_user.update_attributes params[:user].permit(:email)
+    redirect_to edit_user_registration_path
+  end
+
+  def resend_confirmation_email
+    current_user.resend_confirmation_instructions
+    redirect_to edit_user_registration_path
+  end
+
+  def cancel_update_email
+    current_user.update_attributes unconfirmed_email: nil, confirmation_token: nil
+    redirect_to edit_user_registration_path
+  end
+
   # GET /resource/edit
   # def edit
   #   super
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    super
+  end
 
   # DELETE /resource
   # def destroy
