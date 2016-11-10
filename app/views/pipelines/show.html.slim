@@ -45,21 +45,24 @@
         tr
           td width='100px' Title
           td = pipeline_link @pipeline
-        - if @pipeline.shared
-        tr
-          td Accession
-          td
-            a href=pipeline_path(@pipeline.accession_label) = @pipeline.accession_label
+
         tr
           td Contributors
           td == contributors_tag @pipeline.all_contributors
-        tr
-          td Permalink
-          td
-            = pipeline_permalink @pipeline
-        tr
-          td Citation
-          td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_permalink @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
+
+        - if @pipeline.shared
+          tr
+            td Accession
+            td
+              a href=pipeline_path(@pipeline.accession_label) = @pipeline.accession_label
+          tr
+            td Permalink
+            td
+              = pipeline_permalink @pipeline
+          tr
+            td Citation
+            td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_permalink @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
+
         tr
           td Created At
           td = ptime @pipeline.created_at
@@ -90,13 +93,14 @@
           label Job Name
           input.text.long-field name='job_name' placeholder="Job name"
 
-        h5 Params:
-        - for p in @pipeline.params_ui
-          .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
-            - tp = p['tool'].params.find {|e| e['name'] == p['name']}
-            label
-              span.hint--right.hint--info aria-label=tp['desc'] #{p['label']} (#{p['tool'].name}: #{tp['label']})
-            = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
+        - if @pipeline.params.present?
+          h5 Params:
+          - for p in @pipeline.params_ui
+            .pipeline-param.field-group.top-label data-bid=p['box_id'] data-name=p['name']
+              - tp = p['tool'].params.find {|e| e['name'] == p['name']}
+              label
+                span.hint--right.hint--info aria-label=tp['desc'] #{p['label']} (#{p['tool'].name}: #{tp['label']})
+              = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
 
         .aui-group
           = submit_tag 'Run', class: 'aui-button aui-button-primary'

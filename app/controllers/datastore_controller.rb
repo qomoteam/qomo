@@ -71,20 +71,11 @@ class DatastoreController < ApplicationController
   end
 
 
-  def share
+  def toogle_shared
     record = Filerecord.find_or_create_by(path: path, owner_id: current_user.id)
+    authorize! :manage, record
 
-    record.shared = true
-    record.save
-
-    render json: {success: true}
-  end
-
-
-  def unshare
-    record = Filerecord.find_or_create_by(path: path, owner_id: current_user.id)
-    record.shared = false
-    record.save
+    record.update shared: params[:shared].to_bool
 
     render json: {success: true}
   end

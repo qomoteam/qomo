@@ -8,15 +8,11 @@ class Pipeline < ApplicationRecord
 
   belongs_to :category
 
-  before_save :update_slug, :set_accession
+  include AccessionAware
+  accession_aware prefix: 'QP'
 
-  def update_slug
-    self.slug = self.title.parameterize
-    s = Pipeline.find_by_slug(self.slug)
-    if s and s != self
-      self.slug = self.slug + '-1'
-    end
-  end
+  include SlugAware
+  slug_aware for: :title
 
   default_scope -> { order('created_at DESC') }
 
@@ -133,26 +129,6 @@ class Pipeline < ApplicationRecord
       end
     end
     self.boxes = jb
-  end
-
-
-  def accession_label
-    "QP#{sprintf '%06d', self.accession}"
-  end
-
-  def self.find_by_accession_label(label)
-    return nil unless label.upcase.starts_with? 'QP'
-    accession = label[2..-1].to_i
-    self.find_by_accession accession
-  end
-
-
-  private
-
-  def set_accession
-    if (not self.accession) and self.shared
-      self.accession = (Pipeline.maximum(:accession) || 0) + 1
-    end
   end
 
 

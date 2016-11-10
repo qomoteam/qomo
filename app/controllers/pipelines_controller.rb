@@ -40,33 +40,26 @@ class PipelinesController < ApplicationController
   end
 
 
-  def share
+  def toogle_shared
     pipeline = Pipeline.find params[:id]
-    unauthorized if current_user != pipeline.owner
+    authorize! :manage, pipeline
 
-    pipeline.shared = true
-    pipeline.save
-    pipeline.boxes.values.each do |e|
-      tool = Tool.find e['tool_id']
-      tool.inputs.each do |input|
-        path = e['values'][input['name']]
-        unless path.blank?
-          record = Filerecord.find_or_create_by(path: path, owner_id: current_user.id)
-          record.shared = true
-          record.save
+    pipeline.update shared: params[:shared].to_bool
+
+    if pipeline.shared
+      pipeline.boxes.values.each do |e|
+        tool = Tool.find e['tool_id']
+        tool.inputs.each do |input|
+          path = e['values'][input['name']]
+          unless path.blank?
+            record = Filerecord.find_or_create_by(path: path, owner_id: current_user.id)
+            record.shared = true
+            record.save
+          end
         end
       end
     end
-    render json: {success: true}
-  end
 
-
-  def unshare
-    pipeline = Pipeline.find params[:id]
-    unauthorized if current_user != pipeline.owner
-
-    pipeline.shared = false
-    pipeline.save
     render json: {success: true}
   end
 
@@ -137,7 +130,8 @@ class PipelinesController < ApplicationController
 
   def edit
     @pipeline = Pipeline.find params['id']
-    unauthorized if current_user != @pipeline.owner
+    authorize! :update, @pipeline
+    pp @pipeline.persisted?
     @categories = Category.all
   end
 
@@ -156,7 +150,7 @@ class PipelinesController < ApplicationController
     pipeline = Pipeline.find params['id']
     not_found unless pipeline
 
-    unauthorized if current_user != pipeline.owner
+    authorize! :update, @pipeline
     pipeline.slug = nil
     pipeline.update params.require('pipeline').permit!
 

@@ -58,8 +58,8 @@ module ApplicationHelper
   end
 
 
-  def shared_tag(shared)
-    opts = {class: 'shared-toggle', label: 'Shared'}
+  def shared_tag(shared, url)
+    opts = {class: 'shared-toggle', label: 'Shared', 'data-url': url}
     opts[:checked] = 'on' if shared
     content_tag 'aui-toggle', nil, opts
   end

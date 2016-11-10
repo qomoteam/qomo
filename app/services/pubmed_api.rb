@@ -6,13 +6,11 @@ class PubmedApi # a very basic Pubmed API
   def self.find(ids) # can accept an array of ids or a single id or a string of ids separated by commas
     param = ids.class == Array ? ids.join(",") : ids
 
-    uri = URI.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=#{param}")
+    uri = URI.parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=#{param}")
     response = Net::HTTP.get_response(uri)
 
     documents = []
-
     if response.code_type.to_s == "Net::HTTPOK"
-
       parsed_doc = Nokogiri::XML(response.body)
       parsed_doc = parsed_doc.css("eSummaryResult DocSum")
 
@@ -33,7 +31,7 @@ class PubmedApi # a very basic Pubmed API
         pd.css("Item[Name=AuthorList] Item[Name=Author]").each do |author|
           doc[:authors] << author.text
         end
-        doc[:citation] = query_citation(doc[:doi])
+        #doc[:citation] = query_citation(doc[:doi])
         documents << doc
       end
     end

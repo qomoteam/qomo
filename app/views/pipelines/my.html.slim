@@ -22,7 +22,7 @@
           tr data-pid=pipeline.id
             td = pipeline_link(pipeline)
             td = ptime pipeline.created_at
-            td = shared_tag pipeline.shared
+            td = shared_tag pipeline.shared, toogle_shared_pipeline_path(pipeline)
             td = render partial: 'pipelines/operations_ul', locals: {pipeline: pipeline}
   - else
     .empty-placeholder

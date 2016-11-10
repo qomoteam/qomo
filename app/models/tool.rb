@@ -15,17 +15,13 @@ class Tool < ApplicationRecord
   before_destroy :rmdir
   before_save :sanitize
 
-  before_save :update_slug, :set_accession
-
   validates_presence_of :name, :category, :contributors, :desc, :tech
 
-  def update_slug
-    self.slug = self.name.parameterize
-    s = Tool.find_by_slug(self.slug)
-    if s and s != self
-      self.slug = self.slug + '-1'
-    end
-  end
+  include AccessionAware
+  accession_aware prefix: 'QT'
+
+  include SlugAware
+  slug_aware for: :name
 
   scope :featured, -> { where('featured>?', 0).where(shared: true).order(featured: :desc) }
 
@@ -140,26 +136,10 @@ class Tool < ApplicationRecord
     r
   end
 
-  def accession_label
-    "QT#{sprintf '%06d', self.accession}"
-  end
-
-  def self.find_by_accession_label(label)
-    return nil unless label.upcase.starts_with? 'QT'
-    accession = label[2..-1].to_i
-    self.find_by_accession accession
-  end
-
   private
 
   def sanitize
     self.command = self.command.split(/\r?\n/).each { |e| e.strip }.join("\n")
-  end
-
-  def set_accession
-    if (not self.accession) and self.shared
-      self.accession = (Tool.maximum(:accession) || 0) + 1
-    end
   end
 
 end

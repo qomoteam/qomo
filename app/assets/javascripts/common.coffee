@@ -219,3 +219,20 @@ $ ->
     currentSrc = img.attr('src')
     img.attr('src', currentSrc.split('?')[0] + '?' + (new Date()).getTime())
     e.preventDefault()
+
+  $('.shared-toggle').change ->
+    toggle = this
+    toggle.busy = true
+    isChecked = toggle.checked
+    path = $(this).parents('tr').data 'path'
+    url = toggle.dataset.url
+    $.ajax
+      url: url
+      data:
+        shared: isChecked
+      method: 'PATCH'
+      error: ->
+        toggle.checked = !isChecked
+        toggle.busy = false
+      success: ->
+        toggle.busy = false

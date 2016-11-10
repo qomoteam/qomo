@@ -32,7 +32,7 @@
             td = file.type.desc
 
             - if own? file
-              td = shared_tag Filerecord.shared? file.record.owner.id, file.record.path
+              td = shared_tag Filerecord.shared?(file.record.owner.id, file.record.path), datastore_toogle_shared_path(file.record.path)
 
             td = ptime file.mtime.to_s
 

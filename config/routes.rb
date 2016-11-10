@@ -54,8 +54,7 @@ Rails.application.routes.draw do
     get '/edit/-/(*path)', action: 'edit', as: :edit, constraints: { :path => /.*/ }
     patch '/-/(*path)', action: 'update', as: :update, constraints: { :path => /.*/ }
 
-    patch '/share/-/(*path)', action: 'share', as: :share, constraints: {:path => /.*/ }
-    patch '/unshare/-/(*path)', action: 'unshare', as: :unshare, constraints: {:path => /.*/ }
+    patch '/toogle_shared/-/(*path)', action: 'toogle_shared', as: :toogle_shared, constraints: {:path => /.*/ }
 
     get :filetree
 
@@ -116,8 +115,7 @@ Rails.application.routes.draw do
     end
     member do
       get :import
-      patch :share
-      patch :unshare
+      patch :toogle_shared
       patch :toogle_featured
       get :export
       post :run
