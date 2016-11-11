@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'zip'
 
-class Tool < ApplicationRecord
+class ToolModule < ApplicationRecord
 
   attr_accessor :upload
 
