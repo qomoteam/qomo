@@ -21,6 +21,7 @@ module Qomo
     require File.expand_path('../../app/models/config.rb', __FILE__)
 
     config.relative_url_root = Config.relative_root
+    config.action_controller.relative_url_root = Config.relative_root
 
     config.action_mailer.smtp_settings = config_for(:email)['smtp_settings'].symbolize_keys
     config.action_mailer.default_url_options = config_for(:email)['default_url_options'].symbolize_keys
