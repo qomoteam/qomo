@@ -24,6 +24,7 @@ defaults: &defaults
     vhost: qomo
 
   redis: redis://h2:6379/1
+  relative_root: ''
 
 
 development:
