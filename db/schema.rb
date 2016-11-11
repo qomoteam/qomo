@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111083730) do
+ActiveRecord::Schema.define(version: 20161110141853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(version: 20161111083730) do
     t.string "name"
   end
 
-  create_table "tool_modules", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "tools", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name",                         null: false
     t.text     "contributors"
     t.uuid     "owner_id"
@@ -242,13 +242,13 @@ ActiveRecord::Schema.define(version: 20161111083730) do
     t.integer  "accession"
     t.boolean  "shared",       default: false
     t.boolean  "audit",        default: false
-    t.index ["accession"], name: "index_tool_modules_on_accession", unique: true, using: :btree
-    t.index ["category_id"], name: "index_tool_modules_on_category_id", using: :btree
-    t.index ["featured"], name: "index_tool_modules_on_featured", using: :btree
-    t.index ["name"], name: "index_tool_modules_on_name", unique: true, using: :btree
-    t.index ["owner_id", "slug"], name: "index_tool_modules_on_owner_id_and_slug", using: :btree
-    t.index ["owner_id"], name: "index_tool_modules_on_owner_id", using: :btree
-    t.index ["shared"], name: "index_tool_modules_on_shared", using: :btree
+    t.index ["accession"], name: "index_tools_on_accession", unique: true, using: :btree
+    t.index ["category_id"], name: "index_tools_on_category_id", using: :btree
+    t.index ["featured"], name: "index_tools_on_featured", using: :btree
+    t.index ["name"], name: "index_tools_on_name", unique: true, using: :btree
+    t.index ["owner_id", "slug"], name: "index_tools_on_owner_id_and_slug", using: :btree
+    t.index ["owner_id"], name: "index_tools_on_owner_id", using: :btree
+    t.index ["shared"], name: "index_tools_on_shared", using: :btree
   end
 
   create_table "users", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
