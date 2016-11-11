@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  mount ActionCable.server => '/cable'
+  mount ActionCable.server => "#{Config.relative_root}/cable"
 
   mount RuCaptcha::Engine => '/captcha'
 
