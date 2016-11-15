@@ -61,14 +61,14 @@
               = pipeline_permalink @pipeline
           tr
             td Citation
-            td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_permalink @pipeline} (Last update: #{ptime @pipeline.updated_at, current_user.try(:timezone)})
+            td #{contributors_tag @pipeline.contributors, false} Pipeline: "#{@pipeline.title}" in Qomo, available at #{pipeline_permalink @pipeline} (Last update: #{@pipeline.updated_at.to_s :simple})
 
         tr
           td Created At
-          td = ptime @pipeline.created_at
+          td = @pipeline.created_at.to_s :simple
         tr
           td Updated At
-          td = ptime @pipeline.updated_at
+          td = @pipeline.updated_at.to_s :simple
         tr
           td Description
           td

@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
 
-  def ptime(ts, timezone=current_user.profile.timezone)
+  def ptime(ts, timezone=current_user&.profile&.timezone)
     ts.nil? ? '' : ts.in_time_zone(timezone).strftime('%F %T')
   end
 
