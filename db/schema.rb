@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161110141853) do
+ActiveRecord::Schema.define(version: 20161116064509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,18 +74,18 @@ ActiveRecord::Schema.define(version: 20161110141853) do
     t.datetime "ended_at"
     t.text     "log"
     t.integer  "idx"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.json     "docker"
   end
 
   create_table "jobs", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.uuid     "user_id"
     t.text     "log"
-    t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.integer  "status",     default: 0
   end
 
   create_table "overall_averages", force: :cascade do |t|

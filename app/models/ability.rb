@@ -12,6 +12,7 @@ class Ability
     end
 
     can :manage, [Pipeline, Tool, Filerecord], owner_id: user.id
+    can :manage, [Job, JobUnit], user_id: user.id
 
     can [:my, :create], [Pipeline, Tool]
     can [:run, :bookmark], [Pipeline, Tool], shared: true

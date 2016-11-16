@@ -27,23 +27,17 @@ class Job < ApplicationRecord
     self.units.success.count*1.0 / self.units.count
   end
 
-
-  def status
-    return 'running' if units.any? {|u| u.status == 'running'}
-    return 'fail' if units.any? {|u| u.status == 'fail'}
-    return units[-1].status if end?
-    'waiting'
-  end
-
-
   def destroy!
     user.datastore.delete! self.tmpdir
     self.destroy
   end
 
+  def start?
+    self.status != 'waiting'
+  end
 
   def end?
-    units[-1].end?
+    %w(fail success).include? self.status
   end
 
 end

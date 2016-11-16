@@ -3,9 +3,12 @@
     ' Job: #{@job.name}
 
   .job-meta
-    span Created At: #{ptime @job.created_at}
-    span Updated At: #{ptime @job.updated_at}
-    span Progress: #{number_to_percentage @job.progress*100, precision: 0}
+    - if @job.start?
+      span Started At: #{ptime @job.started_at}
+    - if @job.end?
+      span Ended At: #{ptime @job.ended_at}
+    - if @job.start?
+      span Progress: #{number_to_percentage @job.progress*100, precision: 0}
     span = status_label @job.status
 
     a.right href=job_path(@job)
