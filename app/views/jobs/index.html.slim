@@ -25,7 +25,7 @@
               a href=job_path(job) = job.name
             td = status_label job.status
             td
-              - if @job.start?
+              - if job.start?
                 = running_time job
               - else
                 | -
