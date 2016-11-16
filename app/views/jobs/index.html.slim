@@ -24,7 +24,11 @@
             td
               a href=job_path(job) = job.name
             td = status_label job.status
-            td = running_time job
+            td
+              - if @job.start?
+                = running_time job
+              - else
+                | -
             td #{number_to_percentage job.progress*100, precision: 0}
             td #{time_ago_in_words job.updated_at} ago
             td
