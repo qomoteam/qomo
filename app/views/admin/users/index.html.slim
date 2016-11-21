@@ -21,7 +21,9 @@ table.aui
     - for user in @users
       tr
         td
-          a href=admin_user_path(user) = user.username
+          a> href=admin_user_path(user) = user.username
+          - if user.confirmed?
+            i.fa.fa-check title='Use Email is confirmed'
         td
           a href="mailto:#{user.email}" = user.email
         td = user.profile.full_name
@@ -32,5 +34,6 @@ table.aui
         td
           ul.menu
             li = render partial: 'admin/users/lock_toggle', locals: {user: user}
+
 
 = paginate @users

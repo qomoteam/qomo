@@ -76,7 +76,7 @@ class Tool < ApplicationRecord
 
 
   def dirpath
-    File.join Config.dir_tools, self.owner.id, self.dirname.blank? ? self.id : self.dirname
+    File.join self.owner.datastore.tool_home, self.dirname.blank? ? self.id : self.dirname
   end
 
 

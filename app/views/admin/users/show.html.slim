@@ -10,7 +10,7 @@ table.aui.def
       td = @user.email
     tr
       td Full Name
-      td = @user.full_name
+      td = @user.profile.full_name
 
     tr
       td Last Sign In At
@@ -18,6 +18,12 @@ table.aui.def
     tr
       td Last Sign In IP
       td = @user.last_sign_in_ip
+    tr
+      td User Home
+      td = @user.datastore.home
+    tr
+      td Tool Home
+      td = @user.datastore.tool_home
     tr
       td Locked
       td = render partial: 'admin/users/lock_toggle', locals: {user: @user}

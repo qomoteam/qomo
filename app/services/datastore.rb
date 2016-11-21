@@ -1,11 +1,12 @@
 class Datastore
 
-  attr_reader :home
+  attr_reader :home, :tool_home
 
   def initialize(uid, dir_users)
     @uid = uid
     @dir_users = dir_users
     @home = Datastore.home_dir(uid, dir_users)
+    @tool_home = File.join Config.dir_tools, uid
   end
 
   def get(path)
