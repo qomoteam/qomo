@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   rolify
 
+  has_settings do |s|
+    s.key :ftp, defaults: {download_threshold: 2.megabytes, upload_threshold: 2.megabytes}
+  end
+
   validates :username, presence: true, uniqueness: true, length: 5..10, format: {with: /\A[a-zA-Z0-9]+\z/}
 
   validates :email, presence: true, uniqueness: true, email: true
