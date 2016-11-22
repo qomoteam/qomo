@@ -38,7 +38,5 @@ module Qomo
       Devise::PasswordsController.layout 'security'
     end
 
-    Rack::MiniProfiler.config.base_url_path = '/cloud/mini-profiler-resources/'
-
   end
 end
