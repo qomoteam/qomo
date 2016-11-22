@@ -165,7 +165,7 @@ $ ->
       $(this).remove()
 
   if gon.notice
-    notie.alert 4, gon.notice, 100
+    notie.alert 4, gon.notice, 3
 
   $('.logout').click ->
     localStorage.clear()
