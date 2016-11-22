@@ -21,7 +21,7 @@ module Qomo
     require File.expand_path('../../app/models/config.rb', __FILE__)
 
     config.relative_url_root = Config.relative_root
-    config.action_cable.url = "#{Config.relative_root}/cable"
+    config.action_cable.url = File.join Config.relative_root, 'cable'
 
     config.action_mailer.smtp_settings = config_for(:email)['smtp_settings'].symbolize_keys
     config.action_mailer.default_url_options = config_for(:email)['default_url_options'].symbolize_keys
@@ -37,6 +37,8 @@ module Qomo
       Devise::UnlocksController.layout 'security'
       Devise::PasswordsController.layout 'security'
     end
+
+    Rack::MiniProfiler.config.base_url_path = '/cloud/mini-profiler-resources/'
 
   end
 end
