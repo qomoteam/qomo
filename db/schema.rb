@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124054811) do
+ActiveRecord::Schema.define(version: 20161124134458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,14 +139,14 @@ ActiveRecord::Schema.define(version: 20161124054811) do
     t.string   "title"
     t.string   "organization"
     t.string   "department"
-    t.string   "country"
+    t.string   "country",      default: "CN"
     t.string   "city"
-    t.string   "timezone"
+    t.string   "timezone",     default: "Beijing"
     t.string   "homepage"
     t.text     "bio"
     t.uuid     "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "postal_code"
     t.string   "phone"
     t.string   "fax"

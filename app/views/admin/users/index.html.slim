@@ -2,7 +2,7 @@
   .primary
     h3
       | Users
-      small Total: #{@users.count}
+      small Total: #{@users.total_count}
       small Guest: #{User.guests.count}
   .secondary
     a.aui-button.aui-button-primary href=destroy_expired_admin_users_path data-method='delete' data-confirm='Delete all expired guests?' Delete Expired Guests

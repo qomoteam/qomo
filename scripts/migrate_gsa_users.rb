@@ -3,7 +3,7 @@ require 'pg'
 require 'openssl'
 require 'base64'
 require 'bcrypt'
-require 'yaml'
+require 'countries'
 
 gsa_host = ARGV[0]
 gsa_port = ARGV[1]
@@ -49,11 +49,13 @@ gsa_con.query("SELECT * FROM user").each do |user|
     puts "#{user['user_id']}\t#{email}"
     next
   end
-  uid = q_con.exec_params('INSERT INTO users (username, email, encrypted_password, confirmed_at, created_at,updated_at) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id', [username, email, encrypted_password, Time.now, Time.now, Time.now])[0]['id']
+  created_at = user['create_time']
+  country = ISO3166::Country.find_country_by_alpha3(gsa_con.query("SELECT * FROM country WHERE country_id='#{user['country_id']}'").first['ISO_ALPHA-3_code']).alpha2
+  uid = q_con.exec_params('INSERT INTO users (username,email,encrypted_password,confirmed_at,created_at,updated_at) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id', [username, email, encrypted_password, Time.now, created_at, Time.now])[0]['id']
 
-  q_con.exec_params('INSERT INTO profiles (user_id,state,street,postal_code,phone,fax,lab,mid_name,reseach_area,city,department,first_name,last_name,organization,title,created_at,updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)',
+  q_con.exec_params('INSERT INTO profiles (user_id,state,street,postal_code,phone,fax,lab,mid_name,reseach_area,city,department,first_name,last_name,organization,title,created_at,updated_at,country) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)',
                     [uid, user['state'], user['street'], user['postal_code'], user['phone'], user['fax'], user['lab'], user['mid_name'], user['reseach_area'],
-                     user['city'], user['department'], user['first_name'], user['last_name'], user['organization'], user['title'],Time.now,Time.now])
+                     user['city'], user['department'], user['first_name'], user['last_name'], user['organization'], user['title'], created_at, Time.now, country])
 
 end
 
