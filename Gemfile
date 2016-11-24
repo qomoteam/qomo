@@ -6,6 +6,7 @@ gem 'jbuilder'
 
 # DB driver
 gem 'pg'
+gem 'mysql2'
 
 
 gem 'sdoc', group: :doc
