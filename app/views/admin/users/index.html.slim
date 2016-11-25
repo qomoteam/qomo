@@ -34,6 +34,11 @@ table.aui
         td
           ul.menu
             li = render partial: 'admin/users/lock_toggle', locals: {user: user}
+            li
+              = link_to admin_user_path(user), method: :delete, data: {confirm: 'Are you sure to delete this user?'}
+                => icon 'trash'
+                | Delete
+
 
 
 = paginate @users

@@ -1,4 +1,8 @@
 class Users::PasswordsController < Devise::PasswordsController
+  layout 'security'
+
+  include Cas
+
   # GET /resource/password/new
   # def new
   #   super
