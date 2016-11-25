@@ -34,19 +34,17 @@ def encrypt(password)
   ::BCrypt::Password.create(password, cost: 10).to_s
 end
 
-
-
 q_con = PG.connect host: q_host, user: q_username, password: q_password, dbname: q_db
 
 gsa_con = Mysql2::Client.new(host: gsa_host, port: gsa_port, username: gsa_username, password: gsa_password, database: gsa_db)
 
-gsa_con.query("SELECT * FROM user").each do |user|
+gsa_con.query("SELECT * FROM user where is_deleted!=1 AND is_active=1").each do |user|
   encrypted_password = encrypt(decrypted(user['password']))
   email = user['email']
   username = email.split('@')[0]
 
   if q_con.exec_params('SELECT count(*) as c FROM users where username=$1 OR email=$2', [username, email])[0]['c'].to_i > 0
-    puts "#{user['user_id']}\t#{email}"
+    puts "#{user['user_id']}\t#{username}\t#{email}"
     next
   end
   created_at = user['create_time']
