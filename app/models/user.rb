@@ -92,13 +92,6 @@ class User < ApplicationRecord
   end
 
 
-  protected
-
-  def send_on_create_confirmation_instructions
-
-  end
-
-
   private
 
   def ensure_profile_atttached
