@@ -7,6 +7,9 @@ if @success
       xml.tag!("cas:attributes") do
         xml.tag! 'cas:email', @user.email
         @user.profile.attributes.each do |key, value|
+          if key == 'country'
+            value = ISO3166::Country.new(value).name
+          end
           namespace_aware_key = key[0..3]=='cas:' ? key : 'cas:' + key
           xml.tag!(namespace_aware_key, value.to_s)
         end
