@@ -3,3 +3,4 @@ AllCops:
     - 'bin/**/*'
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
+    - 'node_modules/**/*'

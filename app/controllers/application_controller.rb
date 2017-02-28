@@ -33,6 +33,8 @@ class ApplicationController < ActionController::Base
     @page_title = title
   end
 
+  include Cas
+
   def after_sign_in_path_for(resource_or_scope)
     if cas_request?
       edit_profile_path(cas_request: true)
