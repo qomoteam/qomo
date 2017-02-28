@@ -82,9 +82,12 @@ class User < ApplicationRecord
     password = '123456'
     user = User.new username: username,
                     email: "#{username}@example.com",
-                    first_name: 'Guest',
-                    password: password, password_confirmation: password,
+                    password: password,
+                    password_confirmation: password
+    profile = Profile.new first_name: 'Guest',
                     timezone: 'Beijing'
+
+    user.profile = profile
     user.add_role :guest
     user.skip_confirmation!
     user.save

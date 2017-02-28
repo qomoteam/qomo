@@ -1,3 +1,14 @@
+development:
+  smtp_settings:
+    address:
+    domain:
+    authentication: login
+    user_name:
+    password:
+    enable_starttls_auto: false
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+  default_url_options:
+      host: cloud.big.ac.cn
 production:
   smtp_settings:
     address:
