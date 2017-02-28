@@ -169,6 +169,7 @@ Rails.application.routes.draw do
     resources :users do
       collection do
         delete :destroy_expired
+        get :search
       end
       member do
         get :lock

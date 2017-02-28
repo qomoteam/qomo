@@ -31,4 +31,10 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_back fallback_location: admin_users_path
   end
 
+  def search
+    @users = User.without_role(:guest).order(:username)
+                 .where('LOWER(username) LIKE :q OR LOWER(email) LIKE :q', {q: "%#{params[:q].downcase}%"}).page params[:page]
+    render 'index'
+  end
+
 end

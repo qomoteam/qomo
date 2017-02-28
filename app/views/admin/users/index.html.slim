@@ -7,6 +7,11 @@
   .secondary
     a.aui-button.aui-button-primary href=destroy_expired_admin_users_path data-method='delete' data-confirm='Delete all expired guests?' Delete Expired Guests
 
+form.aui.top-label action=search_admin_users_path method='get'
+  .field-group
+    input.text name='q' value=params[:q]
+    button.button style='margin-left: 15px' Search
+
 table.aui
   thead
     tr
