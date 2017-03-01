@@ -44,6 +44,14 @@ Datastore =
   rename: (path, new_name, goto=false) ->
     Datastore.mv path, "#{path.split('/')[0..-2].join('/')}/#{new_name}", goto
 
+  import_remote: (url, dest) ->
+    $.get(Routes.datastore_import_remote(),
+      {
+        url: url,
+        dest: dest
+      }, ->
+        Datastore.reload_files()
+    )
   trash: (path) ->
     $.ajax Routes.datastore_trash(),
       method: 'DELETE'
@@ -64,6 +72,12 @@ within 'datastore', 'show, edit', ->
   $('.clear-job-dirs').click ->
     return true unless confirm('All empty job dirs will be deleted, are you sure?')
 
+  $('.btn-import').click ->
+    notie.input {
+      type: 'text'
+    }, 'Remote url:', 'OK', 'Cancel',
+      (url) ->
+        Datastore.import_remote(url, gon.path) if url
 
   $('.btn-mkdir').click ->
     notie.input {

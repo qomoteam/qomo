@@ -3,12 +3,17 @@
     = render 'datastore/viewer/breadcrumb'
 
   .secondary
-    - if @meta.directory?
+    - if @meta.directory? and own?(@meta)
       = form_tag datastore_search_path, method: 'post', class: 'quicksearch aui' do
         = hidden_field_tag 'path', @meta.path
         input autocomplete="off" placeholder='Find a file...' type='text' name='q' value=params[:q]
         button.aui-button
           i.fa.fa-search
+
+    .aui-buttons
+      buttona.aui-button.hint--bottom.btn-import aria-label='Import remote file to this folder'
+        i.fa.fa-cloud-download>
+        | Import
 
     - if own? @meta
       - if @meta.directory?

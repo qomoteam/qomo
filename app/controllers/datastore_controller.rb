@@ -32,7 +32,7 @@ class DatastoreController < ApplicationController
 
     if @meta.directory?
       @files = datastore.list(path).sort_by { |f| f.name.downcase }
-    else
+    elsif @meta.type.name != :binary
       params[:offset] ||= 0
       params[:offset] = params[:offset].to_i
       params[:len] = params[:len]&.to_i
@@ -231,6 +231,18 @@ class DatastoreController < ApplicationController
     render 'datastore/viewer/directory'
   end
 
+  # Import remote file, using Aria2c RPC as downloader
+  def import_remote
+    url = params[:url]
+    dest = datastore.apath(params[:dest], File.basename(params[:url]))
+    path = datastore.rpath(dest)
+    aid = ARIA2.download(url, dest)
+    # TODO check whether Aria2 download start successfully
+    record = Filerecord.find_or_create_by owner_id: current_user.id, path: path
+    record.aid = aid
+    record.save
+    redirect_to datastore_path(params[:dest])
+  end
 
   private
 

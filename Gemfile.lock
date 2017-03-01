@@ -53,6 +53,7 @@ GEM
     acts_as_votable (0.10.0)
     amq-protocol (2.1.0)
     arel (7.1.4)
+    aria2-ruby (0.0.1)
     awesome_nested_set (3.1.1)
       activerecord (>= 4.0.0, < 5.1)
     bcrypt (3.1.11)
@@ -320,6 +321,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on
   acts_as_votable
+  aria2-ruby
   awesome_nested_set
   bcrypt
   bourbon

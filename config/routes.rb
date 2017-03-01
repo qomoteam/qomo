@@ -48,6 +48,8 @@ Rails.application.routes.draw do
 
     get '/shared/:accession', action: 'shared', as: :shared
 
+    get 'import_remote'
+
     post :search
     patch :mkdir
     patch :cp

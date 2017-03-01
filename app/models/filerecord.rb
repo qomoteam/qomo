@@ -48,6 +48,14 @@ class Filerecord < ApplicationRecord
     Datastore.new(owner.id, Config.dir_users).get(path)
   end
 
+  def aria2_status
+    status = ARIA2.query_status(self.aid)
+    if status['status'] == 'complete'
+      self.aid = nil
+      self.save
+    end
+    {status: status['status'], progress: status['progress']}
+  end
 
   private
 

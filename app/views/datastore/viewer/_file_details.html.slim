@@ -20,5 +20,9 @@ table.aui.file-details
   tr
     th Download
     td
-      a.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
+      a.hint--bottom href=datastore_download_path(meta.path, uid: params[:uid]) aria-label='Download'
         | Link
+  tr
+    th Description
+    td
+      p = meta.record.desc

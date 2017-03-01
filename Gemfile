@@ -61,6 +61,7 @@ gem 'jimson'
 gem 'rgl'
 gem 'docker-api'
 gem 'rmagick'
+gem 'aria2-ruby', require: 'aria2'
 
 # RabbitMQ client
 gem 'bunny'

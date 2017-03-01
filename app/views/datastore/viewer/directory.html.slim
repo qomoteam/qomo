@@ -19,47 +19,54 @@
       tbody
         - for file in @files
           tr data-path=file.path
-            td.nowrap
-              a.file-item> href=viewer_path(file) title=file.name
+            - if file.record.aid and file.record.aria2_status[:status] != 'complete'
+              td
                 i.fa> class=file.type.icon
                 = file.name
-              - if file.shared?
-                a.hint--right href=datastore_shared_path(file.record.accession_label) aria-label='Shared path'
-                  i.fa.fa-external-link
-            td
-              - if file.directory?
-                | --
-              - else
-                = number_to_human_size(file.size, precision: 3)
+              td colspan=4
+                | Download progress: #{'%.2f' % (file.record.aria2_status[:progress]*100)}%
+              td
+            - else
+              td.nowrap
+                a.file-item> href=viewer_path(file) title=file.name
+                  i.fa> class=file.type.icon
+                  = file.name
+                - if file.shared?
+                  a.hint--right href=datastore_shared_path(file.record.accession_label) aria-label='Shared path'
+                    i.fa.fa-external-link
+              td
+                - if file.directory?
+                  | --
+                - else
+                  = number_to_human_size(file.size, precision: 3)
 
-            td = file.type.desc
+              td = file.type.desc
 
-            - if own? file
-              td = shared_tag Filerecord.shared?(file.record.owner.id, file.record.path), datastore_toogle_shared_path(file.record.path)
+              - if own? file
+                td = shared_tag Filerecord.shared?(file.record.owner.id, file.record.path), datastore_toogle_shared_path(file.record.path)
 
-            td = ptime file.mtime.to_s
+              td = ptime file.mtime.to_s
 
-            td
-              ul.menu
-                li
-                  a.hint--bottom.btn-copy aria-label='Copy' href='javascript:;'
-                    i.fa.fa-files-o
-
-                - if own? file
+              td
+                ul.menu
+                  - if own? file
+                    li
+                      a.hint--bottom href=datastore_edit_path(file.path) aria-label='Edit file metadata'
+                        i.fa.fa-pencil
+                    li
+                      a.hint--bottom.btn-move aria-label='Cut' href='javascript:;'
+                        i.fa.fa-scissors
+                    li
+                      a.hint--bottom.btn-trash href='javascript:void(0);' aria-label='Delete this file'
+                        i.fa.fa-trash-o
                   li
-                    a.hint--bottom.btn-move aria-label='Cut' href='javascript:;'
-                      i.fa.fa-scissors
-                  li
-                    a.hint--bottom href=datastore_edit_path(file.path) aria-label='Edit file metadata'
-                      i.fa.fa-pencil
-                  li
-                    a.hint--bottom.btn-trash href='javascript:void(0);' aria-label='Delete this file'
-                      i.fa.fa-trash-o
+                    a.hint--bottom.btn-copy aria-label='Copy' href='javascript:;'
+                      i.fa.fa-files-o
 
-                - unless file.directory?
-                  li
-                    a.hint--bottom href=datastore_download_path(file.path, uid: params[:uid]) aria-label='Download this file'
-                      i.fa.fa-download
+                  - unless file.directory?
+                    li
+                      a.hint--bottom href=datastore_download_path(file.path, uid: params[:uid]) aria-label='Download this file'
+                        i.fa.fa-download
   - else
     .empty-placeholder
       - if params[:action] == 'search'

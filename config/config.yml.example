@@ -24,6 +24,9 @@ defaults: &defaults
     vhost: qomo
   redis: redis://h2:6379/1
   relative_root: '/cloud'
+  aria2c:
+    host: 192.168.118.211
+    port: 16800
 
 
 development:
