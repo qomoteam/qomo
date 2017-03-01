@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124134458) do
+ActiveRecord::Schema.define(version: 20170301060618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20161124134458) do
     t.text    "desc"
     t.boolean "shared",    default: false
     t.integer "accession"
-    t.index ["accession"], name: "index_filerecords_on_accession", using: :btree
+    t.index ["accession"], name: "index_filerecords_on_accession", unique: true, using: :btree
     t.index ["owner_id"], name: "index_filemeta_on_owner_id", using: :btree
   end
 

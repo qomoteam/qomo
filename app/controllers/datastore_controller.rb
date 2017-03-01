@@ -2,7 +2,7 @@ class DatastoreController < ApplicationController
 
   LIBRARY_ID = '__dataset__library__'
 
-  before_action :authenticate_user!, except: [:filetree]
+  before_action :authenticate_user!, except: [:filetree, :show, :shared, :download]
 
   def datastore
     uid = params[:uid] || current_user.id
@@ -11,13 +11,18 @@ class DatastoreController < ApplicationController
 
 
   def show
+    unless params[:uid] or current_user
+      redirect_to new_user_session_path
+      return
+    end
+
     @meta = datastore.get path
 
     unless @meta
       not_found
     end
 
-    if params[:uid] and params[:uid] != current_user.id and !Filerecord.shared?(params[:uid], @meta.path)
+    if params[:uid] and params[:uid] != current_user&.id and !Filerecord.shared?(params[:uid], @meta.path)
       unauthorized
     end
 
@@ -39,6 +44,11 @@ class DatastoreController < ApplicationController
     end
 
     render template: "datastore/viewer/#{@meta.type.tpl}", formats: [:html]
+  end
+
+  def shared
+    record = Filerecord.find_by_accession_label params[:accession]
+    redirect_to datastore_path(record.path, uid: record.owner.id)
   end
 
 
@@ -156,6 +166,11 @@ class DatastoreController < ApplicationController
   def download
     path = params[:path]
     f = datastore.get(path)
+
+    if params[:uid] and params[:uid] != current_user&.id and !Filerecord.shared?(params[:uid], path)
+      unauthorized
+    end
+
     if f.is_rdout
       send_data f.raw_read
     else

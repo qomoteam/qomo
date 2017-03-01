@@ -6,6 +6,9 @@ class Filerecord < ApplicationRecord
 
   before_update :update_subrecords
 
+  include AccessionAware
+  accession_aware prefix: 'QD'
+
   def self.subrecords(path, owner_id)
     where("path LIKE :path_like AND owner_id=:owner_id", {path_like: "#{path}/%", owner_id: owner_id})
   end

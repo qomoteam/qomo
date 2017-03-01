@@ -1,0 +1,24 @@
+table.aui.file-details
+  tr
+    th width='100px' File Name
+    td = meta.name
+
+  - if meta.shared?
+    tr
+      th Accession
+      td = link_to meta.record.accession_label, datastore_shared_path(meta.record.accession_label)
+    tr
+      th Owner
+      td = link_to meta.record.owner.username, scholar_path(meta.record.owner.username)
+  tr
+    th Size
+    td = number_to_human_size(meta.size, precision: 3)
+  tr
+    th Last Modified
+    td = ptime meta.mtime.to_s
+
+  tr
+    th Download
+    td
+      a.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
+        | Link

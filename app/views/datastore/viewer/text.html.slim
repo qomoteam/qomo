@@ -1,7 +1,11 @@
 .page-panel.wider.viewer.viewer-text
   = render 'datastore/viewer/toolbar'
   section.content
-    pre
-      = @read_result[:content]
+    .aui-group
+      .aui-item style='width: 300px'
+        = render 'datastore/viewer/file_details', meta: @meta
+      .aui-item
+        pre
+          = @read_result[:content]
 
   = render 'datastore/viewer/pagination'

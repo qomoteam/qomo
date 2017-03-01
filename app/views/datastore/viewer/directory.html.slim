@@ -20,9 +20,12 @@
         - for file in @files
           tr data-path=file.path
             td.nowrap
-              a.file-item href=viewer_path(file) title=file.name
+              a.file-item> href=viewer_path(file) title=file.name
                 i.fa> class=file.type.icon
                 = file.name
+              - if file.shared?
+                a.hint--right href=datastore_shared_path(file.record.accession_label) aria-label='Shared path'
+                  i.fa.fa-external-link
             td
               - if file.directory?
                 | --

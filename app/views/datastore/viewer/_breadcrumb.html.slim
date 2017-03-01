@@ -6,7 +6,8 @@ ol.aui-nav.aui-nav-breadcrumbs.nav-path
   - else
     li: a href=datastore_path Home
 
-  - for a, b in breadcrumb(@meta.path)
-    li: a href=datastore_path(a, uid: params[:uid]) = b
+  - if not params[:uid]
+    - for a, b in breadcrumb(@meta.path)
+      li: a href=datastore_path(a, uid: params[:uid]) = b
 
   li: a href=viewer_path(@meta) = @meta.name

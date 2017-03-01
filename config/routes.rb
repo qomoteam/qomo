@@ -43,7 +43,10 @@ Rails.application.routes.draw do
 
   scope :datastore, controller: :datastore, as: :datastore do
     get '/-/(*path)', action: 'show', constraints: { :path => /.*/ }
+
     put '/clear/-/(*path)', action: 'clear', as: :clear, constraints: { :path => /.*/ }
+
+    get '/shared/:accession', action: 'shared', as: :shared
 
     post :search
     patch :mkdir

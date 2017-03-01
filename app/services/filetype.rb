@@ -39,11 +39,11 @@ class Filetype
   end
 
 
-  def initialize(name, desc, icon='fa-file-o', tpl=nil, reader=nil)
+  def initialize(name, desc, icon='fa-file-o', tpl=:binary, reader=Reader::Reader.new)
     @name = name
     @desc = desc
     @icon = icon
-    @tpl = tpl || :text
+    @tpl = tpl
     @reader = reader
   end
 

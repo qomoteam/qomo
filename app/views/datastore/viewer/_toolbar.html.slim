@@ -43,5 +43,6 @@
             | Clear Empty Folders
 
     - unless @meta.directory?
-      a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
-        i.fa.fa-download
+      .aui-buttons
+        a.aui-button.hint--bottom href=datastore_download_path(@meta.path, uid: params[:uid]) aria-label='Download'
+          i.fa.fa-download

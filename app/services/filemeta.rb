@@ -63,4 +63,8 @@ class Filemeta
     @path == ''
   end
 
+  def shared?
+    Filerecord.shared?(record.owner.id, record.path)
+  end
+
 end

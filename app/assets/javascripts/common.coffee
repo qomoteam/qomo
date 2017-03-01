@@ -236,3 +236,4 @@ $ ->
         toggle.busy = false
       success: ->
         toggle.busy = false
+        window.location.reload()
