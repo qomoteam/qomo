@@ -29,6 +29,8 @@ class Filerecord < ApplicationRecord
   end
 
 
+  # Attr `shared` used to access DB column `shared`
+  # while this method used to judge whether this record is shared
   def self.shared?(uid, path)
     parts = path.split('/')
     (0..(parts.length-1)).reverse_each { |i|

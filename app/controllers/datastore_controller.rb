@@ -31,7 +31,9 @@ class DatastoreController < ApplicationController
     gon.path = path
 
     if @meta.directory?
-      @files = datastore.list(path).sort_by { |f| f.name.downcase }
+      @files = datastore.list(path).select do |f|
+        f.can_read_by? current_user
+      end.sort_by { |f| f.name.downcase }
     elsif @meta.type.name != :binary
       params[:offset] ||= 0
       params[:offset] = params[:offset].to_i

@@ -31,7 +31,7 @@
                 a.file-item> href=viewer_path(file) title=file.name
                   i.fa> class=file.type.icon
                   = file.name
-                - if file.shared?
+                - if file.record.shared
                   a.hint--right href=datastore_shared_path(file.record.accession_label) aria-label='Shared path'
                     i.fa.fa-external-link
               td
@@ -59,9 +59,10 @@
                     li
                       a.hint--bottom.btn-trash href='javascript:void(0);' aria-label='Delete this file'
                         i.fa.fa-trash-o
-                  li
-                    a.hint--bottom.btn-copy aria-label='Copy' href='javascript:;'
-                      i.fa.fa-files-o
+                  - if user_signed_in?
+                    li
+                      a.hint--bottom.btn-copy aria-label='Copy' href='javascript:;'
+                        i.fa.fa-files-o
 
                   - unless file.directory?
                     li

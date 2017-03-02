@@ -67,4 +67,8 @@ class Filemeta
     Filerecord.shared?(record.owner.id, record.path)
   end
 
+  def can_read_by?(user)
+    shared? || user&.id == @owner_id
+  end
+
 end
