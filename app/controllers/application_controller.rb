@@ -35,14 +35,6 @@ class ApplicationController < ActionController::Base
 
   include Cas
 
-  def after_sign_in_path_for(resource_or_scope)
-    if cas_request?
-      edit_profile_path(cas_request: true)
-    else
-      stored_location_for(resource_or_scope) || signed_in_root_path(resource_or_scope)
-    end
-  end
-
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path(cas_params)
   end

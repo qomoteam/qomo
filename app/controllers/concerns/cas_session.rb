@@ -18,9 +18,13 @@ module CasSession
           flash[:alert] = 'Guests are not allowed to sign in with CAS service'
           redirect_back fallback_location: root_path
         else
-          ticket = "ST-#{SecureRandom.uuid}"
-          Rails.cache.write(ticket, resource.id, namespace: :cas, expires_in: 30.minutes)
-          redirect_to service.add_param(ticket: ticket)
+          if service.present?
+            ticket = "ST-#{SecureRandom.uuid}"
+            Rails.cache.write(ticket, resource.id, namespace: :cas, expires_in: 30.minutes)
+            redirect_to service.add_param(ticket: ticket)
+          else
+            edit_profile_path(cas_request: true)
+          end
         end
       else
         flash[:alert] = 'Invalid Login or password.'
