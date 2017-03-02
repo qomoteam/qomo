@@ -175,18 +175,14 @@
               a.hint--bottom.hint--info href=edit_runtimeconf_tool_path(@tool) aria-label='Edit runtime configuration'
                 i.fa.fa-edit.fa-fw
         .panel-body
-          - if @tool.runnable
-            = form_tag run_tool_path(@tool), method: :post, class: 'aui top-label', id: 'tool-runner'
-              = render partial: 'tools/params_fields', locals: {params: @tool.inputs}
-              = render partial: 'tools/params_fields', locals: {params: @tool.normal_params}
-              = render partial: 'tools/params_fields', locals: {params: @tool.outputs}
+          = form_tag run_tool_path(@tool), method: :post, class: 'aui top-label', id: 'tool-runner'
+            = render partial: 'tools/params_fields', locals: {params: @tool.inputs}
+            = render partial: 'tools/params_fields', locals: {params: @tool.normal_params}
+            = render partial: 'tools/params_fields', locals: {params: @tool.outputs}
 
-              .buttons-container
-                .buttons
-                  - if user_signed_in?
-                    button.button.submit Submit
-                  - else
-                    button.button.submit.hint--warning.hint--bottom-right disabled='disabled' aria-label='You need sign in to run this tool' Submit
-          - else
-            .empty-placeholder
-              p This tool is not runnable in Qomo
+            .buttons-container
+              .buttons
+                - if user_signed_in?
+                  button.button.submit Submit
+                - else
+                  button.button.submit.hint--warning.hint--bottom-right disabled='disabled' aria-label='You need sign in to run this tool' Submit

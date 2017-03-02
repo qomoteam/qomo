@@ -44,15 +44,15 @@ class ToolsController < ApplicationController
   def create
     authorize! :create, Tool
 
-    @tool = Tool.new params.require(:tool).permit!
-    @tool.owner = current_user
+    tool = Tool.new params.require(:tool).permit!
+    tool.owner = current_user
 
     if @current_user.has_role? :admin
-      @tool.shared = true
+      tool.shared = true
     end
 
-    @tool.save
-    @tool.copy_upload!
+    tool.save
+    tool.copy_upload!
     redirect_to user_tool_path(tool.owner.username, tool.slug)
   end
 

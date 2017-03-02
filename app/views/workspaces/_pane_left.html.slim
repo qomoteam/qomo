@@ -10,4 +10,4 @@
     - for root in Category.roots
       = render partial: 'workspaces/category_tools', locals: {category: root}
 
-    = render partial: 'workspaces/ul_tools', locals: {title: 'Private', tools: current_user.tools.private_runnable}
+    = render partial: 'workspaces/ul_tools', locals: {title: 'Private', tools: current_user.tools.unshared}

@@ -26,8 +26,7 @@ class Tool < ApplicationRecord
   scope :featured, -> { where('featured>?', 0).where(shared: true).order(featured: :desc) }
 
   scope :shared, -> { where(shared: true).order(:name) }
-  scope :shared_runnable, -> { where(runnable: true, shared: true).order(:name) }
-  scope :private_runnable, -> { where(runnable: true, shared: false).order(:name) }
+  scope :unshared, -> { where(shared: false).order(:name) }
 
   default_scope -> { order('name ASC') }
 
@@ -139,7 +138,9 @@ class Tool < ApplicationRecord
   private
 
   def sanitize
-    self.command = self.command.split(/\r?\n/).each { |e| e.strip }.join("\n")
+    if self.command.present?
+      self.command = self.command.split(/\r?\n/).each { |e| e.strip }.join("\n")
+    end
   end
 
 end

@@ -3,7 +3,7 @@
 - else
   - title = "#{category.root.name}: #{category.name}"
 
-= render partial: 'workspaces/ul_tools', locals: {title: title, tools: category.tools.shared_runnable}
+= render partial: 'workspaces/ul_tools', locals: {title: title, tools: category.tools.shared}
 
 - if category.root?
   - for c in category.leaves
