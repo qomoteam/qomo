@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   include Cas
 
   def after_sign_in_path_for(resource_or_scope)
-    if params[:service]
+    if service.present?
       ticket = "ST-#{SecureRandom.uuid}"
       Rails.cache.write(ticket, current_user.id, namespace: :cas, expires_in: 30.minutes)
       params[:service].add_param(ticket: ticket)
