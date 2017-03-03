@@ -19,7 +19,7 @@ h3
   .field-group.top-label
     = f.label :captcha
     = rucaptcha_input_tag class: 'text'
-    a.rucaptcha-image-box href='#'
+    a.rucaptcha-image-box.hint--right href='#' aria-label='Click to reload captcha'
       = rucaptcha_image_tag alt: 'Captcha'
 
   - if devise_mapping.rememberable?
