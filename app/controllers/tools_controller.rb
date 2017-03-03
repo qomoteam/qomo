@@ -71,7 +71,7 @@ class ToolsController < ApplicationController
 
   def update
     tool = Tool.find params['id']
-    authorize! :update, @tool
+    authorize! :update, tool
 
     tool.slug = nil
     tool.update params.require(:tool).permit!
@@ -83,7 +83,7 @@ class ToolsController < ApplicationController
 
   def destroy
     tool = Tool.find params['id']
-    authorize! :destroy, @tool
+    authorize! :destroy, tool
 
     tool.destroy!
     redirect_to action: 'index', status: :see_other
