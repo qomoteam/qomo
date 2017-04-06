@@ -104,4 +104,7 @@
               = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
 
         .aui-group
-          = submit_tag 'Run', class: 'aui-button aui-button-primary', disabled: not_guest_user?
+          - if not_guest_user?
+            = submit_tag 'Run', class: 'aui-button aui-button-primary'
+          - else
+            = submit_tag 'Run', class: 'aui-button aui-button-primary hint--error', disabled: 'disabled', 'araia-label' => 'Guests are not allowed to run pipeline.'
