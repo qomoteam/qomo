@@ -5,39 +5,40 @@
         ' Pipeline: #{@pipeline.title}
 
     .secondary
-      .aui-buttons
-        - if can? :bookmark, Pipeline
-          - if current_user.liked? @pipeline
-            a.aui-button.hint--bottom.hint--info aria-label='Unbookmark this item!' href=bookmark_pipeline_path(@pipeline)
-              i.fa.fa-bookmark>
-              | Unbookmark
-          - else
-            a.aui-button.hint--bottom.hint--info aria-label='Bookmark this item!' href=bookmark_pipeline_path(@pipeline)
-              i.fa.fa-bookmark-o>
-              | Bookmark
-
-      .aui-buttons
-        - if @pipeline.owner != current_user
-          a.aui-button.load href=import_pipeline_path(@pipeline) Import
-
-        a.aui-button.load href=load_workspace_path(@pipeline) Load
-        a.aui-button.merge href=merge_workspace_path(@pipeline) Merge
-
-      .aui-buttons
-        a.aui-button.export href=export_pipeline_path(@pipeline) Export
-
-      - if @pipeline.owner == current_user
+      - if not_guest_user?
         .aui-buttons
-          a.aui-button href=edit_pipeline_path(@pipeline.id) Edit
-          a.aui-button href=pipeline_path(@pipeline) data-method='delete' data-confirm='Are you sure want to delete this pipeline?' Delete
+          - if can? :bookmark, Pipeline
+            - if current_user.liked? @pipeline
+              a.aui-button.hint--bottom.hint--info aria-label='Unbookmark this item!' href=bookmark_pipeline_path(@pipeline)
+                i.fa.fa-bookmark>
+                | Unbookmark
+            - else
+              a.aui-button.hint--bottom.hint--info aria-label='Bookmark this item!' href=bookmark_pipeline_path(@pipeline)
+                i.fa.fa-bookmark-o>
+                | Bookmark
 
-      - if current_user&.has_role? :admin
         .aui-buttons
-          - if @pipeline.featured == 0
-            - flabel =  'Featured'
-          - else
-            - flabel =  'Unfeatured'
-          a.aui-button data-method='patch' href=toogle_featured_pipeline_path(@pipeline) = flabel
+          - if @pipeline.owner != current_user
+            a.aui-button.load href=import_pipeline_path(@pipeline) Import
+
+          a.aui-button.load href=load_workspace_path(@pipeline) Load
+          a.aui-button.merge href=merge_workspace_path(@pipeline) Merge
+
+        .aui-buttons
+          a.aui-button.export href=export_pipeline_path(@pipeline) Export
+
+        - if @pipeline.owner == current_user
+          .aui-buttons
+            a.aui-button href=edit_pipeline_path(@pipeline.id) Edit
+            a.aui-button href=pipeline_path(@pipeline) data-method='delete' data-confirm='Are you sure want to delete this pipeline?' Delete
+
+        - if current_user&.has_role? :admin
+          .aui-buttons
+            - if @pipeline.featured == 0
+              - flabel =  'Featured'
+            - else
+              - flabel =  'Unfeatured'
+            a.aui-button data-method='patch' href=toogle_featured_pipeline_path(@pipeline) = flabel
 
   .aui-group
     .aui-item style='width: 65%'
@@ -103,4 +104,4 @@
               = render 'tools/param_setter', param: export_param(p['tool_param'], @pipeline.owner, current_user)
 
         .aui-group
-          = submit_tag 'Run', class: 'aui-button aui-button-primary'
+          = submit_tag 'Run', class: 'aui-button aui-button-primary', disabled: not_guest_user?

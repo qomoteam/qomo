@@ -44,7 +44,7 @@ class Category < ApplicationRecord
   end
 
   def descendant_shared_pipelines
-    Pipeline.where(shared: true, category_id: self.self_and_descendants.ids)
+    Pipeline.where(shared: true, category_id: self.self_and_descendants.ids).order('created_at ASC')
   end
 
 
