@@ -107,4 +107,4 @@
           - if not_guest_user?
             = submit_tag 'Run', class: 'aui-button aui-button-primary'
           - else
-            = submit_tag 'Run', class: 'aui-button aui-button-primary hint--error', disabled: 'disabled', 'aria-label' => 'Guests are not allowed to run pipeline.'
+            = submit_tag 'Run', class: 'aui-button aui-button-primary hint--error hint--bottom', disabled: 'disabled', 'aria-label' => 'Guests are not allowed to run pipeline.'
